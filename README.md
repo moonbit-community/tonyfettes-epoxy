@@ -86,19 +86,28 @@ quirk. Build/run a specific package (`moon build src/main --target native`).
 1. ✅ Vertical slice: resolver + self-patching dispatch + scalar/pointer shims.
 2. ✅ Generator: parse `registry/gl.xml`, emit bindings + C shims for the 1511
    scalar/void/string commands.
-3. Pointer/array params (1729 commands) — `Bytes`/`FixedArray` marshalling for
-   buffers, in-out params, and `const GLchar**` strings.
-4. Alias groups + provider priority + `epoxy_gl_version` / `has_extension`.
-5. Callbacks (`GLDEBUGPROC`), then GLES / EGL / GLX / WGL window-system layers.
-6. Linux (`libGL.so.1` path is already wired) + Windows (`wglGetProcAddress`).
+3. ✅ Pointer/array params — faithful `Bytes`/`FixedArray` passthrough
+   (`#borrow`'d). 3084 commands now generated.
+4. Remaining shapes: `const GLchar* const*` string arrays, 16-bit arrays,
+   non-string pointer returns, callbacks (`GLDEBUGPROC`).
+5. Alias groups + provider priority + `epoxy_gl_version` / `has_extension`.
+6. GLES / EGL / GLX / WGL window-system layers.
+7. Linux (`libGL.so.1` path is already wired) + Windows (`wglGetProcAddress`).
 
 ### Generator coverage (current)
 
 | Category | Count | Status |
 |----------|------:|--------|
-| scalar / void / string return | 1511 | ✅ generated |
-| pointer / array argument | 1729 | deferred (step 3) |
-| unknown / opaque type | 44 | deferred |
+| scalar / void / string + pointer-array | 3084 | ✅ generated |
+| deferred pointer shape (`**`, 16-bit, opaque) | 156 | deferred |
+| unknown / opaque scalar type | 44 | deferred |
 | non-string pointer return | 11 | deferred |
 | callback argument | 4 | deferred |
+
+Pointer params pass through faithfully: `const T*`/`T*` → `FixedArray[T]`
+(float/double/int32/uint32/int64/uint64), `void*`/`GLchar*`/byte data → `Bytes`,
+all `#borrow`'d. The demo exercises this end-to-end — `glGetIntegerv` reads
+`GL_MAX_TEXTURE_SIZE` into a `FixedArray[Int]`, `glGenBuffers` fills a
+`FixedArray[UInt]`. 16-bit arrays (no native fixed-width array), `**`, and
+opaque-pointer params remain deferred.
 ```

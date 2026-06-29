@@ -63,6 +63,58 @@ fn CType::to_c(self : CType) -> String {
 }
 
 ///|
+/// How a single pointer param is represented: the MoonBit container type and
+/// the matching C shim parameter type (the MoonBit-ABI pointer it arrives as).
+/// `None` for element types with no native fixed-width array (16-bit shorts,
+/// opaque handles, ...) — those stay deferred.
+fn ptr_element(base : String) -> (String, String)? {
+  match base {
+    // byte-addressable data / strings / opaque pixel buffers -> raw Bytes
+    "void" | "GLvoid" | "GLchar" | "GLcharARB" | "GLubyte" | "GLbyte" | "GLboolean" =>
+      Some(("Bytes", "moonbit_bytes_t"))
+    "GLfloat" | "GLclampf" => Some(("FixedArray[Float]", "float*"))
+    "GLdouble" | "GLclampd" => Some(("FixedArray[Double]", "double*"))
+    "GLint" | "GLsizei" | "GLfixed" | "GLclampx" =>
+      Some(("FixedArray[Int]", "int32_t*"))
+    "GLuint" | "GLbitfield" | "GLenum" => Some(("FixedArray[UInt]", "uint32_t*"))
+    "GLint64" | "GLint64EXT" => Some(("FixedArray[Int64]", "int64_t*"))
+    "GLuint64" | "GLuint64EXT" => Some(("FixedArray[UInt64]", "uint64_t*"))
+    _ => None
+  }
+}
+
+///|
+/// How one parameter crosses the FFI boundary.
+priv struct Binding {
+  mbt : String // MoonBit parameter type
+  c_abi : String // C shim parameter type (MoonBit ABI)
+  cast : String // GL type to cast to in the call (faithful C type)
+  borrow : Bool // pointer params must be #borrow'd
+}
+
+///|
+/// Compute the binding for a parameter type, or None if unsupported (deferred).
+fn ty_binding(ty : CType) -> Binding? {
+  match ty {
+    // by-value scalar / ptr-sized integer
+    Base(_) =>
+      match mbt_scalar_type(ty.base_name()) {
+        Some(mbt) =>
+          Some({ mbt, c_abi: c_abi_type(mbt), cast: ty.to_c(), borrow: false })
+        None => None
+      }
+    // single pointer to a base type -> array / bytes passthrough
+    Ptr(Base(_), ..) =>
+      match ptr_element(ty.base_name()) {
+        Some((mbt, c_abi)) => Some({ mbt, c_abi, cast: ty.to_c(), borrow: true })
+        None => None
+      }
+    // pointer-to-pointer and deeper: deferred
+    _ => None
+  }
+}
+
+///|
 /// Is this a string-ish pointer return (const GLubyte* / GLchar*)?
 fn is_string_ret(c : Command) -> Bool {
   c.ret.is_pointer() &&
@@ -82,14 +134,13 @@ fn classify(c : Command) -> Eligibility {
   }
   // params
   for p in c.params {
-    if p.ty.base_name().has_prefix("GLDEBUGPROC") || p.ty.base_name().has_prefix("GLVULKAN") {
+    if p.ty.base_name().has_prefix("GLDEBUGPROC") ||
+      p.ty.base_name().has_prefix("GLVULKAN") {
       return Callback
     }
-    if p.ty.is_pointer() {
-      return PointerParam
-    }
-    if mbt_scalar_type(p.ty.base_name()) is None {
-      return UnknownType
+    if ty_binding(p.ty) is None {
+      // unsupported: a deferred pointer shape, or an unmapped scalar type
+      return if p.ty.is_pointer() { PointerParam } else { UnknownType }
     }
   }
   Ok
@@ -173,37 +224,43 @@ fn emit(c : Command) -> (String, String) {
   let shim = "epoxy_call_" + c.name
   let slot = "d_" + c.name
 
-  // --- signatures (scalar params only; pointers are still deferred) -----
-  let mbt_params = c.params.map(fn(p) {
-    safe_ident(p.name) + " : " + mbt_scalar_type(p.ty.base_name()).unwrap()
-  })
-  let call_args = c.params.map(fn(p) { safe_ident(p.name) })
-
-  // C shim parameter list (MoonBit-ABI types) and the real GL signature it casts to
-  let c_shim_params = c.params.map(fn(p) {
-    c_abi_type(mbt_scalar_type(p.ty.base_name()).unwrap()) + " " + safe_ident(p.name)
-  })
-  let gl_sig = c.params.map(fn(p) { p.ty.to_c() })
-  let gl_cast_args = c.params.map(fn(p) {
-    "(" + p.ty.to_c() + ")" + safe_ident(p.name)
-  })
+  // --- per-parameter bindings (scalar by-value or pointer passthrough) --
+  let bindings = c.params.map(fn(p) { ty_binding(p.ty).unwrap() })
+  let names = c.params.map(fn(p) { safe_ident(p.name) })
+  let mbt_params = names.mapi(fn(i, n) { n + " : " + bindings[i].mbt })
+  let call_args = names
+  let c_shim_params = names.mapi(fn(i, n) { bindings[i].c_abi + " " + n })
+  let gl_sig = bindings.map(fn(b) { b.cast })
+  let gl_cast_args = names.mapi(fn(i, n) { "(" + bindings[i].cast + ")" + n })
   let sig_str = if gl_sig.is_empty() { "void" } else { gl_sig.join(", ") }
+
+  // pointer params must be borrowed (C must not retain them past the call)
+  let borrowed = []
+  for i, n in names {
+    if bindings[i].borrow {
+      borrowed.push(n)
+    }
+  }
+  let borrow_line = if borrowed.is_empty() {
+    ""
+  } else {
+    "#borrow(\{borrowed.join(", ")})\n"
+  }
 
   // --- MoonBit side -----------------------------------------------------
   mbt.write_string("///|\n")
   mbt.write_string("let \{slot} : Dispatch = Dispatch::new(\"\{c.name}\")\n\n")
   mbt.write_string("///|\n")
+  let ffi_params = ["fp : CPtr", ..mbt_params]
   if is_string_ret(c) {
-    let ffi_params = ["fp : CPtr", ..mbt_params]
-    mbt.write_string("extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Bytes = \"\{shim}\"\n\n")
+    mbt.write_string("\{borrow_line}extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Bytes = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
     mbt.write_string("pub fn \{fn_name}(\{mbt_params.join(", ")}) -> String raise ResolveError {\n")
     let args = [slot + ".get()", ..call_args]
     mbt.write_string("  decode_utf8(ffi_\{c.name}(\{args.join(", ")}))\n")
     mbt.write_string("}\n\n")
   } else if c.ret.is_void() {
-    let ffi_params = ["fp : CPtr", ..mbt_params]
-    mbt.write_string("extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Unit = \"\{shim}\"\n\n")
+    mbt.write_string("\{borrow_line}extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Unit = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
     mbt.write_string("pub fn \{fn_name}(\{mbt_params.join(", ")}) -> Unit raise ResolveError {\n")
     let args = [slot + ".get()", ..call_args]
@@ -211,8 +268,7 @@ fn emit(c : Command) -> (String, String) {
     mbt.write_string("}\n\n")
   } else {
     let ret_mbt = mbt_scalar_type(c.ret.base_name()).unwrap()
-    let ffi_params = ["fp : CPtr", ..mbt_params]
-    mbt.write_string("extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> \{ret_mbt} = \"\{shim}\"\n\n")
+    mbt.write_string("\{borrow_line}extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> \{ret_mbt} = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
     mbt.write_string("pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} raise ResolveError {\n")
     let args = [slot + ".get()", ..call_args]
