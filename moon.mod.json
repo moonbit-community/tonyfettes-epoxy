@@ -1,0 +1,10 @@
+{
+  "name": "feihaoxiang/epoxy",
+  "version": "0.1.0",
+  "source": "src",
+  "description": "A MoonBit reimplementation of libepoxy: OpenGL function pointer dispatch.",
+  "deps": {
+    "Milky2018/xml": { "path": "upstream/xml-mbt" },
+    "moonbitlang/x": "0.4.38"
+  }
+}

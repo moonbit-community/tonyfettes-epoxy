@@ -1,0 +1,9 @@
+{
+  "is-main": true,
+  "import": ["feihaoxiang/epoxy/epoxy"],
+  "link": {
+    "native": {
+      "cc-link-flags": "-ldl -framework OpenGL"
+    }
+  }
+}

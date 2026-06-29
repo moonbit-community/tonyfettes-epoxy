@@ -1,0 +1,9 @@
+# MoonBit build output
+_build/
+target/
+
+# Resolved dependency cache (restored via `moon`)
+.mooncakes/
+
+# Editor / OS
+.DS_Store

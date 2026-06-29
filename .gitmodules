@@ -1,3 +1,6 @@
 [submodule "upstream/libepoxy"]
 	path = upstream/libepoxy
 	url = https://github.com/anholt/libepoxy.git
+[submodule "upstream/xml-mbt"]
+	path = upstream/xml-mbt
+	url = https://github.com/moonbit-community/xml-mbt.git
