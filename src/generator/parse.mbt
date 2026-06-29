@@ -4,40 +4,15 @@
 /// dispatch; everything else (enums, features, extensions) is skipped here.
 
 ///|
-/// A C type as it appears in a command signature, modelled faithfully and
-/// recursively: a base typedef leaf, or a pointer to another `GlType`.
-///
-/// `Base` keeps the registry typedef name (e.g. "GLfloat", "void") and resolves
-/// to its underlying C / MoonBit type via the type-mapping table — the single
-/// source of truth — rather than re-enumerating every typedef here.
-///
-/// (`is_const` records whether the pointee is `const`, i.e. an input vs. output
-/// buffer; `const` itself is a reserved word so the label can't be named that.)
-priv enum GlType {
-  Base(String)
-  Ptr(GlType, is_const~ : Bool)
-}
-
-///|
-/// The innermost base typedef name (sees through pointers), e.g. the `GLubyte`
-/// in `const GLubyte *`. Used for scalar/string classification.
-fn GlType::base_name(self : GlType) -> String {
-  match self {
-    Base(name) => name
-    Ptr(inner, ..) => inner.base_name()
-  }
-}
-
-///|
 priv struct Param {
   name : String
-  ty : GlType
+  ty : @cdecl.GlType
 }
 
 ///|
 priv struct Command {
   name : String
-  ret : GlType
+  ret : @cdecl.GlType
   params : Array[Param]
 }
 
@@ -92,77 +67,10 @@ fn Decl::ident(self : Decl) -> String {
 }
 
 ///|
-/// A token of a C declarator fragment.
-priv enum Token {
-  Star // *
-  Const // const qualifier
-  Struct // struct keyword (cl_* extension types)
-  Word(String) // a type name, e.g. "void", "GLfloat"
-}
-
-///|
-/// Classify a lexed word as a keyword token or a plain type name.
-fn Token::of_word(w : String) -> Token {
-  match w {
-    "const" => Const
-    "struct" => Struct
-    _ => Word(w)
-  }
-}
-
-///|
-/// Lex a C declarator fragment: whitespace separates words, each `*` is its own
-/// token, and the `const`/`struct` keywords are recognised. e.g. "const  *" ->
-/// [Const, Star], "struct _cl_event" -> [Struct, Word("_cl_event")].
-fn tokenize_declarator(s : String) -> Array[Token] {
-  let toks : Array[Token] = []
-  let mut cur = StringBuilder::new()
-  fn flush() -> Unit {
-    let w = cur.to_string()
-    if w != "" {
-      toks.push(Token::of_word(w))
-    }
-    cur = StringBuilder::new()
-  }
-
-  for c in s {
-    if c == '*' {
-      flush()
-      toks.push(Star)
-    } else if c == ' ' || c == '\t' || c == '\n' {
-      flush()
-    } else {
-      cur.write_char(c)
-    }
-  }
-  flush()
-  toks
-}
-
-///|
-/// Resolve the accumulated declaration into the GL type it describes: the base
-/// type is the explicit `<ptype>` (else the lone non-qualifier word), wrapped
-/// in one pointer level per `*`; the innermost carries the pointee's const-ness
-/// (a `const` appearing before the first `*`).
-fn Decl::to_gltype(self : Decl) -> GlType {
-  // Start from the base leaf and wrap it outward, one pointer per `*`. The base
-  // is the explicit <ptype> if the registry tagged one; otherwise a bare type
-  // word in the declarator (e.g. "void") fills it in.
-  let ptype = self.ptype.to_string()
-  let mut ty : GlType = Base(ptype)
-  let mut pending_const = false // a `const` not yet attached to a pointer
-  for t in tokenize_declarator(self.text.to_string()) {
-    match t {
-      Word(w) => if ptype == "" { ty = Base(w) }
-      Const => pending_const = true
-      Star => {
-        ty = Ptr(ty, is_const=pending_const)
-        pending_const = false
-      }
-      Struct => ()
-    }
-  }
-  ty
+/// The accumulated declaration as the GL type it describes (declarator parsing
+/// lives in the `cdecl` package).
+fn Decl::to_gltype(self : Decl) -> @cdecl.GlType {
+  @cdecl.parse_declarator(self.ptype.to_string(), self.text.to_string())
 }
 
 ///|

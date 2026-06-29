@@ -94,14 +94,14 @@ priv struct Binding {
 
 ///|
 /// Resolve a parameter into its binding, or None if its type is unsupported.
-fn Binding::new(name : String, ty : GlType) -> Binding? {
+fn Binding::new(name : String, ty : @cdecl.GlType) -> Binding? {
   let mty = match ty {
     Base(_) => scalar_mtype(ty.base_name())
     Ptr(Base(_), ..) => ptr_mtype(ty.base_name())
     _ => None // pointer-to-pointer and deeper: unsupported
   }
   guard mty is Some(mty) else { return None }
-  guard ty.to_ctype() is Some(cast) else { return None }
+  guard resolve_ctype(ty) is Some(cast) else { return None }
   Some({ name, mty, cast })
 }
 
@@ -133,7 +133,7 @@ fn Command::signature(self : Command) -> Signature? {
     Ptr(_, ..) => return None // non-string pointer return: unsupported
     Base(name) => {
       guard scalar_mtype(name) is Some(mty) else { return None }
-      guard self.ret.to_ctype() is Some(cast) else { return None }
+      guard resolve_ctype(self.ret) is Some(cast) else { return None }
       Scalar(mty, cast)
     }
   }
@@ -189,17 +189,19 @@ fn ptr_mtype(base : String) -> MType? {
 }
 
 ///|
-/// Resolve a GL typedef leaf to its concrete C type, or None if not in the
-/// mapping table.
-fn GlType::to_ctype(self : GlType) -> CType? {
-  match self {
+/// Resolve a registry GL type into a concrete C type, or None if a leaf typedef
+/// isn't in the mapping table. (A free function, not a method: `GlType` belongs
+/// to the `cdecl` package; this resolution is the generator's concern, since it
+/// consults the type-mapping table.)
+fn resolve_ctype(ty : @cdecl.GlType) -> CType? {
+  match ty {
     Base("void") => Some(Void)
     Base(name) => {
       guard @gen.lookup(name) is Some(m) else { return None }
       Some(Prim(m.c_type))
     }
     Ptr(inner, is_const~) => {
-      guard inner.to_ctype() is Some(ic) else { return None }
+      guard resolve_ctype(inner) is Some(ic) else { return None }
       Some(Pointer(ic, is_const~))
     }
   }

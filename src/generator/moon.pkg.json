@@ -3,6 +3,7 @@
   "import": [
     "Milky2018/xml",
     "moonbitlang/x/fs",
-    "feihaoxiang/epoxy/gen"
+    "feihaoxiang/epoxy/gen",
+    "feihaoxiang/epoxy/cdecl"
   ]
 }
