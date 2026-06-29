@@ -62,47 +62,119 @@ priv enum Field {
 }
 
 ///|
+/// Accumulates the streamed pieces of one declaration — a `<proto>` or a
+/// `<param>`: its `<ptype>`, its `<name>`, and the surrounding declarator text.
+priv struct Decl {
+  ptype : StringBuilder
+  name : StringBuilder
+  text : StringBuilder
+}
+
+///|
+fn Decl::new() -> Decl {
+  { ptype: StringBuilder::new(), name: StringBuilder::new(), text: StringBuilder::new() }
+}
+
+///|
+/// Route a text event to the right buffer for the field currently open.
+fn Decl::feed(self : Decl, field : Field, t : String) -> Unit {
+  match field {
+    Ptype => self.ptype.write_string(t)
+    Name => self.name.write_string(t)
+    Surrounding => self.text.write_string(t)
+  }
+}
+
+///|
+/// The declared identifier (function or parameter name).
+fn Decl::ident(self : Decl) -> String {
+  self.name.to_string().trim(chars=" ").to_owned()
+}
+
+///|
+/// A token of a C declarator fragment.
+priv enum Token {
+  Star // *
+  Const // const qualifier
+  Struct // struct keyword (cl_* extension types)
+  Word(String) // a type name, e.g. "void", "GLfloat"
+}
+
+///|
+/// Lex a C declarator fragment: whitespace separates words, each `*` is its own
+/// token, and the `const`/`struct` keywords are recognised. e.g. "const  *" ->
+/// [Const, Star], "struct _cl_event" -> [Struct, Word("_cl_event")].
+fn tokenize_declarator(s : String) -> Array[Token] {
+  let toks : Array[Token] = []
+  let mut cur = StringBuilder::new()
+  fn flush() -> Unit {
+    let w = cur.to_string()
+    if w != "" {
+      toks.push(match w {
+        "const" => Const
+        "struct" => Struct
+        _ => Word(w)
+      })
+    }
+    cur = StringBuilder::new()
+  }
+
+  for c in s {
+    if c == '*' {
+      flush()
+      toks.push(Star)
+    } else if c == ' ' || c == '\t' || c == '\n' {
+      flush()
+    } else {
+      cur.write_char(c)
+    }
+  }
+  flush()
+  toks
+}
+
+///|
+/// Resolve the accumulated declaration into the GL type it describes: the base
+/// type is the explicit `<ptype>` (else the lone non-qualifier word), wrapped
+/// in one pointer level per `*`; the innermost carries the pointee's const-ness
+/// (a `const` appearing before the first `*`).
+fn Decl::to_gltype(self : Decl) -> GlType {
+  let mut stars = 0
+  let mut seen_star = false
+  let mut pointee_const = false
+  let words : Array[String] = []
+  for t in tokenize_declarator(self.text.to_string()) {
+    match t {
+      Star => {
+        stars += 1
+        seen_star = true
+      }
+      Const => if !seen_star { pointee_const = true }
+      Struct => ()
+      Word(w) => words.push(w)
+    }
+  }
+  // The base type is the explicit <ptype> if the registry tagged one, otherwise
+  // the bare word(s) left in the declarator (e.g. "void").
+  let ptype = self.ptype.to_string()
+  let base = if ptype != "" { ptype } else { words.join(" ") }
+  let mut ty : GlType = Base(base)
+  for i in 0..<stars {
+    ty = Ptr(ty, is_const=i == 0 && pointee_const)
+  }
+  ty
+}
+
+///|
 /// Parse every `<command>` in the registry at `path`.
 fn parse_commands(path : String) -> Array[Command] raise {
   let reader = @xml.Reader::from_file(path)
   let commands : Array[Command] = []
   let mut section = Section::Elsewhere
   let mut field = Field::Surrounding
-
-  // proto (return + function name) accumulators
-  let mut proto_ptype = ""
-  let mut proto_name = ""
-  let mut proto_text = ""
-
-  // current param accumulators
-  let mut p_ptype = ""
-  let mut p_name = ""
-  let mut p_text = ""
+  let mut proto = Decl::new() // the <proto>: return type + function name
+  let mut param = Decl::new() // the <param> currently being read
   let mut params : Array[Param] = []
-  fn finalize_type(ptype : String, text : String) -> GlType {
-    let mut stars = 0
-    for c in text {
-      if c == '*' {
-        stars += 1
-      }
-    }
-    let pointee_const = text.contains("const")
-    let base = if ptype != "" { ptype } else { text.replace(old="*", new="") }
-    // strip qualifiers/whitespace ("const", "struct", spaces)
-    let cleaned = base
-      .replace(old="const", new="")
-      .replace(old="struct", new="")
-      .trim(chars=" \t\n")
-      .to_owned()
-    // wrap the leaf in `stars` pointer levels; the innermost level carries the
-    // pointee's const-ness (the input/output signal).
-    let mut ty : GlType = Base(cleaned)
-    for i in 0..<stars {
-      ty = Ptr(ty, is_const=i == 0 && pointee_const)
-    }
-    ty
-  }
-
   while true {
     match reader.read_event() {
       @xml.Eof => break
@@ -110,9 +182,7 @@ fn parse_commands(path : String) -> Array[Command] raise {
         match el.name {
           "command" => {
             section = Section::Elsewhere
-            proto_ptype = ""
-            proto_name = ""
-            proto_text = ""
+            proto = Decl::new()
             params = []
           }
           "proto" => {
@@ -122,9 +192,7 @@ fn parse_commands(path : String) -> Array[Command] raise {
           "param" => {
             section = Section::Param
             field = Field::Surrounding
-            p_ptype = ""
-            p_name = ""
-            p_text = ""
+            param = Decl::new()
           }
           "ptype" => field = Field::Ptype
           "name" => field = Field::Name
@@ -132,18 +200,8 @@ fn parse_commands(path : String) -> Array[Command] raise {
         }
       @xml.Text(t) =>
         match section {
-          Section::Proto =>
-            match field {
-              Field::Ptype => proto_ptype = proto_ptype + t
-              Field::Name => proto_name = proto_name + t
-              Field::Surrounding => proto_text = proto_text + t
-            }
-          Section::Param =>
-            match field {
-              Field::Ptype => p_ptype = p_ptype + t
-              Field::Name => p_name = p_name + t
-              Field::Surrounding => p_text = p_text + t
-            }
+          Section::Proto => proto.feed(field, t)
+          Section::Param => param.feed(field, t)
           Section::Elsewhere => ()
         }
       @xml.End(name) =>
@@ -152,13 +210,12 @@ fn parse_commands(path : String) -> Array[Command] raise {
           "proto" => section = Section::Elsewhere
           "param" => {
             section = Section::Elsewhere
-            let ty = finalize_type(p_ptype, p_text)
-            params.push({ name: p_name.trim(chars=" ").to_owned(), ty })
+            params.push({ name: param.ident(), ty: param.to_gltype() })
           }
           "command" =>
             commands.push({
-              name: proto_name.trim(chars=" ").to_owned(),
-              ret: finalize_type(proto_ptype, proto_text),
+              name: proto.ident(),
+              ret: proto.to_gltype(),
               params,
             })
           _ => ()
