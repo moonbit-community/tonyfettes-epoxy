@@ -12,3 +12,10 @@ pub const GL_RENDERER : UInt = 0x1F01
 
 ///|
 pub const GL_VERSION : UInt = 0x1F02
+
+///|
+pub const GL_EXTENSIONS : UInt = 0x1F03
+
+///|
+/// Number of extensions, queryable via `glGetIntegerv` on GL 3.0+.
+pub const GL_NUM_EXTENSIONS : UInt = 0x821D

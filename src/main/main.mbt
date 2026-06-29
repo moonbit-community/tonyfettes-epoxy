@@ -19,6 +19,13 @@ fn main {
     let err = @epoxy.gl_get_error()
     println("glGetError  = \{err} (GL_NO_ERROR=\{@epoxy.GL_NO_ERROR})")
 
+    // Introspection API: version/extension detection, epoxy-style.
+    let version = @epoxy.gl_version()
+    println("gl_version  = \{version} (\{version / 10}.\{version % 10})")
+    println("is_desktop  = \{@epoxy.is_desktop_gl()}")
+    let probe = "GL_APPLE_vertex_array_object"
+    println("has \{probe} = \{@epoxy.has_gl_extension(probe)}")
+
     // Exercise generated pointer bindings end-to-end.
     // glGetIntegerv writes into a FixedArray[Int] output buffer.
     let max_tex : FixedArray[Int] = FixedArray::make(1, 0)

@@ -1,5 +1,5 @@
 {
-  "import": ["moonbitlang/core/encoding/utf8"],
+  "import": ["moonbitlang/core/encoding/utf8", "feihaoxiang/epoxy/glinfo"],
   "native-stub": ["epoxy_stub.c", "gl_generated_stub.c"],
   "link": {
     "native": {
