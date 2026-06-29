@@ -1209,6 +1209,18 @@ pub fn gl_binormal3s_ext(bx : Int, by : Int, bz : Int) -> Unit raise ResolveErro
 }
 
 ///|
+let d_glBinormal3svEXT : Dispatch = Dispatch::new("glBinormal3svEXT")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glBinormal3svEXT(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glBinormal3svEXT"
+
+///|
+pub fn gl_binormal3sv_ext(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glBinormal3svEXT(d_glBinormal3svEXT.get(), v)
+}
+
+///|
 let d_glBinormalPointerEXT : Dispatch = Dispatch::new("glBinormalPointerEXT")
 
 ///|
@@ -2656,6 +2668,18 @@ pub fn gl_color3h_nv(red : Int, green : Int, blue : Int) -> Unit raise ResolveEr
 }
 
 ///|
+let d_glColor3hvNV : Dispatch = Dispatch::new("glColor3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glColor3hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glColor3hvNV"
+
+///|
+pub fn gl_color3hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glColor3hvNV(d_glColor3hvNV.get(), v)
+}
+
+///|
 let d_glColor3i : Dispatch = Dispatch::new("glColor3i")
 
 ///|
@@ -2687,6 +2711,18 @@ extern "c" fn epoxy_glColor3s(fp : CPtr, red : Int, green : Int, blue : Int) -> 
 ///|
 pub fn gl_color3s(red : Int, green : Int, blue : Int) -> Unit raise ResolveError {
   epoxy_glColor3s(d_glColor3s.get(), red, green, blue)
+}
+
+///|
+let d_glColor3sv : Dispatch = Dispatch::new("glColor3sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glColor3sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glColor3sv"
+
+///|
+pub fn gl_color3sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glColor3sv(d_glColor3sv.get(), v)
 }
 
 ///|
@@ -2744,6 +2780,18 @@ extern "c" fn epoxy_glColor3us(fp : CPtr, red : Int, green : Int, blue : Int) ->
 ///|
 pub fn gl_color3us(red : Int, green : Int, blue : Int) -> Unit raise ResolveError {
   epoxy_glColor3us(d_glColor3us.get(), red, green, blue)
+}
+
+///|
+let d_glColor3usv : Dispatch = Dispatch::new("glColor3usv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glColor3usv(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glColor3usv"
+
+///|
+pub fn gl_color3usv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glColor3usv(d_glColor3usv.get(), v)
 }
 
 ///|
@@ -2873,6 +2921,18 @@ pub fn gl_color4h_nv(red : Int, green : Int, blue : Int, alpha : Int) -> Unit ra
 }
 
 ///|
+let d_glColor4hvNV : Dispatch = Dispatch::new("glColor4hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glColor4hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glColor4hvNV"
+
+///|
+pub fn gl_color4hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glColor4hvNV(d_glColor4hvNV.get(), v)
+}
+
+///|
 let d_glColor4i : Dispatch = Dispatch::new("glColor4i")
 
 ///|
@@ -2904,6 +2964,18 @@ extern "c" fn epoxy_glColor4s(fp : CPtr, red : Int, green : Int, blue : Int, alp
 ///|
 pub fn gl_color4s(red : Int, green : Int, blue : Int, alpha : Int) -> Unit raise ResolveError {
   epoxy_glColor4s(d_glColor4s.get(), red, green, blue, alpha)
+}
+
+///|
+let d_glColor4sv : Dispatch = Dispatch::new("glColor4sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glColor4sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glColor4sv"
+
+///|
+pub fn gl_color4sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glColor4sv(d_glColor4sv.get(), v)
 }
 
 ///|
@@ -3007,6 +3079,18 @@ extern "c" fn epoxy_glColor4us(fp : CPtr, red : Int, green : Int, blue : Int, al
 ///|
 pub fn gl_color4us(red : Int, green : Int, blue : Int, alpha : Int) -> Unit raise ResolveError {
   epoxy_glColor4us(d_glColor4us.get(), red, green, blue, alpha)
+}
+
+///|
+let d_glColor4usv : Dispatch = Dispatch::new("glColor4usv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glColor4usv(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glColor4usv"
+
+///|
+pub fn gl_color4usv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glColor4usv(d_glColor4usv.get(), v)
 }
 
 ///|
@@ -6571,6 +6655,18 @@ pub fn gl_draw_texs_oes(x : Int, y : Int, z : Int, width : Int, height : Int) ->
 }
 
 ///|
+let d_glDrawTexsvOES : Dispatch = Dispatch::new("glDrawTexsvOES")
+
+///|
+#borrow(coords)
+extern "c" fn epoxy_glDrawTexsvOES(fp : CPtr, coords : FixedArray[Int16]) -> Unit = "epoxy_glDrawTexsvOES"
+
+///|
+pub fn gl_draw_texsv_oes(coords : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glDrawTexsvOES(d_glDrawTexsvOES.get(), coords)
+}
+
+///|
 let d_glDrawTextureNV : Dispatch = Dispatch::new("glDrawTextureNV")
 
 ///|
@@ -7888,6 +7984,18 @@ extern "c" fn epoxy_glFogCoordhNV(fp : CPtr, fog : Int) -> Unit = "epoxy_glFogCo
 ///|
 pub fn gl_fog_coordh_nv(fog : Int) -> Unit raise ResolveError {
   epoxy_glFogCoordhNV(d_glFogCoordhNV.get(), fog)
+}
+
+///|
+let d_glFogCoordhvNV : Dispatch = Dispatch::new("glFogCoordhvNV")
+
+///|
+#borrow(fog)
+extern "c" fn epoxy_glFogCoordhvNV(fp : CPtr, fog : FixedArray[UInt16]) -> Unit = "epoxy_glFogCoordhvNV"
+
+///|
+pub fn gl_fog_coordhv_nv(fog : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glFogCoordhvNV(d_glFogCoordhvNV.get(), fog)
 }
 
 ///|
@@ -11976,6 +12084,18 @@ pub fn gl_get_pixel_mapuiv(map : UInt, values : FixedArray[UInt]) -> Unit raise 
 }
 
 ///|
+let d_glGetPixelMapusv : Dispatch = Dispatch::new("glGetPixelMapusv")
+
+///|
+#borrow(values)
+extern "c" fn epoxy_glGetPixelMapusv(fp : CPtr, map : UInt, values : FixedArray[UInt16]) -> Unit = "epoxy_glGetPixelMapusv"
+
+///|
+pub fn gl_get_pixel_mapusv(map : UInt, values : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glGetPixelMapusv(d_glGetPixelMapusv.get(), map, values)
+}
+
+///|
 let d_glGetPixelMapxv : Dispatch = Dispatch::new("glGetPixelMapxv")
 
 ///|
@@ -14565,6 +14685,30 @@ pub fn gl_getn_pixel_mapuiv_arb(map : UInt, bufSize : Int, values : FixedArray[U
 }
 
 ///|
+let d_glGetnPixelMapusv : Dispatch = Dispatch::new("glGetnPixelMapusv")
+
+///|
+#borrow(values)
+extern "c" fn epoxy_glGetnPixelMapusv(fp : CPtr, map : UInt, bufSize : Int, values : FixedArray[UInt16]) -> Unit = "epoxy_glGetnPixelMapusv"
+
+///|
+pub fn gl_getn_pixel_mapusv(map : UInt, bufSize : Int, values : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glGetnPixelMapusv(d_glGetnPixelMapusv.get(), map, bufSize, values)
+}
+
+///|
+let d_glGetnPixelMapusvARB : Dispatch = Dispatch::new("glGetnPixelMapusvARB")
+
+///|
+#borrow(values)
+extern "c" fn epoxy_glGetnPixelMapusvARB(fp : CPtr, map : UInt, bufSize : Int, values : FixedArray[UInt16]) -> Unit = "epoxy_glGetnPixelMapusvARB"
+
+///|
+pub fn gl_getn_pixel_mapusv_arb(map : UInt, bufSize : Int, values : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glGetnPixelMapusvARB(d_glGetnPixelMapusvARB.get(), map, bufSize, values)
+}
+
+///|
 let d_glGetnPolygonStipple : Dispatch = Dispatch::new("glGetnPolygonStipple")
 
 ///|
@@ -15222,6 +15366,18 @@ extern "c" fn epoxy_glIndexs(fp : CPtr, c : Int) -> Unit = "epoxy_glIndexs"
 ///|
 pub fn gl_indexs(c : Int) -> Unit raise ResolveError {
   epoxy_glIndexs(d_glIndexs.get(), c)
+}
+
+///|
+let d_glIndexsv : Dispatch = Dispatch::new("glIndexsv")
+
+///|
+#borrow(c)
+extern "c" fn epoxy_glIndexsv(fp : CPtr, c : FixedArray[Int16]) -> Unit = "epoxy_glIndexsv"
+
+///|
+pub fn gl_indexsv(c : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glIndexsv(d_glIndexsv.get(), c)
 }
 
 ///|
@@ -17069,6 +17225,18 @@ pub fn gl_matrix_indexuiv_arb(size : Int, indices : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
+let d_glMatrixIndexusvARB : Dispatch = Dispatch::new("glMatrixIndexusvARB")
+
+///|
+#borrow(indices)
+extern "c" fn epoxy_glMatrixIndexusvARB(fp : CPtr, size : Int, indices : FixedArray[UInt16]) -> Unit = "epoxy_glMatrixIndexusvARB"
+
+///|
+pub fn gl_matrix_indexusv_arb(size : Int, indices : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glMatrixIndexusvARB(d_glMatrixIndexusvARB.get(), size, indices)
+}
+
+///|
 let d_glMatrixLoad3x2fNV : Dispatch = Dispatch::new("glMatrixLoad3x2fNV")
 
 ///|
@@ -18008,6 +18176,18 @@ pub fn gl_multi_tex_coord1h_nv(target : UInt, s : Int) -> Unit raise ResolveErro
 }
 
 ///|
+let d_glMultiTexCoord1hvNV : Dispatch = Dispatch::new("glMultiTexCoord1hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord1hvNV(fp : CPtr, target : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glMultiTexCoord1hvNV"
+
+///|
+pub fn gl_multi_tex_coord1hv_nv(target : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord1hvNV(d_glMultiTexCoord1hvNV.get(), target, v)
+}
+
+///|
 let d_glMultiTexCoord1i : Dispatch = Dispatch::with_aliases("glMultiTexCoord1i", ["glMultiTexCoord1iARB"])
 
 ///|
@@ -18073,6 +18253,30 @@ extern "c" fn epoxy_glMultiTexCoord1sARB(fp : CPtr, target : UInt, s : Int) -> U
 ///|
 pub fn gl_multi_tex_coord1s_arb(target : UInt, s : Int) -> Unit raise ResolveError {
   epoxy_glMultiTexCoord1sARB(d_glMultiTexCoord1sARB.get(), target, s)
+}
+
+///|
+let d_glMultiTexCoord1sv : Dispatch = Dispatch::with_aliases("glMultiTexCoord1sv", ["glMultiTexCoord1svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord1sv(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord1sv"
+
+///|
+pub fn gl_multi_tex_coord1sv(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord1sv(d_glMultiTexCoord1sv.get(), target, v)
+}
+
+///|
+let d_glMultiTexCoord1svARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1svARB", ["glMultiTexCoord1sv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord1svARB(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord1svARB"
+
+///|
+pub fn gl_multi_tex_coord1sv_arb(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord1svARB(d_glMultiTexCoord1svARB.get(), target, v)
 }
 
 ///|
@@ -18225,6 +18429,18 @@ pub fn gl_multi_tex_coord2h_nv(target : UInt, s : Int, t : Int) -> Unit raise Re
 }
 
 ///|
+let d_glMultiTexCoord2hvNV : Dispatch = Dispatch::new("glMultiTexCoord2hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord2hvNV(fp : CPtr, target : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glMultiTexCoord2hvNV"
+
+///|
+pub fn gl_multi_tex_coord2hv_nv(target : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord2hvNV(d_glMultiTexCoord2hvNV.get(), target, v)
+}
+
+///|
 let d_glMultiTexCoord2i : Dispatch = Dispatch::with_aliases("glMultiTexCoord2i", ["glMultiTexCoord2iARB"])
 
 ///|
@@ -18290,6 +18506,30 @@ extern "c" fn epoxy_glMultiTexCoord2sARB(fp : CPtr, target : UInt, s : Int, t : 
 ///|
 pub fn gl_multi_tex_coord2s_arb(target : UInt, s : Int, t : Int) -> Unit raise ResolveError {
   epoxy_glMultiTexCoord2sARB(d_glMultiTexCoord2sARB.get(), target, s, t)
+}
+
+///|
+let d_glMultiTexCoord2sv : Dispatch = Dispatch::with_aliases("glMultiTexCoord2sv", ["glMultiTexCoord2svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord2sv(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord2sv"
+
+///|
+pub fn gl_multi_tex_coord2sv(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord2sv(d_glMultiTexCoord2sv.get(), target, v)
+}
+
+///|
+let d_glMultiTexCoord2svARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2svARB", ["glMultiTexCoord2sv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord2svARB(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord2svARB"
+
+///|
+pub fn gl_multi_tex_coord2sv_arb(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord2svARB(d_glMultiTexCoord2svARB.get(), target, v)
 }
 
 ///|
@@ -18442,6 +18682,18 @@ pub fn gl_multi_tex_coord3h_nv(target : UInt, s : Int, t : Int, r : Int) -> Unit
 }
 
 ///|
+let d_glMultiTexCoord3hvNV : Dispatch = Dispatch::new("glMultiTexCoord3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord3hvNV(fp : CPtr, target : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glMultiTexCoord3hvNV"
+
+///|
+pub fn gl_multi_tex_coord3hv_nv(target : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord3hvNV(d_glMultiTexCoord3hvNV.get(), target, v)
+}
+
+///|
 let d_glMultiTexCoord3i : Dispatch = Dispatch::with_aliases("glMultiTexCoord3i", ["glMultiTexCoord3iARB"])
 
 ///|
@@ -18507,6 +18759,30 @@ extern "c" fn epoxy_glMultiTexCoord3sARB(fp : CPtr, target : UInt, s : Int, t : 
 ///|
 pub fn gl_multi_tex_coord3s_arb(target : UInt, s : Int, t : Int, r : Int) -> Unit raise ResolveError {
   epoxy_glMultiTexCoord3sARB(d_glMultiTexCoord3sARB.get(), target, s, t, r)
+}
+
+///|
+let d_glMultiTexCoord3sv : Dispatch = Dispatch::with_aliases("glMultiTexCoord3sv", ["glMultiTexCoord3svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord3sv(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord3sv"
+
+///|
+pub fn gl_multi_tex_coord3sv(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord3sv(d_glMultiTexCoord3sv.get(), target, v)
+}
+
+///|
+let d_glMultiTexCoord3svARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3svARB", ["glMultiTexCoord3sv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord3svARB(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord3svARB"
+
+///|
+pub fn gl_multi_tex_coord3sv_arb(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord3svARB(d_glMultiTexCoord3svARB.get(), target, v)
 }
 
 ///|
@@ -18659,6 +18935,18 @@ pub fn gl_multi_tex_coord4h_nv(target : UInt, s : Int, t : Int, r : Int, q : Int
 }
 
 ///|
+let d_glMultiTexCoord4hvNV : Dispatch = Dispatch::new("glMultiTexCoord4hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord4hvNV(fp : CPtr, target : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glMultiTexCoord4hvNV"
+
+///|
+pub fn gl_multi_tex_coord4hv_nv(target : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord4hvNV(d_glMultiTexCoord4hvNV.get(), target, v)
+}
+
+///|
 let d_glMultiTexCoord4i : Dispatch = Dispatch::with_aliases("glMultiTexCoord4i", ["glMultiTexCoord4iARB"])
 
 ///|
@@ -18724,6 +19012,30 @@ extern "c" fn epoxy_glMultiTexCoord4sARB(fp : CPtr, target : UInt, s : Int, t : 
 ///|
 pub fn gl_multi_tex_coord4s_arb(target : UInt, s : Int, t : Int, r : Int, q : Int) -> Unit raise ResolveError {
   epoxy_glMultiTexCoord4sARB(d_glMultiTexCoord4sARB.get(), target, s, t, r, q)
+}
+
+///|
+let d_glMultiTexCoord4sv : Dispatch = Dispatch::with_aliases("glMultiTexCoord4sv", ["glMultiTexCoord4svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord4sv(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord4sv"
+
+///|
+pub fn gl_multi_tex_coord4sv(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord4sv(d_glMultiTexCoord4sv.get(), target, v)
+}
+
+///|
+let d_glMultiTexCoord4svARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4svARB", ["glMultiTexCoord4sv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glMultiTexCoord4svARB(fp : CPtr, target : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glMultiTexCoord4svARB"
+
+///|
+pub fn gl_multi_tex_coord4sv_arb(target : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glMultiTexCoord4svARB(d_glMultiTexCoord4svARB.get(), target, v)
 }
 
 ///|
@@ -19990,6 +20302,18 @@ pub fn gl_normal3h_nv(nx : Int, ny : Int, nz : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glNormal3hvNV : Dispatch = Dispatch::new("glNormal3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glNormal3hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glNormal3hvNV"
+
+///|
+pub fn gl_normal3hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glNormal3hvNV(d_glNormal3hvNV.get(), v)
+}
+
+///|
 let d_glNormal3i : Dispatch = Dispatch::new("glNormal3i")
 
 ///|
@@ -20021,6 +20345,18 @@ extern "c" fn epoxy_glNormal3s(fp : CPtr, nx : Int, ny : Int, nz : Int) -> Unit 
 ///|
 pub fn gl_normal3s(nx : Int, ny : Int, nz : Int) -> Unit raise ResolveError {
   epoxy_glNormal3s(d_glNormal3s.get(), nx, ny, nz)
+}
+
+///|
+let d_glNormal3sv : Dispatch = Dispatch::new("glNormal3sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glNormal3sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glNormal3sv"
+
+///|
+pub fn gl_normal3sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glNormal3sv(d_glNormal3sv.get(), v)
 }
 
 ///|
@@ -20216,6 +20552,18 @@ extern "c" fn epoxy_glNormalStream3sATI(fp : CPtr, stream : UInt, nx : Int, ny :
 ///|
 pub fn gl_normal_stream3s_ati(stream : UInt, nx : Int, ny : Int, nz : Int) -> Unit raise ResolveError {
   epoxy_glNormalStream3sATI(d_glNormalStream3sATI.get(), stream, nx, ny, nz)
+}
+
+///|
+let d_glNormalStream3svATI : Dispatch = Dispatch::new("glNormalStream3svATI")
+
+///|
+#borrow(coords)
+extern "c" fn epoxy_glNormalStream3svATI(fp : CPtr, stream : UInt, coords : FixedArray[Int16]) -> Unit = "epoxy_glNormalStream3svATI"
+
+///|
+pub fn gl_normal_stream3sv_ati(stream : UInt, coords : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glNormalStream3svATI(d_glNormalStream3svATI.get(), stream, coords)
 }
 
 ///|
@@ -20745,6 +21093,18 @@ extern "c" fn epoxy_glPixelMapuiv(fp : CPtr, map : UInt, mapsize : Int, values :
 ///|
 pub fn gl_pixel_mapuiv(map : UInt, mapsize : Int, values : FixedArray[UInt]) -> Unit raise ResolveError {
   epoxy_glPixelMapuiv(d_glPixelMapuiv.get(), map, mapsize, values)
+}
+
+///|
+let d_glPixelMapusv : Dispatch = Dispatch::new("glPixelMapusv")
+
+///|
+#borrow(values)
+extern "c" fn epoxy_glPixelMapusv(fp : CPtr, map : UInt, mapsize : Int, values : FixedArray[UInt16]) -> Unit = "epoxy_glPixelMapusv"
+
+///|
+pub fn gl_pixel_mapusv(map : UInt, mapsize : Int, values : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glPixelMapusv(d_glPixelMapusv.get(), map, mapsize, values)
 }
 
 ///|
@@ -23932,6 +24292,18 @@ pub fn gl_raster_pos2s(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glRasterPos2sv : Dispatch = Dispatch::new("glRasterPos2sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glRasterPos2sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glRasterPos2sv"
+
+///|
+pub fn gl_raster_pos2sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glRasterPos2sv(d_glRasterPos2sv.get(), v)
+}
+
+///|
 let d_glRasterPos2xOES : Dispatch = Dispatch::new("glRasterPos2xOES")
 
 ///|
@@ -24035,6 +24407,18 @@ pub fn gl_raster_pos3s(x : Int, y : Int, z : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glRasterPos3sv : Dispatch = Dispatch::new("glRasterPos3sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glRasterPos3sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glRasterPos3sv"
+
+///|
+pub fn gl_raster_pos3sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glRasterPos3sv(d_glRasterPos3sv.get(), v)
+}
+
+///|
 let d_glRasterPos3xOES : Dispatch = Dispatch::new("glRasterPos3xOES")
 
 ///|
@@ -24135,6 +24519,18 @@ extern "c" fn epoxy_glRasterPos4s(fp : CPtr, x : Int, y : Int, z : Int, w : Int)
 ///|
 pub fn gl_raster_pos4s(x : Int, y : Int, z : Int, w : Int) -> Unit raise ResolveError {
   epoxy_glRasterPos4s(d_glRasterPos4s.get(), x, y, z, w)
+}
+
+///|
+let d_glRasterPos4sv : Dispatch = Dispatch::new("glRasterPos4sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glRasterPos4sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glRasterPos4sv"
+
+///|
+pub fn gl_raster_pos4sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glRasterPos4sv(d_glRasterPos4sv.get(), v)
 }
 
 ///|
@@ -24364,6 +24760,18 @@ extern "c" fn epoxy_glRects(fp : CPtr, x1 : Int, y1 : Int, x2 : Int, y2 : Int) -
 ///|
 pub fn gl_rects(x1 : Int, y1 : Int, x2 : Int, y2 : Int) -> Unit raise ResolveError {
   epoxy_glRects(d_glRects.get(), x1, y1, x2, y2)
+}
+
+///|
+let d_glRectsv : Dispatch = Dispatch::new("glRectsv")
+
+///|
+#borrow(v1, v2)
+extern "c" fn epoxy_glRectsv(fp : CPtr, v1 : FixedArray[Int16], v2 : FixedArray[Int16]) -> Unit = "epoxy_glRectsv"
+
+///|
+pub fn gl_rectsv(v1 : FixedArray[Int16], v2 : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glRectsv(d_glRectsv.get(), v1, v2)
 }
 
 ///|
@@ -24794,6 +25202,18 @@ extern "c" fn epoxy_glReplacementCodeusSUN(fp : CPtr, code : Int) -> Unit = "epo
 ///|
 pub fn gl_replacement_codeus_sun(code : Int) -> Unit raise ResolveError {
   epoxy_glReplacementCodeusSUN(d_glReplacementCodeusSUN.get(), code)
+}
+
+///|
+let d_glReplacementCodeusvSUN : Dispatch = Dispatch::new("glReplacementCodeusvSUN")
+
+///|
+#borrow(code)
+extern "c" fn epoxy_glReplacementCodeusvSUN(fp : CPtr, code : FixedArray[UInt16]) -> Unit = "epoxy_glReplacementCodeusvSUN"
+
+///|
+pub fn gl_replacement_codeusv_sun(code : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glReplacementCodeusvSUN(d_glReplacementCodeusvSUN.get(), code)
 }
 
 ///|
@@ -25534,6 +25954,18 @@ pub fn gl_secondary_color3h_nv(red : Int, green : Int, blue : Int) -> Unit raise
 }
 
 ///|
+let d_glSecondaryColor3hvNV : Dispatch = Dispatch::new("glSecondaryColor3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glSecondaryColor3hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glSecondaryColor3hvNV"
+
+///|
+pub fn gl_secondary_color3hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glSecondaryColor3hvNV(d_glSecondaryColor3hvNV.get(), v)
+}
+
+///|
 let d_glSecondaryColor3i : Dispatch = Dispatch::with_aliases("glSecondaryColor3i", ["glSecondaryColor3iEXT"])
 
 ///|
@@ -25599,6 +26031,30 @@ extern "c" fn epoxy_glSecondaryColor3sEXT(fp : CPtr, red : Int, green : Int, blu
 ///|
 pub fn gl_secondary_color3s_ext(red : Int, green : Int, blue : Int) -> Unit raise ResolveError {
   epoxy_glSecondaryColor3sEXT(d_glSecondaryColor3sEXT.get(), red, green, blue)
+}
+
+///|
+let d_glSecondaryColor3sv : Dispatch = Dispatch::with_aliases("glSecondaryColor3sv", ["glSecondaryColor3svEXT"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glSecondaryColor3sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glSecondaryColor3sv"
+
+///|
+pub fn gl_secondary_color3sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glSecondaryColor3sv(d_glSecondaryColor3sv.get(), v)
+}
+
+///|
+let d_glSecondaryColor3svEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3svEXT", ["glSecondaryColor3sv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glSecondaryColor3svEXT(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glSecondaryColor3svEXT"
+
+///|
+pub fn gl_secondary_color3sv_ext(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glSecondaryColor3svEXT(d_glSecondaryColor3svEXT.get(), v)
 }
 
 ///|
@@ -25713,6 +26169,30 @@ extern "c" fn epoxy_glSecondaryColor3usEXT(fp : CPtr, red : Int, green : Int, bl
 ///|
 pub fn gl_secondary_color3us_ext(red : Int, green : Int, blue : Int) -> Unit raise ResolveError {
   epoxy_glSecondaryColor3usEXT(d_glSecondaryColor3usEXT.get(), red, green, blue)
+}
+
+///|
+let d_glSecondaryColor3usv : Dispatch = Dispatch::with_aliases("glSecondaryColor3usv", ["glSecondaryColor3usvEXT"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glSecondaryColor3usv(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glSecondaryColor3usv"
+
+///|
+pub fn gl_secondary_color3usv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glSecondaryColor3usv(d_glSecondaryColor3usv.get(), v)
+}
+
+///|
+let d_glSecondaryColor3usvEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3usvEXT", ["glSecondaryColor3usv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glSecondaryColor3usvEXT(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glSecondaryColor3usvEXT"
+
+///|
+pub fn gl_secondary_color3usv_ext(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glSecondaryColor3usvEXT(d_glSecondaryColor3usvEXT.get(), v)
 }
 
 ///|
@@ -26585,6 +27065,18 @@ pub fn gl_tangent3s_ext(tx : Int, ty : Int, tz : Int) -> Unit raise ResolveError
 }
 
 ///|
+let d_glTangent3svEXT : Dispatch = Dispatch::new("glTangent3svEXT")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTangent3svEXT(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glTangent3svEXT"
+
+///|
+pub fn gl_tangent3sv_ext(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glTangent3svEXT(d_glTangent3svEXT.get(), v)
+}
+
+///|
 let d_glTangentPointerEXT : Dispatch = Dispatch::new("glTangentPointerEXT")
 
 ///|
@@ -26855,6 +27347,18 @@ pub fn gl_tex_coord1h_nv(s : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glTexCoord1hvNV : Dispatch = Dispatch::new("glTexCoord1hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord1hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glTexCoord1hvNV"
+
+///|
+pub fn gl_tex_coord1hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord1hvNV(d_glTexCoord1hvNV.get(), v)
+}
+
+///|
 let d_glTexCoord1i : Dispatch = Dispatch::new("glTexCoord1i")
 
 ///|
@@ -26886,6 +27390,18 @@ extern "c" fn epoxy_glTexCoord1s(fp : CPtr, s : Int) -> Unit = "epoxy_glTexCoord
 ///|
 pub fn gl_tex_coord1s(s : Int) -> Unit raise ResolveError {
   epoxy_glTexCoord1s(d_glTexCoord1s.get(), s)
+}
+
+///|
+let d_glTexCoord1sv : Dispatch = Dispatch::new("glTexCoord1sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord1sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glTexCoord1sv"
+
+///|
+pub fn gl_tex_coord1sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord1sv(d_glTexCoord1sv.get(), v)
 }
 
 ///|
@@ -27107,6 +27623,18 @@ pub fn gl_tex_coord2h_nv(s : Int, t : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glTexCoord2hvNV : Dispatch = Dispatch::new("glTexCoord2hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord2hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glTexCoord2hvNV"
+
+///|
+pub fn gl_tex_coord2hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord2hvNV(d_glTexCoord2hvNV.get(), v)
+}
+
+///|
 let d_glTexCoord2i : Dispatch = Dispatch::new("glTexCoord2i")
 
 ///|
@@ -27138,6 +27666,18 @@ extern "c" fn epoxy_glTexCoord2s(fp : CPtr, s : Int, t : Int) -> Unit = "epoxy_g
 ///|
 pub fn gl_tex_coord2s(s : Int, t : Int) -> Unit raise ResolveError {
   epoxy_glTexCoord2s(d_glTexCoord2s.get(), s, t)
+}
+
+///|
+let d_glTexCoord2sv : Dispatch = Dispatch::new("glTexCoord2sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord2sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glTexCoord2sv"
+
+///|
+pub fn gl_tex_coord2sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord2sv(d_glTexCoord2sv.get(), v)
 }
 
 ///|
@@ -27244,6 +27784,18 @@ pub fn gl_tex_coord3h_nv(s : Int, t : Int, r : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glTexCoord3hvNV : Dispatch = Dispatch::new("glTexCoord3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord3hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glTexCoord3hvNV"
+
+///|
+pub fn gl_tex_coord3hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord3hvNV(d_glTexCoord3hvNV.get(), v)
+}
+
+///|
 let d_glTexCoord3i : Dispatch = Dispatch::new("glTexCoord3i")
 
 ///|
@@ -27275,6 +27827,18 @@ extern "c" fn epoxy_glTexCoord3s(fp : CPtr, s : Int, t : Int, r : Int) -> Unit =
 ///|
 pub fn gl_tex_coord3s(s : Int, t : Int, r : Int) -> Unit raise ResolveError {
   epoxy_glTexCoord3s(d_glTexCoord3s.get(), s, t, r)
+}
+
+///|
+let d_glTexCoord3sv : Dispatch = Dispatch::new("glTexCoord3sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord3sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glTexCoord3sv"
+
+///|
+pub fn gl_tex_coord3sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord3sv(d_glTexCoord3sv.get(), v)
 }
 
 ///|
@@ -27427,6 +27991,18 @@ pub fn gl_tex_coord4h_nv(s : Int, t : Int, r : Int, q : Int) -> Unit raise Resol
 }
 
 ///|
+let d_glTexCoord4hvNV : Dispatch = Dispatch::new("glTexCoord4hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord4hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glTexCoord4hvNV"
+
+///|
+pub fn gl_tex_coord4hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord4hvNV(d_glTexCoord4hvNV.get(), v)
+}
+
+///|
 let d_glTexCoord4i : Dispatch = Dispatch::new("glTexCoord4i")
 
 ///|
@@ -27458,6 +28034,18 @@ extern "c" fn epoxy_glTexCoord4s(fp : CPtr, s : Int, t : Int, r : Int, q : Int) 
 ///|
 pub fn gl_tex_coord4s(s : Int, t : Int, r : Int, q : Int) -> Unit raise ResolveError {
   epoxy_glTexCoord4s(d_glTexCoord4s.get(), s, t, r, q)
+}
+
+///|
+let d_glTexCoord4sv : Dispatch = Dispatch::new("glTexCoord4sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glTexCoord4sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glTexCoord4sv"
+
+///|
+pub fn gl_tex_coord4sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glTexCoord4sv(d_glTexCoord4sv.get(), v)
 }
 
 ///|
@@ -31147,6 +31735,18 @@ pub fn gl_variantiv_ext(id : UInt, addr : FixedArray[Int]) -> Unit raise Resolve
 }
 
 ///|
+let d_glVariantsvEXT : Dispatch = Dispatch::new("glVariantsvEXT")
+
+///|
+#borrow(addr)
+extern "c" fn epoxy_glVariantsvEXT(fp : CPtr, id : UInt, addr : FixedArray[Int16]) -> Unit = "epoxy_glVariantsvEXT"
+
+///|
+pub fn gl_variantsv_ext(id : UInt, addr : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVariantsvEXT(d_glVariantsvEXT.get(), id, addr)
+}
+
+///|
 let d_glVariantubvEXT : Dispatch = Dispatch::new("glVariantubvEXT")
 
 ///|
@@ -31168,6 +31768,18 @@ extern "c" fn epoxy_glVariantuivEXT(fp : CPtr, id : UInt, addr : FixedArray[UInt
 ///|
 pub fn gl_variantuiv_ext(id : UInt, addr : FixedArray[UInt]) -> Unit raise ResolveError {
   epoxy_glVariantuivEXT(d_glVariantuivEXT.get(), id, addr)
+}
+
+///|
+let d_glVariantusvEXT : Dispatch = Dispatch::new("glVariantusvEXT")
+
+///|
+#borrow(addr)
+extern "c" fn epoxy_glVariantusvEXT(fp : CPtr, id : UInt, addr : FixedArray[UInt16]) -> Unit = "epoxy_glVariantusvEXT"
+
+///|
+pub fn gl_variantusv_ext(id : UInt, addr : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVariantusvEXT(d_glVariantusvEXT.get(), id, addr)
 }
 
 ///|
@@ -31251,6 +31863,18 @@ pub fn gl_vertex2h_nv(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glVertex2hvNV : Dispatch = Dispatch::new("glVertex2hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertex2hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertex2hvNV"
+
+///|
+pub fn gl_vertex2hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertex2hvNV(d_glVertex2hvNV.get(), v)
+}
+
+///|
 let d_glVertex2i : Dispatch = Dispatch::new("glVertex2i")
 
 ///|
@@ -31282,6 +31906,18 @@ extern "c" fn epoxy_glVertex2s(fp : CPtr, x : Int, y : Int) -> Unit = "epoxy_glV
 ///|
 pub fn gl_vertex2s(x : Int, y : Int) -> Unit raise ResolveError {
   epoxy_glVertex2s(d_glVertex2s.get(), x, y)
+}
+
+///|
+let d_glVertex2sv : Dispatch = Dispatch::new("glVertex2sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertex2sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glVertex2sv"
+
+///|
+pub fn gl_vertex2sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertex2sv(d_glVertex2sv.get(), v)
 }
 
 ///|
@@ -31388,6 +32024,18 @@ pub fn gl_vertex3h_nv(x : Int, y : Int, z : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glVertex3hvNV : Dispatch = Dispatch::new("glVertex3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertex3hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertex3hvNV"
+
+///|
+pub fn gl_vertex3hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertex3hvNV(d_glVertex3hvNV.get(), v)
+}
+
+///|
 let d_glVertex3i : Dispatch = Dispatch::new("glVertex3i")
 
 ///|
@@ -31419,6 +32067,18 @@ extern "c" fn epoxy_glVertex3s(fp : CPtr, x : Int, y : Int, z : Int) -> Unit = "
 ///|
 pub fn gl_vertex3s(x : Int, y : Int, z : Int) -> Unit raise ResolveError {
   epoxy_glVertex3s(d_glVertex3s.get(), x, y, z)
+}
+
+///|
+let d_glVertex3sv : Dispatch = Dispatch::new("glVertex3sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertex3sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glVertex3sv"
+
+///|
+pub fn gl_vertex3sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertex3sv(d_glVertex3sv.get(), v)
 }
 
 ///|
@@ -31525,6 +32185,18 @@ pub fn gl_vertex4h_nv(x : Int, y : Int, z : Int, w : Int) -> Unit raise ResolveE
 }
 
 ///|
+let d_glVertex4hvNV : Dispatch = Dispatch::new("glVertex4hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertex4hvNV(fp : CPtr, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertex4hvNV"
+
+///|
+pub fn gl_vertex4hv_nv(v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertex4hvNV(d_glVertex4hvNV.get(), v)
+}
+
+///|
 let d_glVertex4i : Dispatch = Dispatch::new("glVertex4i")
 
 ///|
@@ -31556,6 +32228,18 @@ extern "c" fn epoxy_glVertex4s(fp : CPtr, x : Int, y : Int, z : Int, w : Int) ->
 ///|
 pub fn gl_vertex4s(x : Int, y : Int, z : Int, w : Int) -> Unit raise ResolveError {
   epoxy_glVertex4s(d_glVertex4s.get(), x, y, z, w)
+}
+
+///|
+let d_glVertex4sv : Dispatch = Dispatch::new("glVertex4sv")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertex4sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glVertex4sv"
+
+///|
+pub fn gl_vertex4sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertex4sv(d_glVertex4sv.get(), v)
 }
 
 ///|
@@ -32052,6 +32736,18 @@ pub fn gl_vertex_attrib1h_nv(index : UInt, x : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glVertexAttrib1hvNV : Dispatch = Dispatch::new("glVertexAttrib1hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib1hvNV(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib1hvNV"
+
+///|
+pub fn gl_vertex_attrib1hv_nv(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib1hvNV(d_glVertexAttrib1hvNV.get(), index, v)
+}
+
+///|
 let d_glVertexAttrib1s : Dispatch = Dispatch::with_aliases("glVertexAttrib1s", ["glVertexAttrib1sARB", "glVertexAttrib1sNV"])
 
 ///|
@@ -32082,6 +32778,42 @@ extern "c" fn epoxy_glVertexAttrib1sNV(fp : CPtr, index : UInt, x : Int) -> Unit
 ///|
 pub fn gl_vertex_attrib1s_nv(index : UInt, x : Int) -> Unit raise ResolveError {
   epoxy_glVertexAttrib1sNV(d_glVertexAttrib1sNV.get(), index, x)
+}
+
+///|
+let d_glVertexAttrib1sv : Dispatch = Dispatch::with_aliases("glVertexAttrib1sv", ["glVertexAttrib1svARB", "glVertexAttrib1svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib1sv(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib1sv"
+
+///|
+pub fn gl_vertex_attrib1sv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib1sv(d_glVertexAttrib1sv.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib1svARB : Dispatch = Dispatch::with_aliases("glVertexAttrib1svARB", ["glVertexAttrib1sv", "glVertexAttrib1svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib1svARB(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib1svARB"
+
+///|
+pub fn gl_vertex_attrib1sv_arb(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib1svARB(d_glVertexAttrib1svARB.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib1svNV : Dispatch = Dispatch::with_aliases("glVertexAttrib1svNV", ["glVertexAttrib1sv", "glVertexAttrib1svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib1svNV(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib1svNV"
+
+///|
+pub fn gl_vertex_attrib1sv_nv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib1svNV(d_glVertexAttrib1svNV.get(), index, v)
 }
 
 ///|
@@ -32234,6 +32966,18 @@ pub fn gl_vertex_attrib2h_nv(index : UInt, x : Int, y : Int) -> Unit raise Resol
 }
 
 ///|
+let d_glVertexAttrib2hvNV : Dispatch = Dispatch::new("glVertexAttrib2hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib2hvNV(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib2hvNV"
+
+///|
+pub fn gl_vertex_attrib2hv_nv(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib2hvNV(d_glVertexAttrib2hvNV.get(), index, v)
+}
+
+///|
 let d_glVertexAttrib2s : Dispatch = Dispatch::with_aliases("glVertexAttrib2s", ["glVertexAttrib2sARB", "glVertexAttrib2sNV"])
 
 ///|
@@ -32264,6 +33008,42 @@ extern "c" fn epoxy_glVertexAttrib2sNV(fp : CPtr, index : UInt, x : Int, y : Int
 ///|
 pub fn gl_vertex_attrib2s_nv(index : UInt, x : Int, y : Int) -> Unit raise ResolveError {
   epoxy_glVertexAttrib2sNV(d_glVertexAttrib2sNV.get(), index, x, y)
+}
+
+///|
+let d_glVertexAttrib2sv : Dispatch = Dispatch::with_aliases("glVertexAttrib2sv", ["glVertexAttrib2svARB", "glVertexAttrib2svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib2sv(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib2sv"
+
+///|
+pub fn gl_vertex_attrib2sv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib2sv(d_glVertexAttrib2sv.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib2svARB : Dispatch = Dispatch::with_aliases("glVertexAttrib2svARB", ["glVertexAttrib2sv", "glVertexAttrib2svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib2svARB(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib2svARB"
+
+///|
+pub fn gl_vertex_attrib2sv_arb(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib2svARB(d_glVertexAttrib2svARB.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib2svNV : Dispatch = Dispatch::with_aliases("glVertexAttrib2svNV", ["glVertexAttrib2sv", "glVertexAttrib2svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib2svNV(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib2svNV"
+
+///|
+pub fn gl_vertex_attrib2sv_nv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib2svNV(d_glVertexAttrib2svNV.get(), index, v)
 }
 
 ///|
@@ -32416,6 +33196,18 @@ pub fn gl_vertex_attrib3h_nv(index : UInt, x : Int, y : Int, z : Int) -> Unit ra
 }
 
 ///|
+let d_glVertexAttrib3hvNV : Dispatch = Dispatch::new("glVertexAttrib3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib3hvNV(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib3hvNV"
+
+///|
+pub fn gl_vertex_attrib3hv_nv(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib3hvNV(d_glVertexAttrib3hvNV.get(), index, v)
+}
+
+///|
 let d_glVertexAttrib3s : Dispatch = Dispatch::with_aliases("glVertexAttrib3s", ["glVertexAttrib3sARB", "glVertexAttrib3sNV"])
 
 ///|
@@ -32446,6 +33238,42 @@ extern "c" fn epoxy_glVertexAttrib3sNV(fp : CPtr, index : UInt, x : Int, y : Int
 ///|
 pub fn gl_vertex_attrib3s_nv(index : UInt, x : Int, y : Int, z : Int) -> Unit raise ResolveError {
   epoxy_glVertexAttrib3sNV(d_glVertexAttrib3sNV.get(), index, x, y, z)
+}
+
+///|
+let d_glVertexAttrib3sv : Dispatch = Dispatch::with_aliases("glVertexAttrib3sv", ["glVertexAttrib3svARB", "glVertexAttrib3svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib3sv(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib3sv"
+
+///|
+pub fn gl_vertex_attrib3sv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib3sv(d_glVertexAttrib3sv.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib3svARB : Dispatch = Dispatch::with_aliases("glVertexAttrib3svARB", ["glVertexAttrib3sv", "glVertexAttrib3svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib3svARB(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib3svARB"
+
+///|
+pub fn gl_vertex_attrib3sv_arb(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib3svARB(d_glVertexAttrib3svARB.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib3svNV : Dispatch = Dispatch::with_aliases("glVertexAttrib3svNV", ["glVertexAttrib3sv", "glVertexAttrib3svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib3svNV(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib3svNV"
+
+///|
+pub fn gl_vertex_attrib3sv_nv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib3svNV(d_glVertexAttrib3svNV.get(), index, v)
 }
 
 ///|
@@ -32494,6 +33322,30 @@ extern "c" fn epoxy_glVertexAttrib4NivARB(fp : CPtr, index : UInt, v : FixedArra
 ///|
 pub fn gl_vertex_attrib4_niv_arb(index : UInt, v : FixedArray[Int]) -> Unit raise ResolveError {
   epoxy_glVertexAttrib4NivARB(d_glVertexAttrib4NivARB.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4Nsv : Dispatch = Dispatch::with_aliases("glVertexAttrib4Nsv", ["glVertexAttrib4NsvARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4Nsv(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib4Nsv"
+
+///|
+pub fn gl_vertex_attrib4_nsv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4Nsv(d_glVertexAttrib4Nsv.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4NsvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4NsvARB", ["glVertexAttrib4Nsv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4NsvARB(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib4NsvARB"
+
+///|
+pub fn gl_vertex_attrib4_nsv_arb(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4NsvARB(d_glVertexAttrib4NsvARB.get(), index, v)
 }
 
 ///|
@@ -32564,6 +33416,30 @@ extern "c" fn epoxy_glVertexAttrib4NuivARB(fp : CPtr, index : UInt, v : FixedArr
 ///|
 pub fn gl_vertex_attrib4_nuiv_arb(index : UInt, v : FixedArray[UInt]) -> Unit raise ResolveError {
   epoxy_glVertexAttrib4NuivARB(d_glVertexAttrib4NuivARB.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4Nusv : Dispatch = Dispatch::with_aliases("glVertexAttrib4Nusv", ["glVertexAttrib4NusvARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4Nusv(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib4Nusv"
+
+///|
+pub fn gl_vertex_attrib4_nusv(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4Nusv(d_glVertexAttrib4Nusv.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4NusvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4NusvARB", ["glVertexAttrib4Nusv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4NusvARB(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib4NusvARB"
+
+///|
+pub fn gl_vertex_attrib4_nusv_arb(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4NusvARB(d_glVertexAttrib4NusvARB.get(), index, v)
 }
 
 ///|
@@ -32740,6 +33616,18 @@ pub fn gl_vertex_attrib4h_nv(index : UInt, x : Int, y : Int, z : Int, w : Int) -
 }
 
 ///|
+let d_glVertexAttrib4hvNV : Dispatch = Dispatch::new("glVertexAttrib4hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4hvNV(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib4hvNV"
+
+///|
+pub fn gl_vertex_attrib4hv_nv(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4hvNV(d_glVertexAttrib4hvNV.get(), index, v)
+}
+
+///|
 let d_glVertexAttrib4iv : Dispatch = Dispatch::with_aliases("glVertexAttrib4iv", ["glVertexAttrib4ivARB"])
 
 ///|
@@ -32794,6 +33682,42 @@ extern "c" fn epoxy_glVertexAttrib4sNV(fp : CPtr, index : UInt, x : Int, y : Int
 ///|
 pub fn gl_vertex_attrib4s_nv(index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit raise ResolveError {
   epoxy_glVertexAttrib4sNV(d_glVertexAttrib4sNV.get(), index, x, y, z, w)
+}
+
+///|
+let d_glVertexAttrib4sv : Dispatch = Dispatch::with_aliases("glVertexAttrib4sv", ["glVertexAttrib4svARB", "glVertexAttrib4svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4sv(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib4sv"
+
+///|
+pub fn gl_vertex_attrib4sv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4sv(d_glVertexAttrib4sv.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4svARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4svARB", ["glVertexAttrib4sv", "glVertexAttrib4svNV"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4svARB(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib4svARB"
+
+///|
+pub fn gl_vertex_attrib4sv_arb(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4svARB(d_glVertexAttrib4svARB.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4svNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4svNV", ["glVertexAttrib4sv", "glVertexAttrib4svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4svNV(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttrib4svNV"
+
+///|
+pub fn gl_vertex_attrib4sv_nv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4svNV(d_glVertexAttrib4svNV.get(), index, v)
 }
 
 ///|
@@ -32865,6 +33789,30 @@ extern "c" fn epoxy_glVertexAttrib4uivARB(fp : CPtr, index : UInt, v : FixedArra
 ///|
 pub fn gl_vertex_attrib4uiv_arb(index : UInt, v : FixedArray[UInt]) -> Unit raise ResolveError {
   epoxy_glVertexAttrib4uivARB(d_glVertexAttrib4uivARB.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4usv : Dispatch = Dispatch::with_aliases("glVertexAttrib4usv", ["glVertexAttrib4usvARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4usv(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib4usv"
+
+///|
+pub fn gl_vertex_attrib4usv(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4usv(d_glVertexAttrib4usv.get(), index, v)
+}
+
+///|
+let d_glVertexAttrib4usvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4usvARB", ["glVertexAttrib4usv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttrib4usvARB(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttrib4usvARB"
+
+///|
+pub fn gl_vertex_attrib4usv_arb(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttrib4usvARB(d_glVertexAttrib4usvARB.get(), index, v)
 }
 
 ///|
@@ -33313,6 +34261,30 @@ pub fn gl_vertex_attrib_i4iv_ext(index : UInt, v : FixedArray[Int]) -> Unit rais
 }
 
 ///|
+let d_glVertexAttribI4sv : Dispatch = Dispatch::with_aliases("glVertexAttribI4sv", ["glVertexAttribI4svEXT"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribI4sv(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttribI4sv"
+
+///|
+pub fn gl_vertex_attrib_i4sv(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribI4sv(d_glVertexAttribI4sv.get(), index, v)
+}
+
+///|
+let d_glVertexAttribI4svEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4svEXT", ["glVertexAttribI4sv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribI4svEXT(fp : CPtr, index : UInt, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttribI4svEXT"
+
+///|
+pub fn gl_vertex_attrib_i4sv_ext(index : UInt, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribI4svEXT(d_glVertexAttribI4svEXT.get(), index, v)
+}
+
+///|
 let d_glVertexAttribI4ubv : Dispatch = Dispatch::with_aliases("glVertexAttribI4ubv", ["glVertexAttribI4ubvEXT"])
 
 ///|
@@ -33380,6 +34352,30 @@ extern "c" fn epoxy_glVertexAttribI4uivEXT(fp : CPtr, index : UInt, v : FixedArr
 ///|
 pub fn gl_vertex_attrib_i4uiv_ext(index : UInt, v : FixedArray[UInt]) -> Unit raise ResolveError {
   epoxy_glVertexAttribI4uivEXT(d_glVertexAttribI4uivEXT.get(), index, v)
+}
+
+///|
+let d_glVertexAttribI4usv : Dispatch = Dispatch::with_aliases("glVertexAttribI4usv", ["glVertexAttribI4usvEXT"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribI4usv(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttribI4usv"
+
+///|
+pub fn gl_vertex_attrib_i4usv(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribI4usv(d_glVertexAttribI4usv.get(), index, v)
+}
+
+///|
+let d_glVertexAttribI4usvEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4usvEXT", ["glVertexAttribI4usv"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribI4usvEXT(fp : CPtr, index : UInt, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttribI4usvEXT"
+
+///|
+pub fn gl_vertex_attrib_i4usv_ext(index : UInt, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribI4usvEXT(d_glVertexAttribI4usvEXT.get(), index, v)
 }
 
 ///|
@@ -34029,6 +35025,30 @@ pub fn gl_vertex_attribs1fv_nv(index : UInt, count : Int, v : FixedArray[Float])
 }
 
 ///|
+let d_glVertexAttribs1hvNV : Dispatch = Dispatch::new("glVertexAttribs1hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs1hvNV(fp : CPtr, index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttribs1hvNV"
+
+///|
+pub fn gl_vertex_attribs1hv_nv(index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs1hvNV(d_glVertexAttribs1hvNV.get(), index, n, v)
+}
+
+///|
+let d_glVertexAttribs1svNV : Dispatch = Dispatch::new("glVertexAttribs1svNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs1svNV(fp : CPtr, index : UInt, count : Int, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttribs1svNV"
+
+///|
+pub fn gl_vertex_attribs1sv_nv(index : UInt, count : Int, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs1svNV(d_glVertexAttribs1svNV.get(), index, count, v)
+}
+
+///|
 let d_glVertexAttribs2dvNV : Dispatch = Dispatch::new("glVertexAttribs2dvNV")
 
 ///|
@@ -34050,6 +35070,30 @@ extern "c" fn epoxy_glVertexAttribs2fvNV(fp : CPtr, index : UInt, count : Int, v
 ///|
 pub fn gl_vertex_attribs2fv_nv(index : UInt, count : Int, v : FixedArray[Float]) -> Unit raise ResolveError {
   epoxy_glVertexAttribs2fvNV(d_glVertexAttribs2fvNV.get(), index, count, v)
+}
+
+///|
+let d_glVertexAttribs2hvNV : Dispatch = Dispatch::new("glVertexAttribs2hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs2hvNV(fp : CPtr, index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttribs2hvNV"
+
+///|
+pub fn gl_vertex_attribs2hv_nv(index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs2hvNV(d_glVertexAttribs2hvNV.get(), index, n, v)
+}
+
+///|
+let d_glVertexAttribs2svNV : Dispatch = Dispatch::new("glVertexAttribs2svNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs2svNV(fp : CPtr, index : UInt, count : Int, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttribs2svNV"
+
+///|
+pub fn gl_vertex_attribs2sv_nv(index : UInt, count : Int, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs2svNV(d_glVertexAttribs2svNV.get(), index, count, v)
 }
 
 ///|
@@ -34077,6 +35121,30 @@ pub fn gl_vertex_attribs3fv_nv(index : UInt, count : Int, v : FixedArray[Float])
 }
 
 ///|
+let d_glVertexAttribs3hvNV : Dispatch = Dispatch::new("glVertexAttribs3hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs3hvNV(fp : CPtr, index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttribs3hvNV"
+
+///|
+pub fn gl_vertex_attribs3hv_nv(index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs3hvNV(d_glVertexAttribs3hvNV.get(), index, n, v)
+}
+
+///|
+let d_glVertexAttribs3svNV : Dispatch = Dispatch::new("glVertexAttribs3svNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs3svNV(fp : CPtr, index : UInt, count : Int, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttribs3svNV"
+
+///|
+pub fn gl_vertex_attribs3sv_nv(index : UInt, count : Int, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs3svNV(d_glVertexAttribs3svNV.get(), index, count, v)
+}
+
+///|
 let d_glVertexAttribs4dvNV : Dispatch = Dispatch::new("glVertexAttribs4dvNV")
 
 ///|
@@ -34098,6 +35166,30 @@ extern "c" fn epoxy_glVertexAttribs4fvNV(fp : CPtr, index : UInt, count : Int, v
 ///|
 pub fn gl_vertex_attribs4fv_nv(index : UInt, count : Int, v : FixedArray[Float]) -> Unit raise ResolveError {
   epoxy_glVertexAttribs4fvNV(d_glVertexAttribs4fvNV.get(), index, count, v)
+}
+
+///|
+let d_glVertexAttribs4hvNV : Dispatch = Dispatch::new("glVertexAttribs4hvNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs4hvNV(fp : CPtr, index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit = "epoxy_glVertexAttribs4hvNV"
+
+///|
+pub fn gl_vertex_attribs4hv_nv(index : UInt, n : Int, v : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs4hvNV(d_glVertexAttribs4hvNV.get(), index, n, v)
+}
+
+///|
+let d_glVertexAttribs4svNV : Dispatch = Dispatch::new("glVertexAttribs4svNV")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glVertexAttribs4svNV(fp : CPtr, index : UInt, count : Int, v : FixedArray[Int16]) -> Unit = "epoxy_glVertexAttribs4svNV"
+
+///|
+pub fn gl_vertex_attribs4sv_nv(index : UInt, count : Int, v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexAttribs4svNV(d_glVertexAttribs4svNV.get(), index, count, v)
 }
 
 ///|
@@ -34341,6 +35433,18 @@ pub fn gl_vertex_stream1s_ati(stream : UInt, x : Int) -> Unit raise ResolveError
 }
 
 ///|
+let d_glVertexStream1svATI : Dispatch = Dispatch::new("glVertexStream1svATI")
+
+///|
+#borrow(coords)
+extern "c" fn epoxy_glVertexStream1svATI(fp : CPtr, stream : UInt, coords : FixedArray[Int16]) -> Unit = "epoxy_glVertexStream1svATI"
+
+///|
+pub fn gl_vertex_stream1sv_ati(stream : UInt, coords : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexStream1svATI(d_glVertexStream1svATI.get(), stream, coords)
+}
+
+///|
 let d_glVertexStream2dATI : Dispatch = Dispatch::new("glVertexStream2dATI")
 
 ///|
@@ -34418,6 +35522,18 @@ extern "c" fn epoxy_glVertexStream2sATI(fp : CPtr, stream : UInt, x : Int, y : I
 ///|
 pub fn gl_vertex_stream2s_ati(stream : UInt, x : Int, y : Int) -> Unit raise ResolveError {
   epoxy_glVertexStream2sATI(d_glVertexStream2sATI.get(), stream, x, y)
+}
+
+///|
+let d_glVertexStream2svATI : Dispatch = Dispatch::new("glVertexStream2svATI")
+
+///|
+#borrow(coords)
+extern "c" fn epoxy_glVertexStream2svATI(fp : CPtr, stream : UInt, coords : FixedArray[Int16]) -> Unit = "epoxy_glVertexStream2svATI"
+
+///|
+pub fn gl_vertex_stream2sv_ati(stream : UInt, coords : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexStream2svATI(d_glVertexStream2svATI.get(), stream, coords)
 }
 
 ///|
@@ -34501,6 +35617,18 @@ pub fn gl_vertex_stream3s_ati(stream : UInt, x : Int, y : Int, z : Int) -> Unit 
 }
 
 ///|
+let d_glVertexStream3svATI : Dispatch = Dispatch::new("glVertexStream3svATI")
+
+///|
+#borrow(coords)
+extern "c" fn epoxy_glVertexStream3svATI(fp : CPtr, stream : UInt, coords : FixedArray[Int16]) -> Unit = "epoxy_glVertexStream3svATI"
+
+///|
+pub fn gl_vertex_stream3sv_ati(stream : UInt, coords : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexStream3svATI(d_glVertexStream3svATI.get(), stream, coords)
+}
+
+///|
 let d_glVertexStream4dATI : Dispatch = Dispatch::new("glVertexStream4dATI")
 
 ///|
@@ -34581,6 +35709,18 @@ pub fn gl_vertex_stream4s_ati(stream : UInt, x : Int, y : Int, z : Int, w : Int)
 }
 
 ///|
+let d_glVertexStream4svATI : Dispatch = Dispatch::new("glVertexStream4svATI")
+
+///|
+#borrow(coords)
+extern "c" fn epoxy_glVertexStream4svATI(fp : CPtr, stream : UInt, coords : FixedArray[Int16]) -> Unit = "epoxy_glVertexStream4svATI"
+
+///|
+pub fn gl_vertex_stream4sv_ati(stream : UInt, coords : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glVertexStream4svATI(d_glVertexStream4svATI.get(), stream, coords)
+}
+
+///|
 let d_glVertexWeightPointerEXT : Dispatch = Dispatch::new("glVertexWeightPointerEXT")
 
 ///|
@@ -34624,6 +35764,18 @@ extern "c" fn epoxy_glVertexWeighthNV(fp : CPtr, weight : Int) -> Unit = "epoxy_
 ///|
 pub fn gl_vertex_weighth_nv(weight : Int) -> Unit raise ResolveError {
   epoxy_glVertexWeighthNV(d_glVertexWeighthNV.get(), weight)
+}
+
+///|
+let d_glVertexWeighthvNV : Dispatch = Dispatch::new("glVertexWeighthvNV")
+
+///|
+#borrow(weight)
+extern "c" fn epoxy_glVertexWeighthvNV(fp : CPtr, weight : FixedArray[UInt16]) -> Unit = "epoxy_glVertexWeighthvNV"
+
+///|
+pub fn gl_vertex_weighthv_nv(weight : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glVertexWeighthvNV(d_glVertexWeighthvNV.get(), weight)
 }
 
 ///|
@@ -34921,6 +36073,18 @@ pub fn gl_weightiv_arb(size : Int, weights : FixedArray[Int]) -> Unit raise Reso
 }
 
 ///|
+let d_glWeightsvARB : Dispatch = Dispatch::new("glWeightsvARB")
+
+///|
+#borrow(weights)
+extern "c" fn epoxy_glWeightsvARB(fp : CPtr, size : Int, weights : FixedArray[Int16]) -> Unit = "epoxy_glWeightsvARB"
+
+///|
+pub fn gl_weightsv_arb(size : Int, weights : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWeightsvARB(d_glWeightsvARB.get(), size, weights)
+}
+
+///|
 let d_glWeightubvARB : Dispatch = Dispatch::new("glWeightubvARB")
 
 ///|
@@ -34942,6 +36106,18 @@ extern "c" fn epoxy_glWeightuivARB(fp : CPtr, size : Int, weights : FixedArray[U
 ///|
 pub fn gl_weightuiv_arb(size : Int, weights : FixedArray[UInt]) -> Unit raise ResolveError {
   epoxy_glWeightuivARB(d_glWeightuivARB.get(), size, weights)
+}
+
+///|
+let d_glWeightusvARB : Dispatch = Dispatch::new("glWeightusvARB")
+
+///|
+#borrow(weights)
+extern "c" fn epoxy_glWeightusvARB(fp : CPtr, size : Int, weights : FixedArray[UInt16]) -> Unit = "epoxy_glWeightusvARB"
+
+///|
+pub fn gl_weightusv_arb(size : Int, weights : FixedArray[UInt16]) -> Unit raise ResolveError {
+  epoxy_glWeightusvARB(d_glWeightusvARB.get(), size, weights)
 }
 
 ///|
@@ -35185,6 +36361,42 @@ pub fn gl_window_pos2s_mesa(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glWindowPos2sv : Dispatch = Dispatch::with_aliases("glWindowPos2sv", ["glWindowPos2svARB", "glWindowPos2svMESA"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glWindowPos2sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glWindowPos2sv"
+
+///|
+pub fn gl_window_pos2sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWindowPos2sv(d_glWindowPos2sv.get(), v)
+}
+
+///|
+let d_glWindowPos2svARB : Dispatch = Dispatch::with_aliases("glWindowPos2svARB", ["glWindowPos2sv", "glWindowPos2svMESA"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glWindowPos2svARB(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glWindowPos2svARB"
+
+///|
+pub fn gl_window_pos2sv_arb(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWindowPos2svARB(d_glWindowPos2svARB.get(), v)
+}
+
+///|
+let d_glWindowPos2svMESA : Dispatch = Dispatch::with_aliases("glWindowPos2svMESA", ["glWindowPos2sv", "glWindowPos2svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glWindowPos2svMESA(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glWindowPos2svMESA"
+
+///|
+pub fn gl_window_pos2sv_mesa(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWindowPos2svMESA(d_glWindowPos2svMESA.get(), v)
+}
+
+///|
 let d_glWindowPos3d : Dispatch = Dispatch::with_aliases("glWindowPos3d", ["glWindowPos3dARB", "glWindowPos3dMESA"])
 
 ///|
@@ -35425,6 +36637,42 @@ pub fn gl_window_pos3s_mesa(x : Int, y : Int, z : Int) -> Unit raise ResolveErro
 }
 
 ///|
+let d_glWindowPos3sv : Dispatch = Dispatch::with_aliases("glWindowPos3sv", ["glWindowPos3svARB", "glWindowPos3svMESA"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glWindowPos3sv(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glWindowPos3sv"
+
+///|
+pub fn gl_window_pos3sv(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWindowPos3sv(d_glWindowPos3sv.get(), v)
+}
+
+///|
+let d_glWindowPos3svARB : Dispatch = Dispatch::with_aliases("glWindowPos3svARB", ["glWindowPos3sv", "glWindowPos3svMESA"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glWindowPos3svARB(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glWindowPos3svARB"
+
+///|
+pub fn gl_window_pos3sv_arb(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWindowPos3svARB(d_glWindowPos3svARB.get(), v)
+}
+
+///|
+let d_glWindowPos3svMESA : Dispatch = Dispatch::with_aliases("glWindowPos3svMESA", ["glWindowPos3sv", "glWindowPos3svARB"])
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glWindowPos3svMESA(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glWindowPos3svMESA"
+
+///|
+pub fn gl_window_pos3sv_mesa(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWindowPos3svMESA(d_glWindowPos3svMESA.get(), v)
+}
+
+///|
 let d_glWindowPos4dMESA : Dispatch = Dispatch::new("glWindowPos4dMESA")
 
 ///|
@@ -35502,6 +36750,18 @@ extern "c" fn epoxy_glWindowPos4sMESA(fp : CPtr, x : Int, y : Int, z : Int, w : 
 ///|
 pub fn gl_window_pos4s_mesa(x : Int, y : Int, z : Int, w : Int) -> Unit raise ResolveError {
   epoxy_glWindowPos4sMESA(d_glWindowPos4sMESA.get(), x, y, z, w)
+}
+
+///|
+let d_glWindowPos4svMESA : Dispatch = Dispatch::new("glWindowPos4svMESA")
+
+///|
+#borrow(v)
+extern "c" fn epoxy_glWindowPos4svMESA(fp : CPtr, v : FixedArray[Int16]) -> Unit = "epoxy_glWindowPos4svMESA"
+
+///|
+pub fn gl_window_pos4sv_mesa(v : FixedArray[Int16]) -> Unit raise ResolveError {
+  epoxy_glWindowPos4svMESA(d_glWindowPos4svMESA.get(), v)
 }
 
 ///|

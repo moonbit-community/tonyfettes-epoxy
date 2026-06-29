@@ -27,6 +27,14 @@ test "MoonBit ABI spelling" {
 }
 
 ///|
+test "16-bit array element types are packed int16_t/uint16_t" {
+  inspect((Array(Int16) : MType).moonbit(), content="FixedArray[Int16]")
+  inspect((Array(Int16) : MType).c_abi(), content="int16_t *")
+  inspect((Array(UInt16) : MType).moonbit(), content="FixedArray[UInt16]")
+  inspect((Array(UInt16) : MType).c_abi(), content="uint16_t *")
+}
+
+///|
 test "opaque handles and callbacks are unsupported (absent from the table)" {
   inspect(lookup("GLsync") is None, content="true")
   inspect(lookup("GLDEBUGPROC") is None, content="true")

@@ -70,6 +70,8 @@ pub(all) enum MType {
   Double
   Int64
   UInt64
+  Int16 // only as an array element; 16-bit scalars pass by value as Int
+  UInt16 // ditto — also carries GLhalf, whose bits we hand through verbatim
   Bool
   Bytes
   Array(MType) // FixedArray[elem]
@@ -85,6 +87,8 @@ pub fn MType::moonbit(self : MType) -> String {
     Double => "Double"
     Int64 => "Int64"
     UInt64 => "UInt64"
+    Int16 => "Int16"
+    UInt16 => "UInt16"
     Bool => "Bool"
     Bytes => "Bytes"
     Array(e) => "FixedArray[\{e.moonbit()}]"
@@ -101,6 +105,8 @@ pub fn MType::c_abi(self : MType) -> String {
     Double => "double"
     Int64 => "int64_t"
     UInt64 => "uint64_t"
+    Int16 => "int16_t"
+    UInt16 => "uint16_t"
     Bool => "int32_t"
     Bytes => "moonbit_bytes_t"
     Array(e) => e.c_abi() + " *"

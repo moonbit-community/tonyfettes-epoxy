@@ -112,6 +112,11 @@ fn pointer_mtype(elem : @gen.CType) -> @gen.MType? {
     Double => Some(Array(Double))
     Int64 => Some(Array(Int64))
     UInt64 => Some(Array(UInt64))
+    // 16-bit element arrays: FixedArray[Int16]/[UInt16] are packed int16_t*/
+    // uint16_t*, matching `const GLshort *` &c. GLhalf rides UShort here — no
+    // native f16, so its bits pass through verbatim.
+    Short => Some(Array(Int16))
+    UShort => Some(Array(UInt16))
     // an array of C strings: pointer-to-(pointer-to-char). Restricted to
     // char-like pointees — `void **`/`T **` of other element types denote
     // out-pointers we can't faithfully represent and stay skipped.

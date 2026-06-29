@@ -49,6 +49,15 @@ fn main {
     let status : FixedArray[Int] = FixedArray::make(1, 0)
     @epoxy.gl_get_shaderiv(shader, @epoxy.GL_COMPILE_STATUS, status)
     println("glShaderSource+compile ok = \{status[0] == 1}")
+
+    // glColor3sv is the 16-bit-array shape: FixedArray[Int16] crosses as a
+    // packed int16_t* (== `const GLshort *`). The driver normalises signed
+    // shorts to [0,1], so 32767 -> 1.0; round-trip it back via glGetFloatv to
+    // prove the array reached the driver intact.
+    @epoxy.gl_color3sv([32767, 0, 0])
+    let color : FixedArray[Float] = FixedArray::make(4, 0.0)
+    @epoxy.gl_get_floatv(@epoxy.GL_CURRENT_COLOR, color)
+    println("glColor3sv round-trip = [\{color[0]}, \{color[1]}, \{color[2]}]")
   } catch {
     e => println("dispatch failed: \{e}")
   }

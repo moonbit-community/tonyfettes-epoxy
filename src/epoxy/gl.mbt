@@ -27,3 +27,8 @@ pub const GL_VERTEX_SHADER : UInt = 0x8B31
 ///|
 /// `glGetShaderiv` query: 1 once the shader compiled without error.
 pub const GL_COMPILE_STATUS : UInt = 0x8B81
+
+///|
+/// The fixed-function current color, set by `glColor*` and read by `glGetFloatv`
+/// (the demo uses it to round-trip a 16-bit array).
+pub const GL_CURRENT_COLOR : UInt = 0x0B00

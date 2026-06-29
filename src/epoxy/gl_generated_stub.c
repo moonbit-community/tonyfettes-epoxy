@@ -435,6 +435,10 @@ void epoxy_glBinormal3sEXT(void *fp, int32_t bx, int32_t by, int32_t bz) {
   ((void(*)(short, short, short))fp)((short)bx, (short)by, (short)bz);
 }
 
+void epoxy_glBinormal3svEXT(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
 void epoxy_glBinormalPointerEXT(void *fp, uint32_t type_, int32_t stride, moonbit_bytes_t pointer) {
   ((void(*)(unsigned int, int, const void *))fp)((unsigned int)type_, (int)stride, (const void *)pointer);
 }
@@ -947,6 +951,10 @@ void epoxy_glColor3hNV(void *fp, int32_t red, int32_t green, int32_t blue) {
   ((void(*)(unsigned short, unsigned short, unsigned short))fp)((unsigned short)red, (unsigned short)green, (unsigned short)blue);
 }
 
+void epoxy_glColor3hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glColor3i(void *fp, int32_t red, int32_t green, int32_t blue) {
   ((void(*)(int, int, int))fp)((int)red, (int)green, (int)blue);
 }
@@ -957,6 +965,10 @@ void epoxy_glColor3iv(void *fp, int32_t * v) {
 
 void epoxy_glColor3s(void *fp, int32_t red, int32_t green, int32_t blue) {
   ((void(*)(short, short, short))fp)((short)red, (short)green, (short)blue);
+}
+
+void epoxy_glColor3sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glColor3ub(void *fp, int32_t red, int32_t green, int32_t blue) {
@@ -977,6 +989,10 @@ void epoxy_glColor3uiv(void *fp, uint32_t * v) {
 
 void epoxy_glColor3us(void *fp, int32_t red, int32_t green, int32_t blue) {
   ((void(*)(unsigned short, unsigned short, unsigned short))fp)((unsigned short)red, (unsigned short)green, (unsigned short)blue);
+}
+
+void epoxy_glColor3usv(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
 }
 
 void epoxy_glColor3xOES(void *fp, int32_t red, int32_t green, int32_t blue) {
@@ -1023,6 +1039,10 @@ void epoxy_glColor4hNV(void *fp, int32_t red, int32_t green, int32_t blue, int32
   ((void(*)(unsigned short, unsigned short, unsigned short, unsigned short))fp)((unsigned short)red, (unsigned short)green, (unsigned short)blue, (unsigned short)alpha);
 }
 
+void epoxy_glColor4hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glColor4i(void *fp, int32_t red, int32_t green, int32_t blue, int32_t alpha) {
   ((void(*)(int, int, int, int))fp)((int)red, (int)green, (int)blue, (int)alpha);
 }
@@ -1033,6 +1053,10 @@ void epoxy_glColor4iv(void *fp, int32_t * v) {
 
 void epoxy_glColor4s(void *fp, int32_t red, int32_t green, int32_t blue, int32_t alpha) {
   ((void(*)(short, short, short, short))fp)((short)red, (short)green, (short)blue, (short)alpha);
+}
+
+void epoxy_glColor4sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glColor4ub(void *fp, int32_t red, int32_t green, int32_t blue, int32_t alpha) {
@@ -1069,6 +1093,10 @@ void epoxy_glColor4uiv(void *fp, uint32_t * v) {
 
 void epoxy_glColor4us(void *fp, int32_t red, int32_t green, int32_t blue, int32_t alpha) {
   ((void(*)(unsigned short, unsigned short, unsigned short, unsigned short))fp)((unsigned short)red, (unsigned short)green, (unsigned short)blue, (unsigned short)alpha);
+}
+
+void epoxy_glColor4usv(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
 }
 
 void epoxy_glColor4x(void *fp, int32_t red, int32_t green, int32_t blue, int32_t alpha) {
@@ -2307,6 +2335,10 @@ void epoxy_glDrawTexsOES(void *fp, int32_t x, int32_t y, int32_t z, int32_t widt
   ((void(*)(short, short, short, short, short))fp)((short)x, (short)y, (short)z, (short)width, (short)height);
 }
 
+void epoxy_glDrawTexsvOES(void *fp, int16_t * coords) {
+  ((void(*)(const short *))fp)((const short *)coords);
+}
+
 void epoxy_glDrawTextureNV(void *fp, uint32_t texture, uint32_t sampler, float x0, float y0, float x1, float y1, float z, float s0, float t0, float s1, float t1) {
   ((void(*)(unsigned int, unsigned int, float, float, float, float, float, float, float, float, float))fp)((unsigned int)texture, (unsigned int)sampler, (float)x0, (float)y0, (float)x1, (float)y1, (float)z, (float)s0, (float)t0, (float)s1, (float)t1);
 }
@@ -2773,6 +2805,10 @@ void epoxy_glFogCoordfvEXT(void *fp, float * coord) {
 
 void epoxy_glFogCoordhNV(void *fp, int32_t fog) {
   ((void(*)(unsigned short))fp)((unsigned short)fog);
+}
+
+void epoxy_glFogCoordhvNV(void *fp, uint16_t * fog) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)fog);
 }
 
 void epoxy_glFogFuncSGIS(void *fp, int32_t n, float * points) {
@@ -4163,6 +4199,10 @@ void epoxy_glGetPixelMapuiv(void *fp, uint32_t map, uint32_t * values) {
   ((void(*)(unsigned int, unsigned int *))fp)((unsigned int)map, (unsigned int *)values);
 }
 
+void epoxy_glGetPixelMapusv(void *fp, uint32_t map, uint16_t * values) {
+  ((void(*)(unsigned int, unsigned short *))fp)((unsigned int)map, (unsigned short *)values);
+}
+
 void epoxy_glGetPixelMapxv(void *fp, uint32_t map, int32_t size, int32_t * values) {
   ((void(*)(unsigned int, int, int *))fp)((unsigned int)map, (int)size, (int *)values);
 }
@@ -5043,6 +5083,14 @@ void epoxy_glGetnPixelMapuivARB(void *fp, uint32_t map, int32_t bufSize, uint32_
   ((void(*)(unsigned int, int, unsigned int *))fp)((unsigned int)map, (int)bufSize, (unsigned int *)values);
 }
 
+void epoxy_glGetnPixelMapusv(void *fp, uint32_t map, int32_t bufSize, uint16_t * values) {
+  ((void(*)(unsigned int, int, unsigned short *))fp)((unsigned int)map, (int)bufSize, (unsigned short *)values);
+}
+
+void epoxy_glGetnPixelMapusvARB(void *fp, uint32_t map, int32_t bufSize, uint16_t * values) {
+  ((void(*)(unsigned int, int, unsigned short *))fp)((unsigned int)map, (int)bufSize, (unsigned short *)values);
+}
+
 void epoxy_glGetnPolygonStipple(void *fp, int32_t bufSize, moonbit_bytes_t pattern) {
   ((void(*)(int, unsigned char *))fp)((int)bufSize, (unsigned char *)pattern);
 }
@@ -5269,6 +5317,10 @@ void epoxy_glIndexiv(void *fp, int32_t * c) {
 
 void epoxy_glIndexs(void *fp, int32_t c) {
   ((void(*)(short))fp)((short)c);
+}
+
+void epoxy_glIndexsv(void *fp, int16_t * c) {
+  ((void(*)(const short *))fp)((const short *)c);
 }
 
 void epoxy_glIndexub(void *fp, int32_t c) {
@@ -5923,6 +5975,10 @@ void epoxy_glMatrixIndexuivARB(void *fp, int32_t size, uint32_t * indices) {
   ((void(*)(int, const unsigned int *))fp)((int)size, (const unsigned int *)indices);
 }
 
+void epoxy_glMatrixIndexusvARB(void *fp, int32_t size, uint16_t * indices) {
+  ((void(*)(int, const unsigned short *))fp)((int)size, (const unsigned short *)indices);
+}
+
 void epoxy_glMatrixLoad3x2fNV(void *fp, uint32_t matrixMode, float * m) {
   ((void(*)(unsigned int, const float *))fp)((unsigned int)matrixMode, (const float *)m);
 }
@@ -6247,6 +6303,10 @@ void epoxy_glMultiTexCoord1hNV(void *fp, uint32_t target, int32_t s) {
   ((void(*)(unsigned int, unsigned short))fp)((unsigned int)target, (unsigned short)s);
 }
 
+void epoxy_glMultiTexCoord1hvNV(void *fp, uint32_t target, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)target, (const unsigned short *)v);
+}
+
 void epoxy_glMultiTexCoord1i(void *fp, uint32_t target, int32_t s) {
   ((void(*)(unsigned int, int))fp)((unsigned int)target, (int)s);
 }
@@ -6269,6 +6329,14 @@ void epoxy_glMultiTexCoord1s(void *fp, uint32_t target, int32_t s) {
 
 void epoxy_glMultiTexCoord1sARB(void *fp, uint32_t target, int32_t s) {
   ((void(*)(unsigned int, short))fp)((unsigned int)target, (short)s);
+}
+
+void epoxy_glMultiTexCoord1sv(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
+}
+
+void epoxy_glMultiTexCoord1svARB(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
 }
 
 void epoxy_glMultiTexCoord1xOES(void *fp, uint32_t texture, int32_t s) {
@@ -6323,6 +6391,10 @@ void epoxy_glMultiTexCoord2hNV(void *fp, uint32_t target, int32_t s, int32_t t) 
   ((void(*)(unsigned int, unsigned short, unsigned short))fp)((unsigned int)target, (unsigned short)s, (unsigned short)t);
 }
 
+void epoxy_glMultiTexCoord2hvNV(void *fp, uint32_t target, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)target, (const unsigned short *)v);
+}
+
 void epoxy_glMultiTexCoord2i(void *fp, uint32_t target, int32_t s, int32_t t) {
   ((void(*)(unsigned int, int, int))fp)((unsigned int)target, (int)s, (int)t);
 }
@@ -6345,6 +6417,14 @@ void epoxy_glMultiTexCoord2s(void *fp, uint32_t target, int32_t s, int32_t t) {
 
 void epoxy_glMultiTexCoord2sARB(void *fp, uint32_t target, int32_t s, int32_t t) {
   ((void(*)(unsigned int, short, short))fp)((unsigned int)target, (short)s, (short)t);
+}
+
+void epoxy_glMultiTexCoord2sv(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
+}
+
+void epoxy_glMultiTexCoord2svARB(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
 }
 
 void epoxy_glMultiTexCoord2xOES(void *fp, uint32_t texture, int32_t s, int32_t t) {
@@ -6399,6 +6479,10 @@ void epoxy_glMultiTexCoord3hNV(void *fp, uint32_t target, int32_t s, int32_t t, 
   ((void(*)(unsigned int, unsigned short, unsigned short, unsigned short))fp)((unsigned int)target, (unsigned short)s, (unsigned short)t, (unsigned short)r);
 }
 
+void epoxy_glMultiTexCoord3hvNV(void *fp, uint32_t target, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)target, (const unsigned short *)v);
+}
+
 void epoxy_glMultiTexCoord3i(void *fp, uint32_t target, int32_t s, int32_t t, int32_t r) {
   ((void(*)(unsigned int, int, int, int))fp)((unsigned int)target, (int)s, (int)t, (int)r);
 }
@@ -6421,6 +6505,14 @@ void epoxy_glMultiTexCoord3s(void *fp, uint32_t target, int32_t s, int32_t t, in
 
 void epoxy_glMultiTexCoord3sARB(void *fp, uint32_t target, int32_t s, int32_t t, int32_t r) {
   ((void(*)(unsigned int, short, short, short))fp)((unsigned int)target, (short)s, (short)t, (short)r);
+}
+
+void epoxy_glMultiTexCoord3sv(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
+}
+
+void epoxy_glMultiTexCoord3svARB(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
 }
 
 void epoxy_glMultiTexCoord3xOES(void *fp, uint32_t texture, int32_t s, int32_t t, int32_t r) {
@@ -6475,6 +6567,10 @@ void epoxy_glMultiTexCoord4hNV(void *fp, uint32_t target, int32_t s, int32_t t, 
   ((void(*)(unsigned int, unsigned short, unsigned short, unsigned short, unsigned short))fp)((unsigned int)target, (unsigned short)s, (unsigned short)t, (unsigned short)r, (unsigned short)q);
 }
 
+void epoxy_glMultiTexCoord4hvNV(void *fp, uint32_t target, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)target, (const unsigned short *)v);
+}
+
 void epoxy_glMultiTexCoord4i(void *fp, uint32_t target, int32_t s, int32_t t, int32_t r, int32_t q) {
   ((void(*)(unsigned int, int, int, int, int))fp)((unsigned int)target, (int)s, (int)t, (int)r, (int)q);
 }
@@ -6497,6 +6593,14 @@ void epoxy_glMultiTexCoord4s(void *fp, uint32_t target, int32_t s, int32_t t, in
 
 void epoxy_glMultiTexCoord4sARB(void *fp, uint32_t target, int32_t s, int32_t t, int32_t r, int32_t q) {
   ((void(*)(unsigned int, short, short, short, short))fp)((unsigned int)target, (short)s, (short)t, (short)r, (short)q);
+}
+
+void epoxy_glMultiTexCoord4sv(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
+}
+
+void epoxy_glMultiTexCoord4svARB(void *fp, uint32_t target, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)target, (const short *)v);
 }
 
 void epoxy_glMultiTexCoord4x(void *fp, uint32_t texture, int32_t s, int32_t t, int32_t r, int32_t q) {
@@ -6939,6 +7043,10 @@ void epoxy_glNormal3hNV(void *fp, int32_t nx, int32_t ny, int32_t nz) {
   ((void(*)(unsigned short, unsigned short, unsigned short))fp)((unsigned short)nx, (unsigned short)ny, (unsigned short)nz);
 }
 
+void epoxy_glNormal3hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glNormal3i(void *fp, int32_t nx, int32_t ny, int32_t nz) {
   ((void(*)(int, int, int))fp)((int)nx, (int)ny, (int)nz);
 }
@@ -6949,6 +7057,10 @@ void epoxy_glNormal3iv(void *fp, int32_t * v) {
 
 void epoxy_glNormal3s(void *fp, int32_t nx, int32_t ny, int32_t nz) {
   ((void(*)(short, short, short))fp)((short)nx, (short)ny, (short)nz);
+}
+
+void epoxy_glNormal3sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glNormal3x(void *fp, int32_t nx, int32_t ny, int32_t nz) {
@@ -7017,6 +7129,10 @@ void epoxy_glNormalStream3ivATI(void *fp, uint32_t stream, int32_t * coords) {
 
 void epoxy_glNormalStream3sATI(void *fp, uint32_t stream, int32_t nx, int32_t ny, int32_t nz) {
   ((void(*)(unsigned int, short, short, short))fp)((unsigned int)stream, (short)nx, (short)ny, (short)nz);
+}
+
+void epoxy_glNormalStream3svATI(void *fp, uint32_t stream, int16_t * coords) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)stream, (const short *)coords);
 }
 
 void epoxy_glObjectLabel(void *fp, uint32_t identifier, uint32_t name, int32_t length, moonbit_bytes_t label) {
@@ -7201,6 +7317,10 @@ void epoxy_glPixelMapfv(void *fp, uint32_t map, int32_t mapsize, float * values)
 
 void epoxy_glPixelMapuiv(void *fp, uint32_t map, int32_t mapsize, uint32_t * values) {
   ((void(*)(unsigned int, int, const unsigned int *))fp)((unsigned int)map, (int)mapsize, (const unsigned int *)values);
+}
+
+void epoxy_glPixelMapusv(void *fp, uint32_t map, int32_t mapsize, uint16_t * values) {
+  ((void(*)(unsigned int, int, const unsigned short *))fp)((unsigned int)map, (int)mapsize, (const unsigned short *)values);
 }
 
 void epoxy_glPixelMapx(void *fp, uint32_t map, int32_t size, int32_t * values) {
@@ -8307,6 +8427,10 @@ void epoxy_glRasterPos2s(void *fp, int32_t x, int32_t y) {
   ((void(*)(short, short))fp)((short)x, (short)y);
 }
 
+void epoxy_glRasterPos2sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
 void epoxy_glRasterPos2xOES(void *fp, int32_t x, int32_t y) {
   ((void(*)(int, int))fp)((int)x, (int)y);
 }
@@ -8343,6 +8467,10 @@ void epoxy_glRasterPos3s(void *fp, int32_t x, int32_t y, int32_t z) {
   ((void(*)(short, short, short))fp)((short)x, (short)y, (short)z);
 }
 
+void epoxy_glRasterPos3sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
 void epoxy_glRasterPos3xOES(void *fp, int32_t x, int32_t y, int32_t z) {
   ((void(*)(int, int, int))fp)((int)x, (int)y, (int)z);
 }
@@ -8377,6 +8505,10 @@ void epoxy_glRasterPos4iv(void *fp, int32_t * v) {
 
 void epoxy_glRasterPos4s(void *fp, int32_t x, int32_t y, int32_t z, int32_t w) {
   ((void(*)(short, short, short, short))fp)((short)x, (short)y, (short)z, (short)w);
+}
+
+void epoxy_glRasterPos4sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glRasterPos4xOES(void *fp, int32_t x, int32_t y, int32_t z, int32_t w) {
@@ -8457,6 +8589,10 @@ void epoxy_glRectiv(void *fp, int32_t * v1, int32_t * v2) {
 
 void epoxy_glRects(void *fp, int32_t x1, int32_t y1, int32_t x2, int32_t y2) {
   ((void(*)(short, short, short, short))fp)((short)x1, (short)y1, (short)x2, (short)y2);
+}
+
+void epoxy_glRectsv(void *fp, int16_t * v1, int16_t * v2) {
+  ((void(*)(const short *, const short *))fp)((const short *)v1, (const short *)v2);
 }
 
 void epoxy_glRectxOES(void *fp, int32_t x1, int32_t y1, int32_t x2, int32_t y2) {
@@ -8609,6 +8745,10 @@ void epoxy_glReplacementCodeuivSUN(void *fp, uint32_t * code) {
 
 void epoxy_glReplacementCodeusSUN(void *fp, int32_t code) {
   ((void(*)(unsigned short))fp)((unsigned short)code);
+}
+
+void epoxy_glReplacementCodeusvSUN(void *fp, uint16_t * code) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)code);
 }
 
 void epoxy_glRequestResidentProgramsNV(void *fp, int32_t n, uint32_t * programs) {
@@ -8871,6 +9011,10 @@ void epoxy_glSecondaryColor3hNV(void *fp, int32_t red, int32_t green, int32_t bl
   ((void(*)(unsigned short, unsigned short, unsigned short))fp)((unsigned short)red, (unsigned short)green, (unsigned short)blue);
 }
 
+void epoxy_glSecondaryColor3hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glSecondaryColor3i(void *fp, int32_t red, int32_t green, int32_t blue) {
   ((void(*)(int, int, int))fp)((int)red, (int)green, (int)blue);
 }
@@ -8893,6 +9037,14 @@ void epoxy_glSecondaryColor3s(void *fp, int32_t red, int32_t green, int32_t blue
 
 void epoxy_glSecondaryColor3sEXT(void *fp, int32_t red, int32_t green, int32_t blue) {
   ((void(*)(short, short, short))fp)((short)red, (short)green, (short)blue);
+}
+
+void epoxy_glSecondaryColor3sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
+void epoxy_glSecondaryColor3svEXT(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glSecondaryColor3ub(void *fp, int32_t red, int32_t green, int32_t blue) {
@@ -8933,6 +9085,14 @@ void epoxy_glSecondaryColor3us(void *fp, int32_t red, int32_t green, int32_t blu
 
 void epoxy_glSecondaryColor3usEXT(void *fp, int32_t red, int32_t green, int32_t blue) {
   ((void(*)(unsigned short, unsigned short, unsigned short))fp)((unsigned short)red, (unsigned short)green, (unsigned short)blue);
+}
+
+void epoxy_glSecondaryColor3usv(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
+void epoxy_glSecondaryColor3usvEXT(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
 }
 
 void epoxy_glSecondaryColorFormatNV(void *fp, int32_t size, uint32_t type_, int32_t stride) {
@@ -9239,6 +9399,10 @@ void epoxy_glTangent3sEXT(void *fp, int32_t tx, int32_t ty, int32_t tz) {
   ((void(*)(short, short, short))fp)((short)tx, (short)ty, (short)tz);
 }
 
+void epoxy_glTangent3svEXT(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
 void epoxy_glTangentPointerEXT(void *fp, uint32_t type_, int32_t stride, moonbit_bytes_t pointer) {
   ((void(*)(unsigned int, int, const void *))fp)((unsigned int)type_, (int)stride, (const void *)pointer);
 }
@@ -9335,6 +9499,10 @@ void epoxy_glTexCoord1hNV(void *fp, int32_t s) {
   ((void(*)(unsigned short))fp)((unsigned short)s);
 }
 
+void epoxy_glTexCoord1hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glTexCoord1i(void *fp, int32_t s) {
   ((void(*)(int))fp)((int)s);
 }
@@ -9345,6 +9513,10 @@ void epoxy_glTexCoord1iv(void *fp, int32_t * v) {
 
 void epoxy_glTexCoord1s(void *fp, int32_t s) {
   ((void(*)(short))fp)((short)s);
+}
+
+void epoxy_glTexCoord1sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glTexCoord1xOES(void *fp, int32_t s) {
@@ -9423,6 +9595,10 @@ void epoxy_glTexCoord2hNV(void *fp, int32_t s, int32_t t) {
   ((void(*)(unsigned short, unsigned short))fp)((unsigned short)s, (unsigned short)t);
 }
 
+void epoxy_glTexCoord2hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glTexCoord2i(void *fp, int32_t s, int32_t t) {
   ((void(*)(int, int))fp)((int)s, (int)t);
 }
@@ -9433,6 +9609,10 @@ void epoxy_glTexCoord2iv(void *fp, int32_t * v) {
 
 void epoxy_glTexCoord2s(void *fp, int32_t s, int32_t t) {
   ((void(*)(short, short))fp)((short)s, (short)t);
+}
+
+void epoxy_glTexCoord2sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glTexCoord2xOES(void *fp, int32_t s, int32_t t) {
@@ -9471,6 +9651,10 @@ void epoxy_glTexCoord3hNV(void *fp, int32_t s, int32_t t, int32_t r) {
   ((void(*)(unsigned short, unsigned short, unsigned short))fp)((unsigned short)s, (unsigned short)t, (unsigned short)r);
 }
 
+void epoxy_glTexCoord3hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glTexCoord3i(void *fp, int32_t s, int32_t t, int32_t r) {
   ((void(*)(int, int, int))fp)((int)s, (int)t, (int)r);
 }
@@ -9481,6 +9665,10 @@ void epoxy_glTexCoord3iv(void *fp, int32_t * v) {
 
 void epoxy_glTexCoord3s(void *fp, int32_t s, int32_t t, int32_t r) {
   ((void(*)(short, short, short))fp)((short)s, (short)t, (short)r);
+}
+
+void epoxy_glTexCoord3sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glTexCoord3xOES(void *fp, int32_t s, int32_t t, int32_t r) {
@@ -9535,6 +9723,10 @@ void epoxy_glTexCoord4hNV(void *fp, int32_t s, int32_t t, int32_t r, int32_t q) 
   ((void(*)(unsigned short, unsigned short, unsigned short, unsigned short))fp)((unsigned short)s, (unsigned short)t, (unsigned short)r, (unsigned short)q);
 }
 
+void epoxy_glTexCoord4hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glTexCoord4i(void *fp, int32_t s, int32_t t, int32_t r, int32_t q) {
   ((void(*)(int, int, int, int))fp)((int)s, (int)t, (int)r, (int)q);
 }
@@ -9545,6 +9737,10 @@ void epoxy_glTexCoord4iv(void *fp, int32_t * v) {
 
 void epoxy_glTexCoord4s(void *fp, int32_t s, int32_t t, int32_t r, int32_t q) {
   ((void(*)(short, short, short, short))fp)((short)s, (short)t, (short)r, (short)q);
+}
+
+void epoxy_glTexCoord4sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glTexCoord4xOES(void *fp, int32_t s, int32_t t, int32_t r, int32_t q) {
@@ -10831,12 +11027,20 @@ void epoxy_glVariantivEXT(void *fp, uint32_t id, int32_t * addr) {
   ((void(*)(unsigned int, const int *))fp)((unsigned int)id, (const int *)addr);
 }
 
+void epoxy_glVariantsvEXT(void *fp, uint32_t id, int16_t * addr) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)id, (const short *)addr);
+}
+
 void epoxy_glVariantubvEXT(void *fp, uint32_t id, moonbit_bytes_t addr) {
   ((void(*)(unsigned int, const unsigned char *))fp)((unsigned int)id, (const unsigned char *)addr);
 }
 
 void epoxy_glVariantuivEXT(void *fp, uint32_t id, uint32_t * addr) {
   ((void(*)(unsigned int, const unsigned int *))fp)((unsigned int)id, (const unsigned int *)addr);
+}
+
+void epoxy_glVariantusvEXT(void *fp, uint32_t id, uint16_t * addr) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)id, (const unsigned short *)addr);
 }
 
 void epoxy_glVertex2bOES(void *fp, int32_t x, int32_t y) {
@@ -10867,6 +11071,10 @@ void epoxy_glVertex2hNV(void *fp, int32_t x, int32_t y) {
   ((void(*)(unsigned short, unsigned short))fp)((unsigned short)x, (unsigned short)y);
 }
 
+void epoxy_glVertex2hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glVertex2i(void *fp, int32_t x, int32_t y) {
   ((void(*)(int, int))fp)((int)x, (int)y);
 }
@@ -10877,6 +11085,10 @@ void epoxy_glVertex2iv(void *fp, int32_t * v) {
 
 void epoxy_glVertex2s(void *fp, int32_t x, int32_t y) {
   ((void(*)(short, short))fp)((short)x, (short)y);
+}
+
+void epoxy_glVertex2sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glVertex2xOES(void *fp, int32_t x) {
@@ -10915,6 +11127,10 @@ void epoxy_glVertex3hNV(void *fp, int32_t x, int32_t y, int32_t z) {
   ((void(*)(unsigned short, unsigned short, unsigned short))fp)((unsigned short)x, (unsigned short)y, (unsigned short)z);
 }
 
+void epoxy_glVertex3hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glVertex3i(void *fp, int32_t x, int32_t y, int32_t z) {
   ((void(*)(int, int, int))fp)((int)x, (int)y, (int)z);
 }
@@ -10925,6 +11141,10 @@ void epoxy_glVertex3iv(void *fp, int32_t * v) {
 
 void epoxy_glVertex3s(void *fp, int32_t x, int32_t y, int32_t z) {
   ((void(*)(short, short, short))fp)((short)x, (short)y, (short)z);
+}
+
+void epoxy_glVertex3sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glVertex3xOES(void *fp, int32_t x, int32_t y) {
@@ -10963,6 +11183,10 @@ void epoxy_glVertex4hNV(void *fp, int32_t x, int32_t y, int32_t z, int32_t w) {
   ((void(*)(unsigned short, unsigned short, unsigned short, unsigned short))fp)((unsigned short)x, (unsigned short)y, (unsigned short)z, (unsigned short)w);
 }
 
+void epoxy_glVertex4hvNV(void *fp, uint16_t * v) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)v);
+}
+
 void epoxy_glVertex4i(void *fp, int32_t x, int32_t y, int32_t z, int32_t w) {
   ((void(*)(int, int, int, int))fp)((int)x, (int)y, (int)z, (int)w);
 }
@@ -10973,6 +11197,10 @@ void epoxy_glVertex4iv(void *fp, int32_t * v) {
 
 void epoxy_glVertex4s(void *fp, int32_t x, int32_t y, int32_t z, int32_t w) {
   ((void(*)(short, short, short, short))fp)((short)x, (short)y, (short)z, (short)w);
+}
+
+void epoxy_glVertex4sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glVertex4xOES(void *fp, int32_t x, int32_t y, int32_t z) {
@@ -11151,6 +11379,10 @@ void epoxy_glVertexAttrib1hNV(void *fp, uint32_t index, int32_t x) {
   ((void(*)(unsigned int, unsigned short))fp)((unsigned int)index, (unsigned short)x);
 }
 
+void epoxy_glVertexAttrib1hvNV(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
+}
+
 void epoxy_glVertexAttrib1s(void *fp, uint32_t index, int32_t x) {
   ((void(*)(unsigned int, short))fp)((unsigned int)index, (short)x);
 }
@@ -11161,6 +11393,18 @@ void epoxy_glVertexAttrib1sARB(void *fp, uint32_t index, int32_t x) {
 
 void epoxy_glVertexAttrib1sNV(void *fp, uint32_t index, int32_t x) {
   ((void(*)(unsigned int, short))fp)((unsigned int)index, (short)x);
+}
+
+void epoxy_glVertexAttrib1sv(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib1svARB(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib1svNV(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
 }
 
 void epoxy_glVertexAttrib2d(void *fp, uint32_t index, double x, double y) {
@@ -11215,6 +11459,10 @@ void epoxy_glVertexAttrib2hNV(void *fp, uint32_t index, int32_t x, int32_t y) {
   ((void(*)(unsigned int, unsigned short, unsigned short))fp)((unsigned int)index, (unsigned short)x, (unsigned short)y);
 }
 
+void epoxy_glVertexAttrib2hvNV(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
+}
+
 void epoxy_glVertexAttrib2s(void *fp, uint32_t index, int32_t x, int32_t y) {
   ((void(*)(unsigned int, short, short))fp)((unsigned int)index, (short)x, (short)y);
 }
@@ -11225,6 +11473,18 @@ void epoxy_glVertexAttrib2sARB(void *fp, uint32_t index, int32_t x, int32_t y) {
 
 void epoxy_glVertexAttrib2sNV(void *fp, uint32_t index, int32_t x, int32_t y) {
   ((void(*)(unsigned int, short, short))fp)((unsigned int)index, (short)x, (short)y);
+}
+
+void epoxy_glVertexAttrib2sv(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib2svARB(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib2svNV(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
 }
 
 void epoxy_glVertexAttrib3d(void *fp, uint32_t index, double x, double y, double z) {
@@ -11279,6 +11539,10 @@ void epoxy_glVertexAttrib3hNV(void *fp, uint32_t index, int32_t x, int32_t y, in
   ((void(*)(unsigned int, unsigned short, unsigned short, unsigned short))fp)((unsigned int)index, (unsigned short)x, (unsigned short)y, (unsigned short)z);
 }
 
+void epoxy_glVertexAttrib3hvNV(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
+}
+
 void epoxy_glVertexAttrib3s(void *fp, uint32_t index, int32_t x, int32_t y, int32_t z) {
   ((void(*)(unsigned int, short, short, short))fp)((unsigned int)index, (short)x, (short)y, (short)z);
 }
@@ -11289,6 +11553,18 @@ void epoxy_glVertexAttrib3sARB(void *fp, uint32_t index, int32_t x, int32_t y, i
 
 void epoxy_glVertexAttrib3sNV(void *fp, uint32_t index, int32_t x, int32_t y, int32_t z) {
   ((void(*)(unsigned int, short, short, short))fp)((unsigned int)index, (short)x, (short)y, (short)z);
+}
+
+void epoxy_glVertexAttrib3sv(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib3svARB(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib3svNV(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
 }
 
 void epoxy_glVertexAttrib4Nbv(void *fp, uint32_t index, moonbit_bytes_t v) {
@@ -11305,6 +11581,14 @@ void epoxy_glVertexAttrib4Niv(void *fp, uint32_t index, int32_t * v) {
 
 void epoxy_glVertexAttrib4NivARB(void *fp, uint32_t index, int32_t * v) {
   ((void(*)(unsigned int, const int *))fp)((unsigned int)index, (const int *)v);
+}
+
+void epoxy_glVertexAttrib4Nsv(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib4NsvARB(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
 }
 
 void epoxy_glVertexAttrib4Nub(void *fp, uint32_t index, int32_t x, int32_t y, int32_t z, int32_t w) {
@@ -11329,6 +11613,14 @@ void epoxy_glVertexAttrib4Nuiv(void *fp, uint32_t index, uint32_t * v) {
 
 void epoxy_glVertexAttrib4NuivARB(void *fp, uint32_t index, uint32_t * v) {
   ((void(*)(unsigned int, const unsigned int *))fp)((unsigned int)index, (const unsigned int *)v);
+}
+
+void epoxy_glVertexAttrib4Nusv(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
+}
+
+void epoxy_glVertexAttrib4NusvARB(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
 }
 
 void epoxy_glVertexAttrib4bv(void *fp, uint32_t index, moonbit_bytes_t v) {
@@ -11391,6 +11683,10 @@ void epoxy_glVertexAttrib4hNV(void *fp, uint32_t index, int32_t x, int32_t y, in
   ((void(*)(unsigned int, unsigned short, unsigned short, unsigned short, unsigned short))fp)((unsigned int)index, (unsigned short)x, (unsigned short)y, (unsigned short)z, (unsigned short)w);
 }
 
+void epoxy_glVertexAttrib4hvNV(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
+}
+
 void epoxy_glVertexAttrib4iv(void *fp, uint32_t index, int32_t * v) {
   ((void(*)(unsigned int, const int *))fp)((unsigned int)index, (const int *)v);
 }
@@ -11409,6 +11705,18 @@ void epoxy_glVertexAttrib4sARB(void *fp, uint32_t index, int32_t x, int32_t y, i
 
 void epoxy_glVertexAttrib4sNV(void *fp, uint32_t index, int32_t x, int32_t y, int32_t z, int32_t w) {
   ((void(*)(unsigned int, short, short, short, short))fp)((unsigned int)index, (short)x, (short)y, (short)z, (short)w);
+}
+
+void epoxy_glVertexAttrib4sv(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib4svARB(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttrib4svNV(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
 }
 
 void epoxy_glVertexAttrib4ubNV(void *fp, uint32_t index, int32_t x, int32_t y, int32_t z, int32_t w) {
@@ -11433,6 +11741,14 @@ void epoxy_glVertexAttrib4uiv(void *fp, uint32_t index, uint32_t * v) {
 
 void epoxy_glVertexAttrib4uivARB(void *fp, uint32_t index, uint32_t * v) {
   ((void(*)(unsigned int, const unsigned int *))fp)((unsigned int)index, (const unsigned int *)v);
+}
+
+void epoxy_glVertexAttrib4usv(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
+}
+
+void epoxy_glVertexAttrib4usvARB(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
 }
 
 void epoxy_glVertexAttribArrayObjectATI(void *fp, uint32_t index, int32_t size, uint32_t type_, int32_t normalized, int32_t stride, uint32_t buffer, uint32_t offset) {
@@ -11591,6 +11907,14 @@ void epoxy_glVertexAttribI4ivEXT(void *fp, uint32_t index, int32_t * v) {
   ((void(*)(unsigned int, const int *))fp)((unsigned int)index, (const int *)v);
 }
 
+void epoxy_glVertexAttribI4sv(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
+void epoxy_glVertexAttribI4svEXT(void *fp, uint32_t index, int16_t * v) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)index, (const short *)v);
+}
+
 void epoxy_glVertexAttribI4ubv(void *fp, uint32_t index, moonbit_bytes_t v) {
   ((void(*)(unsigned int, const unsigned char *))fp)((unsigned int)index, (const unsigned char *)v);
 }
@@ -11613,6 +11937,14 @@ void epoxy_glVertexAttribI4uiv(void *fp, uint32_t index, uint32_t * v) {
 
 void epoxy_glVertexAttribI4uivEXT(void *fp, uint32_t index, uint32_t * v) {
   ((void(*)(unsigned int, const unsigned int *))fp)((unsigned int)index, (const unsigned int *)v);
+}
+
+void epoxy_glVertexAttribI4usv(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
+}
+
+void epoxy_glVertexAttribI4usvEXT(void *fp, uint32_t index, uint16_t * v) {
+  ((void(*)(unsigned int, const unsigned short *))fp)((unsigned int)index, (const unsigned short *)v);
 }
 
 void epoxy_glVertexAttribIFormat(void *fp, uint32_t attribindex, int32_t size, uint32_t type_, uint32_t relativeoffset) {
@@ -11839,12 +12171,28 @@ void epoxy_glVertexAttribs1fvNV(void *fp, uint32_t index, int32_t count, float *
   ((void(*)(unsigned int, int, const float *))fp)((unsigned int)index, (int)count, (const float *)v);
 }
 
+void epoxy_glVertexAttribs1hvNV(void *fp, uint32_t index, int32_t n, uint16_t * v) {
+  ((void(*)(unsigned int, int, const unsigned short *))fp)((unsigned int)index, (int)n, (const unsigned short *)v);
+}
+
+void epoxy_glVertexAttribs1svNV(void *fp, uint32_t index, int32_t count, int16_t * v) {
+  ((void(*)(unsigned int, int, const short *))fp)((unsigned int)index, (int)count, (const short *)v);
+}
+
 void epoxy_glVertexAttribs2dvNV(void *fp, uint32_t index, int32_t count, double * v) {
   ((void(*)(unsigned int, int, const double *))fp)((unsigned int)index, (int)count, (const double *)v);
 }
 
 void epoxy_glVertexAttribs2fvNV(void *fp, uint32_t index, int32_t count, float * v) {
   ((void(*)(unsigned int, int, const float *))fp)((unsigned int)index, (int)count, (const float *)v);
+}
+
+void epoxy_glVertexAttribs2hvNV(void *fp, uint32_t index, int32_t n, uint16_t * v) {
+  ((void(*)(unsigned int, int, const unsigned short *))fp)((unsigned int)index, (int)n, (const unsigned short *)v);
+}
+
+void epoxy_glVertexAttribs2svNV(void *fp, uint32_t index, int32_t count, int16_t * v) {
+  ((void(*)(unsigned int, int, const short *))fp)((unsigned int)index, (int)count, (const short *)v);
 }
 
 void epoxy_glVertexAttribs3dvNV(void *fp, uint32_t index, int32_t count, double * v) {
@@ -11855,12 +12203,28 @@ void epoxy_glVertexAttribs3fvNV(void *fp, uint32_t index, int32_t count, float *
   ((void(*)(unsigned int, int, const float *))fp)((unsigned int)index, (int)count, (const float *)v);
 }
 
+void epoxy_glVertexAttribs3hvNV(void *fp, uint32_t index, int32_t n, uint16_t * v) {
+  ((void(*)(unsigned int, int, const unsigned short *))fp)((unsigned int)index, (int)n, (const unsigned short *)v);
+}
+
+void epoxy_glVertexAttribs3svNV(void *fp, uint32_t index, int32_t count, int16_t * v) {
+  ((void(*)(unsigned int, int, const short *))fp)((unsigned int)index, (int)count, (const short *)v);
+}
+
 void epoxy_glVertexAttribs4dvNV(void *fp, uint32_t index, int32_t count, double * v) {
   ((void(*)(unsigned int, int, const double *))fp)((unsigned int)index, (int)count, (const double *)v);
 }
 
 void epoxy_glVertexAttribs4fvNV(void *fp, uint32_t index, int32_t count, float * v) {
   ((void(*)(unsigned int, int, const float *))fp)((unsigned int)index, (int)count, (const float *)v);
+}
+
+void epoxy_glVertexAttribs4hvNV(void *fp, uint32_t index, int32_t n, uint16_t * v) {
+  ((void(*)(unsigned int, int, const unsigned short *))fp)((unsigned int)index, (int)n, (const unsigned short *)v);
+}
+
+void epoxy_glVertexAttribs4svNV(void *fp, uint32_t index, int32_t count, int16_t * v) {
+  ((void(*)(unsigned int, int, const short *))fp)((unsigned int)index, (int)count, (const short *)v);
 }
 
 void epoxy_glVertexAttribs4ubvNV(void *fp, uint32_t index, int32_t count, moonbit_bytes_t v) {
@@ -11947,6 +12311,10 @@ void epoxy_glVertexStream1sATI(void *fp, uint32_t stream, int32_t x) {
   ((void(*)(unsigned int, short))fp)((unsigned int)stream, (short)x);
 }
 
+void epoxy_glVertexStream1svATI(void *fp, uint32_t stream, int16_t * coords) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)stream, (const short *)coords);
+}
+
 void epoxy_glVertexStream2dATI(void *fp, uint32_t stream, double x, double y) {
   ((void(*)(unsigned int, double, double))fp)((unsigned int)stream, (double)x, (double)y);
 }
@@ -11973,6 +12341,10 @@ void epoxy_glVertexStream2ivATI(void *fp, uint32_t stream, int32_t * coords) {
 
 void epoxy_glVertexStream2sATI(void *fp, uint32_t stream, int32_t x, int32_t y) {
   ((void(*)(unsigned int, short, short))fp)((unsigned int)stream, (short)x, (short)y);
+}
+
+void epoxy_glVertexStream2svATI(void *fp, uint32_t stream, int16_t * coords) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)stream, (const short *)coords);
 }
 
 void epoxy_glVertexStream3dATI(void *fp, uint32_t stream, double x, double y, double z) {
@@ -12003,6 +12375,10 @@ void epoxy_glVertexStream3sATI(void *fp, uint32_t stream, int32_t x, int32_t y, 
   ((void(*)(unsigned int, short, short, short))fp)((unsigned int)stream, (short)x, (short)y, (short)z);
 }
 
+void epoxy_glVertexStream3svATI(void *fp, uint32_t stream, int16_t * coords) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)stream, (const short *)coords);
+}
+
 void epoxy_glVertexStream4dATI(void *fp, uint32_t stream, double x, double y, double z, double w) {
   ((void(*)(unsigned int, double, double, double, double))fp)((unsigned int)stream, (double)x, (double)y, (double)z, (double)w);
 }
@@ -12031,6 +12407,10 @@ void epoxy_glVertexStream4sATI(void *fp, uint32_t stream, int32_t x, int32_t y, 
   ((void(*)(unsigned int, short, short, short, short))fp)((unsigned int)stream, (short)x, (short)y, (short)z, (short)w);
 }
 
+void epoxy_glVertexStream4svATI(void *fp, uint32_t stream, int16_t * coords) {
+  ((void(*)(unsigned int, const short *))fp)((unsigned int)stream, (const short *)coords);
+}
+
 void epoxy_glVertexWeightPointerEXT(void *fp, int32_t size, uint32_t type_, int32_t stride, moonbit_bytes_t pointer) {
   ((void(*)(int, unsigned int, int, const void *))fp)((int)size, (unsigned int)type_, (int)stride, (const void *)pointer);
 }
@@ -12045,6 +12425,10 @@ void epoxy_glVertexWeightfvEXT(void *fp, float * weight) {
 
 void epoxy_glVertexWeighthNV(void *fp, int32_t weight) {
   ((void(*)(unsigned short))fp)((unsigned short)weight);
+}
+
+void epoxy_glVertexWeighthvNV(void *fp, uint16_t * weight) {
+  ((void(*)(const unsigned short *))fp)((const unsigned short *)weight);
 }
 
 uint32_t epoxy_glVideoCaptureNV(void *fp, uint32_t video_capture_slot, uint32_t * sequence_num, uint64_t * capture_time) {
@@ -12147,12 +12531,20 @@ void epoxy_glWeightivARB(void *fp, int32_t size, int32_t * weights) {
   ((void(*)(int, const int *))fp)((int)size, (const int *)weights);
 }
 
+void epoxy_glWeightsvARB(void *fp, int32_t size, int16_t * weights) {
+  ((void(*)(int, const short *))fp)((int)size, (const short *)weights);
+}
+
 void epoxy_glWeightubvARB(void *fp, int32_t size, moonbit_bytes_t weights) {
   ((void(*)(int, const unsigned char *))fp)((int)size, (const unsigned char *)weights);
 }
 
 void epoxy_glWeightuivARB(void *fp, int32_t size, uint32_t * weights) {
   ((void(*)(int, const unsigned int *))fp)((int)size, (const unsigned int *)weights);
+}
+
+void epoxy_glWeightusvARB(void *fp, int32_t size, uint16_t * weights) {
+  ((void(*)(int, const unsigned short *))fp)((int)size, (const unsigned short *)weights);
 }
 
 void epoxy_glWindowPos2d(void *fp, double x, double y) {
@@ -12239,6 +12631,18 @@ void epoxy_glWindowPos2sMESA(void *fp, int32_t x, int32_t y) {
   ((void(*)(short, short))fp)((short)x, (short)y);
 }
 
+void epoxy_glWindowPos2sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
+void epoxy_glWindowPos2svARB(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
+void epoxy_glWindowPos2svMESA(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
 void epoxy_glWindowPos3d(void *fp, double x, double y, double z) {
   ((void(*)(double, double, double))fp)((double)x, (double)y, (double)z);
 }
@@ -12323,6 +12727,18 @@ void epoxy_glWindowPos3sMESA(void *fp, int32_t x, int32_t y, int32_t z) {
   ((void(*)(short, short, short))fp)((short)x, (short)y, (short)z);
 }
 
+void epoxy_glWindowPos3sv(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
+void epoxy_glWindowPos3svARB(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
+void epoxy_glWindowPos3svMESA(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
+}
+
 void epoxy_glWindowPos4dMESA(void *fp, double x, double y, double z, double w) {
   ((void(*)(double, double, double, double))fp)((double)x, (double)y, (double)z, (double)w);
 }
@@ -12349,6 +12765,10 @@ void epoxy_glWindowPos4ivMESA(void *fp, int32_t * v) {
 
 void epoxy_glWindowPos4sMESA(void *fp, int32_t x, int32_t y, int32_t z, int32_t w) {
   ((void(*)(short, short, short, short))fp)((short)x, (short)y, (short)z, (short)w);
+}
+
+void epoxy_glWindowPos4svMESA(void *fp, int16_t * v) {
+  ((void(*)(const short *))fp)((const short *)v);
 }
 
 void epoxy_glWindowRectanglesEXT(void *fp, uint32_t mode, int32_t count, int32_t * box) {
