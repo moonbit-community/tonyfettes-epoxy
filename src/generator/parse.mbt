@@ -49,8 +49,11 @@ priv enum Region {
 }
 
 ///|
-priv enum Sub {
-  None
+/// Within a `<proto>`/`<param>`, which child element the current text belongs
+/// to: the `<ptype>` (C base type), the `<name>` (identifier), or the
+/// surrounding declarator tokens (`const`, `*`, spaces).
+priv enum Field {
+  Surrounding
   Ptype
   Name
 }
@@ -61,7 +64,7 @@ fn parse_commands(path : String) -> Array[Command] raise {
   let reader = @xml.Reader::from_file(path)
   let commands : Array[Command] = []
   let mut region = Region::Outside
-  let mut sub = Sub::None
+  let mut field = Field::Surrounding
 
   // proto (return + function name) accumulators
   let mut proto_ptype = ""
@@ -111,38 +114,38 @@ fn parse_commands(path : String) -> Array[Command] raise {
           }
           "proto" => {
             region = Region::Proto
-            sub = Sub::None
+            field = Field::Surrounding
           }
           "param" => {
             region = Region::Param
-            sub = Sub::None
+            field = Field::Surrounding
             p_ptype = ""
             p_name = ""
             p_text = ""
           }
-          "ptype" => sub = Sub::Ptype
-          "name" => sub = Sub::Name
+          "ptype" => field = Field::Ptype
+          "name" => field = Field::Name
           _ => ()
         }
       @xml.Text(t) =>
         match region {
           Region::Proto =>
-            match sub {
-              Sub::Ptype => proto_ptype = proto_ptype + t
-              Sub::Name => proto_name = proto_name + t
-              Sub::None => proto_text = proto_text + t
+            match field {
+              Field::Ptype => proto_ptype = proto_ptype + t
+              Field::Name => proto_name = proto_name + t
+              Field::Surrounding => proto_text = proto_text + t
             }
           Region::Param =>
-            match sub {
-              Sub::Ptype => p_ptype = p_ptype + t
-              Sub::Name => p_name = p_name + t
-              Sub::None => p_text = p_text + t
+            match field {
+              Field::Ptype => p_ptype = p_ptype + t
+              Field::Name => p_name = p_name + t
+              Field::Surrounding => p_text = p_text + t
             }
           Region::Outside => ()
         }
       @xml.End(name) =>
         match name {
-          "ptype" | "name" => sub = Sub::None
+          "ptype" | "name" => field = Field::Surrounding
           "proto" => region = Region::Outside
           "param" => {
             region = Region::Outside
