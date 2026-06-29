@@ -1,36 +1,34 @@
 ///|
-test "scalar lookup maps to the right MoonBit type" {
+test "scalar lookup gives the right C and MoonBit types" {
   let m = lookup("GLenum").unwrap()
-  inspect(m.moonbit_type, content="UInt")
-  inspect(m.category == Scalar, content="true")
+  inspect(m.c_type.c(), content="unsigned int")
+  inspect(m.m_type.moonbit(), content="UInt")
 }
 
 ///|
-test "pointer-width offset is Int64, never narrowed" {
+test "pointer-width type resolves to intptr-sized C / Int64 MoonBit" {
   let m = lookup("GLsizeiptr").unwrap()
-  inspect(m.moonbit_type, content="Int64")
-  inspect(m.category == PtrSized, content="true")
+  inspect(m.c_type.c(), content="ssize_t")
+  inspect(m.m_type.moonbit(), content="Int64")
 }
 
 ///|
-test "unknown type returns None so the generator can complain" {
-  inspect(lookup("GLnope") is None, content="true")
+test "GLboolean and GLubyte share a C type but differ in MoonBit" {
+  inspect(lookup("GLboolean").unwrap().c_type.c(), content="unsigned char")
+  inspect(lookup("GLubyte").unwrap().c_type.c(), content="unsigned char")
+  inspect(lookup("GLboolean").unwrap().m_type.moonbit(), content="Bool")
+  inspect(lookup("GLubyte").unwrap().m_type.moonbit(), content="Int")
 }
 
 ///|
-test "every typedef seen in gl.xml command signatures is covered" {
-  // The full list of <ptype> names that actually appear in gl.xml command
-  // signatures (excluding bare `struct _cl_*`, which are extension-only).
-  let needed = [
-    "GLenum", "GLuint", "GLint", "GLsizei", "GLfloat", "GLdouble", "GLfixed",
-    "GLboolean", "GLshort", "GLuint64", "GLintptr", "GLubyte", "GLchar",
-    "GLbyte", "GLhalfNV", "GLbitfield", "GLuint64EXT", "GLsizeiptr",
-    "GLint64EXT", "GLint64", "GLushort", "GLhandleARB", "GLsync",
-    "GLvdpauSurfaceNV", "GLclampf", "GLcharARB", "GLeglImageOES",
-    "GLsizeiptrARB", "GLintptrARB", "GLeglClientBufferEXT", "GLclampx",
-    "GLclampd", "GLDEBUGPROC", "GLDEBUGPROCKHR", "GLDEBUGPROCARB",
-    "GLDEBUGPROCAMD", "GLVULKANPROCNV",
-  ]
-  let missing = needed.filter(fn(t) { lookup(t) is None })
-  inspect(missing.length(), content="0")
+test "MoonBit ABI spelling" {
+  inspect(lookup("GLuint64").unwrap().m_type.c_abi(), content="uint64_t")
+  inspect(lookup("GLfloat").unwrap().m_type.c_abi(), content="float")
+}
+
+///|
+test "opaque handles and callbacks are unsupported (absent from the table)" {
+  inspect(lookup("GLsync") is None, content="true")
+  inspect(lookup("GLDEBUGPROC") is None, content="true")
+  inspect(lookup("GLhandleARB") is None, content="true")
 }

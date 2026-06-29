@@ -1,313 +1,167 @@
 ///|
-/// The type mapping table that drives the binding generator.
+/// The type vocabulary and mapping table that drive the binding generator.
 ///
-/// Every `GLxxx` typedef found in the Khronos registry (`registry/gl.xml`)
-/// collapses onto a small set of underlying C representations. The generator
-/// reads each command's `<ptype>` from the XML and looks it up here to decide:
-///   - the MoonBit-side type to expose,
-///   - the C type to emit in the generated shim,
-///   - how the argument/return value must be marshalled across the FFI boundary.
-///
-/// This is the single source of truth; extending GL coverage is mostly a matter
-/// of keeping this table complete.
+/// Each GL typedef the generator can handle maps to a `TypeInfo`: the concrete
+/// C type it resolves to (for the function-pointer cast) and the MoonBit type
+/// it is exposed as. Both are enums — no stringly-typed spellings — so the
+/// "GLenum is unsigned int / UInt" knowledge lives in exactly one place.
 
 ///|
-/// How a value crosses the MoonBit <-> C FFI boundary.
-pub(all) enum FfiCategory {
-  /// Plain by-value number. Direct 1:1 mapping, no marshalling.
-  Scalar
-  /// Pointer-width integer (offset/size). MoonBit `Int64` -> C `intptr_t`/
-  /// `ssize_t`. MUST NOT be narrowed to 32-bit or it truncates on 64-bit.
-  PtrSized
-  /// Pointer to data: arrays, pixel buffers, in/out params, C strings.
-  /// Marshalled as `Bytes` / `FixedArray[T]` (passed via `#borrow`) or an
-  /// `#external` raw pointer.
-  Pointer
-  /// Opaque handle (`GLsync`, `GLhandleARB`, egl image, ...). `#external type`.
-  Opaque
-  /// Function-pointer callback (`GLDEBUGPROC` family). Needs a MoonBit->C
-  /// trampoline; deferred in the MVP.
-  Callback
-} derive(Eq)
+/// A concrete C type. Leaves are real machine types (`c` gives the C
+/// spelling); `Pointer` nests. Unlike a parsed declarator, every leaf is known,
+/// so `c` is total.
+pub(all) enum CType {
+  Void
+  UInt // unsigned int
+  Int // int
+  Float
+  Double
+  Int64 // int64_t
+  UInt64 // uint64_t
+  Byte // unsigned char
+  SByte // signed char
+  Char // char
+  Short // short
+  UShort // unsigned short
+  IntPtr // intptr_t
+  SizePtr // ssize_t
+  Pointer(CType, is_const~ : Bool)
+}
 
 ///|
-/// One row of the mapping table.
-pub struct TypeMapping {
-  /// The registry typedef name, e.g. "GLenum".
-  gl_type : String
-  /// The C type the generated shim should use, e.g. "unsigned int".
-  c_type : String
-  /// The MoonBit type exposed to callers, e.g. "UInt".
-  moonbit_type : String
-  /// How it is marshalled.
-  category : FfiCategory
-} derive(Eq)
-
-///|
-/// The canonical table. Synonym typedefs (e.g. GLclampf ~ GLfloat) are listed
-/// explicitly so a registry lookup never misses.
-pub let table : Array[TypeMapping] = [
-  // --- 1. Scalars: ~95% of all parameters -------------------------------
-  TypeMapping::{
-    gl_type: "GLenum",
-    c_type: "unsigned int",
-    moonbit_type: "UInt",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLbitfield",
-    c_type: "unsigned int",
-    moonbit_type: "UInt",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLuint",
-    c_type: "unsigned int",
-    moonbit_type: "UInt",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLint",
-    c_type: "int",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLsizei",
-    c_type: "int",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLfixed",
-    c_type: "int",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLclampx",
-    c_type: "int",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLfloat",
-    c_type: "float",
-    moonbit_type: "Float",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLclampf",
-    c_type: "float",
-    moonbit_type: "Float",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLdouble",
-    c_type: "double",
-    moonbit_type: "Double",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLclampd",
-    c_type: "double",
-    moonbit_type: "Double",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLint64",
-    c_type: "int64_t",
-    moonbit_type: "Int64",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLint64EXT",
-    c_type: "int64_t",
-    moonbit_type: "Int64",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLuint64",
-    c_type: "uint64_t",
-    moonbit_type: "UInt64",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLuint64EXT",
-    c_type: "uint64_t",
-    moonbit_type: "UInt64",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLbyte",
-    c_type: "signed char",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLchar",
-    c_type: "char",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLcharARB",
-    c_type: "char",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLboolean",
-    c_type: "unsigned char",
-    moonbit_type: "Bool",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLubyte",
-    c_type: "unsigned char",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLshort",
-    c_type: "short",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLushort",
-    c_type: "unsigned short",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLhalf",
-    c_type: "unsigned short",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLhalfARB",
-    c_type: "unsigned short",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-  TypeMapping::{
-    gl_type: "GLhalfNV",
-    c_type: "unsigned short",
-    moonbit_type: "Int",
-    category: Scalar,
-  },
-
-  // --- 2. Pointer-width integers (offsets / sizes) ----------------------
-  TypeMapping::{
-    gl_type: "GLintptr",
-    c_type: "intptr_t",
-    moonbit_type: "Int64",
-    category: PtrSized,
-  },
-  TypeMapping::{
-    gl_type: "GLintptrARB",
-    c_type: "intptr_t",
-    moonbit_type: "Int64",
-    category: PtrSized,
-  },
-  TypeMapping::{
-    gl_type: "GLsizeiptr",
-    c_type: "ssize_t",
-    moonbit_type: "Int64",
-    category: PtrSized,
-  },
-  TypeMapping::{
-    gl_type: "GLsizeiptrARB",
-    c_type: "ssize_t",
-    moonbit_type: "Int64",
-    category: PtrSized,
-  },
-  TypeMapping::{
-    gl_type: "GLvdpauSurfaceNV",
-    c_type: "intptr_t",
-    moonbit_type: "Int64",
-    category: PtrSized,
-  },
-
-  // --- 3. Pointers: data / arrays / strings / in-out params -------------
-  // The generator emits `Bytes` (via #borrow) for these; `void` here is the
-  // pointee fallback, the actual pointee type comes from the command sig.
-  TypeMapping::{
-    gl_type: "GLvoid",
-    c_type: "void",
-    moonbit_type: "Bytes",
-    category: Pointer,
-  },
-
-  // --- 4. Opaque handles ------------------------------------------------
-  TypeMapping::{
-    gl_type: "GLsync",
-    c_type: "GLsync",
-    moonbit_type: "GLsync",
-    category: Opaque,
-  },
-  TypeMapping::{
-    gl_type: "GLhandleARB",
-    c_type: "GLhandleARB",
-    moonbit_type: "GLhandleARB",
-    category: Opaque,
-  },
-  TypeMapping::{
-    gl_type: "GLeglImageOES",
-    c_type: "void*",
-    moonbit_type: "GLeglImageOES",
-    category: Opaque,
-  },
-  TypeMapping::{
-    gl_type: "GLeglClientBufferEXT",
-    c_type: "void*",
-    moonbit_type: "GLeglClientBufferEXT",
-    category: Opaque,
-  },
-
-  // --- 5. Callbacks (deferred in MVP) -----------------------------------
-  TypeMapping::{
-    gl_type: "GLDEBUGPROC",
-    c_type: "GLDEBUGPROC",
-    moonbit_type: "GLDEBUGPROC",
-    category: Callback,
-  },
-  TypeMapping::{
-    gl_type: "GLDEBUGPROCARB",
-    c_type: "GLDEBUGPROCARB",
-    moonbit_type: "GLDEBUGPROC",
-    category: Callback,
-  },
-  TypeMapping::{
-    gl_type: "GLDEBUGPROCKHR",
-    c_type: "GLDEBUGPROCKHR",
-    moonbit_type: "GLDEBUGPROC",
-    category: Callback,
-  },
-  TypeMapping::{
-    gl_type: "GLDEBUGPROCAMD",
-    c_type: "GLDEBUGPROCAMD",
-    moonbit_type: "GLDEBUGPROC",
-    category: Callback,
-  },
-  TypeMapping::{
-    gl_type: "GLVULKANPROCNV",
-    c_type: "GLVULKANPROCNV",
-    moonbit_type: "GLVULKANPROCNV",
-    category: Callback,
-  },
-]
-
-///|
-/// Look up a registry typedef. Returns None for unknown types so the generator
-/// can report (and the user can extend the table) instead of emitting wrong code.
-pub fn lookup(gl_type : String) -> TypeMapping? {
-  for m in table {
-    if m.gl_type == gl_type {
-      return Some(m)
-    }
+/// The C spelling, for the generated function-pointer cast.
+pub fn CType::c(self : CType) -> String {
+  match self {
+    Void => "void"
+    UInt => "unsigned int"
+    Int => "int"
+    Float => "float"
+    Double => "double"
+    Int64 => "int64_t"
+    UInt64 => "uint64_t"
+    Byte => "unsigned char"
+    SByte => "signed char"
+    Char => "char"
+    Short => "short"
+    UShort => "unsigned short"
+    IntPtr => "intptr_t"
+    SizePtr => "ssize_t"
+    Pointer(inner, is_const~) =>
+      (if is_const { "const " } else { "" }) + inner.c() + " *"
   }
-  None
+}
+
+///|
+/// A MoonBit type appearing in a generated binding. It knows how to print
+/// itself and how it crosses the C FFI boundary.
+pub(all) enum MType {
+  UInt
+  Int
+  Float
+  Double
+  Int64
+  UInt64
+  Bool
+  Bytes
+  Array(MType) // FixedArray[elem]
+}
+
+///|
+/// The MoonBit-source spelling, e.g. `UInt`, `FixedArray[Float]`.
+pub fn MType::moonbit(self : MType) -> String {
+  match self {
+    UInt => "UInt"
+    Int => "Int"
+    Float => "Float"
+    Double => "Double"
+    Int64 => "Int64"
+    UInt64 => "UInt64"
+    Bool => "Bool"
+    Bytes => "Bytes"
+    Array(e) => "FixedArray[\{e.moonbit()}]"
+  }
+}
+
+///|
+/// The C type a value arrives as on the shim side (the MoonBit ABI spelling).
+pub fn MType::c_abi(self : MType) -> String {
+  match self {
+    UInt => "uint32_t"
+    Int => "int32_t"
+    Float => "float"
+    Double => "double"
+    Int64 => "int64_t"
+    UInt64 => "uint64_t"
+    Bool => "int32_t"
+    Bytes => "moonbit_bytes_t"
+    Array(e) => e.c_abi() + " *"
+  }
+}
+
+///|
+/// Pointer-like types must be `#borrow`'d into the extern.
+pub fn MType::is_pointer(self : MType) -> Bool {
+  match self {
+    Bytes | Array(_) => true
+    _ => false
+  }
+}
+
+///|
+/// How a GL typedef maps: its concrete C type and its MoonBit type. Both are
+/// needed because neither determines the other — e.g. `GLboolean` and `GLubyte`
+/// share the C type `unsigned char` but differ in MoonBit (`Bool` vs `Int`).
+pub struct TypeInfo {
+  c_type : CType
+  m_type : MType
+}
+
+///|
+/// The mapping table: every GL typedef the generator can express, keyed by its
+/// registry name. Typedefs absent here (opaque handles like `GLsync`, callback
+/// types like `GLDEBUGPROC`) are simply unsupported — the command is skipped.
+pub let table : Map[String, TypeInfo] = {
+  // unsigned 32-bit
+  "GLenum": { c_type: UInt, m_type: UInt },
+  "GLbitfield": { c_type: UInt, m_type: UInt },
+  "GLuint": { c_type: UInt, m_type: UInt },
+  // signed 32-bit
+  "GLint": { c_type: Int, m_type: Int },
+  "GLsizei": { c_type: Int, m_type: Int },
+  "GLfixed": { c_type: Int, m_type: Int },
+  "GLclampx": { c_type: Int, m_type: Int },
+  // floating point
+  "GLfloat": { c_type: Float, m_type: Float },
+  "GLclampf": { c_type: Float, m_type: Float },
+  "GLdouble": { c_type: Double, m_type: Double },
+  "GLclampd": { c_type: Double, m_type: Double },
+  // 64-bit
+  "GLint64": { c_type: Int64, m_type: Int64 },
+  "GLint64EXT": { c_type: Int64, m_type: Int64 },
+  "GLuint64": { c_type: UInt64, m_type: UInt64 },
+  "GLuint64EXT": { c_type: UInt64, m_type: UInt64 },
+  // byte-sized (GLboolean vs GLubyte differ in MoonBit)
+  "GLbyte": { c_type: SByte, m_type: Int },
+  "GLchar": { c_type: Char, m_type: Int },
+  "GLcharARB": { c_type: Char, m_type: Int },
+  "GLboolean": { c_type: Byte, m_type: Bool },
+  "GLubyte": { c_type: Byte, m_type: Int },
+  // 16-bit (by value only; no native fixed-width array)
+  "GLshort": { c_type: Short, m_type: Int },
+  "GLushort": { c_type: UShort, m_type: Int },
+  "GLhalf": { c_type: UShort, m_type: Int },
+  "GLhalfARB": { c_type: UShort, m_type: Int },
+  "GLhalfNV": { c_type: UShort, m_type: Int },
+  // pointer-width integers (offsets / sizes)
+  "GLintptr": { c_type: IntPtr, m_type: Int64 },
+  "GLintptrARB": { c_type: IntPtr, m_type: Int64 },
+  "GLsizeiptr": { c_type: SizePtr, m_type: Int64 },
+  "GLsizeiptrARB": { c_type: SizePtr, m_type: Int64 },
+  "GLvdpauSurfaceNV": { c_type: IntPtr, m_type: Int64 },
+}
+
+///|
+/// Look up a GL typedef, or None if the generator can't express it.
+pub fn lookup(name : String) -> TypeInfo? {
+  table.get(name)
 }

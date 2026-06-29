@@ -8,19 +8,19 @@
 /// registry*. Leaves (`Base`) are GL-registry spellings — `GLfloat`, `GLenum`,
 /// `void` — so this is purely syntactic, with no notion of size, ABI, or C
 /// spelling. Translating it to a real C type is the generator's job (it looks
-/// each leaf up in the type table; see the generator's `CType`).
+/// each leaf up in the type table; see the generator's `Declarator`).
 ///
 /// `is_const` records whether the pointee is `const` (the input-vs-output
 /// signal); `const` is a reserved word, hence the label name.
-pub(all) enum CType {
+pub(all) enum Declarator {
   Base(String)
-  Ptr(CType, is_const~ : Bool)
+  Ptr(Declarator, is_const~ : Bool)
 }
 
 ///|
 /// Render a GL type the way it reads in C, used for diagnostics and tests:
 /// `Ptr(Base("GLfloat"), is_const=true)` -> `const GLfloat*`.
-pub impl Show for CType with output(self, logger) {
+pub impl Show for Declarator with output(self, logger) {
   match self {
     Base(name) => logger.write_string(name)
     Ptr(inner, is_const~) => {
@@ -36,7 +36,7 @@ pub impl Show for CType with output(self, logger) {
 ///|
 /// The innermost base typedef name (sees through pointers), e.g. the `GLubyte`
 /// in `const GLubyte *`.
-pub fn CType::base_name(self : CType) -> String {
+pub fn Declarator::base_name(self : Declarator) -> String {
   match self {
     Base(name) => name
     Ptr(inner, ..) => inner.base_name()
@@ -99,8 +99,8 @@ fn tokenize_declarator(s : String) -> Array[Token] {
 /// Builds the type outward from the base leaf: one pointer level per `*`, with
 /// a `const` attached to the next pointer (so a `const` before the first `*`
 /// marks the pointee const).
-pub fn parse_declarator(ptype : String, text : String) -> CType {
-  let mut ty : CType = Base(ptype)
+pub fn parse_declarator(ptype : String, text : String) -> Declarator {
+  let mut ty : Declarator = Base(ptype)
   let mut pending_const = false
   for t in tokenize_declarator(text) {
     match t {

@@ -1,107 +1,34 @@
 ///|
 /// Two phases, deliberately separated:
-///   - `Command::signature` does ALL type resolution. Every lookup returns
-///     `Option`; an unmapped/unsupported type makes the whole signature `None`
-///     (the command is skipped) — never a fabricated default.
+///   - `Command::signature` does ALL type resolution against the `@gen` type
+///     table. Every lookup returns `Option`; an unmapped/unsupported type makes
+///     the whole signature `None` (the command is skipped) — never a default.
 ///   - `render` builds strings from an already-resolved `Signature`. Every type
-///     is concrete by then, so rendering is total and cannot miscompile.
+///     is a concrete `@gen.CType`/`@gen.MType`, so rendering is total.
 
 ///|
-/// A MoonBit type appearing in a generated binding. It knows how to print
-/// itself and how it is represented across the C FFI boundary.
-priv enum MType {
-  UInt
-  Int
-  Float
-  Double
-  Int64
-  UInt64
-  Bool
-  Bytes
-  Array(MType) // FixedArray[elem]
-}
-
-///|
-/// The MoonBit-source spelling, e.g. `UInt`, `FixedArray[Float]`.
-fn MType::moonbit(self : MType) -> String {
-  match self {
-    UInt => "UInt"
-    Int => "Int"
-    Float => "Float"
-    Double => "Double"
-    Int64 => "Int64"
-    UInt64 => "UInt64"
-    Bool => "Bool"
-    Bytes => "Bytes"
-    Array(e) => "FixedArray[\{e.moonbit()}]"
-  }
-}
-
-///|
-/// The C type this value arrives as on the shim side (the MoonBit ABI).
-fn MType::c_abi(self : MType) -> ResolvedCType {
-  match self {
-    UInt => Prim("uint32_t")
-    Int => Prim("int32_t")
-    Float => Prim("float")
-    Double => Prim("double")
-    Int64 => Prim("int64_t")
-    UInt64 => Prim("uint64_t")
-    Bool => Prim("int32_t")
-    Bytes => Prim("moonbit_bytes_t")
-    Array(e) => Pointer(e.c_abi(), is_const=false)
-  }
-}
-
-///|
-/// Pointer-like types must be `#borrow`'d into the extern.
-fn MType::is_pointer(self : MType) -> Bool {
-  match self {
-    Bytes | Array(_) => true
-    _ => false
-  }
-}
-
-///|
-/// A concrete C type, with literal leaves (`unsigned int`, `moonbit_bytes_t`,
-/// ...). Unlike the registry-level `CType`, every leaf is already resolved, so
-/// `render` is a total, lookup-free function.
-priv enum ResolvedCType {
-  Void
-  Prim(String)
-  Pointer(ResolvedCType, is_const~ : Bool)
-}
-
-///|
-fn ResolvedCType::render(self : ResolvedCType) -> String {
-  match self {
-    Void => "void"
-    Prim(s) => s
-    Pointer(inner, is_const~) =>
-      (if is_const { "const " } else { "" }) + inner.render() + " *"
-  }
-}
-
-///|
-/// One parameter, fully resolved: its MoonBit representation (`mty`, yielding
-/// both the source type and the ABI type) and the faithful GL type to cast to
-/// in the call (`cast`).
+/// One parameter, fully resolved: its MoonBit representation (`mty`, which
+/// yields both the source type and the ABI type) and the faithful C type to
+/// cast to in the call (`cast`).
 priv struct Binding {
   name : String
-  mty : MType
-  cast : ResolvedCType
+  mty : @gen.MType
+  cast : @gen.CType
 }
 
 ///|
 /// Resolve a parameter into its binding, or None if its type is unsupported.
-fn Binding::new(name : String, ty : @cdecl.CType) -> Binding? {
+fn Binding::new(name : String, ty : @cdecl.Declarator) -> Binding? {
+  guard resolve_ctype(ty) is Some(cast) else { return None }
   let mty = match ty {
-    Base(_) => scalar_mtype(ty.base_name())
-    Ptr(Base(_), ..) => ptr_mtype(ty.base_name())
-    _ => None // pointer-to-pointer and deeper: unsupported
+    Base(typedef) => @gen.lookup(typedef).map(fn(info) { info.m_type })
+    Ptr(inner, ..) =>
+      match resolve_ctype(inner) {
+        Some(elem) => pointer_mtype(elem)
+        None => None
+      }
   }
   guard mty is Some(mty) else { return None }
-  guard resolve_ctype(ty) is Some(cast) else { return None }
   Some({ name, mty, cast })
 }
 
@@ -110,7 +37,7 @@ fn Binding::new(name : String, ty : @cdecl.CType) -> Binding? {
 priv enum Ret {
   Void
   Str
-  Scalar(MType, ResolvedCType)
+  Scalar(@gen.MType, @gen.CType)
 }
 
 ///|
@@ -132,9 +59,9 @@ fn Command::signature(self : Command) -> Signature? {
     Ptr(Base("GLubyte" | "GLchar" | "GLbyte"), ..) => Str
     Ptr(_, ..) => return None // non-string pointer return: unsupported
     Base(name) => {
-      guard scalar_mtype(name) is Some(mty) else { return None }
+      guard @gen.lookup(name) is Some(info) else { return None }
       guard resolve_ctype(self.ret) is Some(cast) else { return None }
-      Scalar(mty, cast)
+      Scalar(info.m_type, cast)
     }
   }
   let params = []
@@ -143,67 +70,46 @@ fn Command::signature(self : Command) -> Signature? {
       p.ty.base_name().has_prefix("GLVULKAN") {
       return None // callback param: unsupported
     }
-    guard Binding::new(moonbit_safe_ident(p.name), p.ty) is Some(b) else { return None }
+    guard Binding::new(moonbit_safe_ident(p.name), p.ty) is Some(b) else {
+      return None
+    }
     params.push(b)
   }
   Some({ params, ret })
 }
 
-// --- type resolution: all Option, no fabricated defaults -----------------
+// --- type resolution: declarator -> concrete types via the @gen table ----
 
 ///|
-/// The MoonBit type for a scalar / ptr-sized GL typedef, or None otherwise.
-fn scalar_mtype(gltype : String) -> MType? {
-  guard @gen.lookup(gltype) is Some(m) else { return None }
-  match m.category {
-    @gen.Scalar | @gen.PtrSized =>
-      match m.moonbit_type {
-        "UInt" => Some(UInt)
-        "Int" => Some(Int)
-        "Float" => Some(Float)
-        "Double" => Some(Double)
-        "Int64" => Some(Int64)
-        "UInt64" => Some(UInt64)
-        "Bool" => Some(Bool)
-        _ => None
-      }
-    _ => None
-  }
-}
-
-///|
-/// The MoonBit type for a single pointer whose element is `base`, or None for
-/// elements with no native fixed-width array (16-bit, opaque handles, ...).
-fn ptr_mtype(base : String) -> MType? {
-  match base {
-    "void" | "GLvoid" | "GLchar" | "GLcharARB" | "GLubyte" | "GLbyte"
-    | "GLboolean" => Some(Bytes)
-    "GLfloat" | "GLclampf" => Some(Array(Float))
-    "GLdouble" | "GLclampd" => Some(Array(Double))
-    "GLint" | "GLsizei" | "GLfixed" | "GLclampx" => Some(Array(Int))
-    "GLuint" | "GLbitfield" | "GLenum" => Some(Array(UInt))
-    "GLint64" | "GLint64EXT" => Some(Array(Int64))
-    "GLuint64" | "GLuint64EXT" => Some(Array(UInt64))
-    _ => None
-  }
-}
-
-///|
-/// Resolve a registry GL type into a concrete C type, or None if a leaf typedef
-/// isn't in the mapping table. (A free function, not a method: `CType` belongs
-/// to the `cdecl` package; this resolution is the generator's concern, since it
-/// consults the type-mapping table.)
-fn resolve_ctype(ty : @cdecl.CType) -> ResolvedCType? {
+/// Resolve a parsed declarator into its concrete C type (for the cast), or None
+/// if a leaf typedef isn't in the table.
+fn resolve_ctype(ty : @cdecl.Declarator) -> @gen.CType? {
   match ty {
-    Base("void") => Some(Void)
-    Base(name) => {
-      guard @gen.lookup(name) is Some(m) else { return None }
-      Some(Prim(m.c_type))
-    }
-    Ptr(inner, is_const~) => {
-      guard resolve_ctype(inner) is Some(ic) else { return None }
-      Some(Pointer(ic, is_const~))
-    }
+    Base("void" | "GLvoid") => Some(Void)
+    Base(name) => @gen.lookup(name).map(fn(info) { info.c_type })
+    Ptr(inner, is_const~) =>
+      match resolve_ctype(inner) {
+        Some(ic) => Some(Pointer(ic, is_const~))
+        None => None
+      }
+  }
+}
+
+///|
+/// The MoonBit type for a single pointer to an element of the given C type:
+/// byte-sized elements become raw `Bytes`, wider scalars a `FixedArray`, and
+/// anything without a native fixed-width array (16-bit, pointer-sized) is
+/// unsupported.
+fn pointer_mtype(elem : @gen.CType) -> @gen.MType? {
+  match elem {
+    Void | Char | Byte | SByte => Some(Bytes)
+    UInt => Some(Array(UInt))
+    Int => Some(Array(Int))
+    Float => Some(Array(Float))
+    Double => Some(Array(Double))
+    Int64 => Some(Array(Int64))
+    UInt64 => Some(Array(UInt64))
+    _ => None
   }
 }
 
@@ -272,11 +178,9 @@ fn render(c : Command, sig : Signature) -> Rendered {
   let slot = "d_" + c.name
   let names = sig.params.map(fn(b) { b.name })
   let mbt_params = sig.params.map(fn(b) { b.name + " : " + b.mty.moonbit() })
-  let c_shim_params = sig.params.map(fn(b) {
-    b.mty.c_abi().render() + " " + b.name
-  })
-  let gl_sig = sig.params.map(fn(b) { b.cast.render() })
-  let gl_cast_args = sig.params.map(fn(b) { "(" + b.cast.render() + ")" + b.name })
+  let c_shim_params = sig.params.map(fn(b) { b.mty.c_abi() + " " + b.name })
+  let gl_sig = sig.params.map(fn(b) { b.cast.c() })
+  let gl_cast_args = sig.params.map(fn(b) { "(" + b.cast.c() + ")" + b.name })
   let sig_str = if gl_sig.is_empty() { "void" } else { gl_sig.join(", ") }
   let borrowed = []
   for b in sig.params {
@@ -336,8 +240,8 @@ fn render(c : Command, sig : Signature) -> Rendered {
       cc.write_string("  ((void(*)(\{sig_str}))fp)(\{cargs});\n}\n\n")
     }
     Scalar(mty, cast) => {
-      let abi = mty.c_abi().render()
-      let ret_gl = cast.render()
+      let abi = mty.c_abi()
+      let ret_gl = cast.c()
       cc.write_string("\{abi} \{sym}(\{c_params.join(", ")}) {\n")
       if mty is Bool {
         cc.write_string("  return (\{abi})(((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs}) != 0);\n}\n\n")

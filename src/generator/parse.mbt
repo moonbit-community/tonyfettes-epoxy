@@ -6,13 +6,13 @@
 ///|
 priv struct Param {
   name : String
-  ty : @cdecl.CType
+  ty : @cdecl.Declarator
 }
 
 ///|
 priv struct Command {
   name : String
-  ret : @cdecl.CType
+  ret : @cdecl.Declarator
   params : Array[Param]
 }
 
@@ -69,7 +69,7 @@ fn Decl::ident(self : Decl) -> String {
 ///|
 /// The accumulated declaration as the GL type it describes (declarator parsing
 /// lives in the `cdecl` package).
-fn Decl::to_ctype(self : Decl) -> @cdecl.CType {
+fn Decl::to_ctype(self : Decl) -> @cdecl.Declarator {
   @cdecl.parse_declarator(self.ptype.to_string(), self.text.to_string())
 }
 
