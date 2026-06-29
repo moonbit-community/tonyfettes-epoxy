@@ -2,19 +2,19 @@
 test "scalar lookup maps to the right MoonBit type" {
   let m = lookup("GLenum").unwrap()
   inspect(m.moonbit_type, content="UInt")
-  inspect(m.category, content="Scalar")
+  inspect(m.category == Scalar, content="true")
 }
 
 ///|
 test "pointer-width offset is Int64, never narrowed" {
   let m = lookup("GLsizeiptr").unwrap()
   inspect(m.moonbit_type, content="Int64")
-  inspect(m.category, content="PtrSized")
+  inspect(m.category == PtrSized, content="true")
 }
 
 ///|
 test "unknown type returns None so the generator can complain" {
-  inspect(lookup("GLnope"), content="None")
+  inspect(lookup("GLnope") is None, content="true")
 }
 
 ///|
@@ -32,5 +32,5 @@ test "every typedef seen in gl.xml command signatures is covered" {
     "GLDEBUGPROCAMD", "GLVULKANPROCNV",
   ]
   let missing = needed.filter(fn(t) { lookup(t) is None })
-  inspect(missing, content="[]")
+  inspect(missing.length(), content="0")
 }

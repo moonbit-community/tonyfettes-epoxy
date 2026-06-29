@@ -58,7 +58,7 @@ fn parse_commands(path : String) -> Array[Command] raise {
       .replace(old="const", new="")
       .replace(old="struct", new="")
       .trim(chars=" \t\n")
-      .to_string()
+      .to_owned()
     (cleaned, pointer)
   }
 
@@ -112,12 +112,12 @@ fn parse_commands(path : String) -> Array[Command] raise {
           "param" => {
             region = Region::Outside
             let (gltype, pointer) = finalize_type(p_ptype, p_text)
-            params.push({ name: p_name.trim(chars=" ").to_string(), gltype, pointer })
+            params.push({ name: p_name.trim(chars=" ").to_owned(), gltype, pointer })
           }
           "command" => {
             let (ret, ret_pointer) = finalize_type(proto_ptype, proto_text)
             commands.push({
-              name: proto_name.trim(chars=" ").to_string(),
+              name: proto_name.trim(chars=" ").to_owned(),
               ret,
               ret_pointer,
               params,

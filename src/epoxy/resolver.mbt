@@ -1,7 +1,7 @@
 ///|
 /// An opaque C pointer: a dlopen handle or a resolved entry-point address.
 #external
-type CPtr
+priv type CPtr
 
 ///|
 extern "c" fn ffi_gl_dlopen() -> CPtr = "epoxy_gl_dlopen"
@@ -19,7 +19,9 @@ extern "c" fn ffi_ptr_is_null(p : CPtr) -> Bool = "epoxy_ptr_is_null"
 let gl_handle : Ref[CPtr?] = { val: None }
 
 ///|
-pub suberror ResolveError String
+pub suberror ResolveError {
+  ResolveError(String)
+}
 
 ///|
 pub impl Show for ResolveError with output(self, logger) {

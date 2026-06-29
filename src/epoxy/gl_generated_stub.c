@@ -47,20 +47,20 @@ void epoxy_call_glAlphaFragmentOp3ATI(void *fp, uint32_t op, uint32_t dst, uint3
   ((void(*)(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int))fp)((unsigned int)op, (unsigned int)dst, (unsigned int)dstMod, (unsigned int)arg1, (unsigned int)arg1Rep, (unsigned int)arg1Mod, (unsigned int)arg2, (unsigned int)arg2Rep, (unsigned int)arg2Mod, (unsigned int)arg3, (unsigned int)arg3Rep, (unsigned int)arg3Mod);
 }
 
-void epoxy_call_glAlphaFunc(void *fp, uint32_t func, float ref) {
-  ((void(*)(unsigned int, float))fp)((unsigned int)func, (float)ref);
+void epoxy_call_glAlphaFunc(void *fp, uint32_t func, float ref_) {
+  ((void(*)(unsigned int, float))fp)((unsigned int)func, (float)ref_);
 }
 
-void epoxy_call_glAlphaFuncQCOM(void *fp, uint32_t func, float ref) {
-  ((void(*)(unsigned int, float))fp)((unsigned int)func, (float)ref);
+void epoxy_call_glAlphaFuncQCOM(void *fp, uint32_t func, float ref_) {
+  ((void(*)(unsigned int, float))fp)((unsigned int)func, (float)ref_);
 }
 
-void epoxy_call_glAlphaFuncx(void *fp, uint32_t func, int32_t ref) {
-  ((void(*)(unsigned int, int))fp)((unsigned int)func, (int)ref);
+void epoxy_call_glAlphaFuncx(void *fp, uint32_t func, int32_t ref_) {
+  ((void(*)(unsigned int, int))fp)((unsigned int)func, (int)ref_);
 }
 
-void epoxy_call_glAlphaFuncxOES(void *fp, uint32_t func, int32_t ref) {
-  ((void(*)(unsigned int, int))fp)((unsigned int)func, (int)ref);
+void epoxy_call_glAlphaFuncxOES(void *fp, uint32_t func, int32_t ref_) {
+  ((void(*)(unsigned int, int))fp)((unsigned int)func, (int)ref_);
 }
 
 void epoxy_call_glAlphaToCoverageDitherControlNV(void *fp, uint32_t mode) {
@@ -2167,8 +2167,8 @@ void epoxy_call_glIndexFormatNV(void *fp, uint32_t type_, int32_t stride) {
   ((void(*)(unsigned int, int))fp)((unsigned int)type_, (int)stride);
 }
 
-void epoxy_call_glIndexFuncEXT(void *fp, uint32_t func, float ref) {
-  ((void(*)(unsigned int, float))fp)((unsigned int)func, (float)ref);
+void epoxy_call_glIndexFuncEXT(void *fp, uint32_t func, float ref_) {
+  ((void(*)(unsigned int, float))fp)((unsigned int)func, (float)ref_);
 }
 
 void epoxy_call_glIndexMask(void *fp, uint32_t mask) {
@@ -3275,8 +3275,8 @@ void epoxy_call_glPathStencilDepthOffsetNV(void *fp, float factor, float units) 
   ((void(*)(float, float))fp)((float)factor, (float)units);
 }
 
-void epoxy_call_glPathStencilFuncNV(void *fp, uint32_t func, int32_t ref, uint32_t mask) {
-  ((void(*)(unsigned int, int, unsigned int))fp)((unsigned int)func, (int)ref, (unsigned int)mask);
+void epoxy_call_glPathStencilFuncNV(void *fp, uint32_t func, int32_t ref_, uint32_t mask) {
+  ((void(*)(unsigned int, int, unsigned int))fp)((unsigned int)func, (int)ref_, (unsigned int)mask);
 }
 
 void epoxy_call_glPauseTransformFeedback(void *fp) {
@@ -4283,16 +4283,16 @@ void epoxy_call_glStencilFillPathNV(void *fp, uint32_t path, uint32_t fillMode, 
   ((void(*)(unsigned int, unsigned int, unsigned int))fp)((unsigned int)path, (unsigned int)fillMode, (unsigned int)mask);
 }
 
-void epoxy_call_glStencilFunc(void *fp, uint32_t func, int32_t ref, uint32_t mask) {
-  ((void(*)(unsigned int, int, unsigned int))fp)((unsigned int)func, (int)ref, (unsigned int)mask);
+void epoxy_call_glStencilFunc(void *fp, uint32_t func, int32_t ref_, uint32_t mask) {
+  ((void(*)(unsigned int, int, unsigned int))fp)((unsigned int)func, (int)ref_, (unsigned int)mask);
 }
 
-void epoxy_call_glStencilFuncSeparate(void *fp, uint32_t face, uint32_t func, int32_t ref, uint32_t mask) {
-  ((void(*)(unsigned int, unsigned int, int, unsigned int))fp)((unsigned int)face, (unsigned int)func, (int)ref, (unsigned int)mask);
+void epoxy_call_glStencilFuncSeparate(void *fp, uint32_t face, uint32_t func, int32_t ref_, uint32_t mask) {
+  ((void(*)(unsigned int, unsigned int, int, unsigned int))fp)((unsigned int)face, (unsigned int)func, (int)ref_, (unsigned int)mask);
 }
 
-void epoxy_call_glStencilFuncSeparateATI(void *fp, uint32_t frontfunc, uint32_t backfunc, int32_t ref, uint32_t mask) {
-  ((void(*)(unsigned int, unsigned int, int, unsigned int))fp)((unsigned int)frontfunc, (unsigned int)backfunc, (int)ref, (unsigned int)mask);
+void epoxy_call_glStencilFuncSeparateATI(void *fp, uint32_t frontfunc, uint32_t backfunc, int32_t ref_, uint32_t mask) {
+  ((void(*)(unsigned int, unsigned int, int, unsigned int))fp)((unsigned int)frontfunc, (unsigned int)backfunc, (int)ref_, (unsigned int)mask);
 }
 
 void epoxy_call_glStencilMask(void *fp, uint32_t mask) {
@@ -4603,12 +4603,12 @@ void epoxy_call_glTexEnvxOES(void *fp, uint32_t target, uint32_t pname, int32_t 
   ((void(*)(unsigned int, unsigned int, int))fp)((unsigned int)target, (unsigned int)pname, (int)param);
 }
 
-void epoxy_call_glTexEstimateMotionQCOM(void *fp, uint32_t ref, uint32_t target, uint32_t output) {
-  ((void(*)(unsigned int, unsigned int, unsigned int))fp)((unsigned int)ref, (unsigned int)target, (unsigned int)output);
+void epoxy_call_glTexEstimateMotionQCOM(void *fp, uint32_t ref_, uint32_t target, uint32_t output) {
+  ((void(*)(unsigned int, unsigned int, unsigned int))fp)((unsigned int)ref_, (unsigned int)target, (unsigned int)output);
 }
 
-void epoxy_call_glTexEstimateMotionRegionsQCOM(void *fp, uint32_t ref, uint32_t target, uint32_t output, uint32_t mask) {
-  ((void(*)(unsigned int, unsigned int, unsigned int, unsigned int))fp)((unsigned int)ref, (unsigned int)target, (unsigned int)output, (unsigned int)mask);
+void epoxy_call_glTexEstimateMotionRegionsQCOM(void *fp, uint32_t ref_, uint32_t target, uint32_t output, uint32_t mask) {
+  ((void(*)(unsigned int, unsigned int, unsigned int, unsigned int))fp)((unsigned int)ref_, (unsigned int)target, (unsigned int)output, (unsigned int)mask);
 }
 
 void epoxy_call_glExtrapolateTex2DQCOM(void *fp, uint32_t src1, uint32_t src2, uint32_t output, float scaleFactor) {

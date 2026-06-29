@@ -126,44 +126,44 @@ pub fn gl_alpha_fragment_op3_ati(op : UInt, dst : UInt, dstMod : UInt, arg1 : UI
 let d_glAlphaFunc : Dispatch = Dispatch::new("glAlphaFunc")
 
 ///|
-extern "c" fn ffi_glAlphaFunc(fp : CPtr, func : UInt, ref : Float) -> Unit = "epoxy_call_glAlphaFunc"
+extern "c" fn ffi_glAlphaFunc(fp : CPtr, func : UInt, ref_ : Float) -> Unit = "epoxy_call_glAlphaFunc"
 
 ///|
-pub fn gl_alpha_func(func : UInt, ref : Float) -> Unit raise ResolveError {
-  ffi_glAlphaFunc(d_glAlphaFunc.get(), func, ref)
+pub fn gl_alpha_func(func : UInt, ref_ : Float) -> Unit raise ResolveError {
+  ffi_glAlphaFunc(d_glAlphaFunc.get(), func, ref_)
 }
 
 ///|
 let d_glAlphaFuncQCOM : Dispatch = Dispatch::new("glAlphaFuncQCOM")
 
 ///|
-extern "c" fn ffi_glAlphaFuncQCOM(fp : CPtr, func : UInt, ref : Float) -> Unit = "epoxy_call_glAlphaFuncQCOM"
+extern "c" fn ffi_glAlphaFuncQCOM(fp : CPtr, func : UInt, ref_ : Float) -> Unit = "epoxy_call_glAlphaFuncQCOM"
 
 ///|
-pub fn gl_alpha_func_qcom(func : UInt, ref : Float) -> Unit raise ResolveError {
-  ffi_glAlphaFuncQCOM(d_glAlphaFuncQCOM.get(), func, ref)
+pub fn gl_alpha_func_qcom(func : UInt, ref_ : Float) -> Unit raise ResolveError {
+  ffi_glAlphaFuncQCOM(d_glAlphaFuncQCOM.get(), func, ref_)
 }
 
 ///|
 let d_glAlphaFuncx : Dispatch = Dispatch::new("glAlphaFuncx")
 
 ///|
-extern "c" fn ffi_glAlphaFuncx(fp : CPtr, func : UInt, ref : Int) -> Unit = "epoxy_call_glAlphaFuncx"
+extern "c" fn ffi_glAlphaFuncx(fp : CPtr, func : UInt, ref_ : Int) -> Unit = "epoxy_call_glAlphaFuncx"
 
 ///|
-pub fn gl_alpha_funcx(func : UInt, ref : Int) -> Unit raise ResolveError {
-  ffi_glAlphaFuncx(d_glAlphaFuncx.get(), func, ref)
+pub fn gl_alpha_funcx(func : UInt, ref_ : Int) -> Unit raise ResolveError {
+  ffi_glAlphaFuncx(d_glAlphaFuncx.get(), func, ref_)
 }
 
 ///|
 let d_glAlphaFuncxOES : Dispatch = Dispatch::new("glAlphaFuncxOES")
 
 ///|
-extern "c" fn ffi_glAlphaFuncxOES(fp : CPtr, func : UInt, ref : Int) -> Unit = "epoxy_call_glAlphaFuncxOES"
+extern "c" fn ffi_glAlphaFuncxOES(fp : CPtr, func : UInt, ref_ : Int) -> Unit = "epoxy_call_glAlphaFuncxOES"
 
 ///|
-pub fn gl_alpha_funcx_oes(func : UInt, ref : Int) -> Unit raise ResolveError {
-  ffi_glAlphaFuncxOES(d_glAlphaFuncxOES.get(), func, ref)
+pub fn gl_alpha_funcx_oes(func : UInt, ref_ : Int) -> Unit raise ResolveError {
+  ffi_glAlphaFuncxOES(d_glAlphaFuncxOES.get(), func, ref_)
 }
 
 ///|
@@ -5923,11 +5923,11 @@ pub fn gl_index_format_nv(type_ : UInt, stride : Int) -> Unit raise ResolveError
 let d_glIndexFuncEXT : Dispatch = Dispatch::new("glIndexFuncEXT")
 
 ///|
-extern "c" fn ffi_glIndexFuncEXT(fp : CPtr, func : UInt, ref : Float) -> Unit = "epoxy_call_glIndexFuncEXT"
+extern "c" fn ffi_glIndexFuncEXT(fp : CPtr, func : UInt, ref_ : Float) -> Unit = "epoxy_call_glIndexFuncEXT"
 
 ///|
-pub fn gl_index_func_ext(func : UInt, ref : Float) -> Unit raise ResolveError {
-  ffi_glIndexFuncEXT(d_glIndexFuncEXT.get(), func, ref)
+pub fn gl_index_func_ext(func : UInt, ref_ : Float) -> Unit raise ResolveError {
+  ffi_glIndexFuncEXT(d_glIndexFuncEXT.get(), func, ref_)
 }
 
 ///|
@@ -8970,11 +8970,11 @@ pub fn gl_path_stencil_depth_offset_nv(factor : Float, units : Float) -> Unit ra
 let d_glPathStencilFuncNV : Dispatch = Dispatch::new("glPathStencilFuncNV")
 
 ///|
-extern "c" fn ffi_glPathStencilFuncNV(fp : CPtr, func : UInt, ref : Int, mask : UInt) -> Unit = "epoxy_call_glPathStencilFuncNV"
+extern "c" fn ffi_glPathStencilFuncNV(fp : CPtr, func : UInt, ref_ : Int, mask : UInt) -> Unit = "epoxy_call_glPathStencilFuncNV"
 
 ///|
-pub fn gl_path_stencil_func_nv(func : UInt, ref : Int, mask : UInt) -> Unit raise ResolveError {
-  ffi_glPathStencilFuncNV(d_glPathStencilFuncNV.get(), func, ref, mask)
+pub fn gl_path_stencil_func_nv(func : UInt, ref_ : Int, mask : UInt) -> Unit raise ResolveError {
+  ffi_glPathStencilFuncNV(d_glPathStencilFuncNV.get(), func, ref_, mask)
 }
 
 ///|
@@ -11742,33 +11742,33 @@ pub fn gl_stencil_fill_path_nv(path : UInt, fillMode : UInt, mask : UInt) -> Uni
 let d_glStencilFunc : Dispatch = Dispatch::new("glStencilFunc")
 
 ///|
-extern "c" fn ffi_glStencilFunc(fp : CPtr, func : UInt, ref : Int, mask : UInt) -> Unit = "epoxy_call_glStencilFunc"
+extern "c" fn ffi_glStencilFunc(fp : CPtr, func : UInt, ref_ : Int, mask : UInt) -> Unit = "epoxy_call_glStencilFunc"
 
 ///|
-pub fn gl_stencil_func(func : UInt, ref : Int, mask : UInt) -> Unit raise ResolveError {
-  ffi_glStencilFunc(d_glStencilFunc.get(), func, ref, mask)
+pub fn gl_stencil_func(func : UInt, ref_ : Int, mask : UInt) -> Unit raise ResolveError {
+  ffi_glStencilFunc(d_glStencilFunc.get(), func, ref_, mask)
 }
 
 ///|
 let d_glStencilFuncSeparate : Dispatch = Dispatch::new("glStencilFuncSeparate")
 
 ///|
-extern "c" fn ffi_glStencilFuncSeparate(fp : CPtr, face : UInt, func : UInt, ref : Int, mask : UInt) -> Unit = "epoxy_call_glStencilFuncSeparate"
+extern "c" fn ffi_glStencilFuncSeparate(fp : CPtr, face : UInt, func : UInt, ref_ : Int, mask : UInt) -> Unit = "epoxy_call_glStencilFuncSeparate"
 
 ///|
-pub fn gl_stencil_func_separate(face : UInt, func : UInt, ref : Int, mask : UInt) -> Unit raise ResolveError {
-  ffi_glStencilFuncSeparate(d_glStencilFuncSeparate.get(), face, func, ref, mask)
+pub fn gl_stencil_func_separate(face : UInt, func : UInt, ref_ : Int, mask : UInt) -> Unit raise ResolveError {
+  ffi_glStencilFuncSeparate(d_glStencilFuncSeparate.get(), face, func, ref_, mask)
 }
 
 ///|
 let d_glStencilFuncSeparateATI : Dispatch = Dispatch::new("glStencilFuncSeparateATI")
 
 ///|
-extern "c" fn ffi_glStencilFuncSeparateATI(fp : CPtr, frontfunc : UInt, backfunc : UInt, ref : Int, mask : UInt) -> Unit = "epoxy_call_glStencilFuncSeparateATI"
+extern "c" fn ffi_glStencilFuncSeparateATI(fp : CPtr, frontfunc : UInt, backfunc : UInt, ref_ : Int, mask : UInt) -> Unit = "epoxy_call_glStencilFuncSeparateATI"
 
 ///|
-pub fn gl_stencil_func_separate_ati(frontfunc : UInt, backfunc : UInt, ref : Int, mask : UInt) -> Unit raise ResolveError {
-  ffi_glStencilFuncSeparateATI(d_glStencilFuncSeparateATI.get(), frontfunc, backfunc, ref, mask)
+pub fn gl_stencil_func_separate_ati(frontfunc : UInt, backfunc : UInt, ref_ : Int, mask : UInt) -> Unit raise ResolveError {
+  ffi_glStencilFuncSeparateATI(d_glStencilFuncSeparateATI.get(), frontfunc, backfunc, ref_, mask)
 }
 
 ///|
@@ -12622,22 +12622,22 @@ pub fn gl_tex_envx_oes(target : UInt, pname : UInt, param : Int) -> Unit raise R
 let d_glTexEstimateMotionQCOM : Dispatch = Dispatch::new("glTexEstimateMotionQCOM")
 
 ///|
-extern "c" fn ffi_glTexEstimateMotionQCOM(fp : CPtr, ref : UInt, target : UInt, output : UInt) -> Unit = "epoxy_call_glTexEstimateMotionQCOM"
+extern "c" fn ffi_glTexEstimateMotionQCOM(fp : CPtr, ref_ : UInt, target : UInt, output : UInt) -> Unit = "epoxy_call_glTexEstimateMotionQCOM"
 
 ///|
-pub fn gl_tex_estimate_motion_qcom(ref : UInt, target : UInt, output : UInt) -> Unit raise ResolveError {
-  ffi_glTexEstimateMotionQCOM(d_glTexEstimateMotionQCOM.get(), ref, target, output)
+pub fn gl_tex_estimate_motion_qcom(ref_ : UInt, target : UInt, output : UInt) -> Unit raise ResolveError {
+  ffi_glTexEstimateMotionQCOM(d_glTexEstimateMotionQCOM.get(), ref_, target, output)
 }
 
 ///|
 let d_glTexEstimateMotionRegionsQCOM : Dispatch = Dispatch::new("glTexEstimateMotionRegionsQCOM")
 
 ///|
-extern "c" fn ffi_glTexEstimateMotionRegionsQCOM(fp : CPtr, ref : UInt, target : UInt, output : UInt, mask : UInt) -> Unit = "epoxy_call_glTexEstimateMotionRegionsQCOM"
+extern "c" fn ffi_glTexEstimateMotionRegionsQCOM(fp : CPtr, ref_ : UInt, target : UInt, output : UInt, mask : UInt) -> Unit = "epoxy_call_glTexEstimateMotionRegionsQCOM"
 
 ///|
-pub fn gl_tex_estimate_motion_regions_qcom(ref : UInt, target : UInt, output : UInt, mask : UInt) -> Unit raise ResolveError {
-  ffi_glTexEstimateMotionRegionsQCOM(d_glTexEstimateMotionRegionsQCOM.get(), ref, target, output, mask)
+pub fn gl_tex_estimate_motion_regions_qcom(ref_ : UInt, target : UInt, output : UInt, mask : UInt) -> Unit raise ResolveError {
+  ffi_glTexEstimateMotionRegionsQCOM(d_glTexEstimateMotionRegionsQCOM.get(), ref_, target, output, mask)
 }
 
 ///|

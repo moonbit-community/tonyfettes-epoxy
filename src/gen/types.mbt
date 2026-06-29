@@ -13,7 +13,7 @@
 
 ///|
 /// How a value crosses the MoonBit <-> C FFI boundary.
-pub enum FfiCategory {
+pub(all) enum FfiCategory {
   /// Plain by-value number. Direct 1:1 mapping, no marshalling.
   Scalar
   /// Pointer-width integer (offset/size). MoonBit `Int64` -> C `intptr_t`/
@@ -28,7 +28,7 @@ pub enum FfiCategory {
   /// Function-pointer callback (`GLDEBUGPROC` family). Needs a MoonBit->C
   /// trampoline; deferred in the MVP.
   Callback
-} derive(Show, Eq)
+} derive(Eq)
 
 ///|
 /// One row of the mapping table.
@@ -41,7 +41,7 @@ pub struct TypeMapping {
   moonbit_type : String
   /// How it is marshalled.
   category : FfiCategory
-} derive(Show, Eq)
+} derive(Eq)
 
 ///|
 /// The canonical table. Synonym typedefs (e.g. GLclampf ~ GLfloat) are listed

@@ -7,10 +7,10 @@
 /// Why a command is (in)eligible for the first-pass generator.
 priv enum Eligibility {
   Ok
-  PointerParam(String) // an argument is a pointer/array — deferred
+  PointerParam // an argument is a pointer/array — deferred
   PointerReturn // returns a non-string pointer — deferred
-  UnknownType(String) // a type isn't in the mapping table
-  Callback(String) // a callback param — deferred
+  UnknownType // a type isn't in the mapping table — deferred
+  Callback // a callback param — deferred
 }
 
 ///|
@@ -59,24 +59,24 @@ fn is_string_ret(c : Command) -> Bool {
 ///|
 fn classify(c : Command) -> Eligibility {
   // return type
-  if c.ret_pointer && not(is_string_ret(c)) {
+  if c.ret_pointer && !is_string_ret(c) {
     return PointerReturn
   }
-  if not(c.ret_pointer) && c.ret != "void" {
+  if !c.ret_pointer && c.ret != "void" {
     if mbt_scalar_type(c.ret) is None {
-      return UnknownType(c.ret)
+      return UnknownType
     }
   }
   // params
   for p in c.params {
     if p.gltype.has_prefix("GLDEBUGPROC") || p.gltype.has_prefix("GLVULKAN") {
-      return Callback(p.gltype)
+      return Callback
     }
     if p.pointer {
-      return PointerParam(p.name)
+      return PointerParam
     }
     if mbt_scalar_type(p.gltype) is None {
-      return UnknownType(p.gltype)
+      return UnknownType
     }
   }
   Ok
@@ -134,6 +134,7 @@ fn safe_ident(name : String) -> String {
     | "continue"
     | "loop"
     | "guard"
+    | "ref"
     | "as"
     | "is"
     | "and"
@@ -187,7 +188,7 @@ fn emit(c : Command) -> (String, String) {
     let args = [slot + ".get()", ..call_args]
     mbt.write_string("  decode_utf8(ffi_\{c.name}(\{args.join(", ")}))\n")
     mbt.write_string("}\n\n")
-  } else if c.ret == "void" && not(c.ret_pointer) {
+  } else if c.ret == "void" && !c.ret_pointer {
     let ffi_params = ["fp : CPtr", ..mbt_params]
     mbt.write_string("extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Unit = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
