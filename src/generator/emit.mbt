@@ -51,31 +51,44 @@ fn c_gl_type(gltype : String) -> String {
 }
 
 ///|
+/// Reconstruct the faithful C type string for a function-pointer cast,
+/// recursing through pointer levels (e.g. `const float *`, `void *`).
+fn CType::to_c(self : CType) -> String {
+  match self {
+    Base("void") => "void"
+    Base(name) => c_gl_type(name)
+    Ptr(inner, is_const~) =>
+      (if is_const { "const " } else { "" }) + inner.to_c() + " *"
+  }
+}
+
+///|
 /// Is this a string-ish pointer return (const GLubyte* / GLchar*)?
 fn is_string_ret(c : Command) -> Bool {
-  c.ret_pointer && (c.ret == "GLubyte" || c.ret == "GLchar" || c.ret == "GLbyte")
+  c.ret.is_pointer() &&
+  (c.ret.base_name() == "GLubyte" || c.ret.base_name() == "GLchar" || c.ret.base_name() == "GLbyte")
 }
 
 ///|
 fn classify(c : Command) -> Eligibility {
   // return type
-  if c.ret_pointer && !is_string_ret(c) {
+  if c.ret.is_pointer() && !is_string_ret(c) {
     return PointerReturn
   }
-  if !c.ret_pointer && c.ret != "void" {
-    if mbt_scalar_type(c.ret) is None {
+  if !c.ret.is_void() && !c.ret.is_pointer() {
+    if mbt_scalar_type(c.ret.base_name()) is None {
       return UnknownType
     }
   }
   // params
   for p in c.params {
-    if p.gltype.has_prefix("GLDEBUGPROC") || p.gltype.has_prefix("GLVULKAN") {
+    if p.ty.base_name().has_prefix("GLDEBUGPROC") || p.ty.base_name().has_prefix("GLVULKAN") {
       return Callback
     }
-    if p.pointer {
+    if p.ty.is_pointer() {
       return PointerParam
     }
-    if mbt_scalar_type(p.gltype) is None {
+    if mbt_scalar_type(p.ty.base_name()) is None {
       return UnknownType
     }
   }
@@ -160,19 +173,19 @@ fn emit(c : Command) -> (String, String) {
   let shim = "epoxy_call_" + c.name
   let slot = "d_" + c.name
 
-  // --- signatures -------------------------------------------------------
+  // --- signatures (scalar params only; pointers are still deferred) -----
   let mbt_params = c.params.map(fn(p) {
-    safe_ident(p.name) + " : " + mbt_scalar_type(p.gltype).unwrap()
+    safe_ident(p.name) + " : " + mbt_scalar_type(p.ty.base_name()).unwrap()
   })
   let call_args = c.params.map(fn(p) { safe_ident(p.name) })
 
   // C shim parameter list (MoonBit-ABI types) and the real GL signature it casts to
   let c_shim_params = c.params.map(fn(p) {
-    c_abi_type(mbt_scalar_type(p.gltype).unwrap()) + " " + safe_ident(p.name)
+    c_abi_type(mbt_scalar_type(p.ty.base_name()).unwrap()) + " " + safe_ident(p.name)
   })
-  let gl_sig = c.params.map(fn(p) { c_gl_type(p.gltype) })
+  let gl_sig = c.params.map(fn(p) { p.ty.to_c() })
   let gl_cast_args = c.params.map(fn(p) {
-    "(" + c_gl_type(p.gltype) + ")" + safe_ident(p.name)
+    "(" + p.ty.to_c() + ")" + safe_ident(p.name)
   })
   let sig_str = if gl_sig.is_empty() { "void" } else { gl_sig.join(", ") }
 
@@ -188,7 +201,7 @@ fn emit(c : Command) -> (String, String) {
     let args = [slot + ".get()", ..call_args]
     mbt.write_string("  decode_utf8(ffi_\{c.name}(\{args.join(", ")}))\n")
     mbt.write_string("}\n\n")
-  } else if c.ret == "void" && !c.ret_pointer {
+  } else if c.ret.is_void() {
     let ffi_params = ["fp : CPtr", ..mbt_params]
     mbt.write_string("extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Unit = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
@@ -197,7 +210,7 @@ fn emit(c : Command) -> (String, String) {
     mbt.write_string("  ffi_\{c.name}(\{args.join(", ")})\n")
     mbt.write_string("}\n\n")
   } else {
-    let ret_mbt = mbt_scalar_type(c.ret).unwrap()
+    let ret_mbt = mbt_scalar_type(c.ret.base_name()).unwrap()
     let ffi_params = ["fp : CPtr", ..mbt_params]
     mbt.write_string("extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> \{ret_mbt} = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
@@ -219,13 +232,13 @@ fn emit(c : Command) -> (String, String) {
     cc.write_string("  moonbit_bytes_t out = moonbit_make_bytes((int32_t)len, 0);\n")
     cc.write_string("  memcpy(out, s, len);\n")
     cc.write_string("  return out;\n}\n\n")
-  } else if c.ret == "void" {
+  } else if c.ret.is_void() {
     cc.write_string("void \{shim}(\{c_params.join(", ")}) {\n")
     cc.write_string("  ((void(*)(\{sig_str}))fp)(\{cargs});\n}\n\n")
   } else {
-    let ret_mbt = mbt_scalar_type(c.ret).unwrap()
+    let ret_mbt = mbt_scalar_type(c.ret.base_name()).unwrap()
     let ret_abi = c_abi_type(ret_mbt)
-    let ret_gl = c_gl_type(c.ret)
+    let ret_gl = c.ret.to_c()
     cc.write_string("\{ret_abi} \{shim}(\{c_params.join(", ")}) {\n")
     if ret_mbt == "Bool" {
       cc.write_string("  return (\{ret_abi})(((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs}) != 0);\n}\n\n")

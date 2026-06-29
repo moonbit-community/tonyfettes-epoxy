@@ -4,17 +4,50 @@
 /// dispatch; everything else (enums, features, extensions) is skipped here.
 
 ///|
+/// A C type as it appears in a command signature, modelled faithfully and
+/// recursively: a base typedef leaf, or a pointer to another `CType`.
+///
+/// `Base` keeps the registry typedef name (e.g. "GLfloat", "void") and resolves
+/// to its underlying C / MoonBit type via the type-mapping table — the single
+/// source of truth — rather than re-enumerating every typedef here.
+///
+/// (`is_const` records whether the pointee is `const`, i.e. an input vs. output
+/// buffer; `const` itself is a reserved word so the label can't be named that.)
+priv enum CType {
+  Base(String)
+  Ptr(CType, is_const~ : Bool)
+}
+
+///|
+fn CType::is_pointer(self : CType) -> Bool {
+  self is Ptr(_, ..)
+}
+
+///|
+fn CType::is_void(self : CType) -> Bool {
+  self is Base("void")
+}
+
+///|
+/// The innermost base typedef name (sees through pointers), e.g. the `GLubyte`
+/// in `const GLubyte *`. Used for scalar/string classification.
+fn CType::base_name(self : CType) -> String {
+  match self {
+    Base(name) => name
+    Ptr(inner, ..) => inner.base_name()
+  }
+}
+
+///|
 priv struct Param {
   name : String
-  gltype : String
-  pointer : Bool
+  ty : CType
 }
 
 ///|
 priv struct Command {
   name : String
-  ret : String
-  ret_pointer : Bool
+  ret : CType
   params : Array[Param]
 }
 
@@ -50,8 +83,14 @@ fn parse_commands(path : String) -> Array[Command] raise {
   let mut p_name = ""
   let mut p_text = ""
   let mut params : Array[Param] = []
-  fn finalize_type(ptype : String, text : String) -> (String, Bool) {
-    let pointer = text.contains("*")
+  fn finalize_type(ptype : String, text : String) -> CType {
+    let mut stars = 0
+    for c in text {
+      if c == '*' {
+        stars += 1
+      }
+    }
+    let pointee_const = text.contains("const")
     let base = if ptype != "" { ptype } else { text.replace(old="*", new="") }
     // strip qualifiers/whitespace ("const", "struct", spaces)
     let cleaned = base
@@ -59,7 +98,13 @@ fn parse_commands(path : String) -> Array[Command] raise {
       .replace(old="struct", new="")
       .trim(chars=" \t\n")
       .to_owned()
-    (cleaned, pointer)
+    // wrap the leaf in `stars` pointer levels; the innermost level carries the
+    // pointee's const-ness (the input/output signal).
+    let mut ty : CType = Base(cleaned)
+    for i in 0..<stars {
+      ty = Ptr(ty, is_const=i == 0 && pointee_const)
+    }
+    ty
   }
 
   while true {
@@ -111,18 +156,15 @@ fn parse_commands(path : String) -> Array[Command] raise {
           "proto" => region = Region::Outside
           "param" => {
             region = Region::Outside
-            let (gltype, pointer) = finalize_type(p_ptype, p_text)
-            params.push({ name: p_name.trim(chars=" ").to_owned(), gltype, pointer })
+            let ty = finalize_type(p_ptype, p_text)
+            params.push({ name: p_name.trim(chars=" ").to_owned(), ty })
           }
-          "command" => {
-            let (ret, ret_pointer) = finalize_type(proto_ptype, proto_text)
+          "command" =>
             commands.push({
               name: proto_name.trim(chars=" ").to_owned(),
-              ret,
-              ret_pointer,
+              ret: finalize_type(proto_ptype, proto_text),
               params,
             })
-          }
           _ => ()
         }
       _ => ()
