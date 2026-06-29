@@ -42,8 +42,11 @@ priv struct Command {
 }
 
 ///|
-priv enum Region {
-  Outside
+/// Which part of the current `<command>` we're parsing: its `<proto>` (return
+/// type + function name), one of its `<param>` elements, or somewhere else
+/// inside the command (`<glx>`, `<alias>`, ... — ignored).
+priv enum Section {
+  Elsewhere
   Proto
   Param
 }
@@ -63,7 +66,7 @@ priv enum Field {
 fn parse_commands(path : String) -> Array[Command] raise {
   let reader = @xml.Reader::from_file(path)
   let commands : Array[Command] = []
-  let mut region = Region::Outside
+  let mut section = Section::Elsewhere
   let mut field = Field::Surrounding
 
   // proto (return + function name) accumulators
@@ -106,18 +109,18 @@ fn parse_commands(path : String) -> Array[Command] raise {
       @xml.Start(el) =>
         match el.name {
           "command" => {
-            region = Region::Outside
+            section = Section::Elsewhere
             proto_ptype = ""
             proto_name = ""
             proto_text = ""
             params = []
           }
           "proto" => {
-            region = Region::Proto
+            section = Section::Proto
             field = Field::Surrounding
           }
           "param" => {
-            region = Region::Param
+            section = Section::Param
             field = Field::Surrounding
             p_ptype = ""
             p_name = ""
@@ -128,27 +131,27 @@ fn parse_commands(path : String) -> Array[Command] raise {
           _ => ()
         }
       @xml.Text(t) =>
-        match region {
-          Region::Proto =>
+        match section {
+          Section::Proto =>
             match field {
               Field::Ptype => proto_ptype = proto_ptype + t
               Field::Name => proto_name = proto_name + t
               Field::Surrounding => proto_text = proto_text + t
             }
-          Region::Param =>
+          Section::Param =>
             match field {
               Field::Ptype => p_ptype = p_ptype + t
               Field::Name => p_name = p_name + t
               Field::Surrounding => p_text = p_text + t
             }
-          Region::Outside => ()
+          Section::Elsewhere => ()
         }
       @xml.End(name) =>
         match name {
           "ptype" | "name" => field = Field::Surrounding
-          "proto" => region = Region::Outside
+          "proto" => section = Section::Elsewhere
           "param" => {
-            region = Region::Outside
+            section = Section::Elsewhere
             let ty = finalize_type(p_ptype, p_text)
             params.push({ name: p_name.trim(chars=" ").to_owned(), ty })
           }
