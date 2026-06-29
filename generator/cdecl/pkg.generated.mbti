@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "feihaoxiang/epoxy-generator/cdecl"
+package "tonyfettes/epoxy-generator/cdecl"
 
 // Values
 pub fn parse_declarator(String, String) -> Declarator

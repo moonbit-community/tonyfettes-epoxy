@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "feihaoxiang/epoxy"
+package "tonyfettes/epoxy"
 
 // Values
 pub const GL_COMPILE_STATUS : UInt = 0x8B81

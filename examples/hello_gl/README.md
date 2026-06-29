@@ -1,6 +1,6 @@
 # hello_gl
 
-A single end-to-end smoke test of the `feihaoxiang/epoxy` dispatch library: it
+A single end-to-end smoke test of the `tonyfettes/epoxy` dispatch library: it
 makes a current GL context, then drives a cross-section of generated bindings —
 every FFI marshalling shape the generator can emit — against a live driver.
 
@@ -45,4 +45,4 @@ What each line proves:
 `demo_context.c` (CGL) stands in for the window-system layer an app/toolkit
 provides — it is the only reason the example links the OpenGL framework. epoxy
 itself only `dlopen`s. That code is the app's job, not the library's, so it
-lives here in the example rather than in `feihaoxiang/epoxy`.
+lives here in the example rather than in `tonyfettes/epoxy`.

@@ -14,7 +14,7 @@ const DEFAULT_REGISTRY : String = "../upstream/libepoxy/registry/gl.xml"
 const DEFAULT_OUT_MBT : String = "../gl_generated.mbt"
 
 ///|
-const DEFAULT_OUT_C : String = "../gl_generated_stub.c"
+const DEFAULT_OUT_C : String = "../gl_generated.c"
 
 ///|
 /// Read a single-valued option. Every option below carries a default, so the

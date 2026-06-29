@@ -1,4 +1,4 @@
-name = "feihaoxiang/epoxy"
+name = "tonyfettes/epoxy"
 
 version = "0.1.0"
 

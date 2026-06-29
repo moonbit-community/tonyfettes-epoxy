@@ -10,7 +10,7 @@ const gl = process.platform === "darwin" ? "-framework OpenGL" : "-lGL";
 console.log(
   JSON.stringify({
     link_configs: [
-      { package: "feihaoxiang/epoxy-examples/hello_gl/main", link_flags: gl },
+      { package: "tonyfettes/epoxy-examples/hello_gl/main", link_flags: gl },
     ],
   }),
 );

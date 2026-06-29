@@ -4,9 +4,9 @@ import {
   "moonbitlang/async",
   "moonbitlang/async/fs",
   "moonbitlang/async/io",
-  "feihaoxiang/epoxy-generator/gen",
-  "feihaoxiang/epoxy-generator/cdecl",
-  "feihaoxiang/epoxy-generator/aliasgroup",
+  "tonyfettes/epoxy-generator/gen",
+  "tonyfettes/epoxy-generator/cdecl",
+  "tonyfettes/epoxy-generator/aliasgroup",
 }
 
 options(

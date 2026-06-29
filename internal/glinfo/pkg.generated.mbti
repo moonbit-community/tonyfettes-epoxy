@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "feihaoxiang/epoxy/internal/glinfo"
+package "tonyfettes/epoxy/internal/glinfo"
 
 // Values
 pub fn extension_in_string(String, String) -> Bool

@@ -1,4 +1,4 @@
-name = "feihaoxiang/epoxy-generator"
+name = "tonyfettes/epoxy-generator"
 
 version = "0.1.0"
 

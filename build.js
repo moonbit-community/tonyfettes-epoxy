@@ -10,6 +10,6 @@ const dl = process.platform === "linux" ? "-ldl" : "";
 
 console.log(
   JSON.stringify({
-    link_configs: [{ package: "feihaoxiang/epoxy", link_flags: dl }],
+    link_configs: [{ package: "tonyfettes/epoxy", link_flags: dl }],
   }),
 );

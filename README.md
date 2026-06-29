@@ -5,8 +5,8 @@ OpenGL function-pointer dispatch that resolves entry points lazily via
 `dlopen`/`dlsym` and caches them — so callers just use undecorated names like
 `glGetString` without worrying about loaders, versions, or extensions.
 
-The library package is the module root: import it as `feihaoxiang/epoxy`. A
-separate module — `feihaoxiang/epoxy-generator` under `generator/` — parses the
+The library package is the module root: import it as `tonyfettes/epoxy`. A
+separate module — `tonyfettes/epoxy-generator` under `generator/` — parses the
 Khronos registry (`registry/gl.xml`, 3299 commands) with the
 [xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and emits
 MoonBit dispatch wrappers + C call shims for the **3197** commands it can
@@ -14,7 +14,7 @@ express. The rest (callbacks, opaque handles, a few exotic pointer shapes) are
 skipped, never miscompiled.
 
 Keeping the generator in its own module means the library's dependency closure
-stays minimal: consumers of `feihaoxiang/epoxy` never inherit the build-time
+stays minimal: consumers of `tonyfettes/epoxy` never inherit the build-time
 toolchain (xml parser, async IO). The library depends only on
 `moonbitlang/core`.
 
@@ -44,12 +44,12 @@ generator, and the examples.
 
 | Path | Role |
 |------|------|
-| `gl.mbt`, `resolver.mbt`, `version.mbt` | **The epoxy library** (module root, `feihaoxiang/epoxy`): GL enum constants, the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, and the version/extension introspection API. |
-| `epoxy_stub.c` | Hand-written C: the `dlopen`/`dlsym` resolver. |
-| `gl_generated.mbt` / `gl_generated_stub.c` | **Generated** dispatch wrappers + per-signature C call shims (3197). |
+| `gl.mbt`, `resolver.mbt`, `version.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): GL enum constants, the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, and the version/extension introspection API. |
+| `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver. |
+| `gl_generated.mbt` / `gl_generated.c` | **Generated** dispatch wrappers + per-signature C call shims (3197). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
-| `generator/` | **The binding generator** — its own module, `feihaoxiang/epoxy-generator`: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (CLI driver), plus its private support packages `gen/` (the `GLxxx`→type table), `cdecl/` (C-declarator parser), `aliasgroup/` (union-find over `<alias>` edges). |
-| `examples/` | A separate module (`feihaoxiang/epoxy-examples`); see `hello_gl`. |
+| `generator/` | **The binding generator** — its own module, `tonyfettes/epoxy-generator`: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (CLI driver), plus its private support packages `gen/` (the `GLxxx`→type table), `cdecl/` (C-declarator parser), `aliasgroup/` (union-find over `<alias>` edges). |
+| `examples/` | A separate module (`tonyfettes/epoxy-examples`); see `hello_gl`. |
 | `upstream/libepoxy` | The reference C implementation (submodule), incl. `registry/*.xml`. |
 
 ## How dispatch works
@@ -104,7 +104,7 @@ the library package, so the bare command above regenerates in place:
 moon -C generator run . -- \
   --registry ../upstream/libepoxy/registry/gl.xml \
   --out-mbt  ../gl_generated.mbt \
-  --out-c    ../gl_generated_stub.c
+  --out-c    ../gl_generated.c
 ```
 
 ## Generator coverage
