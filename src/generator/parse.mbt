@@ -14,6 +14,9 @@ priv struct Command {
   name : String
   ret : @cdecl.Declarator
   params : Array[Param]
+  /// The names this command declares itself an alias of (`<alias name="..."/>`);
+  /// the generator unions these into resolution groups.
+  aliases : Array[String]
 }
 
 ///|
@@ -83,15 +86,24 @@ fn parse_commands(path : String) -> Array[Command] raise {
   let mut proto = Decl::new() // the <proto>: return type + function name
   let mut param = Decl::new() // the <param> currently being read
   let mut params : Array[Param] = []
+  let mut aliases : Array[String] = []
   while true {
     match reader.read_event() {
       @xml.Eof => break
+      @xml.Empty(el) =>
+        // `<alias name="..."/>` is a self-closing element inside <command>.
+        if el.name == "alias" && section is Section::Elsewhere {
+          if el.get("name") is Some(target) {
+            aliases.push(target)
+          }
+        }
       @xml.Start(el) =>
         match el.name {
           "command" => {
             section = Section::Elsewhere
             proto = Decl::new()
             params = []
+            aliases = []
           }
           "proto" => {
             section = Section::Proto
@@ -125,6 +137,7 @@ fn parse_commands(path : String) -> Array[Command] raise {
               name: proto.ident(),
               ret: proto.to_ctype(),
               params,
+              aliases,
             })
           _ => ()
         }

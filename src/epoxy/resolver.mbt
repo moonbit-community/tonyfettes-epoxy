@@ -54,36 +54,57 @@ fn gl_lib() -> CPtr raise ResolveError {
 }
 
 ///|
-/// Resolve a single entry point by name. Raises if the symbol is absent.
-/// (MoonBit-allocated `Bytes` always carry a trailing NUL, so the UTF-8
-/// encoding is already a valid C string for `dlsym` — no terminator to add.)
-fn resolve(name : String) -> CPtr raise ResolveError {
-  let p = epoxy_dlsym(gl_lib(), @utf8.encode(name))
-  if p.is_null() {
-    raise EntryPointNotFound(name)
-  }
-  p
+/// Look up a single symbol, returning a null `CPtr` if it is simply absent.
+/// Raises only when the GL library itself cannot be opened. (MoonBit-allocated
+/// `Bytes` always carry a trailing NUL, so the UTF-8 encoding is already a
+/// valid C string for `dlsym` — no terminator to add.)
+fn lookup_symbol(name : String) -> CPtr raise ResolveError {
+  epoxy_dlsym(gl_lib(), @utf8.encode(name))
 }
 
 ///|
 /// A self-patching dispatch slot, the MoonBit analogue of epoxy's global
 /// rewrite pointer: it resolves the entry point on first use and caches it.
 /// `ptr` starts null and is patched in place on first `get`.
+///
+/// A GL function often has several names — it first ships as an extension
+/// (`...OES`, `...APPLE`) and later enters core — and a given driver may export
+/// only some of them. `aliases` holds the fallback names (the registry's alias
+/// group, minus `name`); `get` tries `name` first, then each alias, so a core
+/// call still resolves on a driver that only exports an extension form.
 priv struct Dispatch {
-  name : String
+  name : String // primary entry point, also used in the not-found error
+  aliases : Array[String] // fallback names, tried in order after `name`
   mut ptr : CPtr
 }
 
 ///|
 fn Dispatch::new(name : String) -> Dispatch {
-  { name, ptr: CPtr::null() }
+  { name, aliases: [], ptr: CPtr::null() }
 }
 
 ///|
-/// Return the resolved address, resolving (and caching) on first call.
+fn Dispatch::with_aliases(name : String, aliases : Array[String]) -> Dispatch {
+  { name, aliases, ptr: CPtr::null() }
+}
+
+///|
+/// Return the resolved address, resolving (and caching) on first call. Tries
+/// the primary name then each alias; raises `EntryPointNotFound` only if none
+/// of them resolve.
 fn Dispatch::get(self : Dispatch) -> CPtr raise ResolveError {
   if self.ptr.is_null() {
-    self.ptr = resolve(self.name)
+    let mut found = lookup_symbol(self.name)
+    for candidate in self.aliases {
+      if !found.is_null() {
+        break
+      }
+      found = lookup_symbol(candidate)
+    }
+    if found.is_null() {
+      raise EntryPointNotFound(self.name)
+    }
+    self.ptr = found
   }
   self.ptr
 }

@@ -169,8 +169,10 @@ priv struct Rendered {
 }
 
 ///|
-/// Generate the MoonBit binding + C call shim for a command.
-fn render(c : Command, sig : Signature) -> Rendered {
+/// Generate the MoonBit binding + C call shim for a command. `aliases` are the
+/// command's fallback entry-point names (its alias group, minus itself); when
+/// non-empty the dispatch slot is built to try them in turn after the primary.
+fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   let mbt = StringBuilder::new()
   let cc = StringBuilder::new()
   let fn_name = snake(c.name)
@@ -202,8 +204,14 @@ fn render(c : Command, sig : Signature) -> Rendered {
   }
 
   // --- MoonBit side -----------------------------------------------------
+  let slot_decl = if aliases.is_empty() {
+    "let \{slot} : Dispatch = Dispatch::new(\"\{c.name}\")\n\n"
+  } else {
+    let quoted = aliases.map(fn(a) { "\"\{a}\"" }).join(", ")
+    "let \{slot} : Dispatch = Dispatch::with_aliases(\"\{c.name}\", [\{quoted}])\n\n"
+  }
   mbt.write_string("///|\n")
-  mbt.write_string("let \{slot} : Dispatch = Dispatch::new(\"\{c.name}\")\n\n")
+  mbt.write_string(slot_decl)
   mbt.write_string("///|\n")
   let ffi_params = ["fp : CPtr", ..mbt_params]
   mbt.write_string(

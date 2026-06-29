@@ -37,6 +37,16 @@ fn main {
     #|
   mbt.write_string(mbt_header)
   cc.write_string(cc_header)
+  // Build alias resolution groups from every command's `<alias>` edges, so each
+  // binding can fall back to its equivalent entry-point names (epoxy resolves a
+  // core call on a driver that only exports the extension form).
+  let edges = []
+  for c in commands {
+    for target in c.aliases {
+      edges.push(@aliasgroup.Edge::{ name: c.name, target, })
+    }
+  }
+  let groups = @aliasgroup.Groups::from_edges(edges)
   let mut total = 0
   let mut emitted = 0
   let seen : Map[String, Bool] = {}
@@ -48,7 +58,7 @@ fn main {
     total += 1
     match c.signature() {
       Some(sig) => {
-        let r = render(c, sig)
+        let r = render(c, sig, groups.aliases_of(c.name))
         mbt.write_string(r.moonbit)
         cc.write_string(r.c)
         emitted += 1

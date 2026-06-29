@@ -68,7 +68,7 @@ pub fn gl_active_stencil_face_ext(face : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glActiveTexture : Dispatch = Dispatch::new("glActiveTexture")
+let d_glActiveTexture : Dispatch = Dispatch::with_aliases("glActiveTexture", ["glActiveTextureARB"])
 
 ///|
 extern "c" fn epoxy_glActiveTexture(fp : CPtr, texture : UInt) -> Unit = "epoxy_glActiveTexture"
@@ -79,7 +79,7 @@ pub fn gl_active_texture(texture : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glActiveTextureARB : Dispatch = Dispatch::new("glActiveTextureARB")
+let d_glActiveTextureARB : Dispatch = Dispatch::with_aliases("glActiveTextureARB", ["glActiveTexture"])
 
 ///|
 extern "c" fn epoxy_glActiveTextureARB(fp : CPtr, texture : UInt) -> Unit = "epoxy_glActiveTextureARB"
@@ -259,7 +259,7 @@ pub fn gl_are_textures_resident_ext(n : Int, textures : FixedArray[UInt], reside
 }
 
 ///|
-let d_glArrayElement : Dispatch = Dispatch::new("glArrayElement")
+let d_glArrayElement : Dispatch = Dispatch::with_aliases("glArrayElement", ["glArrayElementEXT"])
 
 ///|
 extern "c" fn epoxy_glArrayElement(fp : CPtr, i : Int) -> Unit = "epoxy_glArrayElement"
@@ -270,7 +270,7 @@ pub fn gl_array_element(i : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glArrayElementEXT : Dispatch = Dispatch::new("glArrayElementEXT")
+let d_glArrayElementEXT : Dispatch = Dispatch::with_aliases("glArrayElementEXT", ["glArrayElement"])
 
 ///|
 extern "c" fn epoxy_glArrayElementEXT(fp : CPtr, i : Int) -> Unit = "epoxy_glArrayElementEXT"
@@ -327,7 +327,7 @@ pub fn gl_async_marker_sgix(marker : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glAttachShader : Dispatch = Dispatch::new("glAttachShader")
+let d_glAttachShader : Dispatch = Dispatch::with_aliases("glAttachShader", ["glAttachObjectARB"])
 
 ///|
 extern "c" fn epoxy_glAttachShader(fp : CPtr, program : UInt, shader : UInt) -> Unit = "epoxy_glAttachShader"
@@ -349,7 +349,7 @@ pub fn gl_begin(mode : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBeginConditionalRender : Dispatch = Dispatch::new("glBeginConditionalRender")
+let d_glBeginConditionalRender : Dispatch = Dispatch::with_aliases("glBeginConditionalRender", ["glBeginConditionalRenderNV"])
 
 ///|
 extern "c" fn epoxy_glBeginConditionalRender(fp : CPtr, id : UInt, mode : UInt) -> Unit = "epoxy_glBeginConditionalRender"
@@ -360,7 +360,7 @@ pub fn gl_begin_conditional_render(id : UInt, mode : UInt) -> Unit raise Resolve
 }
 
 ///|
-let d_glBeginConditionalRenderNV : Dispatch = Dispatch::new("glBeginConditionalRenderNV")
+let d_glBeginConditionalRenderNV : Dispatch = Dispatch::with_aliases("glBeginConditionalRenderNV", ["glBeginConditionalRender"])
 
 ///|
 extern "c" fn epoxy_glBeginConditionalRenderNV(fp : CPtr, id : UInt, mode : UInt) -> Unit = "epoxy_glBeginConditionalRenderNV"
@@ -426,7 +426,7 @@ pub fn gl_begin_perf_query_intel(queryHandle : UInt) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glBeginQuery : Dispatch = Dispatch::new("glBeginQuery")
+let d_glBeginQuery : Dispatch = Dispatch::with_aliases("glBeginQuery", ["glBeginQueryARB"])
 
 ///|
 extern "c" fn epoxy_glBeginQuery(fp : CPtr, target : UInt, id : UInt) -> Unit = "epoxy_glBeginQuery"
@@ -437,7 +437,7 @@ pub fn gl_begin_query(target : UInt, id : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBeginQueryARB : Dispatch = Dispatch::new("glBeginQueryARB")
+let d_glBeginQueryARB : Dispatch = Dispatch::with_aliases("glBeginQueryARB", ["glBeginQuery"])
 
 ///|
 extern "c" fn epoxy_glBeginQueryARB(fp : CPtr, target : UInt, id : UInt) -> Unit = "epoxy_glBeginQueryARB"
@@ -470,7 +470,7 @@ pub fn gl_begin_query_indexed(target : UInt, index : UInt, id : UInt) -> Unit ra
 }
 
 ///|
-let d_glBeginTransformFeedback : Dispatch = Dispatch::new("glBeginTransformFeedback")
+let d_glBeginTransformFeedback : Dispatch = Dispatch::with_aliases("glBeginTransformFeedback", ["glBeginTransformFeedbackEXT", "glBeginTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glBeginTransformFeedback(fp : CPtr, primitiveMode : UInt) -> Unit = "epoxy_glBeginTransformFeedback"
@@ -481,7 +481,7 @@ pub fn gl_begin_transform_feedback(primitiveMode : UInt) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glBeginTransformFeedbackEXT : Dispatch = Dispatch::new("glBeginTransformFeedbackEXT")
+let d_glBeginTransformFeedbackEXT : Dispatch = Dispatch::with_aliases("glBeginTransformFeedbackEXT", ["glBeginTransformFeedback", "glBeginTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glBeginTransformFeedbackEXT(fp : CPtr, primitiveMode : UInt) -> Unit = "epoxy_glBeginTransformFeedbackEXT"
@@ -492,7 +492,7 @@ pub fn gl_begin_transform_feedback_ext(primitiveMode : UInt) -> Unit raise Resol
 }
 
 ///|
-let d_glBeginTransformFeedbackNV : Dispatch = Dispatch::new("glBeginTransformFeedbackNV")
+let d_glBeginTransformFeedbackNV : Dispatch = Dispatch::with_aliases("glBeginTransformFeedbackNV", ["glBeginTransformFeedback", "glBeginTransformFeedbackEXT"])
 
 ///|
 extern "c" fn epoxy_glBeginTransformFeedbackNV(fp : CPtr, primitiveMode : UInt) -> Unit = "epoxy_glBeginTransformFeedbackNV"
@@ -525,7 +525,7 @@ pub fn gl_begin_video_capture_nv(video_capture_slot : UInt) -> Unit raise Resolv
 }
 
 ///|
-let d_glBindAttribLocation : Dispatch = Dispatch::new("glBindAttribLocation")
+let d_glBindAttribLocation : Dispatch = Dispatch::with_aliases("glBindAttribLocation", ["glBindAttribLocationARB"])
 
 ///|
 #borrow(name)
@@ -537,7 +537,7 @@ pub fn gl_bind_attrib_location(program : UInt, index : UInt, name : Bytes) -> Un
 }
 
 ///|
-let d_glBindBuffer : Dispatch = Dispatch::new("glBindBuffer")
+let d_glBindBuffer : Dispatch = Dispatch::with_aliases("glBindBuffer", ["glBindBufferARB"])
 
 ///|
 extern "c" fn epoxy_glBindBuffer(fp : CPtr, target : UInt, buffer : UInt) -> Unit = "epoxy_glBindBuffer"
@@ -548,7 +548,7 @@ pub fn gl_bind_buffer(target : UInt, buffer : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBindBufferARB : Dispatch = Dispatch::new("glBindBufferARB")
+let d_glBindBufferARB : Dispatch = Dispatch::with_aliases("glBindBufferARB", ["glBindBuffer"])
 
 ///|
 extern "c" fn epoxy_glBindBufferARB(fp : CPtr, target : UInt, buffer : UInt) -> Unit = "epoxy_glBindBufferARB"
@@ -559,7 +559,7 @@ pub fn gl_bind_buffer_arb(target : UInt, buffer : UInt) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glBindBufferBase : Dispatch = Dispatch::new("glBindBufferBase")
+let d_glBindBufferBase : Dispatch = Dispatch::with_aliases("glBindBufferBase", ["glBindBufferBaseEXT", "glBindBufferBaseNV"])
 
 ///|
 extern "c" fn epoxy_glBindBufferBase(fp : CPtr, target : UInt, index : UInt, buffer : UInt) -> Unit = "epoxy_glBindBufferBase"
@@ -570,7 +570,7 @@ pub fn gl_bind_buffer_base(target : UInt, index : UInt, buffer : UInt) -> Unit r
 }
 
 ///|
-let d_glBindBufferBaseEXT : Dispatch = Dispatch::new("glBindBufferBaseEXT")
+let d_glBindBufferBaseEXT : Dispatch = Dispatch::with_aliases("glBindBufferBaseEXT", ["glBindBufferBase", "glBindBufferBaseNV"])
 
 ///|
 extern "c" fn epoxy_glBindBufferBaseEXT(fp : CPtr, target : UInt, index : UInt, buffer : UInt) -> Unit = "epoxy_glBindBufferBaseEXT"
@@ -581,7 +581,7 @@ pub fn gl_bind_buffer_base_ext(target : UInt, index : UInt, buffer : UInt) -> Un
 }
 
 ///|
-let d_glBindBufferBaseNV : Dispatch = Dispatch::new("glBindBufferBaseNV")
+let d_glBindBufferBaseNV : Dispatch = Dispatch::with_aliases("glBindBufferBaseNV", ["glBindBufferBase", "glBindBufferBaseEXT"])
 
 ///|
 extern "c" fn epoxy_glBindBufferBaseNV(fp : CPtr, target : UInt, index : UInt, buffer : UInt) -> Unit = "epoxy_glBindBufferBaseNV"
@@ -592,7 +592,7 @@ pub fn gl_bind_buffer_base_nv(target : UInt, index : UInt, buffer : UInt) -> Uni
 }
 
 ///|
-let d_glBindBufferOffsetEXT : Dispatch = Dispatch::new("glBindBufferOffsetEXT")
+let d_glBindBufferOffsetEXT : Dispatch = Dispatch::with_aliases("glBindBufferOffsetEXT", ["glBindBufferOffsetNV"])
 
 ///|
 extern "c" fn epoxy_glBindBufferOffsetEXT(fp : CPtr, target : UInt, index : UInt, buffer : UInt, offset : Int64) -> Unit = "epoxy_glBindBufferOffsetEXT"
@@ -603,7 +603,7 @@ pub fn gl_bind_buffer_offset_ext(target : UInt, index : UInt, buffer : UInt, off
 }
 
 ///|
-let d_glBindBufferOffsetNV : Dispatch = Dispatch::new("glBindBufferOffsetNV")
+let d_glBindBufferOffsetNV : Dispatch = Dispatch::with_aliases("glBindBufferOffsetNV", ["glBindBufferOffsetEXT"])
 
 ///|
 extern "c" fn epoxy_glBindBufferOffsetNV(fp : CPtr, target : UInt, index : UInt, buffer : UInt, offset : Int64) -> Unit = "epoxy_glBindBufferOffsetNV"
@@ -614,7 +614,7 @@ pub fn gl_bind_buffer_offset_nv(target : UInt, index : UInt, buffer : UInt, offs
 }
 
 ///|
-let d_glBindBufferRange : Dispatch = Dispatch::new("glBindBufferRange")
+let d_glBindBufferRange : Dispatch = Dispatch::with_aliases("glBindBufferRange", ["glBindBufferRangeEXT", "glBindBufferRangeNV"])
 
 ///|
 extern "c" fn epoxy_glBindBufferRange(fp : CPtr, target : UInt, index : UInt, buffer : UInt, offset : Int64, size : Int64) -> Unit = "epoxy_glBindBufferRange"
@@ -625,7 +625,7 @@ pub fn gl_bind_buffer_range(target : UInt, index : UInt, buffer : UInt, offset :
 }
 
 ///|
-let d_glBindBufferRangeEXT : Dispatch = Dispatch::new("glBindBufferRangeEXT")
+let d_glBindBufferRangeEXT : Dispatch = Dispatch::with_aliases("glBindBufferRangeEXT", ["glBindBufferRange", "glBindBufferRangeNV"])
 
 ///|
 extern "c" fn epoxy_glBindBufferRangeEXT(fp : CPtr, target : UInt, index : UInt, buffer : UInt, offset : Int64, size : Int64) -> Unit = "epoxy_glBindBufferRangeEXT"
@@ -636,7 +636,7 @@ pub fn gl_bind_buffer_range_ext(target : UInt, index : UInt, buffer : UInt, offs
 }
 
 ///|
-let d_glBindBufferRangeNV : Dispatch = Dispatch::new("glBindBufferRangeNV")
+let d_glBindBufferRangeNV : Dispatch = Dispatch::with_aliases("glBindBufferRangeNV", ["glBindBufferRange", "glBindBufferRangeEXT"])
 
 ///|
 extern "c" fn epoxy_glBindBufferRangeNV(fp : CPtr, target : UInt, index : UInt, buffer : UInt, offset : Int64, size : Int64) -> Unit = "epoxy_glBindBufferRangeNV"
@@ -659,7 +659,7 @@ pub fn gl_bind_buffers_base(target : UInt, first : UInt, count : Int, buffers : 
 }
 
 ///|
-let d_glBindFragDataLocation : Dispatch = Dispatch::new("glBindFragDataLocation")
+let d_glBindFragDataLocation : Dispatch = Dispatch::with_aliases("glBindFragDataLocation", ["glBindFragDataLocationEXT"])
 
 ///|
 #borrow(name)
@@ -671,7 +671,7 @@ pub fn gl_bind_frag_data_location(program : UInt, color : UInt, name : Bytes) ->
 }
 
 ///|
-let d_glBindFragDataLocationEXT : Dispatch = Dispatch::new("glBindFragDataLocationEXT")
+let d_glBindFragDataLocationEXT : Dispatch = Dispatch::with_aliases("glBindFragDataLocationEXT", ["glBindFragDataLocation"])
 
 ///|
 #borrow(name)
@@ -683,7 +683,7 @@ pub fn gl_bind_frag_data_location_ext(program : UInt, color : UInt, name : Bytes
 }
 
 ///|
-let d_glBindFragDataLocationIndexed : Dispatch = Dispatch::new("glBindFragDataLocationIndexed")
+let d_glBindFragDataLocationIndexed : Dispatch = Dispatch::with_aliases("glBindFragDataLocationIndexed", ["glBindFragDataLocationIndexedEXT"])
 
 ///|
 #borrow(name)
@@ -695,7 +695,7 @@ pub fn gl_bind_frag_data_location_indexed(program : UInt, colorNumber : UInt, in
 }
 
 ///|
-let d_glBindFragDataLocationIndexedEXT : Dispatch = Dispatch::new("glBindFragDataLocationIndexedEXT")
+let d_glBindFragDataLocationIndexedEXT : Dispatch = Dispatch::with_aliases("glBindFragDataLocationIndexedEXT", ["glBindFragDataLocationIndexed"])
 
 ///|
 #borrow(name)
@@ -829,7 +829,7 @@ pub fn gl_bind_parameter_ext(value : UInt) -> UInt raise ResolveError {
 }
 
 ///|
-let d_glBindProgramARB : Dispatch = Dispatch::new("glBindProgramARB")
+let d_glBindProgramARB : Dispatch = Dispatch::with_aliases("glBindProgramARB", ["glBindProgramNV"])
 
 ///|
 extern "c" fn epoxy_glBindProgramARB(fp : CPtr, target : UInt, program : UInt) -> Unit = "epoxy_glBindProgramARB"
@@ -840,7 +840,7 @@ pub fn gl_bind_program_arb(target : UInt, program : UInt) -> Unit raise ResolveE
 }
 
 ///|
-let d_glBindProgramNV : Dispatch = Dispatch::new("glBindProgramNV")
+let d_glBindProgramNV : Dispatch = Dispatch::with_aliases("glBindProgramNV", ["glBindProgramARB"])
 
 ///|
 extern "c" fn epoxy_glBindProgramNV(fp : CPtr, target : UInt, id : UInt) -> Unit = "epoxy_glBindProgramNV"
@@ -951,7 +951,7 @@ pub fn gl_bind_tex_gen_parameter_ext(unit : UInt, coord : UInt, value : UInt) ->
 }
 
 ///|
-let d_glBindTexture : Dispatch = Dispatch::new("glBindTexture")
+let d_glBindTexture : Dispatch = Dispatch::with_aliases("glBindTexture", ["glBindTextureEXT"])
 
 ///|
 extern "c" fn epoxy_glBindTexture(fp : CPtr, target : UInt, texture : UInt) -> Unit = "epoxy_glBindTexture"
@@ -962,7 +962,7 @@ pub fn gl_bind_texture(target : UInt, texture : UInt) -> Unit raise ResolveError
 }
 
 ///|
-let d_glBindTextureEXT : Dispatch = Dispatch::new("glBindTextureEXT")
+let d_glBindTextureEXT : Dispatch = Dispatch::with_aliases("glBindTextureEXT", ["glBindTexture"])
 
 ///|
 extern "c" fn epoxy_glBindTextureEXT(fp : CPtr, target : UInt, texture : UInt) -> Unit = "epoxy_glBindTextureEXT"
@@ -1029,7 +1029,7 @@ pub fn gl_bind_transform_feedback_nv(target : UInt, id : UInt) -> Unit raise Res
 }
 
 ///|
-let d_glBindVertexArray : Dispatch = Dispatch::new("glBindVertexArray")
+let d_glBindVertexArray : Dispatch = Dispatch::with_aliases("glBindVertexArray", ["glBindVertexArrayOES"])
 
 ///|
 extern "c" fn epoxy_glBindVertexArray(fp : CPtr, array : UInt) -> Unit = "epoxy_glBindVertexArray"
@@ -1051,7 +1051,7 @@ pub fn gl_bind_vertex_array_apple(array : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBindVertexArrayOES : Dispatch = Dispatch::new("glBindVertexArrayOES")
+let d_glBindVertexArrayOES : Dispatch = Dispatch::with_aliases("glBindVertexArrayOES", ["glBindVertexArray"])
 
 ///|
 extern "c" fn epoxy_glBindVertexArrayOES(fp : CPtr, array : UInt) -> Unit = "epoxy_glBindVertexArrayOES"
@@ -1245,7 +1245,7 @@ pub fn gl_bitmapx_oes(width : Int, height : Int, xorig : Int, yorig : Int, xmove
 }
 
 ///|
-let d_glBlendBarrier : Dispatch = Dispatch::new("glBlendBarrier")
+let d_glBlendBarrier : Dispatch = Dispatch::with_aliases("glBlendBarrier", ["glBlendBarrierKHR", "glBlendBarrierNV"])
 
 ///|
 extern "c" fn epoxy_glBlendBarrier(fp : CPtr) -> Unit = "epoxy_glBlendBarrier"
@@ -1256,7 +1256,7 @@ pub fn gl_blend_barrier() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBlendBarrierKHR : Dispatch = Dispatch::new("glBlendBarrierKHR")
+let d_glBlendBarrierKHR : Dispatch = Dispatch::with_aliases("glBlendBarrierKHR", ["glBlendBarrier", "glBlendBarrierNV"])
 
 ///|
 extern "c" fn epoxy_glBlendBarrierKHR(fp : CPtr) -> Unit = "epoxy_glBlendBarrierKHR"
@@ -1267,7 +1267,7 @@ pub fn gl_blend_barrier_khr() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBlendBarrierNV : Dispatch = Dispatch::new("glBlendBarrierNV")
+let d_glBlendBarrierNV : Dispatch = Dispatch::with_aliases("glBlendBarrierNV", ["glBlendBarrier", "glBlendBarrierKHR"])
 
 ///|
 extern "c" fn epoxy_glBlendBarrierNV(fp : CPtr) -> Unit = "epoxy_glBlendBarrierNV"
@@ -1278,7 +1278,7 @@ pub fn gl_blend_barrier_nv() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBlendColor : Dispatch = Dispatch::new("glBlendColor")
+let d_glBlendColor : Dispatch = Dispatch::with_aliases("glBlendColor", ["glBlendColorEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendColor(fp : CPtr, red : Float, green : Float, blue : Float, alpha : Float) -> Unit = "epoxy_glBlendColor"
@@ -1289,7 +1289,7 @@ pub fn gl_blend_color(red : Float, green : Float, blue : Float, alpha : Float) -
 }
 
 ///|
-let d_glBlendColorEXT : Dispatch = Dispatch::new("glBlendColorEXT")
+let d_glBlendColorEXT : Dispatch = Dispatch::with_aliases("glBlendColorEXT", ["glBlendColor"])
 
 ///|
 extern "c" fn epoxy_glBlendColorEXT(fp : CPtr, red : Float, green : Float, blue : Float, alpha : Float) -> Unit = "epoxy_glBlendColorEXT"
@@ -1311,7 +1311,7 @@ pub fn gl_blend_colorx_oes(red : Int, green : Int, blue : Int, alpha : Int) -> U
 }
 
 ///|
-let d_glBlendEquation : Dispatch = Dispatch::new("glBlendEquation")
+let d_glBlendEquation : Dispatch = Dispatch::with_aliases("glBlendEquation", ["glBlendEquationEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendEquation(fp : CPtr, mode : UInt) -> Unit = "epoxy_glBlendEquation"
@@ -1322,7 +1322,7 @@ pub fn gl_blend_equation(mode : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBlendEquationEXT : Dispatch = Dispatch::new("glBlendEquationEXT")
+let d_glBlendEquationEXT : Dispatch = Dispatch::with_aliases("glBlendEquationEXT", ["glBlendEquation"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationEXT(fp : CPtr, mode : UInt) -> Unit = "epoxy_glBlendEquationEXT"
@@ -1333,7 +1333,7 @@ pub fn gl_blend_equation_ext(mode : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBlendEquationIndexedAMD : Dispatch = Dispatch::new("glBlendEquationIndexedAMD")
+let d_glBlendEquationIndexedAMD : Dispatch = Dispatch::with_aliases("glBlendEquationIndexedAMD", ["glBlendEquationi", "glBlendEquationiARB", "glBlendEquationiEXT", "glBlendEquationiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationIndexedAMD(fp : CPtr, buf : UInt, mode : UInt) -> Unit = "epoxy_glBlendEquationIndexedAMD"
@@ -1355,7 +1355,7 @@ pub fn gl_blend_equation_oes(mode : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBlendEquationSeparate : Dispatch = Dispatch::new("glBlendEquationSeparate")
+let d_glBlendEquationSeparate : Dispatch = Dispatch::with_aliases("glBlendEquationSeparate", ["glBlendEquationSeparateEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationSeparate(fp : CPtr, modeRGB : UInt, modeAlpha : UInt) -> Unit = "epoxy_glBlendEquationSeparate"
@@ -1366,7 +1366,7 @@ pub fn gl_blend_equation_separate(modeRGB : UInt, modeAlpha : UInt) -> Unit rais
 }
 
 ///|
-let d_glBlendEquationSeparateEXT : Dispatch = Dispatch::new("glBlendEquationSeparateEXT")
+let d_glBlendEquationSeparateEXT : Dispatch = Dispatch::with_aliases("glBlendEquationSeparateEXT", ["glBlendEquationSeparate"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationSeparateEXT(fp : CPtr, modeRGB : UInt, modeAlpha : UInt) -> Unit = "epoxy_glBlendEquationSeparateEXT"
@@ -1377,7 +1377,7 @@ pub fn gl_blend_equation_separate_ext(modeRGB : UInt, modeAlpha : UInt) -> Unit 
 }
 
 ///|
-let d_glBlendEquationSeparateIndexedAMD : Dispatch = Dispatch::new("glBlendEquationSeparateIndexedAMD")
+let d_glBlendEquationSeparateIndexedAMD : Dispatch = Dispatch::with_aliases("glBlendEquationSeparateIndexedAMD", ["glBlendEquationSeparatei", "glBlendEquationSeparateiARB", "glBlendEquationSeparateiEXT", "glBlendEquationSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationSeparateIndexedAMD(fp : CPtr, buf : UInt, modeRGB : UInt, modeAlpha : UInt) -> Unit = "epoxy_glBlendEquationSeparateIndexedAMD"
@@ -1399,7 +1399,7 @@ pub fn gl_blend_equation_separate_oes(modeRGB : UInt, modeAlpha : UInt) -> Unit 
 }
 
 ///|
-let d_glBlendEquationSeparatei : Dispatch = Dispatch::new("glBlendEquationSeparatei")
+let d_glBlendEquationSeparatei : Dispatch = Dispatch::with_aliases("glBlendEquationSeparatei", ["glBlendEquationSeparateIndexedAMD", "glBlendEquationSeparateiARB", "glBlendEquationSeparateiEXT", "glBlendEquationSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationSeparatei(fp : CPtr, buf : UInt, modeRGB : UInt, modeAlpha : UInt) -> Unit = "epoxy_glBlendEquationSeparatei"
@@ -1410,7 +1410,7 @@ pub fn gl_blend_equation_separatei(buf : UInt, modeRGB : UInt, modeAlpha : UInt)
 }
 
 ///|
-let d_glBlendEquationSeparateiARB : Dispatch = Dispatch::new("glBlendEquationSeparateiARB")
+let d_glBlendEquationSeparateiARB : Dispatch = Dispatch::with_aliases("glBlendEquationSeparateiARB", ["glBlendEquationSeparateIndexedAMD", "glBlendEquationSeparatei", "glBlendEquationSeparateiEXT", "glBlendEquationSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationSeparateiARB(fp : CPtr, buf : UInt, modeRGB : UInt, modeAlpha : UInt) -> Unit = "epoxy_glBlendEquationSeparateiARB"
@@ -1421,7 +1421,7 @@ pub fn gl_blend_equation_separatei_arb(buf : UInt, modeRGB : UInt, modeAlpha : U
 }
 
 ///|
-let d_glBlendEquationSeparateiEXT : Dispatch = Dispatch::new("glBlendEquationSeparateiEXT")
+let d_glBlendEquationSeparateiEXT : Dispatch = Dispatch::with_aliases("glBlendEquationSeparateiEXT", ["glBlendEquationSeparateIndexedAMD", "glBlendEquationSeparatei", "glBlendEquationSeparateiARB", "glBlendEquationSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationSeparateiEXT(fp : CPtr, buf : UInt, modeRGB : UInt, modeAlpha : UInt) -> Unit = "epoxy_glBlendEquationSeparateiEXT"
@@ -1432,7 +1432,7 @@ pub fn gl_blend_equation_separatei_ext(buf : UInt, modeRGB : UInt, modeAlpha : U
 }
 
 ///|
-let d_glBlendEquationSeparateiOES : Dispatch = Dispatch::new("glBlendEquationSeparateiOES")
+let d_glBlendEquationSeparateiOES : Dispatch = Dispatch::with_aliases("glBlendEquationSeparateiOES", ["glBlendEquationSeparateIndexedAMD", "glBlendEquationSeparatei", "glBlendEquationSeparateiARB", "glBlendEquationSeparateiEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationSeparateiOES(fp : CPtr, buf : UInt, modeRGB : UInt, modeAlpha : UInt) -> Unit = "epoxy_glBlendEquationSeparateiOES"
@@ -1443,7 +1443,7 @@ pub fn gl_blend_equation_separatei_oes(buf : UInt, modeRGB : UInt, modeAlpha : U
 }
 
 ///|
-let d_glBlendEquationi : Dispatch = Dispatch::new("glBlendEquationi")
+let d_glBlendEquationi : Dispatch = Dispatch::with_aliases("glBlendEquationi", ["glBlendEquationIndexedAMD", "glBlendEquationiARB", "glBlendEquationiEXT", "glBlendEquationiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationi(fp : CPtr, buf : UInt, mode : UInt) -> Unit = "epoxy_glBlendEquationi"
@@ -1454,7 +1454,7 @@ pub fn gl_blend_equationi(buf : UInt, mode : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glBlendEquationiARB : Dispatch = Dispatch::new("glBlendEquationiARB")
+let d_glBlendEquationiARB : Dispatch = Dispatch::with_aliases("glBlendEquationiARB", ["glBlendEquationIndexedAMD", "glBlendEquationi", "glBlendEquationiEXT", "glBlendEquationiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationiARB(fp : CPtr, buf : UInt, mode : UInt) -> Unit = "epoxy_glBlendEquationiARB"
@@ -1465,7 +1465,7 @@ pub fn gl_blend_equationi_arb(buf : UInt, mode : UInt) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glBlendEquationiEXT : Dispatch = Dispatch::new("glBlendEquationiEXT")
+let d_glBlendEquationiEXT : Dispatch = Dispatch::with_aliases("glBlendEquationiEXT", ["glBlendEquationIndexedAMD", "glBlendEquationi", "glBlendEquationiARB", "glBlendEquationiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationiEXT(fp : CPtr, buf : UInt, mode : UInt) -> Unit = "epoxy_glBlendEquationiEXT"
@@ -1476,7 +1476,7 @@ pub fn gl_blend_equationi_ext(buf : UInt, mode : UInt) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glBlendEquationiOES : Dispatch = Dispatch::new("glBlendEquationiOES")
+let d_glBlendEquationiOES : Dispatch = Dispatch::with_aliases("glBlendEquationiOES", ["glBlendEquationIndexedAMD", "glBlendEquationi", "glBlendEquationiARB", "glBlendEquationiEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendEquationiOES(fp : CPtr, buf : UInt, mode : UInt) -> Unit = "epoxy_glBlendEquationiOES"
@@ -1498,7 +1498,7 @@ pub fn gl_blend_func(sfactor : UInt, dfactor : UInt) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glBlendFuncIndexedAMD : Dispatch = Dispatch::new("glBlendFuncIndexedAMD")
+let d_glBlendFuncIndexedAMD : Dispatch = Dispatch::with_aliases("glBlendFuncIndexedAMD", ["glBlendFunci", "glBlendFunciARB", "glBlendFunciEXT", "glBlendFunciOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncIndexedAMD(fp : CPtr, buf : UInt, src : UInt, dst : UInt) -> Unit = "epoxy_glBlendFuncIndexedAMD"
@@ -1509,7 +1509,7 @@ pub fn gl_blend_func_indexed_amd(buf : UInt, src : UInt, dst : UInt) -> Unit rai
 }
 
 ///|
-let d_glBlendFuncSeparate : Dispatch = Dispatch::new("glBlendFuncSeparate")
+let d_glBlendFuncSeparate : Dispatch = Dispatch::with_aliases("glBlendFuncSeparate", ["glBlendFuncSeparateEXT", "glBlendFuncSeparateINGR"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparate(fp : CPtr, sfactorRGB : UInt, dfactorRGB : UInt, sfactorAlpha : UInt, dfactorAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparate"
@@ -1520,7 +1520,7 @@ pub fn gl_blend_func_separate(sfactorRGB : UInt, dfactorRGB : UInt, sfactorAlpha
 }
 
 ///|
-let d_glBlendFuncSeparateEXT : Dispatch = Dispatch::new("glBlendFuncSeparateEXT")
+let d_glBlendFuncSeparateEXT : Dispatch = Dispatch::with_aliases("glBlendFuncSeparateEXT", ["glBlendFuncSeparate", "glBlendFuncSeparateINGR"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparateEXT(fp : CPtr, sfactorRGB : UInt, dfactorRGB : UInt, sfactorAlpha : UInt, dfactorAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparateEXT"
@@ -1531,7 +1531,7 @@ pub fn gl_blend_func_separate_ext(sfactorRGB : UInt, dfactorRGB : UInt, sfactorA
 }
 
 ///|
-let d_glBlendFuncSeparateINGR : Dispatch = Dispatch::new("glBlendFuncSeparateINGR")
+let d_glBlendFuncSeparateINGR : Dispatch = Dispatch::with_aliases("glBlendFuncSeparateINGR", ["glBlendFuncSeparate", "glBlendFuncSeparateEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparateINGR(fp : CPtr, sfactorRGB : UInt, dfactorRGB : UInt, sfactorAlpha : UInt, dfactorAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparateINGR"
@@ -1542,7 +1542,7 @@ pub fn gl_blend_func_separate_ingr(sfactorRGB : UInt, dfactorRGB : UInt, sfactor
 }
 
 ///|
-let d_glBlendFuncSeparateIndexedAMD : Dispatch = Dispatch::new("glBlendFuncSeparateIndexedAMD")
+let d_glBlendFuncSeparateIndexedAMD : Dispatch = Dispatch::with_aliases("glBlendFuncSeparateIndexedAMD", ["glBlendFuncSeparatei", "glBlendFuncSeparateiARB", "glBlendFuncSeparateiEXT", "glBlendFuncSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparateIndexedAMD(fp : CPtr, buf : UInt, srcRGB : UInt, dstRGB : UInt, srcAlpha : UInt, dstAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparateIndexedAMD"
@@ -1564,7 +1564,7 @@ pub fn gl_blend_func_separate_oes(srcRGB : UInt, dstRGB : UInt, srcAlpha : UInt,
 }
 
 ///|
-let d_glBlendFuncSeparatei : Dispatch = Dispatch::new("glBlendFuncSeparatei")
+let d_glBlendFuncSeparatei : Dispatch = Dispatch::with_aliases("glBlendFuncSeparatei", ["glBlendFuncSeparateIndexedAMD", "glBlendFuncSeparateiARB", "glBlendFuncSeparateiEXT", "glBlendFuncSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparatei(fp : CPtr, buf : UInt, srcRGB : UInt, dstRGB : UInt, srcAlpha : UInt, dstAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparatei"
@@ -1575,7 +1575,7 @@ pub fn gl_blend_func_separatei(buf : UInt, srcRGB : UInt, dstRGB : UInt, srcAlph
 }
 
 ///|
-let d_glBlendFuncSeparateiARB : Dispatch = Dispatch::new("glBlendFuncSeparateiARB")
+let d_glBlendFuncSeparateiARB : Dispatch = Dispatch::with_aliases("glBlendFuncSeparateiARB", ["glBlendFuncSeparateIndexedAMD", "glBlendFuncSeparatei", "glBlendFuncSeparateiEXT", "glBlendFuncSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparateiARB(fp : CPtr, buf : UInt, srcRGB : UInt, dstRGB : UInt, srcAlpha : UInt, dstAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparateiARB"
@@ -1586,7 +1586,7 @@ pub fn gl_blend_func_separatei_arb(buf : UInt, srcRGB : UInt, dstRGB : UInt, src
 }
 
 ///|
-let d_glBlendFuncSeparateiEXT : Dispatch = Dispatch::new("glBlendFuncSeparateiEXT")
+let d_glBlendFuncSeparateiEXT : Dispatch = Dispatch::with_aliases("glBlendFuncSeparateiEXT", ["glBlendFuncSeparateIndexedAMD", "glBlendFuncSeparatei", "glBlendFuncSeparateiARB", "glBlendFuncSeparateiOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparateiEXT(fp : CPtr, buf : UInt, srcRGB : UInt, dstRGB : UInt, srcAlpha : UInt, dstAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparateiEXT"
@@ -1597,7 +1597,7 @@ pub fn gl_blend_func_separatei_ext(buf : UInt, srcRGB : UInt, dstRGB : UInt, src
 }
 
 ///|
-let d_glBlendFuncSeparateiOES : Dispatch = Dispatch::new("glBlendFuncSeparateiOES")
+let d_glBlendFuncSeparateiOES : Dispatch = Dispatch::with_aliases("glBlendFuncSeparateiOES", ["glBlendFuncSeparateIndexedAMD", "glBlendFuncSeparatei", "glBlendFuncSeparateiARB", "glBlendFuncSeparateiEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendFuncSeparateiOES(fp : CPtr, buf : UInt, srcRGB : UInt, dstRGB : UInt, srcAlpha : UInt, dstAlpha : UInt) -> Unit = "epoxy_glBlendFuncSeparateiOES"
@@ -1608,7 +1608,7 @@ pub fn gl_blend_func_separatei_oes(buf : UInt, srcRGB : UInt, dstRGB : UInt, src
 }
 
 ///|
-let d_glBlendFunci : Dispatch = Dispatch::new("glBlendFunci")
+let d_glBlendFunci : Dispatch = Dispatch::with_aliases("glBlendFunci", ["glBlendFuncIndexedAMD", "glBlendFunciARB", "glBlendFunciEXT", "glBlendFunciOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFunci(fp : CPtr, buf : UInt, src : UInt, dst : UInt) -> Unit = "epoxy_glBlendFunci"
@@ -1619,7 +1619,7 @@ pub fn gl_blend_funci(buf : UInt, src : UInt, dst : UInt) -> Unit raise ResolveE
 }
 
 ///|
-let d_glBlendFunciARB : Dispatch = Dispatch::new("glBlendFunciARB")
+let d_glBlendFunciARB : Dispatch = Dispatch::with_aliases("glBlendFunciARB", ["glBlendFuncIndexedAMD", "glBlendFunci", "glBlendFunciEXT", "glBlendFunciOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFunciARB(fp : CPtr, buf : UInt, src : UInt, dst : UInt) -> Unit = "epoxy_glBlendFunciARB"
@@ -1630,7 +1630,7 @@ pub fn gl_blend_funci_arb(buf : UInt, src : UInt, dst : UInt) -> Unit raise Reso
 }
 
 ///|
-let d_glBlendFunciEXT : Dispatch = Dispatch::new("glBlendFunciEXT")
+let d_glBlendFunciEXT : Dispatch = Dispatch::with_aliases("glBlendFunciEXT", ["glBlendFuncIndexedAMD", "glBlendFunci", "glBlendFunciARB", "glBlendFunciOES"])
 
 ///|
 extern "c" fn epoxy_glBlendFunciEXT(fp : CPtr, buf : UInt, src : UInt, dst : UInt) -> Unit = "epoxy_glBlendFunciEXT"
@@ -1641,7 +1641,7 @@ pub fn gl_blend_funci_ext(buf : UInt, src : UInt, dst : UInt) -> Unit raise Reso
 }
 
 ///|
-let d_glBlendFunciOES : Dispatch = Dispatch::new("glBlendFunciOES")
+let d_glBlendFunciOES : Dispatch = Dispatch::with_aliases("glBlendFunciOES", ["glBlendFuncIndexedAMD", "glBlendFunci", "glBlendFunciARB", "glBlendFunciEXT"])
 
 ///|
 extern "c" fn epoxy_glBlendFunciOES(fp : CPtr, buf : UInt, src : UInt, dst : UInt) -> Unit = "epoxy_glBlendFunciOES"
@@ -1663,7 +1663,7 @@ pub fn gl_blend_parameteri_nv(pname : UInt, value : Int) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glBlitFramebuffer : Dispatch = Dispatch::new("glBlitFramebuffer")
+let d_glBlitFramebuffer : Dispatch = Dispatch::with_aliases("glBlitFramebuffer", ["glBlitFramebufferEXT", "glBlitFramebufferNV"])
 
 ///|
 extern "c" fn epoxy_glBlitFramebuffer(fp : CPtr, srcX0 : Int, srcY0 : Int, srcX1 : Int, srcY1 : Int, dstX0 : Int, dstY0 : Int, dstX1 : Int, dstY1 : Int, mask : UInt, filter : UInt) -> Unit = "epoxy_glBlitFramebuffer"
@@ -1685,7 +1685,7 @@ pub fn gl_blit_framebuffer_angle(srcX0 : Int, srcY0 : Int, srcX1 : Int, srcY1 : 
 }
 
 ///|
-let d_glBlitFramebufferEXT : Dispatch = Dispatch::new("glBlitFramebufferEXT")
+let d_glBlitFramebufferEXT : Dispatch = Dispatch::with_aliases("glBlitFramebufferEXT", ["glBlitFramebuffer", "glBlitFramebufferNV"])
 
 ///|
 extern "c" fn epoxy_glBlitFramebufferEXT(fp : CPtr, srcX0 : Int, srcY0 : Int, srcX1 : Int, srcY1 : Int, dstX0 : Int, dstY0 : Int, dstX1 : Int, dstY1 : Int, mask : UInt, filter : UInt) -> Unit = "epoxy_glBlitFramebufferEXT"
@@ -1718,7 +1718,7 @@ pub fn gl_blit_framebuffer_layers_ext(srcX0 : Int, srcY0 : Int, srcX1 : Int, src
 }
 
 ///|
-let d_glBlitFramebufferNV : Dispatch = Dispatch::new("glBlitFramebufferNV")
+let d_glBlitFramebufferNV : Dispatch = Dispatch::with_aliases("glBlitFramebufferNV", ["glBlitFramebuffer", "glBlitFramebufferEXT"])
 
 ///|
 extern "c" fn epoxy_glBlitFramebufferNV(fp : CPtr, srcX0 : Int, srcY0 : Int, srcX1 : Int, srcY1 : Int, dstX0 : Int, dstY0 : Int, dstX1 : Int, dstY1 : Int, mask : UInt, filter : UInt) -> Unit = "epoxy_glBlitFramebufferNV"
@@ -1762,7 +1762,7 @@ pub fn gl_buffer_attach_memory_nv(target : UInt, memory : UInt, offset : UInt64)
 }
 
 ///|
-let d_glBufferData : Dispatch = Dispatch::new("glBufferData")
+let d_glBufferData : Dispatch = Dispatch::with_aliases("glBufferData", ["glBufferDataARB"])
 
 ///|
 #borrow(data)
@@ -1774,7 +1774,7 @@ pub fn gl_buffer_data(target : UInt, size : Int64, data : Bytes, usage : UInt) -
 }
 
 ///|
-let d_glBufferDataARB : Dispatch = Dispatch::new("glBufferDataARB")
+let d_glBufferDataARB : Dispatch = Dispatch::with_aliases("glBufferDataARB", ["glBufferData"])
 
 ///|
 #borrow(data)
@@ -1819,7 +1819,7 @@ pub fn gl_buffer_parameteri_apple(target : UInt, pname : UInt, param : Int) -> U
 }
 
 ///|
-let d_glBufferStorage : Dispatch = Dispatch::new("glBufferStorage")
+let d_glBufferStorage : Dispatch = Dispatch::with_aliases("glBufferStorage", ["glBufferStorageEXT"])
 
 ///|
 #borrow(data)
@@ -1831,7 +1831,7 @@ pub fn gl_buffer_storage(target : UInt, size : Int64, data : Bytes, flags : UInt
 }
 
 ///|
-let d_glBufferStorageEXT : Dispatch = Dispatch::new("glBufferStorageEXT")
+let d_glBufferStorageEXT : Dispatch = Dispatch::with_aliases("glBufferStorageEXT", ["glBufferStorage"])
 
 ///|
 #borrow(data)
@@ -1854,7 +1854,7 @@ pub fn gl_buffer_storage_mem_ext(target : UInt, size : Int64, memory : UInt, off
 }
 
 ///|
-let d_glBufferSubData : Dispatch = Dispatch::new("glBufferSubData")
+let d_glBufferSubData : Dispatch = Dispatch::with_aliases("glBufferSubData", ["glBufferSubDataARB"])
 
 ///|
 #borrow(data)
@@ -1866,7 +1866,7 @@ pub fn gl_buffer_sub_data(target : UInt, offset : Int64, size : Int64, data : By
 }
 
 ///|
-let d_glBufferSubDataARB : Dispatch = Dispatch::new("glBufferSubDataARB")
+let d_glBufferSubDataARB : Dispatch = Dispatch::with_aliases("glBufferSubDataARB", ["glBufferSubData"])
 
 ///|
 #borrow(data)
@@ -1912,7 +1912,7 @@ pub fn gl_call_lists(n : Int, type_ : UInt, lists : Bytes) -> Unit raise Resolve
 }
 
 ///|
-let d_glCheckFramebufferStatus : Dispatch = Dispatch::new("glCheckFramebufferStatus")
+let d_glCheckFramebufferStatus : Dispatch = Dispatch::with_aliases("glCheckFramebufferStatus", ["glCheckFramebufferStatusEXT"])
 
 ///|
 extern "c" fn epoxy_glCheckFramebufferStatus(fp : CPtr, target : UInt) -> UInt = "epoxy_glCheckFramebufferStatus"
@@ -1923,7 +1923,7 @@ pub fn gl_check_framebuffer_status(target : UInt) -> UInt raise ResolveError {
 }
 
 ///|
-let d_glCheckFramebufferStatusEXT : Dispatch = Dispatch::new("glCheckFramebufferStatusEXT")
+let d_glCheckFramebufferStatusEXT : Dispatch = Dispatch::with_aliases("glCheckFramebufferStatusEXT", ["glCheckFramebufferStatus"])
 
 ///|
 extern "c" fn epoxy_glCheckFramebufferStatusEXT(fp : CPtr, target : UInt) -> UInt = "epoxy_glCheckFramebufferStatusEXT"
@@ -1967,7 +1967,7 @@ pub fn gl_check_named_framebuffer_status_ext(framebuffer : UInt, target : UInt) 
 }
 
 ///|
-let d_glClampColor : Dispatch = Dispatch::new("glClampColor")
+let d_glClampColor : Dispatch = Dispatch::with_aliases("glClampColor", ["glClampColorARB"])
 
 ///|
 extern "c" fn epoxy_glClampColor(fp : CPtr, target : UInt, clamp : UInt) -> Unit = "epoxy_glClampColor"
@@ -1978,7 +1978,7 @@ pub fn gl_clamp_color(target : UInt, clamp : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glClampColorARB : Dispatch = Dispatch::new("glClampColorARB")
+let d_glClampColorARB : Dispatch = Dispatch::with_aliases("glClampColorARB", ["glClampColor"])
 
 ///|
 extern "c" fn epoxy_glClampColorARB(fp : CPtr, target : UInt, clamp : UInt) -> Unit = "epoxy_glClampColorARB"
@@ -2170,7 +2170,7 @@ pub fn gl_clear_depthd_nv(depth : Double) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glClearDepthf : Dispatch = Dispatch::new("glClearDepthf")
+let d_glClearDepthf : Dispatch = Dispatch::with_aliases("glClearDepthf", ["glClearDepthfOES"])
 
 ///|
 extern "c" fn epoxy_glClearDepthf(fp : CPtr, d : Float) -> Unit = "epoxy_glClearDepthf"
@@ -2181,7 +2181,7 @@ pub fn gl_clear_depthf(d : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glClearDepthfOES : Dispatch = Dispatch::new("glClearDepthfOES")
+let d_glClearDepthfOES : Dispatch = Dispatch::with_aliases("glClearDepthfOES", ["glClearDepthf"])
 
 ///|
 extern "c" fn epoxy_glClearDepthfOES(fp : CPtr, depth : Float) -> Unit = "epoxy_glClearDepthfOES"
@@ -2343,7 +2343,7 @@ pub fn gl_clear_stencil(s : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glClearTexImage : Dispatch = Dispatch::new("glClearTexImage")
+let d_glClearTexImage : Dispatch = Dispatch::with_aliases("glClearTexImage", ["glClearTexImageEXT"])
 
 ///|
 #borrow(data)
@@ -2355,7 +2355,7 @@ pub fn gl_clear_tex_image(texture : UInt, level : Int, format : UInt, type_ : UI
 }
 
 ///|
-let d_glClearTexImageEXT : Dispatch = Dispatch::new("glClearTexImageEXT")
+let d_glClearTexImageEXT : Dispatch = Dispatch::with_aliases("glClearTexImageEXT", ["glClearTexImage"])
 
 ///|
 #borrow(data)
@@ -2367,7 +2367,7 @@ pub fn gl_clear_tex_image_ext(texture : UInt, level : Int, format : UInt, type_ 
 }
 
 ///|
-let d_glClearTexSubImage : Dispatch = Dispatch::new("glClearTexSubImage")
+let d_glClearTexSubImage : Dispatch = Dispatch::with_aliases("glClearTexSubImage", ["glClearTexSubImageEXT"])
 
 ///|
 #borrow(data)
@@ -2379,7 +2379,7 @@ pub fn gl_clear_tex_sub_image(texture : UInt, level : Int, xoffset : Int, yoffse
 }
 
 ///|
-let d_glClearTexSubImageEXT : Dispatch = Dispatch::new("glClearTexSubImageEXT")
+let d_glClearTexSubImageEXT : Dispatch = Dispatch::with_aliases("glClearTexSubImageEXT", ["glClearTexSubImage"])
 
 ///|
 #borrow(data)
@@ -2391,7 +2391,7 @@ pub fn gl_clear_tex_sub_image_ext(texture : UInt, level : Int, xoffset : Int, yo
 }
 
 ///|
-let d_glClientActiveTexture : Dispatch = Dispatch::new("glClientActiveTexture")
+let d_glClientActiveTexture : Dispatch = Dispatch::with_aliases("glClientActiveTexture", ["glClientActiveTextureARB"])
 
 ///|
 extern "c" fn epoxy_glClientActiveTexture(fp : CPtr, texture : UInt) -> Unit = "epoxy_glClientActiveTexture"
@@ -2402,7 +2402,7 @@ pub fn gl_client_active_texture(texture : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glClientActiveTextureARB : Dispatch = Dispatch::new("glClientActiveTextureARB")
+let d_glClientActiveTextureARB : Dispatch = Dispatch::with_aliases("glClientActiveTextureARB", ["glClientActiveTexture"])
 
 ///|
 extern "c" fn epoxy_glClientActiveTextureARB(fp : CPtr, texture : UInt) -> Unit = "epoxy_glClientActiveTextureARB"
@@ -2447,7 +2447,7 @@ pub fn gl_client_wait_semaphoreui64_nvx(fenceObjectCount : Int, semaphoreArray :
 }
 
 ///|
-let d_glClipControl : Dispatch = Dispatch::new("glClipControl")
+let d_glClipControl : Dispatch = Dispatch::with_aliases("glClipControl", ["glClipControlEXT"])
 
 ///|
 extern "c" fn epoxy_glClipControl(fp : CPtr, origin : UInt, depth : UInt) -> Unit = "epoxy_glClipControl"
@@ -2458,7 +2458,7 @@ pub fn gl_clip_control(origin : UInt, depth : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glClipControlEXT : Dispatch = Dispatch::new("glClipControlEXT")
+let d_glClipControlEXT : Dispatch = Dispatch::with_aliases("glClipControlEXT", ["glClipControl"])
 
 ///|
 extern "c" fn epoxy_glClipControlEXT(fp : CPtr, origin : UInt, depth : UInt) -> Unit = "epoxy_glClipControlEXT"
@@ -3099,7 +3099,7 @@ pub fn gl_color_mask(red : Bool, green : Bool, blue : Bool, alpha : Bool) -> Uni
 }
 
 ///|
-let d_glColorMaskIndexedEXT : Dispatch = Dispatch::new("glColorMaskIndexedEXT")
+let d_glColorMaskIndexedEXT : Dispatch = Dispatch::with_aliases("glColorMaskIndexedEXT", ["glColorMaski", "glColorMaskiEXT", "glColorMaskiOES"])
 
 ///|
 extern "c" fn epoxy_glColorMaskIndexedEXT(fp : CPtr, index : UInt, r : Bool, g : Bool, b : Bool, a : Bool) -> Unit = "epoxy_glColorMaskIndexedEXT"
@@ -3110,7 +3110,7 @@ pub fn gl_color_mask_indexed_ext(index : UInt, r : Bool, g : Bool, b : Bool, a :
 }
 
 ///|
-let d_glColorMaski : Dispatch = Dispatch::new("glColorMaski")
+let d_glColorMaski : Dispatch = Dispatch::with_aliases("glColorMaski", ["glColorMaskIndexedEXT", "glColorMaskiEXT", "glColorMaskiOES"])
 
 ///|
 extern "c" fn epoxy_glColorMaski(fp : CPtr, index : UInt, r : Bool, g : Bool, b : Bool, a : Bool) -> Unit = "epoxy_glColorMaski"
@@ -3121,7 +3121,7 @@ pub fn gl_color_maski(index : UInt, r : Bool, g : Bool, b : Bool, a : Bool) -> U
 }
 
 ///|
-let d_glColorMaskiEXT : Dispatch = Dispatch::new("glColorMaskiEXT")
+let d_glColorMaskiEXT : Dispatch = Dispatch::with_aliases("glColorMaskiEXT", ["glColorMaskIndexedEXT", "glColorMaski", "glColorMaskiOES"])
 
 ///|
 extern "c" fn epoxy_glColorMaskiEXT(fp : CPtr, index : UInt, r : Bool, g : Bool, b : Bool, a : Bool) -> Unit = "epoxy_glColorMaskiEXT"
@@ -3132,7 +3132,7 @@ pub fn gl_color_maski_ext(index : UInt, r : Bool, g : Bool, b : Bool, a : Bool) 
 }
 
 ///|
-let d_glColorMaskiOES : Dispatch = Dispatch::new("glColorMaskiOES")
+let d_glColorMaskiOES : Dispatch = Dispatch::with_aliases("glColorMaskiOES", ["glColorMaskIndexedEXT", "glColorMaski", "glColorMaskiEXT"])
 
 ///|
 extern "c" fn epoxy_glColorMaskiOES(fp : CPtr, index : UInt, r : Bool, g : Bool, b : Bool, a : Bool) -> Unit = "epoxy_glColorMaskiOES"
@@ -3224,7 +3224,7 @@ pub fn gl_color_pointer_ext(size : Int, type_ : UInt, stride : Int, count : Int,
 }
 
 ///|
-let d_glColorSubTable : Dispatch = Dispatch::new("glColorSubTable")
+let d_glColorSubTable : Dispatch = Dispatch::with_aliases("glColorSubTable", ["glColorSubTableEXT"])
 
 ///|
 #borrow(data)
@@ -3236,7 +3236,7 @@ pub fn gl_color_sub_table(target : UInt, start : Int, count : Int, format : UInt
 }
 
 ///|
-let d_glColorSubTableEXT : Dispatch = Dispatch::new("glColorSubTableEXT")
+let d_glColorSubTableEXT : Dispatch = Dispatch::with_aliases("glColorSubTableEXT", ["glColorSubTable"])
 
 ///|
 #borrow(data)
@@ -3248,7 +3248,7 @@ pub fn gl_color_sub_table_ext(target : UInt, start : Int, count : Int, format : 
 }
 
 ///|
-let d_glColorTable : Dispatch = Dispatch::new("glColorTable")
+let d_glColorTable : Dispatch = Dispatch::with_aliases("glColorTable", ["glColorTableEXT", "glColorTableSGI"])
 
 ///|
 #borrow(table)
@@ -3260,7 +3260,7 @@ pub fn gl_color_table(target : UInt, internalformat : UInt, width : Int, format 
 }
 
 ///|
-let d_glColorTableEXT : Dispatch = Dispatch::new("glColorTableEXT")
+let d_glColorTableEXT : Dispatch = Dispatch::with_aliases("glColorTableEXT", ["glColorTable", "glColorTableSGI"])
 
 ///|
 #borrow(table)
@@ -3272,7 +3272,7 @@ pub fn gl_color_table_ext(target : UInt, internalFormat : UInt, width : Int, for
 }
 
 ///|
-let d_glColorTableParameterfv : Dispatch = Dispatch::new("glColorTableParameterfv")
+let d_glColorTableParameterfv : Dispatch = Dispatch::with_aliases("glColorTableParameterfv", ["glColorTableParameterfvSGI"])
 
 ///|
 #borrow(params)
@@ -3284,7 +3284,7 @@ pub fn gl_color_table_parameterfv(target : UInt, pname : UInt, params : FixedArr
 }
 
 ///|
-let d_glColorTableParameterfvSGI : Dispatch = Dispatch::new("glColorTableParameterfvSGI")
+let d_glColorTableParameterfvSGI : Dispatch = Dispatch::with_aliases("glColorTableParameterfvSGI", ["glColorTableParameterfv"])
 
 ///|
 #borrow(params)
@@ -3296,7 +3296,7 @@ pub fn gl_color_table_parameterfv_sgi(target : UInt, pname : UInt, params : Fixe
 }
 
 ///|
-let d_glColorTableParameteriv : Dispatch = Dispatch::new("glColorTableParameteriv")
+let d_glColorTableParameteriv : Dispatch = Dispatch::with_aliases("glColorTableParameteriv", ["glColorTableParameterivSGI"])
 
 ///|
 #borrow(params)
@@ -3308,7 +3308,7 @@ pub fn gl_color_table_parameteriv(target : UInt, pname : UInt, params : FixedArr
 }
 
 ///|
-let d_glColorTableParameterivSGI : Dispatch = Dispatch::new("glColorTableParameterivSGI")
+let d_glColorTableParameterivSGI : Dispatch = Dispatch::with_aliases("glColorTableParameterivSGI", ["glColorTableParameteriv"])
 
 ///|
 #borrow(params)
@@ -3320,7 +3320,7 @@ pub fn gl_color_table_parameteriv_sgi(target : UInt, pname : UInt, params : Fixe
 }
 
 ///|
-let d_glColorTableSGI : Dispatch = Dispatch::new("glColorTableSGI")
+let d_glColorTableSGI : Dispatch = Dispatch::with_aliases("glColorTableSGI", ["glColorTable", "glColorTableEXT"])
 
 ///|
 #borrow(table)
@@ -3434,7 +3434,7 @@ pub fn gl_compile_command_list_nv(list : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glCompileShader : Dispatch = Dispatch::new("glCompileShader")
+let d_glCompileShader : Dispatch = Dispatch::with_aliases("glCompileShader", ["glCompileShaderARB"])
 
 ///|
 extern "c" fn epoxy_glCompileShader(fp : CPtr, shader : UInt) -> Unit = "epoxy_glCompileShader"
@@ -3517,7 +3517,7 @@ pub fn gl_compressed_multi_tex_sub_image3_dext(texunit : UInt, target : UInt, le
 }
 
 ///|
-let d_glCompressedTexImage1D : Dispatch = Dispatch::new("glCompressedTexImage1D")
+let d_glCompressedTexImage1D : Dispatch = Dispatch::with_aliases("glCompressedTexImage1D", ["glCompressedTexImage1DARB"])
 
 ///|
 #borrow(data)
@@ -3529,7 +3529,7 @@ pub fn gl_compressed_tex_image1_d(target : UInt, level : Int, internalformat : U
 }
 
 ///|
-let d_glCompressedTexImage1DARB : Dispatch = Dispatch::new("glCompressedTexImage1DARB")
+let d_glCompressedTexImage1DARB : Dispatch = Dispatch::with_aliases("glCompressedTexImage1DARB", ["glCompressedTexImage1D"])
 
 ///|
 #borrow(data)
@@ -3541,7 +3541,7 @@ pub fn gl_compressed_tex_image1_darb(target : UInt, level : Int, internalformat 
 }
 
 ///|
-let d_glCompressedTexImage2D : Dispatch = Dispatch::new("glCompressedTexImage2D")
+let d_glCompressedTexImage2D : Dispatch = Dispatch::with_aliases("glCompressedTexImage2D", ["glCompressedTexImage2DARB"])
 
 ///|
 #borrow(data)
@@ -3553,7 +3553,7 @@ pub fn gl_compressed_tex_image2_d(target : UInt, level : Int, internalformat : U
 }
 
 ///|
-let d_glCompressedTexImage2DARB : Dispatch = Dispatch::new("glCompressedTexImage2DARB")
+let d_glCompressedTexImage2DARB : Dispatch = Dispatch::with_aliases("glCompressedTexImage2DARB", ["glCompressedTexImage2D"])
 
 ///|
 #borrow(data)
@@ -3565,7 +3565,7 @@ pub fn gl_compressed_tex_image2_darb(target : UInt, level : Int, internalformat 
 }
 
 ///|
-let d_glCompressedTexImage3D : Dispatch = Dispatch::new("glCompressedTexImage3D")
+let d_glCompressedTexImage3D : Dispatch = Dispatch::with_aliases("glCompressedTexImage3D", ["glCompressedTexImage3DARB"])
 
 ///|
 #borrow(data)
@@ -3577,7 +3577,7 @@ pub fn gl_compressed_tex_image3_d(target : UInt, level : Int, internalformat : U
 }
 
 ///|
-let d_glCompressedTexImage3DARB : Dispatch = Dispatch::new("glCompressedTexImage3DARB")
+let d_glCompressedTexImage3DARB : Dispatch = Dispatch::with_aliases("glCompressedTexImage3DARB", ["glCompressedTexImage3D"])
 
 ///|
 #borrow(data)
@@ -3601,7 +3601,7 @@ pub fn gl_compressed_tex_image3_does(target : UInt, level : Int, internalformat 
 }
 
 ///|
-let d_glCompressedTexSubImage1D : Dispatch = Dispatch::new("glCompressedTexSubImage1D")
+let d_glCompressedTexSubImage1D : Dispatch = Dispatch::with_aliases("glCompressedTexSubImage1D", ["glCompressedTexSubImage1DARB"])
 
 ///|
 #borrow(data)
@@ -3613,7 +3613,7 @@ pub fn gl_compressed_tex_sub_image1_d(target : UInt, level : Int, xoffset : Int,
 }
 
 ///|
-let d_glCompressedTexSubImage1DARB : Dispatch = Dispatch::new("glCompressedTexSubImage1DARB")
+let d_glCompressedTexSubImage1DARB : Dispatch = Dispatch::with_aliases("glCompressedTexSubImage1DARB", ["glCompressedTexSubImage1D"])
 
 ///|
 #borrow(data)
@@ -3625,7 +3625,7 @@ pub fn gl_compressed_tex_sub_image1_darb(target : UInt, level : Int, xoffset : I
 }
 
 ///|
-let d_glCompressedTexSubImage2D : Dispatch = Dispatch::new("glCompressedTexSubImage2D")
+let d_glCompressedTexSubImage2D : Dispatch = Dispatch::with_aliases("glCompressedTexSubImage2D", ["glCompressedTexSubImage2DARB"])
 
 ///|
 #borrow(data)
@@ -3637,7 +3637,7 @@ pub fn gl_compressed_tex_sub_image2_d(target : UInt, level : Int, xoffset : Int,
 }
 
 ///|
-let d_glCompressedTexSubImage2DARB : Dispatch = Dispatch::new("glCompressedTexSubImage2DARB")
+let d_glCompressedTexSubImage2DARB : Dispatch = Dispatch::with_aliases("glCompressedTexSubImage2DARB", ["glCompressedTexSubImage2D"])
 
 ///|
 #borrow(data)
@@ -3649,7 +3649,7 @@ pub fn gl_compressed_tex_sub_image2_darb(target : UInt, level : Int, xoffset : I
 }
 
 ///|
-let d_glCompressedTexSubImage3D : Dispatch = Dispatch::new("glCompressedTexSubImage3D")
+let d_glCompressedTexSubImage3D : Dispatch = Dispatch::with_aliases("glCompressedTexSubImage3D", ["glCompressedTexSubImage3DARB"])
 
 ///|
 #borrow(data)
@@ -3661,7 +3661,7 @@ pub fn gl_compressed_tex_sub_image3_d(target : UInt, level : Int, xoffset : Int,
 }
 
 ///|
-let d_glCompressedTexSubImage3DARB : Dispatch = Dispatch::new("glCompressedTexSubImage3DARB")
+let d_glCompressedTexSubImage3DARB : Dispatch = Dispatch::with_aliases("glCompressedTexSubImage3DARB", ["glCompressedTexSubImage3D"])
 
 ///|
 #borrow(data)
@@ -3815,7 +3815,7 @@ pub fn gl_conservative_raster_parameteri_nv(pname : UInt, param : Int) -> Unit r
 }
 
 ///|
-let d_glConvolutionFilter1D : Dispatch = Dispatch::new("glConvolutionFilter1D")
+let d_glConvolutionFilter1D : Dispatch = Dispatch::with_aliases("glConvolutionFilter1D", ["glConvolutionFilter1DEXT"])
 
 ///|
 #borrow(image)
@@ -3827,7 +3827,7 @@ pub fn gl_convolution_filter1_d(target : UInt, internalformat : UInt, width : In
 }
 
 ///|
-let d_glConvolutionFilter1DEXT : Dispatch = Dispatch::new("glConvolutionFilter1DEXT")
+let d_glConvolutionFilter1DEXT : Dispatch = Dispatch::with_aliases("glConvolutionFilter1DEXT", ["glConvolutionFilter1D"])
 
 ///|
 #borrow(image)
@@ -3839,7 +3839,7 @@ pub fn gl_convolution_filter1_dext(target : UInt, internalformat : UInt, width :
 }
 
 ///|
-let d_glConvolutionFilter2D : Dispatch = Dispatch::new("glConvolutionFilter2D")
+let d_glConvolutionFilter2D : Dispatch = Dispatch::with_aliases("glConvolutionFilter2D", ["glConvolutionFilter2DEXT"])
 
 ///|
 #borrow(image)
@@ -3851,7 +3851,7 @@ pub fn gl_convolution_filter2_d(target : UInt, internalformat : UInt, width : In
 }
 
 ///|
-let d_glConvolutionFilter2DEXT : Dispatch = Dispatch::new("glConvolutionFilter2DEXT")
+let d_glConvolutionFilter2DEXT : Dispatch = Dispatch::with_aliases("glConvolutionFilter2DEXT", ["glConvolutionFilter2D"])
 
 ///|
 #borrow(image)
@@ -3863,7 +3863,7 @@ pub fn gl_convolution_filter2_dext(target : UInt, internalformat : UInt, width :
 }
 
 ///|
-let d_glConvolutionParameterf : Dispatch = Dispatch::new("glConvolutionParameterf")
+let d_glConvolutionParameterf : Dispatch = Dispatch::with_aliases("glConvolutionParameterf", ["glConvolutionParameterfEXT"])
 
 ///|
 extern "c" fn epoxy_glConvolutionParameterf(fp : CPtr, target : UInt, pname : UInt, params : Float) -> Unit = "epoxy_glConvolutionParameterf"
@@ -3874,7 +3874,7 @@ pub fn gl_convolution_parameterf(target : UInt, pname : UInt, params : Float) ->
 }
 
 ///|
-let d_glConvolutionParameterfEXT : Dispatch = Dispatch::new("glConvolutionParameterfEXT")
+let d_glConvolutionParameterfEXT : Dispatch = Dispatch::with_aliases("glConvolutionParameterfEXT", ["glConvolutionParameterf"])
 
 ///|
 extern "c" fn epoxy_glConvolutionParameterfEXT(fp : CPtr, target : UInt, pname : UInt, params : Float) -> Unit = "epoxy_glConvolutionParameterfEXT"
@@ -3885,7 +3885,7 @@ pub fn gl_convolution_parameterf_ext(target : UInt, pname : UInt, params : Float
 }
 
 ///|
-let d_glConvolutionParameterfv : Dispatch = Dispatch::new("glConvolutionParameterfv")
+let d_glConvolutionParameterfv : Dispatch = Dispatch::with_aliases("glConvolutionParameterfv", ["glConvolutionParameterfvEXT"])
 
 ///|
 #borrow(params)
@@ -3897,7 +3897,7 @@ pub fn gl_convolution_parameterfv(target : UInt, pname : UInt, params : FixedArr
 }
 
 ///|
-let d_glConvolutionParameterfvEXT : Dispatch = Dispatch::new("glConvolutionParameterfvEXT")
+let d_glConvolutionParameterfvEXT : Dispatch = Dispatch::with_aliases("glConvolutionParameterfvEXT", ["glConvolutionParameterfv"])
 
 ///|
 #borrow(params)
@@ -3909,7 +3909,7 @@ pub fn gl_convolution_parameterfv_ext(target : UInt, pname : UInt, params : Fixe
 }
 
 ///|
-let d_glConvolutionParameteri : Dispatch = Dispatch::new("glConvolutionParameteri")
+let d_glConvolutionParameteri : Dispatch = Dispatch::with_aliases("glConvolutionParameteri", ["glConvolutionParameteriEXT"])
 
 ///|
 extern "c" fn epoxy_glConvolutionParameteri(fp : CPtr, target : UInt, pname : UInt, params : Int) -> Unit = "epoxy_glConvolutionParameteri"
@@ -3920,7 +3920,7 @@ pub fn gl_convolution_parameteri(target : UInt, pname : UInt, params : Int) -> U
 }
 
 ///|
-let d_glConvolutionParameteriEXT : Dispatch = Dispatch::new("glConvolutionParameteriEXT")
+let d_glConvolutionParameteriEXT : Dispatch = Dispatch::with_aliases("glConvolutionParameteriEXT", ["glConvolutionParameteri"])
 
 ///|
 extern "c" fn epoxy_glConvolutionParameteriEXT(fp : CPtr, target : UInt, pname : UInt, params : Int) -> Unit = "epoxy_glConvolutionParameteriEXT"
@@ -3931,7 +3931,7 @@ pub fn gl_convolution_parameteri_ext(target : UInt, pname : UInt, params : Int) 
 }
 
 ///|
-let d_glConvolutionParameteriv : Dispatch = Dispatch::new("glConvolutionParameteriv")
+let d_glConvolutionParameteriv : Dispatch = Dispatch::with_aliases("glConvolutionParameteriv", ["glConvolutionParameterivEXT"])
 
 ///|
 #borrow(params)
@@ -3943,7 +3943,7 @@ pub fn gl_convolution_parameteriv(target : UInt, pname : UInt, params : FixedArr
 }
 
 ///|
-let d_glConvolutionParameterivEXT : Dispatch = Dispatch::new("glConvolutionParameterivEXT")
+let d_glConvolutionParameterivEXT : Dispatch = Dispatch::with_aliases("glConvolutionParameterivEXT", ["glConvolutionParameteriv"])
 
 ///|
 #borrow(params)
@@ -3978,7 +3978,7 @@ pub fn gl_convolution_parameterxv_oes(target : UInt, pname : UInt, params : Fixe
 }
 
 ///|
-let d_glCopyBufferSubData : Dispatch = Dispatch::new("glCopyBufferSubData")
+let d_glCopyBufferSubData : Dispatch = Dispatch::with_aliases("glCopyBufferSubData", ["glCopyBufferSubDataNV"])
 
 ///|
 extern "c" fn epoxy_glCopyBufferSubData(fp : CPtr, readTarget : UInt, writeTarget : UInt, readOffset : Int64, writeOffset : Int64, size : Int64) -> Unit = "epoxy_glCopyBufferSubData"
@@ -3989,7 +3989,7 @@ pub fn gl_copy_buffer_sub_data(readTarget : UInt, writeTarget : UInt, readOffset
 }
 
 ///|
-let d_glCopyBufferSubDataNV : Dispatch = Dispatch::new("glCopyBufferSubDataNV")
+let d_glCopyBufferSubDataNV : Dispatch = Dispatch::with_aliases("glCopyBufferSubDataNV", ["glCopyBufferSubData"])
 
 ///|
 extern "c" fn epoxy_glCopyBufferSubDataNV(fp : CPtr, readTarget : UInt, writeTarget : UInt, readOffset : Int64, writeOffset : Int64, size : Int64) -> Unit = "epoxy_glCopyBufferSubDataNV"
@@ -4000,7 +4000,7 @@ pub fn gl_copy_buffer_sub_data_nv(readTarget : UInt, writeTarget : UInt, readOff
 }
 
 ///|
-let d_glCopyColorSubTable : Dispatch = Dispatch::new("glCopyColorSubTable")
+let d_glCopyColorSubTable : Dispatch = Dispatch::with_aliases("glCopyColorSubTable", ["glCopyColorSubTableEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyColorSubTable(fp : CPtr, target : UInt, start : Int, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyColorSubTable"
@@ -4011,7 +4011,7 @@ pub fn gl_copy_color_sub_table(target : UInt, start : Int, x : Int, y : Int, wid
 }
 
 ///|
-let d_glCopyColorSubTableEXT : Dispatch = Dispatch::new("glCopyColorSubTableEXT")
+let d_glCopyColorSubTableEXT : Dispatch = Dispatch::with_aliases("glCopyColorSubTableEXT", ["glCopyColorSubTable"])
 
 ///|
 extern "c" fn epoxy_glCopyColorSubTableEXT(fp : CPtr, target : UInt, start : Int, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyColorSubTableEXT"
@@ -4022,7 +4022,7 @@ pub fn gl_copy_color_sub_table_ext(target : UInt, start : Int, x : Int, y : Int,
 }
 
 ///|
-let d_glCopyColorTable : Dispatch = Dispatch::new("glCopyColorTable")
+let d_glCopyColorTable : Dispatch = Dispatch::with_aliases("glCopyColorTable", ["glCopyColorTableSGI"])
 
 ///|
 extern "c" fn epoxy_glCopyColorTable(fp : CPtr, target : UInt, internalformat : UInt, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyColorTable"
@@ -4033,7 +4033,7 @@ pub fn gl_copy_color_table(target : UInt, internalformat : UInt, x : Int, y : In
 }
 
 ///|
-let d_glCopyColorTableSGI : Dispatch = Dispatch::new("glCopyColorTableSGI")
+let d_glCopyColorTableSGI : Dispatch = Dispatch::with_aliases("glCopyColorTableSGI", ["glCopyColorTable"])
 
 ///|
 extern "c" fn epoxy_glCopyColorTableSGI(fp : CPtr, target : UInt, internalformat : UInt, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyColorTableSGI"
@@ -4044,7 +4044,7 @@ pub fn gl_copy_color_table_sgi(target : UInt, internalformat : UInt, x : Int, y 
 }
 
 ///|
-let d_glCopyConvolutionFilter1D : Dispatch = Dispatch::new("glCopyConvolutionFilter1D")
+let d_glCopyConvolutionFilter1D : Dispatch = Dispatch::with_aliases("glCopyConvolutionFilter1D", ["glCopyConvolutionFilter1DEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyConvolutionFilter1D(fp : CPtr, target : UInt, internalformat : UInt, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyConvolutionFilter1D"
@@ -4055,7 +4055,7 @@ pub fn gl_copy_convolution_filter1_d(target : UInt, internalformat : UInt, x : I
 }
 
 ///|
-let d_glCopyConvolutionFilter1DEXT : Dispatch = Dispatch::new("glCopyConvolutionFilter1DEXT")
+let d_glCopyConvolutionFilter1DEXT : Dispatch = Dispatch::with_aliases("glCopyConvolutionFilter1DEXT", ["glCopyConvolutionFilter1D"])
 
 ///|
 extern "c" fn epoxy_glCopyConvolutionFilter1DEXT(fp : CPtr, target : UInt, internalformat : UInt, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyConvolutionFilter1DEXT"
@@ -4066,7 +4066,7 @@ pub fn gl_copy_convolution_filter1_dext(target : UInt, internalformat : UInt, x 
 }
 
 ///|
-let d_glCopyConvolutionFilter2D : Dispatch = Dispatch::new("glCopyConvolutionFilter2D")
+let d_glCopyConvolutionFilter2D : Dispatch = Dispatch::with_aliases("glCopyConvolutionFilter2D", ["glCopyConvolutionFilter2DEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyConvolutionFilter2D(fp : CPtr, target : UInt, internalformat : UInt, x : Int, y : Int, width : Int, height : Int) -> Unit = "epoxy_glCopyConvolutionFilter2D"
@@ -4077,7 +4077,7 @@ pub fn gl_copy_convolution_filter2_d(target : UInt, internalformat : UInt, x : I
 }
 
 ///|
-let d_glCopyConvolutionFilter2DEXT : Dispatch = Dispatch::new("glCopyConvolutionFilter2DEXT")
+let d_glCopyConvolutionFilter2DEXT : Dispatch = Dispatch::with_aliases("glCopyConvolutionFilter2DEXT", ["glCopyConvolutionFilter2D"])
 
 ///|
 extern "c" fn epoxy_glCopyConvolutionFilter2DEXT(fp : CPtr, target : UInt, internalformat : UInt, x : Int, y : Int, width : Int, height : Int) -> Unit = "epoxy_glCopyConvolutionFilter2DEXT"
@@ -4088,7 +4088,7 @@ pub fn gl_copy_convolution_filter2_dext(target : UInt, internalformat : UInt, x 
 }
 
 ///|
-let d_glCopyImageSubData : Dispatch = Dispatch::new("glCopyImageSubData")
+let d_glCopyImageSubData : Dispatch = Dispatch::with_aliases("glCopyImageSubData", ["glCopyImageSubDataEXT", "glCopyImageSubDataOES"])
 
 ///|
 extern "c" fn epoxy_glCopyImageSubData(fp : CPtr, srcName : UInt, srcTarget : UInt, srcLevel : Int, srcX : Int, srcY : Int, srcZ : Int, dstName : UInt, dstTarget : UInt, dstLevel : Int, dstX : Int, dstY : Int, dstZ : Int, srcWidth : Int, srcHeight : Int, srcDepth : Int) -> Unit = "epoxy_glCopyImageSubData"
@@ -4099,7 +4099,7 @@ pub fn gl_copy_image_sub_data(srcName : UInt, srcTarget : UInt, srcLevel : Int, 
 }
 
 ///|
-let d_glCopyImageSubDataEXT : Dispatch = Dispatch::new("glCopyImageSubDataEXT")
+let d_glCopyImageSubDataEXT : Dispatch = Dispatch::with_aliases("glCopyImageSubDataEXT", ["glCopyImageSubData", "glCopyImageSubDataOES"])
 
 ///|
 extern "c" fn epoxy_glCopyImageSubDataEXT(fp : CPtr, srcName : UInt, srcTarget : UInt, srcLevel : Int, srcX : Int, srcY : Int, srcZ : Int, dstName : UInt, dstTarget : UInt, dstLevel : Int, dstX : Int, dstY : Int, dstZ : Int, srcWidth : Int, srcHeight : Int, srcDepth : Int) -> Unit = "epoxy_glCopyImageSubDataEXT"
@@ -4121,7 +4121,7 @@ pub fn gl_copy_image_sub_data_nv(srcName : UInt, srcTarget : UInt, srcLevel : In
 }
 
 ///|
-let d_glCopyImageSubDataOES : Dispatch = Dispatch::new("glCopyImageSubDataOES")
+let d_glCopyImageSubDataOES : Dispatch = Dispatch::with_aliases("glCopyImageSubDataOES", ["glCopyImageSubData", "glCopyImageSubDataEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyImageSubDataOES(fp : CPtr, srcName : UInt, srcTarget : UInt, srcLevel : Int, srcX : Int, srcY : Int, srcZ : Int, dstName : UInt, dstTarget : UInt, dstLevel : Int, dstX : Int, dstY : Int, dstZ : Int, srcWidth : Int, srcHeight : Int, srcDepth : Int) -> Unit = "epoxy_glCopyImageSubDataOES"
@@ -4220,7 +4220,7 @@ pub fn gl_copy_pixels(x : Int, y : Int, width : Int, height : Int, type_ : UInt)
 }
 
 ///|
-let d_glCopyTexImage1D : Dispatch = Dispatch::new("glCopyTexImage1D")
+let d_glCopyTexImage1D : Dispatch = Dispatch::with_aliases("glCopyTexImage1D", ["glCopyTexImage1DEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyTexImage1D(fp : CPtr, target : UInt, level : Int, internalformat : UInt, x : Int, y : Int, width : Int, border : Int) -> Unit = "epoxy_glCopyTexImage1D"
@@ -4231,7 +4231,7 @@ pub fn gl_copy_tex_image1_d(target : UInt, level : Int, internalformat : UInt, x
 }
 
 ///|
-let d_glCopyTexImage1DEXT : Dispatch = Dispatch::new("glCopyTexImage1DEXT")
+let d_glCopyTexImage1DEXT : Dispatch = Dispatch::with_aliases("glCopyTexImage1DEXT", ["glCopyTexImage1D"])
 
 ///|
 extern "c" fn epoxy_glCopyTexImage1DEXT(fp : CPtr, target : UInt, level : Int, internalformat : UInt, x : Int, y : Int, width : Int, border : Int) -> Unit = "epoxy_glCopyTexImage1DEXT"
@@ -4242,7 +4242,7 @@ pub fn gl_copy_tex_image1_dext(target : UInt, level : Int, internalformat : UInt
 }
 
 ///|
-let d_glCopyTexImage2D : Dispatch = Dispatch::new("glCopyTexImage2D")
+let d_glCopyTexImage2D : Dispatch = Dispatch::with_aliases("glCopyTexImage2D", ["glCopyTexImage2DEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyTexImage2D(fp : CPtr, target : UInt, level : Int, internalformat : UInt, x : Int, y : Int, width : Int, height : Int, border : Int) -> Unit = "epoxy_glCopyTexImage2D"
@@ -4253,7 +4253,7 @@ pub fn gl_copy_tex_image2_d(target : UInt, level : Int, internalformat : UInt, x
 }
 
 ///|
-let d_glCopyTexImage2DEXT : Dispatch = Dispatch::new("glCopyTexImage2DEXT")
+let d_glCopyTexImage2DEXT : Dispatch = Dispatch::with_aliases("glCopyTexImage2DEXT", ["glCopyTexImage2D"])
 
 ///|
 extern "c" fn epoxy_glCopyTexImage2DEXT(fp : CPtr, target : UInt, level : Int, internalformat : UInt, x : Int, y : Int, width : Int, height : Int, border : Int) -> Unit = "epoxy_glCopyTexImage2DEXT"
@@ -4264,7 +4264,7 @@ pub fn gl_copy_tex_image2_dext(target : UInt, level : Int, internalformat : UInt
 }
 
 ///|
-let d_glCopyTexSubImage1D : Dispatch = Dispatch::new("glCopyTexSubImage1D")
+let d_glCopyTexSubImage1D : Dispatch = Dispatch::with_aliases("glCopyTexSubImage1D", ["glCopyTexSubImage1DEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyTexSubImage1D(fp : CPtr, target : UInt, level : Int, xoffset : Int, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyTexSubImage1D"
@@ -4275,7 +4275,7 @@ pub fn gl_copy_tex_sub_image1_d(target : UInt, level : Int, xoffset : Int, x : I
 }
 
 ///|
-let d_glCopyTexSubImage1DEXT : Dispatch = Dispatch::new("glCopyTexSubImage1DEXT")
+let d_glCopyTexSubImage1DEXT : Dispatch = Dispatch::with_aliases("glCopyTexSubImage1DEXT", ["glCopyTexSubImage1D"])
 
 ///|
 extern "c" fn epoxy_glCopyTexSubImage1DEXT(fp : CPtr, target : UInt, level : Int, xoffset : Int, x : Int, y : Int, width : Int) -> Unit = "epoxy_glCopyTexSubImage1DEXT"
@@ -4286,7 +4286,7 @@ pub fn gl_copy_tex_sub_image1_dext(target : UInt, level : Int, xoffset : Int, x 
 }
 
 ///|
-let d_glCopyTexSubImage2D : Dispatch = Dispatch::new("glCopyTexSubImage2D")
+let d_glCopyTexSubImage2D : Dispatch = Dispatch::with_aliases("glCopyTexSubImage2D", ["glCopyTexSubImage2DEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyTexSubImage2D(fp : CPtr, target : UInt, level : Int, xoffset : Int, yoffset : Int, x : Int, y : Int, width : Int, height : Int) -> Unit = "epoxy_glCopyTexSubImage2D"
@@ -4297,7 +4297,7 @@ pub fn gl_copy_tex_sub_image2_d(target : UInt, level : Int, xoffset : Int, yoffs
 }
 
 ///|
-let d_glCopyTexSubImage2DEXT : Dispatch = Dispatch::new("glCopyTexSubImage2DEXT")
+let d_glCopyTexSubImage2DEXT : Dispatch = Dispatch::with_aliases("glCopyTexSubImage2DEXT", ["glCopyTexSubImage2D"])
 
 ///|
 extern "c" fn epoxy_glCopyTexSubImage2DEXT(fp : CPtr, target : UInt, level : Int, xoffset : Int, yoffset : Int, x : Int, y : Int, width : Int, height : Int) -> Unit = "epoxy_glCopyTexSubImage2DEXT"
@@ -4308,7 +4308,7 @@ pub fn gl_copy_tex_sub_image2_dext(target : UInt, level : Int, xoffset : Int, yo
 }
 
 ///|
-let d_glCopyTexSubImage3D : Dispatch = Dispatch::new("glCopyTexSubImage3D")
+let d_glCopyTexSubImage3D : Dispatch = Dispatch::with_aliases("glCopyTexSubImage3D", ["glCopyTexSubImage3DEXT"])
 
 ///|
 extern "c" fn epoxy_glCopyTexSubImage3D(fp : CPtr, target : UInt, level : Int, xoffset : Int, yoffset : Int, zoffset : Int, x : Int, y : Int, width : Int, height : Int) -> Unit = "epoxy_glCopyTexSubImage3D"
@@ -4319,7 +4319,7 @@ pub fn gl_copy_tex_sub_image3_d(target : UInt, level : Int, xoffset : Int, yoffs
 }
 
 ///|
-let d_glCopyTexSubImage3DEXT : Dispatch = Dispatch::new("glCopyTexSubImage3DEXT")
+let d_glCopyTexSubImage3DEXT : Dispatch = Dispatch::with_aliases("glCopyTexSubImage3DEXT", ["glCopyTexSubImage3D"])
 
 ///|
 extern "c" fn epoxy_glCopyTexSubImage3DEXT(fp : CPtr, target : UInt, level : Int, xoffset : Int, yoffset : Int, zoffset : Int, x : Int, y : Int, width : Int, height : Int) -> Unit = "epoxy_glCopyTexSubImage3DEXT"
@@ -4591,7 +4591,7 @@ pub fn gl_create_perf_query_intel(queryId : UInt, queryHandle : FixedArray[UInt]
 }
 
 ///|
-let d_glCreateProgram : Dispatch = Dispatch::new("glCreateProgram")
+let d_glCreateProgram : Dispatch = Dispatch::with_aliases("glCreateProgram", ["glCreateProgramObjectARB"])
 
 ///|
 extern "c" fn epoxy_glCreateProgram(fp : CPtr) -> UInt = "epoxy_glCreateProgram"
@@ -4673,7 +4673,7 @@ pub fn gl_create_semaphores_nv(n : Int, semaphores : FixedArray[UInt]) -> Unit r
 }
 
 ///|
-let d_glCreateShader : Dispatch = Dispatch::new("glCreateShader")
+let d_glCreateShader : Dispatch = Dispatch::with_aliases("glCreateShader", ["glCreateShaderObjectARB"])
 
 ///|
 extern "c" fn epoxy_glCreateShader(fp : CPtr, type_ : UInt) -> UInt = "epoxy_glCreateShader"
@@ -4801,7 +4801,7 @@ pub fn gl_current_palette_matrix_oes(matrixpaletteindex : UInt) -> Unit raise Re
 }
 
 ///|
-let d_glDebugMessageControl : Dispatch = Dispatch::new("glDebugMessageControl")
+let d_glDebugMessageControl : Dispatch = Dispatch::with_aliases("glDebugMessageControl", ["glDebugMessageControlARB", "glDebugMessageControlKHR"])
 
 ///|
 #borrow(ids)
@@ -4813,7 +4813,7 @@ pub fn gl_debug_message_control(source : UInt, type_ : UInt, severity : UInt, co
 }
 
 ///|
-let d_glDebugMessageControlARB : Dispatch = Dispatch::new("glDebugMessageControlARB")
+let d_glDebugMessageControlARB : Dispatch = Dispatch::with_aliases("glDebugMessageControlARB", ["glDebugMessageControl", "glDebugMessageControlKHR"])
 
 ///|
 #borrow(ids)
@@ -4825,7 +4825,7 @@ pub fn gl_debug_message_control_arb(source : UInt, type_ : UInt, severity : UInt
 }
 
 ///|
-let d_glDebugMessageControlKHR : Dispatch = Dispatch::new("glDebugMessageControlKHR")
+let d_glDebugMessageControlKHR : Dispatch = Dispatch::with_aliases("glDebugMessageControlKHR", ["glDebugMessageControl", "glDebugMessageControlARB"])
 
 ///|
 #borrow(ids)
@@ -4849,7 +4849,7 @@ pub fn gl_debug_message_enable_amd(category : UInt, severity : UInt, count : Int
 }
 
 ///|
-let d_glDebugMessageInsert : Dispatch = Dispatch::new("glDebugMessageInsert")
+let d_glDebugMessageInsert : Dispatch = Dispatch::with_aliases("glDebugMessageInsert", ["glDebugMessageInsertARB", "glDebugMessageInsertKHR"])
 
 ///|
 #borrow(buf)
@@ -4873,7 +4873,7 @@ pub fn gl_debug_message_insert_amd(category : UInt, severity : UInt, id : UInt, 
 }
 
 ///|
-let d_glDebugMessageInsertARB : Dispatch = Dispatch::new("glDebugMessageInsertARB")
+let d_glDebugMessageInsertARB : Dispatch = Dispatch::with_aliases("glDebugMessageInsertARB", ["glDebugMessageInsert", "glDebugMessageInsertKHR"])
 
 ///|
 #borrow(buf)
@@ -4885,7 +4885,7 @@ pub fn gl_debug_message_insert_arb(source : UInt, type_ : UInt, id : UInt, sever
 }
 
 ///|
-let d_glDebugMessageInsertKHR : Dispatch = Dispatch::new("glDebugMessageInsertKHR")
+let d_glDebugMessageInsertKHR : Dispatch = Dispatch::with_aliases("glDebugMessageInsertKHR", ["glDebugMessageInsert", "glDebugMessageInsertARB"])
 
 ///|
 #borrow(buf)
@@ -4943,7 +4943,7 @@ pub fn gl_delete_async_markers_sgix(marker : UInt, range : Int) -> Unit raise Re
 }
 
 ///|
-let d_glDeleteBuffers : Dispatch = Dispatch::new("glDeleteBuffers")
+let d_glDeleteBuffers : Dispatch = Dispatch::with_aliases("glDeleteBuffers", ["glDeleteBuffersARB"])
 
 ///|
 #borrow(buffers)
@@ -4955,7 +4955,7 @@ pub fn gl_delete_buffers(n : Int, buffers : FixedArray[UInt]) -> Unit raise Reso
 }
 
 ///|
-let d_glDeleteBuffersARB : Dispatch = Dispatch::new("glDeleteBuffersARB")
+let d_glDeleteBuffersARB : Dispatch = Dispatch::with_aliases("glDeleteBuffersARB", ["glDeleteBuffers"])
 
 ///|
 #borrow(buffers)
@@ -5014,7 +5014,7 @@ pub fn gl_delete_fragment_shader_ati(id : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDeleteFramebuffers : Dispatch = Dispatch::new("glDeleteFramebuffers")
+let d_glDeleteFramebuffers : Dispatch = Dispatch::with_aliases("glDeleteFramebuffers", ["glDeleteFramebuffersEXT"])
 
 ///|
 #borrow(framebuffers)
@@ -5026,7 +5026,7 @@ pub fn gl_delete_framebuffers(n : Int, framebuffers : FixedArray[UInt]) -> Unit 
 }
 
 ///|
-let d_glDeleteFramebuffersEXT : Dispatch = Dispatch::new("glDeleteFramebuffersEXT")
+let d_glDeleteFramebuffersEXT : Dispatch = Dispatch::with_aliases("glDeleteFramebuffersEXT", ["glDeleteFramebuffers"])
 
 ///|
 #borrow(framebuffers)
@@ -5178,7 +5178,7 @@ pub fn gl_delete_program_pipelines_ext(n : Int, pipelines : FixedArray[UInt]) ->
 }
 
 ///|
-let d_glDeleteProgramsARB : Dispatch = Dispatch::new("glDeleteProgramsARB")
+let d_glDeleteProgramsARB : Dispatch = Dispatch::with_aliases("glDeleteProgramsARB", ["glDeleteProgramsNV"])
 
 ///|
 #borrow(programs)
@@ -5190,7 +5190,7 @@ pub fn gl_delete_programs_arb(n : Int, programs : FixedArray[UInt]) -> Unit rais
 }
 
 ///|
-let d_glDeleteProgramsNV : Dispatch = Dispatch::new("glDeleteProgramsNV")
+let d_glDeleteProgramsNV : Dispatch = Dispatch::with_aliases("glDeleteProgramsNV", ["glDeleteProgramsARB"])
 
 ///|
 #borrow(programs)
@@ -5202,7 +5202,7 @@ pub fn gl_delete_programs_nv(n : Int, programs : FixedArray[UInt]) -> Unit raise
 }
 
 ///|
-let d_glDeleteQueries : Dispatch = Dispatch::new("glDeleteQueries")
+let d_glDeleteQueries : Dispatch = Dispatch::with_aliases("glDeleteQueries", ["glDeleteQueriesARB"])
 
 ///|
 #borrow(ids)
@@ -5214,7 +5214,7 @@ pub fn gl_delete_queries(n : Int, ids : FixedArray[UInt]) -> Unit raise ResolveE
 }
 
 ///|
-let d_glDeleteQueriesARB : Dispatch = Dispatch::new("glDeleteQueriesARB")
+let d_glDeleteQueriesARB : Dispatch = Dispatch::with_aliases("glDeleteQueriesARB", ["glDeleteQueries"])
 
 ///|
 #borrow(ids)
@@ -5250,7 +5250,7 @@ pub fn gl_delete_query_resource_tag_nv(n : Int, tagIds : FixedArray[Int]) -> Uni
 }
 
 ///|
-let d_glDeleteRenderbuffers : Dispatch = Dispatch::new("glDeleteRenderbuffers")
+let d_glDeleteRenderbuffers : Dispatch = Dispatch::with_aliases("glDeleteRenderbuffers", ["glDeleteRenderbuffersEXT"])
 
 ///|
 #borrow(renderbuffers)
@@ -5262,7 +5262,7 @@ pub fn gl_delete_renderbuffers(n : Int, renderbuffers : FixedArray[UInt]) -> Uni
 }
 
 ///|
-let d_glDeleteRenderbuffersEXT : Dispatch = Dispatch::new("glDeleteRenderbuffersEXT")
+let d_glDeleteRenderbuffersEXT : Dispatch = Dispatch::with_aliases("glDeleteRenderbuffersEXT", ["glDeleteRenderbuffers"])
 
 ///|
 #borrow(renderbuffers)
@@ -5357,7 +5357,7 @@ pub fn gl_delete_textures_ext(n : Int, textures : FixedArray[UInt]) -> Unit rais
 }
 
 ///|
-let d_glDeleteTransformFeedbacks : Dispatch = Dispatch::new("glDeleteTransformFeedbacks")
+let d_glDeleteTransformFeedbacks : Dispatch = Dispatch::with_aliases("glDeleteTransformFeedbacks", ["glDeleteTransformFeedbacksNV"])
 
 ///|
 #borrow(ids)
@@ -5369,7 +5369,7 @@ pub fn gl_delete_transform_feedbacks(n : Int, ids : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
-let d_glDeleteTransformFeedbacksNV : Dispatch = Dispatch::new("glDeleteTransformFeedbacksNV")
+let d_glDeleteTransformFeedbacksNV : Dispatch = Dispatch::with_aliases("glDeleteTransformFeedbacksNV", ["glDeleteTransformFeedbacks"])
 
 ///|
 #borrow(ids)
@@ -5381,7 +5381,7 @@ pub fn gl_delete_transform_feedbacks_nv(n : Int, ids : FixedArray[UInt]) -> Unit
 }
 
 ///|
-let d_glDeleteVertexArrays : Dispatch = Dispatch::new("glDeleteVertexArrays")
+let d_glDeleteVertexArrays : Dispatch = Dispatch::with_aliases("glDeleteVertexArrays", ["glDeleteVertexArraysAPPLE", "glDeleteVertexArraysOES"])
 
 ///|
 #borrow(arrays)
@@ -5393,7 +5393,7 @@ pub fn gl_delete_vertex_arrays(n : Int, arrays : FixedArray[UInt]) -> Unit raise
 }
 
 ///|
-let d_glDeleteVertexArraysAPPLE : Dispatch = Dispatch::new("glDeleteVertexArraysAPPLE")
+let d_glDeleteVertexArraysAPPLE : Dispatch = Dispatch::with_aliases("glDeleteVertexArraysAPPLE", ["glDeleteVertexArrays", "glDeleteVertexArraysOES"])
 
 ///|
 #borrow(arrays)
@@ -5405,7 +5405,7 @@ pub fn gl_delete_vertex_arrays_apple(n : Int, arrays : FixedArray[UInt]) -> Unit
 }
 
 ///|
-let d_glDeleteVertexArraysOES : Dispatch = Dispatch::new("glDeleteVertexArraysOES")
+let d_glDeleteVertexArraysOES : Dispatch = Dispatch::with_aliases("glDeleteVertexArraysOES", ["glDeleteVertexArrays", "glDeleteVertexArraysAPPLE"])
 
 ///|
 #borrow(arrays)
@@ -5586,7 +5586,7 @@ pub fn gl_depth_ranged_nv(zNear : Double, zFar : Double) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glDepthRangef : Dispatch = Dispatch::new("glDepthRangef")
+let d_glDepthRangef : Dispatch = Dispatch::with_aliases("glDepthRangef", ["glDepthRangefOES"])
 
 ///|
 extern "c" fn epoxy_glDepthRangef(fp : CPtr, n : Float, f : Float) -> Unit = "epoxy_glDepthRangef"
@@ -5597,7 +5597,7 @@ pub fn gl_depth_rangef(n : Float, f : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDepthRangefOES : Dispatch = Dispatch::new("glDepthRangefOES")
+let d_glDepthRangefOES : Dispatch = Dispatch::with_aliases("glDepthRangefOES", ["glDepthRangef"])
 
 ///|
 extern "c" fn epoxy_glDepthRangefOES(fp : CPtr, n : Float, f : Float) -> Unit = "epoxy_glDepthRangefOES"
@@ -5630,7 +5630,7 @@ pub fn gl_depth_rangex_oes(n : Int, f : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDetachShader : Dispatch = Dispatch::new("glDetachShader")
+let d_glDetachShader : Dispatch = Dispatch::with_aliases("glDetachShader", ["glDetachObjectARB"])
 
 ///|
 extern "c" fn epoxy_glDetachShader(fp : CPtr, program : UInt, shader : UInt) -> Unit = "epoxy_glDetachShader"
@@ -5708,7 +5708,7 @@ pub fn gl_disable_driver_control_qcom(driverControl : UInt) -> Unit raise Resolv
 }
 
 ///|
-let d_glDisableIndexedEXT : Dispatch = Dispatch::new("glDisableIndexedEXT")
+let d_glDisableIndexedEXT : Dispatch = Dispatch::with_aliases("glDisableIndexedEXT", ["glDisablei", "glDisableiEXT", "glDisableiNV", "glDisableiOES"])
 
 ///|
 extern "c" fn epoxy_glDisableIndexedEXT(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glDisableIndexedEXT"
@@ -5774,7 +5774,7 @@ pub fn gl_disable_vertex_attrib_apple(index : UInt, pname : UInt) -> Unit raise 
 }
 
 ///|
-let d_glDisableVertexAttribArray : Dispatch = Dispatch::new("glDisableVertexAttribArray")
+let d_glDisableVertexAttribArray : Dispatch = Dispatch::with_aliases("glDisableVertexAttribArray", ["glDisableVertexAttribArrayARB"])
 
 ///|
 extern "c" fn epoxy_glDisableVertexAttribArray(fp : CPtr, index : UInt) -> Unit = "epoxy_glDisableVertexAttribArray"
@@ -5785,7 +5785,7 @@ pub fn gl_disable_vertex_attrib_array(index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDisableVertexAttribArrayARB : Dispatch = Dispatch::new("glDisableVertexAttribArrayARB")
+let d_glDisableVertexAttribArrayARB : Dispatch = Dispatch::with_aliases("glDisableVertexAttribArrayARB", ["glDisableVertexAttribArray"])
 
 ///|
 extern "c" fn epoxy_glDisableVertexAttribArrayARB(fp : CPtr, index : UInt) -> Unit = "epoxy_glDisableVertexAttribArrayARB"
@@ -5796,7 +5796,7 @@ pub fn gl_disable_vertex_attrib_array_arb(index : UInt) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glDisablei : Dispatch = Dispatch::new("glDisablei")
+let d_glDisablei : Dispatch = Dispatch::with_aliases("glDisablei", ["glDisableIndexedEXT", "glDisableiEXT", "glDisableiNV", "glDisableiOES"])
 
 ///|
 extern "c" fn epoxy_glDisablei(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glDisablei"
@@ -5807,7 +5807,7 @@ pub fn gl_disablei(target : UInt, index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDisableiEXT : Dispatch = Dispatch::new("glDisableiEXT")
+let d_glDisableiEXT : Dispatch = Dispatch::with_aliases("glDisableiEXT", ["glDisableIndexedEXT", "glDisablei", "glDisableiNV", "glDisableiOES"])
 
 ///|
 extern "c" fn epoxy_glDisableiEXT(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glDisableiEXT"
@@ -5818,7 +5818,7 @@ pub fn gl_disablei_ext(target : UInt, index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDisableiNV : Dispatch = Dispatch::new("glDisableiNV")
+let d_glDisableiNV : Dispatch = Dispatch::with_aliases("glDisableiNV", ["glDisableIndexedEXT", "glDisablei", "glDisableiEXT", "glDisableiOES"])
 
 ///|
 extern "c" fn epoxy_glDisableiNV(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glDisableiNV"
@@ -5829,7 +5829,7 @@ pub fn gl_disablei_nv(target : UInt, index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDisableiOES : Dispatch = Dispatch::new("glDisableiOES")
+let d_glDisableiOES : Dispatch = Dispatch::with_aliases("glDisableiOES", ["glDisableIndexedEXT", "glDisablei", "glDisableiEXT", "glDisableiNV"])
 
 ///|
 extern "c" fn epoxy_glDisableiOES(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glDisableiOES"
@@ -5885,7 +5885,7 @@ pub fn gl_dispatch_compute_indirect(indirect : Int64) -> Unit raise ResolveError
 }
 
 ///|
-let d_glDrawArrays : Dispatch = Dispatch::new("glDrawArrays")
+let d_glDrawArrays : Dispatch = Dispatch::with_aliases("glDrawArrays", ["glDrawArraysEXT"])
 
 ///|
 extern "c" fn epoxy_glDrawArrays(fp : CPtr, mode : UInt, first : Int, count : Int) -> Unit = "epoxy_glDrawArrays"
@@ -5896,7 +5896,7 @@ pub fn gl_draw_arrays(mode : UInt, first : Int, count : Int) -> Unit raise Resol
 }
 
 ///|
-let d_glDrawArraysEXT : Dispatch = Dispatch::new("glDrawArraysEXT")
+let d_glDrawArraysEXT : Dispatch = Dispatch::with_aliases("glDrawArraysEXT", ["glDrawArrays"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysEXT(fp : CPtr, mode : UInt, first : Int, count : Int) -> Unit = "epoxy_glDrawArraysEXT"
@@ -5919,7 +5919,7 @@ pub fn gl_draw_arrays_indirect(mode : UInt, indirect : Bytes) -> Unit raise Reso
 }
 
 ///|
-let d_glDrawArraysInstanced : Dispatch = Dispatch::new("glDrawArraysInstanced")
+let d_glDrawArraysInstanced : Dispatch = Dispatch::with_aliases("glDrawArraysInstanced", ["glDrawArraysInstancedANGLE", "glDrawArraysInstancedARB", "glDrawArraysInstancedEXT", "glDrawArraysInstancedNV"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysInstanced(fp : CPtr, mode : UInt, first : Int, count : Int, instancecount : Int) -> Unit = "epoxy_glDrawArraysInstanced"
@@ -5930,7 +5930,7 @@ pub fn gl_draw_arrays_instanced(mode : UInt, first : Int, count : Int, instancec
 }
 
 ///|
-let d_glDrawArraysInstancedANGLE : Dispatch = Dispatch::new("glDrawArraysInstancedANGLE")
+let d_glDrawArraysInstancedANGLE : Dispatch = Dispatch::with_aliases("glDrawArraysInstancedANGLE", ["glDrawArraysInstanced", "glDrawArraysInstancedARB", "glDrawArraysInstancedEXT", "glDrawArraysInstancedNV"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysInstancedANGLE(fp : CPtr, mode : UInt, first : Int, count : Int, primcount : Int) -> Unit = "epoxy_glDrawArraysInstancedANGLE"
@@ -5941,7 +5941,7 @@ pub fn gl_draw_arrays_instanced_angle(mode : UInt, first : Int, count : Int, pri
 }
 
 ///|
-let d_glDrawArraysInstancedARB : Dispatch = Dispatch::new("glDrawArraysInstancedARB")
+let d_glDrawArraysInstancedARB : Dispatch = Dispatch::with_aliases("glDrawArraysInstancedARB", ["glDrawArraysInstanced", "glDrawArraysInstancedANGLE", "glDrawArraysInstancedEXT", "glDrawArraysInstancedNV"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysInstancedARB(fp : CPtr, mode : UInt, first : Int, count : Int, primcount : Int) -> Unit = "epoxy_glDrawArraysInstancedARB"
@@ -5952,7 +5952,7 @@ pub fn gl_draw_arrays_instanced_arb(mode : UInt, first : Int, count : Int, primc
 }
 
 ///|
-let d_glDrawArraysInstancedBaseInstance : Dispatch = Dispatch::new("glDrawArraysInstancedBaseInstance")
+let d_glDrawArraysInstancedBaseInstance : Dispatch = Dispatch::with_aliases("glDrawArraysInstancedBaseInstance", ["glDrawArraysInstancedBaseInstanceEXT"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysInstancedBaseInstance(fp : CPtr, mode : UInt, first : Int, count : Int, instancecount : Int, baseinstance : UInt) -> Unit = "epoxy_glDrawArraysInstancedBaseInstance"
@@ -5963,7 +5963,7 @@ pub fn gl_draw_arrays_instanced_base_instance(mode : UInt, first : Int, count : 
 }
 
 ///|
-let d_glDrawArraysInstancedBaseInstanceEXT : Dispatch = Dispatch::new("glDrawArraysInstancedBaseInstanceEXT")
+let d_glDrawArraysInstancedBaseInstanceEXT : Dispatch = Dispatch::with_aliases("glDrawArraysInstancedBaseInstanceEXT", ["glDrawArraysInstancedBaseInstance"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysInstancedBaseInstanceEXT(fp : CPtr, mode : UInt, first : Int, count : Int, instancecount : Int, baseinstance : UInt) -> Unit = "epoxy_glDrawArraysInstancedBaseInstanceEXT"
@@ -5974,7 +5974,7 @@ pub fn gl_draw_arrays_instanced_base_instance_ext(mode : UInt, first : Int, coun
 }
 
 ///|
-let d_glDrawArraysInstancedEXT : Dispatch = Dispatch::new("glDrawArraysInstancedEXT")
+let d_glDrawArraysInstancedEXT : Dispatch = Dispatch::with_aliases("glDrawArraysInstancedEXT", ["glDrawArraysInstanced", "glDrawArraysInstancedANGLE", "glDrawArraysInstancedARB", "glDrawArraysInstancedNV"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysInstancedEXT(fp : CPtr, mode : UInt, start : Int, count : Int, primcount : Int) -> Unit = "epoxy_glDrawArraysInstancedEXT"
@@ -5985,7 +5985,7 @@ pub fn gl_draw_arrays_instanced_ext(mode : UInt, start : Int, count : Int, primc
 }
 
 ///|
-let d_glDrawArraysInstancedNV : Dispatch = Dispatch::new("glDrawArraysInstancedNV")
+let d_glDrawArraysInstancedNV : Dispatch = Dispatch::with_aliases("glDrawArraysInstancedNV", ["glDrawArraysInstanced", "glDrawArraysInstancedANGLE", "glDrawArraysInstancedARB", "glDrawArraysInstancedEXT"])
 
 ///|
 extern "c" fn epoxy_glDrawArraysInstancedNV(fp : CPtr, mode : UInt, first : Int, count : Int, primcount : Int) -> Unit = "epoxy_glDrawArraysInstancedNV"
@@ -6007,7 +6007,7 @@ pub fn gl_draw_buffer(buf : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDrawBuffers : Dispatch = Dispatch::new("glDrawBuffers")
+let d_glDrawBuffers : Dispatch = Dispatch::with_aliases("glDrawBuffers", ["glDrawBuffersARB", "glDrawBuffersATI", "glDrawBuffersEXT"])
 
 ///|
 #borrow(bufs)
@@ -6019,7 +6019,7 @@ pub fn gl_draw_buffers(n : Int, bufs : FixedArray[UInt]) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glDrawBuffersARB : Dispatch = Dispatch::new("glDrawBuffersARB")
+let d_glDrawBuffersARB : Dispatch = Dispatch::with_aliases("glDrawBuffersARB", ["glDrawBuffers", "glDrawBuffersATI", "glDrawBuffersEXT"])
 
 ///|
 #borrow(bufs)
@@ -6031,7 +6031,7 @@ pub fn gl_draw_buffers_arb(n : Int, bufs : FixedArray[UInt]) -> Unit raise Resol
 }
 
 ///|
-let d_glDrawBuffersATI : Dispatch = Dispatch::new("glDrawBuffersATI")
+let d_glDrawBuffersATI : Dispatch = Dispatch::with_aliases("glDrawBuffersATI", ["glDrawBuffers", "glDrawBuffersARB", "glDrawBuffersEXT"])
 
 ///|
 #borrow(bufs)
@@ -6043,7 +6043,7 @@ pub fn gl_draw_buffers_ati(n : Int, bufs : FixedArray[UInt]) -> Unit raise Resol
 }
 
 ///|
-let d_glDrawBuffersEXT : Dispatch = Dispatch::new("glDrawBuffersEXT")
+let d_glDrawBuffersEXT : Dispatch = Dispatch::with_aliases("glDrawBuffersEXT", ["glDrawBuffers", "glDrawBuffersARB", "glDrawBuffersATI"])
 
 ///|
 #borrow(bufs)
@@ -6137,7 +6137,7 @@ pub fn gl_draw_elements(mode : UInt, count : Int, type_ : UInt, indices : Bytes)
 }
 
 ///|
-let d_glDrawElementsBaseVertex : Dispatch = Dispatch::new("glDrawElementsBaseVertex")
+let d_glDrawElementsBaseVertex : Dispatch = Dispatch::with_aliases("glDrawElementsBaseVertex", ["glDrawElementsBaseVertexEXT", "glDrawElementsBaseVertexOES"])
 
 ///|
 #borrow(indices)
@@ -6149,7 +6149,7 @@ pub fn gl_draw_elements_base_vertex(mode : UInt, count : Int, type_ : UInt, indi
 }
 
 ///|
-let d_glDrawElementsBaseVertexEXT : Dispatch = Dispatch::new("glDrawElementsBaseVertexEXT")
+let d_glDrawElementsBaseVertexEXT : Dispatch = Dispatch::with_aliases("glDrawElementsBaseVertexEXT", ["glDrawElementsBaseVertex", "glDrawElementsBaseVertexOES"])
 
 ///|
 #borrow(indices)
@@ -6161,7 +6161,7 @@ pub fn gl_draw_elements_base_vertex_ext(mode : UInt, count : Int, type_ : UInt, 
 }
 
 ///|
-let d_glDrawElementsBaseVertexOES : Dispatch = Dispatch::new("glDrawElementsBaseVertexOES")
+let d_glDrawElementsBaseVertexOES : Dispatch = Dispatch::with_aliases("glDrawElementsBaseVertexOES", ["glDrawElementsBaseVertex", "glDrawElementsBaseVertexEXT"])
 
 ///|
 #borrow(indices)
@@ -6185,7 +6185,7 @@ pub fn gl_draw_elements_indirect(mode : UInt, type_ : UInt, indirect : Bytes) ->
 }
 
 ///|
-let d_glDrawElementsInstanced : Dispatch = Dispatch::new("glDrawElementsInstanced")
+let d_glDrawElementsInstanced : Dispatch = Dispatch::with_aliases("glDrawElementsInstanced", ["glDrawElementsInstancedANGLE", "glDrawElementsInstancedARB", "glDrawElementsInstancedEXT", "glDrawElementsInstancedNV"])
 
 ///|
 #borrow(indices)
@@ -6197,7 +6197,7 @@ pub fn gl_draw_elements_instanced(mode : UInt, count : Int, type_ : UInt, indice
 }
 
 ///|
-let d_glDrawElementsInstancedANGLE : Dispatch = Dispatch::new("glDrawElementsInstancedANGLE")
+let d_glDrawElementsInstancedANGLE : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedANGLE", ["glDrawElementsInstanced", "glDrawElementsInstancedARB", "glDrawElementsInstancedEXT", "glDrawElementsInstancedNV"])
 
 ///|
 #borrow(indices)
@@ -6209,7 +6209,7 @@ pub fn gl_draw_elements_instanced_angle(mode : UInt, count : Int, type_ : UInt, 
 }
 
 ///|
-let d_glDrawElementsInstancedARB : Dispatch = Dispatch::new("glDrawElementsInstancedARB")
+let d_glDrawElementsInstancedARB : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedARB", ["glDrawElementsInstanced", "glDrawElementsInstancedANGLE", "glDrawElementsInstancedEXT", "glDrawElementsInstancedNV"])
 
 ///|
 #borrow(indices)
@@ -6221,7 +6221,7 @@ pub fn gl_draw_elements_instanced_arb(mode : UInt, count : Int, type_ : UInt, in
 }
 
 ///|
-let d_glDrawElementsInstancedBaseInstance : Dispatch = Dispatch::new("glDrawElementsInstancedBaseInstance")
+let d_glDrawElementsInstancedBaseInstance : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedBaseInstance", ["glDrawElementsInstancedBaseInstanceEXT"])
 
 ///|
 #borrow(indices)
@@ -6233,7 +6233,7 @@ pub fn gl_draw_elements_instanced_base_instance(mode : UInt, count : Int, type_ 
 }
 
 ///|
-let d_glDrawElementsInstancedBaseInstanceEXT : Dispatch = Dispatch::new("glDrawElementsInstancedBaseInstanceEXT")
+let d_glDrawElementsInstancedBaseInstanceEXT : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedBaseInstanceEXT", ["glDrawElementsInstancedBaseInstance"])
 
 ///|
 #borrow(indices)
@@ -6245,7 +6245,7 @@ pub fn gl_draw_elements_instanced_base_instance_ext(mode : UInt, count : Int, ty
 }
 
 ///|
-let d_glDrawElementsInstancedBaseVertex : Dispatch = Dispatch::new("glDrawElementsInstancedBaseVertex")
+let d_glDrawElementsInstancedBaseVertex : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedBaseVertex", ["glDrawElementsInstancedBaseVertexEXT", "glDrawElementsInstancedBaseVertexOES"])
 
 ///|
 #borrow(indices)
@@ -6257,7 +6257,7 @@ pub fn gl_draw_elements_instanced_base_vertex(mode : UInt, count : Int, type_ : 
 }
 
 ///|
-let d_glDrawElementsInstancedBaseVertexBaseInstance : Dispatch = Dispatch::new("glDrawElementsInstancedBaseVertexBaseInstance")
+let d_glDrawElementsInstancedBaseVertexBaseInstance : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedBaseVertexBaseInstance", ["glDrawElementsInstancedBaseVertexBaseInstanceEXT"])
 
 ///|
 #borrow(indices)
@@ -6269,7 +6269,7 @@ pub fn gl_draw_elements_instanced_base_vertex_base_instance(mode : UInt, count :
 }
 
 ///|
-let d_glDrawElementsInstancedBaseVertexBaseInstanceEXT : Dispatch = Dispatch::new("glDrawElementsInstancedBaseVertexBaseInstanceEXT")
+let d_glDrawElementsInstancedBaseVertexBaseInstanceEXT : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedBaseVertexBaseInstanceEXT", ["glDrawElementsInstancedBaseVertexBaseInstance"])
 
 ///|
 #borrow(indices)
@@ -6281,7 +6281,7 @@ pub fn gl_draw_elements_instanced_base_vertex_base_instance_ext(mode : UInt, cou
 }
 
 ///|
-let d_glDrawElementsInstancedBaseVertexEXT : Dispatch = Dispatch::new("glDrawElementsInstancedBaseVertexEXT")
+let d_glDrawElementsInstancedBaseVertexEXT : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedBaseVertexEXT", ["glDrawElementsInstancedBaseVertex", "glDrawElementsInstancedBaseVertexOES"])
 
 ///|
 #borrow(indices)
@@ -6293,7 +6293,7 @@ pub fn gl_draw_elements_instanced_base_vertex_ext(mode : UInt, count : Int, type
 }
 
 ///|
-let d_glDrawElementsInstancedBaseVertexOES : Dispatch = Dispatch::new("glDrawElementsInstancedBaseVertexOES")
+let d_glDrawElementsInstancedBaseVertexOES : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedBaseVertexOES", ["glDrawElementsInstancedBaseVertex", "glDrawElementsInstancedBaseVertexEXT"])
 
 ///|
 #borrow(indices)
@@ -6305,7 +6305,7 @@ pub fn gl_draw_elements_instanced_base_vertex_oes(mode : UInt, count : Int, type
 }
 
 ///|
-let d_glDrawElementsInstancedEXT : Dispatch = Dispatch::new("glDrawElementsInstancedEXT")
+let d_glDrawElementsInstancedEXT : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedEXT", ["glDrawElementsInstanced", "glDrawElementsInstancedANGLE", "glDrawElementsInstancedARB", "glDrawElementsInstancedNV"])
 
 ///|
 #borrow(indices)
@@ -6317,7 +6317,7 @@ pub fn gl_draw_elements_instanced_ext(mode : UInt, count : Int, type_ : UInt, in
 }
 
 ///|
-let d_glDrawElementsInstancedNV : Dispatch = Dispatch::new("glDrawElementsInstancedNV")
+let d_glDrawElementsInstancedNV : Dispatch = Dispatch::with_aliases("glDrawElementsInstancedNV", ["glDrawElementsInstanced", "glDrawElementsInstancedANGLE", "glDrawElementsInstancedARB", "glDrawElementsInstancedEXT"])
 
 ///|
 #borrow(indices)
@@ -6418,7 +6418,7 @@ pub fn gl_draw_range_element_array_ati(mode : UInt, start : UInt, end : UInt, co
 }
 
 ///|
-let d_glDrawRangeElements : Dispatch = Dispatch::new("glDrawRangeElements")
+let d_glDrawRangeElements : Dispatch = Dispatch::with_aliases("glDrawRangeElements", ["glDrawRangeElementsEXT"])
 
 ///|
 #borrow(indices)
@@ -6430,7 +6430,7 @@ pub fn gl_draw_range_elements(mode : UInt, start : UInt, end : UInt, count : Int
 }
 
 ///|
-let d_glDrawRangeElementsBaseVertex : Dispatch = Dispatch::new("glDrawRangeElementsBaseVertex")
+let d_glDrawRangeElementsBaseVertex : Dispatch = Dispatch::with_aliases("glDrawRangeElementsBaseVertex", ["glDrawRangeElementsBaseVertexEXT", "glDrawRangeElementsBaseVertexOES"])
 
 ///|
 #borrow(indices)
@@ -6442,7 +6442,7 @@ pub fn gl_draw_range_elements_base_vertex(mode : UInt, start : UInt, end : UInt,
 }
 
 ///|
-let d_glDrawRangeElementsBaseVertexEXT : Dispatch = Dispatch::new("glDrawRangeElementsBaseVertexEXT")
+let d_glDrawRangeElementsBaseVertexEXT : Dispatch = Dispatch::with_aliases("glDrawRangeElementsBaseVertexEXT", ["glDrawRangeElementsBaseVertex", "glDrawRangeElementsBaseVertexOES"])
 
 ///|
 #borrow(indices)
@@ -6454,7 +6454,7 @@ pub fn gl_draw_range_elements_base_vertex_ext(mode : UInt, start : UInt, end : U
 }
 
 ///|
-let d_glDrawRangeElementsBaseVertexOES : Dispatch = Dispatch::new("glDrawRangeElementsBaseVertexOES")
+let d_glDrawRangeElementsBaseVertexOES : Dispatch = Dispatch::with_aliases("glDrawRangeElementsBaseVertexOES", ["glDrawRangeElementsBaseVertex", "glDrawRangeElementsBaseVertexEXT"])
 
 ///|
 #borrow(indices)
@@ -6466,7 +6466,7 @@ pub fn gl_draw_range_elements_base_vertex_oes(mode : UInt, start : UInt, end : U
 }
 
 ///|
-let d_glDrawRangeElementsEXT : Dispatch = Dispatch::new("glDrawRangeElementsEXT")
+let d_glDrawRangeElementsEXT : Dispatch = Dispatch::with_aliases("glDrawRangeElementsEXT", ["glDrawRangeElements"])
 
 ///|
 #borrow(indices)
@@ -6569,7 +6569,7 @@ pub fn gl_draw_texxv_oes(coords : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glDrawTransformFeedback : Dispatch = Dispatch::new("glDrawTransformFeedback")
+let d_glDrawTransformFeedback : Dispatch = Dispatch::with_aliases("glDrawTransformFeedback", ["glDrawTransformFeedbackEXT", "glDrawTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glDrawTransformFeedback(fp : CPtr, mode : UInt, id : UInt) -> Unit = "epoxy_glDrawTransformFeedback"
@@ -6580,7 +6580,7 @@ pub fn gl_draw_transform_feedback(mode : UInt, id : UInt) -> Unit raise ResolveE
 }
 
 ///|
-let d_glDrawTransformFeedbackEXT : Dispatch = Dispatch::new("glDrawTransformFeedbackEXT")
+let d_glDrawTransformFeedbackEXT : Dispatch = Dispatch::with_aliases("glDrawTransformFeedbackEXT", ["glDrawTransformFeedback", "glDrawTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glDrawTransformFeedbackEXT(fp : CPtr, mode : UInt, id : UInt) -> Unit = "epoxy_glDrawTransformFeedbackEXT"
@@ -6591,7 +6591,7 @@ pub fn gl_draw_transform_feedback_ext(mode : UInt, id : UInt) -> Unit raise Reso
 }
 
 ///|
-let d_glDrawTransformFeedbackInstanced : Dispatch = Dispatch::new("glDrawTransformFeedbackInstanced")
+let d_glDrawTransformFeedbackInstanced : Dispatch = Dispatch::with_aliases("glDrawTransformFeedbackInstanced", ["glDrawTransformFeedbackInstancedEXT"])
 
 ///|
 extern "c" fn epoxy_glDrawTransformFeedbackInstanced(fp : CPtr, mode : UInt, id : UInt, instancecount : Int) -> Unit = "epoxy_glDrawTransformFeedbackInstanced"
@@ -6602,7 +6602,7 @@ pub fn gl_draw_transform_feedback_instanced(mode : UInt, id : UInt, instancecoun
 }
 
 ///|
-let d_glDrawTransformFeedbackInstancedEXT : Dispatch = Dispatch::new("glDrawTransformFeedbackInstancedEXT")
+let d_glDrawTransformFeedbackInstancedEXT : Dispatch = Dispatch::with_aliases("glDrawTransformFeedbackInstancedEXT", ["glDrawTransformFeedbackInstanced"])
 
 ///|
 extern "c" fn epoxy_glDrawTransformFeedbackInstancedEXT(fp : CPtr, mode : UInt, id : UInt, instancecount : Int) -> Unit = "epoxy_glDrawTransformFeedbackInstancedEXT"
@@ -6613,7 +6613,7 @@ pub fn gl_draw_transform_feedback_instanced_ext(mode : UInt, id : UInt, instance
 }
 
 ///|
-let d_glDrawTransformFeedbackNV : Dispatch = Dispatch::new("glDrawTransformFeedbackNV")
+let d_glDrawTransformFeedbackNV : Dispatch = Dispatch::with_aliases("glDrawTransformFeedbackNV", ["glDrawTransformFeedback", "glDrawTransformFeedbackEXT"])
 
 ///|
 extern "c" fn epoxy_glDrawTransformFeedbackNV(fp : CPtr, mode : UInt, id : UInt) -> Unit = "epoxy_glDrawTransformFeedbackNV"
@@ -6783,7 +6783,7 @@ pub fn gl_enable_driver_control_qcom(driverControl : UInt) -> Unit raise Resolve
 }
 
 ///|
-let d_glEnableIndexedEXT : Dispatch = Dispatch::new("glEnableIndexedEXT")
+let d_glEnableIndexedEXT : Dispatch = Dispatch::with_aliases("glEnableIndexedEXT", ["glEnablei", "glEnableiEXT", "glEnableiNV", "glEnableiOES"])
 
 ///|
 extern "c" fn epoxy_glEnableIndexedEXT(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glEnableIndexedEXT"
@@ -6849,7 +6849,7 @@ pub fn gl_enable_vertex_attrib_apple(index : UInt, pname : UInt) -> Unit raise R
 }
 
 ///|
-let d_glEnableVertexAttribArray : Dispatch = Dispatch::new("glEnableVertexAttribArray")
+let d_glEnableVertexAttribArray : Dispatch = Dispatch::with_aliases("glEnableVertexAttribArray", ["glEnableVertexAttribArrayARB"])
 
 ///|
 extern "c" fn epoxy_glEnableVertexAttribArray(fp : CPtr, index : UInt) -> Unit = "epoxy_glEnableVertexAttribArray"
@@ -6860,7 +6860,7 @@ pub fn gl_enable_vertex_attrib_array(index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEnableVertexAttribArrayARB : Dispatch = Dispatch::new("glEnableVertexAttribArrayARB")
+let d_glEnableVertexAttribArrayARB : Dispatch = Dispatch::with_aliases("glEnableVertexAttribArrayARB", ["glEnableVertexAttribArray"])
 
 ///|
 extern "c" fn epoxy_glEnableVertexAttribArrayARB(fp : CPtr, index : UInt) -> Unit = "epoxy_glEnableVertexAttribArrayARB"
@@ -6871,7 +6871,7 @@ pub fn gl_enable_vertex_attrib_array_arb(index : UInt) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glEnablei : Dispatch = Dispatch::new("glEnablei")
+let d_glEnablei : Dispatch = Dispatch::with_aliases("glEnablei", ["glEnableIndexedEXT", "glEnableiEXT", "glEnableiNV", "glEnableiOES"])
 
 ///|
 extern "c" fn epoxy_glEnablei(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glEnablei"
@@ -6882,7 +6882,7 @@ pub fn gl_enablei(target : UInt, index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEnableiEXT : Dispatch = Dispatch::new("glEnableiEXT")
+let d_glEnableiEXT : Dispatch = Dispatch::with_aliases("glEnableiEXT", ["glEnableIndexedEXT", "glEnablei", "glEnableiNV", "glEnableiOES"])
 
 ///|
 extern "c" fn epoxy_glEnableiEXT(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glEnableiEXT"
@@ -6893,7 +6893,7 @@ pub fn gl_enablei_ext(target : UInt, index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEnableiNV : Dispatch = Dispatch::new("glEnableiNV")
+let d_glEnableiNV : Dispatch = Dispatch::with_aliases("glEnableiNV", ["glEnableIndexedEXT", "glEnablei", "glEnableiEXT", "glEnableiOES"])
 
 ///|
 extern "c" fn epoxy_glEnableiNV(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glEnableiNV"
@@ -6904,7 +6904,7 @@ pub fn gl_enablei_nv(target : UInt, index : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEnableiOES : Dispatch = Dispatch::new("glEnableiOES")
+let d_glEnableiOES : Dispatch = Dispatch::with_aliases("glEnableiOES", ["glEnableIndexedEXT", "glEnablei", "glEnableiEXT", "glEnableiNV"])
 
 ///|
 extern "c" fn epoxy_glEnableiOES(fp : CPtr, target : UInt, index : UInt) -> Unit = "epoxy_glEnableiOES"
@@ -6926,7 +6926,7 @@ pub fn gl_end() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndConditionalRender : Dispatch = Dispatch::new("glEndConditionalRender")
+let d_glEndConditionalRender : Dispatch = Dispatch::with_aliases("glEndConditionalRender", ["glEndConditionalRenderNV", "glEndConditionalRenderNVX"])
 
 ///|
 extern "c" fn epoxy_glEndConditionalRender(fp : CPtr) -> Unit = "epoxy_glEndConditionalRender"
@@ -6937,7 +6937,7 @@ pub fn gl_end_conditional_render() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndConditionalRenderNV : Dispatch = Dispatch::new("glEndConditionalRenderNV")
+let d_glEndConditionalRenderNV : Dispatch = Dispatch::with_aliases("glEndConditionalRenderNV", ["glEndConditionalRender", "glEndConditionalRenderNVX"])
 
 ///|
 extern "c" fn epoxy_glEndConditionalRenderNV(fp : CPtr) -> Unit = "epoxy_glEndConditionalRenderNV"
@@ -6948,7 +6948,7 @@ pub fn gl_end_conditional_render_nv() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndConditionalRenderNVX : Dispatch = Dispatch::new("glEndConditionalRenderNVX")
+let d_glEndConditionalRenderNVX : Dispatch = Dispatch::with_aliases("glEndConditionalRenderNVX", ["glEndConditionalRender", "glEndConditionalRenderNV"])
 
 ///|
 extern "c" fn epoxy_glEndConditionalRenderNVX(fp : CPtr) -> Unit = "epoxy_glEndConditionalRenderNVX"
@@ -7014,7 +7014,7 @@ pub fn gl_end_perf_query_intel(queryHandle : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndQuery : Dispatch = Dispatch::new("glEndQuery")
+let d_glEndQuery : Dispatch = Dispatch::with_aliases("glEndQuery", ["glEndQueryARB"])
 
 ///|
 extern "c" fn epoxy_glEndQuery(fp : CPtr, target : UInt) -> Unit = "epoxy_glEndQuery"
@@ -7025,7 +7025,7 @@ pub fn gl_end_query(target : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndQueryARB : Dispatch = Dispatch::new("glEndQueryARB")
+let d_glEndQueryARB : Dispatch = Dispatch::with_aliases("glEndQueryARB", ["glEndQuery"])
 
 ///|
 extern "c" fn epoxy_glEndQueryARB(fp : CPtr, target : UInt) -> Unit = "epoxy_glEndQueryARB"
@@ -7069,7 +7069,7 @@ pub fn gl_end_tiling_qcom(preserveMask : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndTransformFeedback : Dispatch = Dispatch::new("glEndTransformFeedback")
+let d_glEndTransformFeedback : Dispatch = Dispatch::with_aliases("glEndTransformFeedback", ["glEndTransformFeedbackEXT", "glEndTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glEndTransformFeedback(fp : CPtr) -> Unit = "epoxy_glEndTransformFeedback"
@@ -7080,7 +7080,7 @@ pub fn gl_end_transform_feedback() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndTransformFeedbackEXT : Dispatch = Dispatch::new("glEndTransformFeedbackEXT")
+let d_glEndTransformFeedbackEXT : Dispatch = Dispatch::with_aliases("glEndTransformFeedbackEXT", ["glEndTransformFeedback", "glEndTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glEndTransformFeedbackEXT(fp : CPtr) -> Unit = "epoxy_glEndTransformFeedbackEXT"
@@ -7091,7 +7091,7 @@ pub fn gl_end_transform_feedback_ext() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glEndTransformFeedbackNV : Dispatch = Dispatch::new("glEndTransformFeedbackNV")
+let d_glEndTransformFeedbackNV : Dispatch = Dispatch::with_aliases("glEndTransformFeedbackNV", ["glEndTransformFeedback", "glEndTransformFeedbackEXT"])
 
 ///|
 extern "c" fn epoxy_glEndTransformFeedbackNV(fp : CPtr) -> Unit = "epoxy_glEndTransformFeedbackNV"
@@ -7594,7 +7594,7 @@ pub fn gl_flush() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glFlushMappedBufferRange : Dispatch = Dispatch::new("glFlushMappedBufferRange")
+let d_glFlushMappedBufferRange : Dispatch = Dispatch::with_aliases("glFlushMappedBufferRange", ["glFlushMappedBufferRangeAPPLE", "glFlushMappedBufferRangeEXT"])
 
 ///|
 extern "c" fn epoxy_glFlushMappedBufferRange(fp : CPtr, target : UInt, offset : Int64, length : Int64) -> Unit = "epoxy_glFlushMappedBufferRange"
@@ -7605,7 +7605,7 @@ pub fn gl_flush_mapped_buffer_range(target : UInt, offset : Int64, length : Int6
 }
 
 ///|
-let d_glFlushMappedBufferRangeAPPLE : Dispatch = Dispatch::new("glFlushMappedBufferRangeAPPLE")
+let d_glFlushMappedBufferRangeAPPLE : Dispatch = Dispatch::with_aliases("glFlushMappedBufferRangeAPPLE", ["glFlushMappedBufferRange", "glFlushMappedBufferRangeEXT"])
 
 ///|
 extern "c" fn epoxy_glFlushMappedBufferRangeAPPLE(fp : CPtr, target : UInt, offset : Int64, size : Int64) -> Unit = "epoxy_glFlushMappedBufferRangeAPPLE"
@@ -7616,7 +7616,7 @@ pub fn gl_flush_mapped_buffer_range_apple(target : UInt, offset : Int64, size : 
 }
 
 ///|
-let d_glFlushMappedBufferRangeEXT : Dispatch = Dispatch::new("glFlushMappedBufferRangeEXT")
+let d_glFlushMappedBufferRangeEXT : Dispatch = Dispatch::with_aliases("glFlushMappedBufferRangeEXT", ["glFlushMappedBufferRange", "glFlushMappedBufferRangeAPPLE"])
 
 ///|
 extern "c" fn epoxy_glFlushMappedBufferRangeEXT(fp : CPtr, target : UInt, offset : Int64, length : Int64) -> Unit = "epoxy_glFlushMappedBufferRangeEXT"
@@ -7716,7 +7716,7 @@ pub fn gl_fog_coord_format_nv(type_ : UInt, stride : Int) -> Unit raise ResolveE
 }
 
 ///|
-let d_glFogCoordPointer : Dispatch = Dispatch::new("glFogCoordPointer")
+let d_glFogCoordPointer : Dispatch = Dispatch::with_aliases("glFogCoordPointer", ["glFogCoordPointerEXT"])
 
 ///|
 #borrow(pointer)
@@ -7728,7 +7728,7 @@ pub fn gl_fog_coord_pointer(type_ : UInt, stride : Int, pointer : Bytes) -> Unit
 }
 
 ///|
-let d_glFogCoordPointerEXT : Dispatch = Dispatch::new("glFogCoordPointerEXT")
+let d_glFogCoordPointerEXT : Dispatch = Dispatch::with_aliases("glFogCoordPointerEXT", ["glFogCoordPointer"])
 
 ///|
 #borrow(pointer)
@@ -7740,7 +7740,7 @@ pub fn gl_fog_coord_pointer_ext(type_ : UInt, stride : Int, pointer : Bytes) -> 
 }
 
 ///|
-let d_glFogCoordd : Dispatch = Dispatch::new("glFogCoordd")
+let d_glFogCoordd : Dispatch = Dispatch::with_aliases("glFogCoordd", ["glFogCoorddEXT"])
 
 ///|
 extern "c" fn epoxy_glFogCoordd(fp : CPtr, coord : Double) -> Unit = "epoxy_glFogCoordd"
@@ -7751,7 +7751,7 @@ pub fn gl_fog_coordd(coord : Double) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glFogCoorddEXT : Dispatch = Dispatch::new("glFogCoorddEXT")
+let d_glFogCoorddEXT : Dispatch = Dispatch::with_aliases("glFogCoorddEXT", ["glFogCoordd"])
 
 ///|
 extern "c" fn epoxy_glFogCoorddEXT(fp : CPtr, coord : Double) -> Unit = "epoxy_glFogCoorddEXT"
@@ -7762,7 +7762,7 @@ pub fn gl_fog_coordd_ext(coord : Double) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glFogCoorddv : Dispatch = Dispatch::new("glFogCoorddv")
+let d_glFogCoorddv : Dispatch = Dispatch::with_aliases("glFogCoorddv", ["glFogCoorddvEXT"])
 
 ///|
 #borrow(coord)
@@ -7774,7 +7774,7 @@ pub fn gl_fog_coorddv(coord : FixedArray[Double]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glFogCoorddvEXT : Dispatch = Dispatch::new("glFogCoorddvEXT")
+let d_glFogCoorddvEXT : Dispatch = Dispatch::with_aliases("glFogCoorddvEXT", ["glFogCoorddv"])
 
 ///|
 #borrow(coord)
@@ -7786,7 +7786,7 @@ pub fn gl_fog_coorddv_ext(coord : FixedArray[Double]) -> Unit raise ResolveError
 }
 
 ///|
-let d_glFogCoordf : Dispatch = Dispatch::new("glFogCoordf")
+let d_glFogCoordf : Dispatch = Dispatch::with_aliases("glFogCoordf", ["glFogCoordfEXT"])
 
 ///|
 extern "c" fn epoxy_glFogCoordf(fp : CPtr, coord : Float) -> Unit = "epoxy_glFogCoordf"
@@ -7797,7 +7797,7 @@ pub fn gl_fog_coordf(coord : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glFogCoordfEXT : Dispatch = Dispatch::new("glFogCoordfEXT")
+let d_glFogCoordfEXT : Dispatch = Dispatch::with_aliases("glFogCoordfEXT", ["glFogCoordf"])
 
 ///|
 extern "c" fn epoxy_glFogCoordfEXT(fp : CPtr, coord : Float) -> Unit = "epoxy_glFogCoordfEXT"
@@ -7808,7 +7808,7 @@ pub fn gl_fog_coordf_ext(coord : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glFogCoordfv : Dispatch = Dispatch::new("glFogCoordfv")
+let d_glFogCoordfv : Dispatch = Dispatch::with_aliases("glFogCoordfv", ["glFogCoordfvEXT"])
 
 ///|
 #borrow(coord)
@@ -7820,7 +7820,7 @@ pub fn gl_fog_coordfv(coord : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glFogCoordfvEXT : Dispatch = Dispatch::new("glFogCoordfvEXT")
+let d_glFogCoordfvEXT : Dispatch = Dispatch::with_aliases("glFogCoordfvEXT", ["glFogCoordfv"])
 
 ///|
 #borrow(coord)
@@ -8230,7 +8230,7 @@ pub fn gl_framebuffer_read_buffer_ext(framebuffer : UInt, mode : UInt) -> Unit r
 }
 
 ///|
-let d_glFramebufferRenderbuffer : Dispatch = Dispatch::new("glFramebufferRenderbuffer")
+let d_glFramebufferRenderbuffer : Dispatch = Dispatch::with_aliases("glFramebufferRenderbuffer", ["glFramebufferRenderbufferEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferRenderbuffer(fp : CPtr, target : UInt, attachment : UInt, renderbuffertarget : UInt, renderbuffer : UInt) -> Unit = "epoxy_glFramebufferRenderbuffer"
@@ -8241,7 +8241,7 @@ pub fn gl_framebuffer_renderbuffer(target : UInt, attachment : UInt, renderbuffe
 }
 
 ///|
-let d_glFramebufferRenderbufferEXT : Dispatch = Dispatch::new("glFramebufferRenderbufferEXT")
+let d_glFramebufferRenderbufferEXT : Dispatch = Dispatch::with_aliases("glFramebufferRenderbufferEXT", ["glFramebufferRenderbuffer"])
 
 ///|
 extern "c" fn epoxy_glFramebufferRenderbufferEXT(fp : CPtr, target : UInt, attachment : UInt, renderbuffertarget : UInt, renderbuffer : UInt) -> Unit = "epoxy_glFramebufferRenderbufferEXT"
@@ -8310,7 +8310,7 @@ pub fn gl_framebuffer_shading_rate_ext(target : UInt, attachment : UInt, texture
 }
 
 ///|
-let d_glFramebufferTexture : Dispatch = Dispatch::new("glFramebufferTexture")
+let d_glFramebufferTexture : Dispatch = Dispatch::with_aliases("glFramebufferTexture", ["glFramebufferTextureARB", "glFramebufferTextureEXT", "glFramebufferTextureOES"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTexture(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTexture"
@@ -8321,7 +8321,7 @@ pub fn gl_framebuffer_texture(target : UInt, attachment : UInt, texture : UInt, 
 }
 
 ///|
-let d_glFramebufferTexture1D : Dispatch = Dispatch::new("glFramebufferTexture1D")
+let d_glFramebufferTexture1D : Dispatch = Dispatch::with_aliases("glFramebufferTexture1D", ["glFramebufferTexture1DEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTexture1D(fp : CPtr, target : UInt, attachment : UInt, textarget : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTexture1D"
@@ -8332,7 +8332,7 @@ pub fn gl_framebuffer_texture1_d(target : UInt, attachment : UInt, textarget : U
 }
 
 ///|
-let d_glFramebufferTexture1DEXT : Dispatch = Dispatch::new("glFramebufferTexture1DEXT")
+let d_glFramebufferTexture1DEXT : Dispatch = Dispatch::with_aliases("glFramebufferTexture1DEXT", ["glFramebufferTexture1D"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTexture1DEXT(fp : CPtr, target : UInt, attachment : UInt, textarget : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTexture1DEXT"
@@ -8343,7 +8343,7 @@ pub fn gl_framebuffer_texture1_dext(target : UInt, attachment : UInt, textarget 
 }
 
 ///|
-let d_glFramebufferTexture2D : Dispatch = Dispatch::new("glFramebufferTexture2D")
+let d_glFramebufferTexture2D : Dispatch = Dispatch::with_aliases("glFramebufferTexture2D", ["glFramebufferTexture2DEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTexture2D(fp : CPtr, target : UInt, attachment : UInt, textarget : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTexture2D"
@@ -8354,7 +8354,7 @@ pub fn gl_framebuffer_texture2_d(target : UInt, attachment : UInt, textarget : U
 }
 
 ///|
-let d_glFramebufferTexture2DEXT : Dispatch = Dispatch::new("glFramebufferTexture2DEXT")
+let d_glFramebufferTexture2DEXT : Dispatch = Dispatch::with_aliases("glFramebufferTexture2DEXT", ["glFramebufferTexture2D"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTexture2DEXT(fp : CPtr, target : UInt, attachment : UInt, textarget : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTexture2DEXT"
@@ -8409,7 +8409,7 @@ pub fn gl_framebuffer_texture2_does(target : UInt, attachment : UInt, textarget 
 }
 
 ///|
-let d_glFramebufferTexture3D : Dispatch = Dispatch::new("glFramebufferTexture3D")
+let d_glFramebufferTexture3D : Dispatch = Dispatch::with_aliases("glFramebufferTexture3D", ["glFramebufferTexture3DEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTexture3D(fp : CPtr, target : UInt, attachment : UInt, textarget : UInt, texture : UInt, level : Int, zoffset : Int) -> Unit = "epoxy_glFramebufferTexture3D"
@@ -8420,7 +8420,7 @@ pub fn gl_framebuffer_texture3_d(target : UInt, attachment : UInt, textarget : U
 }
 
 ///|
-let d_glFramebufferTexture3DEXT : Dispatch = Dispatch::new("glFramebufferTexture3DEXT")
+let d_glFramebufferTexture3DEXT : Dispatch = Dispatch::with_aliases("glFramebufferTexture3DEXT", ["glFramebufferTexture3D"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTexture3DEXT(fp : CPtr, target : UInt, attachment : UInt, textarget : UInt, texture : UInt, level : Int, zoffset : Int) -> Unit = "epoxy_glFramebufferTexture3DEXT"
@@ -8442,7 +8442,7 @@ pub fn gl_framebuffer_texture3_does(target : UInt, attachment : UInt, textarget 
 }
 
 ///|
-let d_glFramebufferTextureARB : Dispatch = Dispatch::new("glFramebufferTextureARB")
+let d_glFramebufferTextureARB : Dispatch = Dispatch::with_aliases("glFramebufferTextureARB", ["glFramebufferTexture", "glFramebufferTextureEXT", "glFramebufferTextureOES"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureARB(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTextureARB"
@@ -8453,7 +8453,7 @@ pub fn gl_framebuffer_texture_arb(target : UInt, attachment : UInt, texture : UI
 }
 
 ///|
-let d_glFramebufferTextureEXT : Dispatch = Dispatch::new("glFramebufferTextureEXT")
+let d_glFramebufferTextureEXT : Dispatch = Dispatch::with_aliases("glFramebufferTextureEXT", ["glFramebufferTexture", "glFramebufferTextureARB", "glFramebufferTextureOES"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureEXT(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTextureEXT"
@@ -8464,7 +8464,7 @@ pub fn gl_framebuffer_texture_ext(target : UInt, attachment : UInt, texture : UI
 }
 
 ///|
-let d_glFramebufferTextureFaceARB : Dispatch = Dispatch::new("glFramebufferTextureFaceARB")
+let d_glFramebufferTextureFaceARB : Dispatch = Dispatch::with_aliases("glFramebufferTextureFaceARB", ["glFramebufferTextureFaceEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureFaceARB(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int, face : UInt) -> Unit = "epoxy_glFramebufferTextureFaceARB"
@@ -8475,7 +8475,7 @@ pub fn gl_framebuffer_texture_face_arb(target : UInt, attachment : UInt, texture
 }
 
 ///|
-let d_glFramebufferTextureFaceEXT : Dispatch = Dispatch::new("glFramebufferTextureFaceEXT")
+let d_glFramebufferTextureFaceEXT : Dispatch = Dispatch::with_aliases("glFramebufferTextureFaceEXT", ["glFramebufferTextureFaceARB"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureFaceEXT(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int, face : UInt) -> Unit = "epoxy_glFramebufferTextureFaceEXT"
@@ -8486,7 +8486,7 @@ pub fn gl_framebuffer_texture_face_ext(target : UInt, attachment : UInt, texture
 }
 
 ///|
-let d_glFramebufferTextureLayer : Dispatch = Dispatch::new("glFramebufferTextureLayer")
+let d_glFramebufferTextureLayer : Dispatch = Dispatch::with_aliases("glFramebufferTextureLayer", ["glFramebufferTextureLayerARB", "glFramebufferTextureLayerEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureLayer(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int, layer : Int) -> Unit = "epoxy_glFramebufferTextureLayer"
@@ -8497,7 +8497,7 @@ pub fn gl_framebuffer_texture_layer(target : UInt, attachment : UInt, texture : 
 }
 
 ///|
-let d_glFramebufferTextureLayerARB : Dispatch = Dispatch::new("glFramebufferTextureLayerARB")
+let d_glFramebufferTextureLayerARB : Dispatch = Dispatch::with_aliases("glFramebufferTextureLayerARB", ["glFramebufferTextureLayer", "glFramebufferTextureLayerEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureLayerARB(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int, layer : Int) -> Unit = "epoxy_glFramebufferTextureLayerARB"
@@ -8508,7 +8508,7 @@ pub fn gl_framebuffer_texture_layer_arb(target : UInt, attachment : UInt, textur
 }
 
 ///|
-let d_glFramebufferTextureLayerEXT : Dispatch = Dispatch::new("glFramebufferTextureLayerEXT")
+let d_glFramebufferTextureLayerEXT : Dispatch = Dispatch::with_aliases("glFramebufferTextureLayerEXT", ["glFramebufferTextureLayer", "glFramebufferTextureLayerARB"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureLayerEXT(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int, layer : Int) -> Unit = "epoxy_glFramebufferTextureLayerEXT"
@@ -8552,7 +8552,7 @@ pub fn gl_framebuffer_texture_multiview_ovr(target : UInt, attachment : UInt, te
 }
 
 ///|
-let d_glFramebufferTextureOES : Dispatch = Dispatch::new("glFramebufferTextureOES")
+let d_glFramebufferTextureOES : Dispatch = Dispatch::with_aliases("glFramebufferTextureOES", ["glFramebufferTexture", "glFramebufferTextureARB", "glFramebufferTextureEXT"])
 
 ///|
 extern "c" fn epoxy_glFramebufferTextureOES(fp : CPtr, target : UInt, attachment : UInt, texture : UInt, level : Int) -> Unit = "epoxy_glFramebufferTextureOES"
@@ -8651,7 +8651,7 @@ pub fn gl_gen_async_markers_sgix(range : Int) -> UInt raise ResolveError {
 }
 
 ///|
-let d_glGenBuffers : Dispatch = Dispatch::new("glGenBuffers")
+let d_glGenBuffers : Dispatch = Dispatch::with_aliases("glGenBuffers", ["glGenBuffersARB"])
 
 ///|
 #borrow(buffers)
@@ -8663,7 +8663,7 @@ pub fn gl_gen_buffers(n : Int, buffers : FixedArray[UInt]) -> Unit raise Resolve
 }
 
 ///|
-let d_glGenBuffersARB : Dispatch = Dispatch::new("glGenBuffersARB")
+let d_glGenBuffersARB : Dispatch = Dispatch::with_aliases("glGenBuffersARB", ["glGenBuffers"])
 
 ///|
 #borrow(buffers)
@@ -8710,7 +8710,7 @@ pub fn gl_gen_fragment_shaders_ati(range : UInt) -> UInt raise ResolveError {
 }
 
 ///|
-let d_glGenFramebuffers : Dispatch = Dispatch::new("glGenFramebuffers")
+let d_glGenFramebuffers : Dispatch = Dispatch::with_aliases("glGenFramebuffers", ["glGenFramebuffersEXT"])
 
 ///|
 #borrow(framebuffers)
@@ -8722,7 +8722,7 @@ pub fn gl_gen_framebuffers(n : Int, framebuffers : FixedArray[UInt]) -> Unit rai
 }
 
 ///|
-let d_glGenFramebuffersEXT : Dispatch = Dispatch::new("glGenFramebuffersEXT")
+let d_glGenFramebuffersEXT : Dispatch = Dispatch::with_aliases("glGenFramebuffersEXT", ["glGenFramebuffers"])
 
 ///|
 #borrow(framebuffers)
@@ -8828,7 +8828,7 @@ pub fn gl_gen_program_pipelines_ext(n : Int, pipelines : FixedArray[UInt]) -> Un
 }
 
 ///|
-let d_glGenProgramsARB : Dispatch = Dispatch::new("glGenProgramsARB")
+let d_glGenProgramsARB : Dispatch = Dispatch::with_aliases("glGenProgramsARB", ["glGenProgramsNV"])
 
 ///|
 #borrow(programs)
@@ -8840,7 +8840,7 @@ pub fn gl_gen_programs_arb(n : Int, programs : FixedArray[UInt]) -> Unit raise R
 }
 
 ///|
-let d_glGenProgramsNV : Dispatch = Dispatch::new("glGenProgramsNV")
+let d_glGenProgramsNV : Dispatch = Dispatch::with_aliases("glGenProgramsNV", ["glGenProgramsARB"])
 
 ///|
 #borrow(programs)
@@ -8852,7 +8852,7 @@ pub fn gl_gen_programs_nv(n : Int, programs : FixedArray[UInt]) -> Unit raise Re
 }
 
 ///|
-let d_glGenQueries : Dispatch = Dispatch::new("glGenQueries")
+let d_glGenQueries : Dispatch = Dispatch::with_aliases("glGenQueries", ["glGenQueriesARB"])
 
 ///|
 #borrow(ids)
@@ -8864,7 +8864,7 @@ pub fn gl_gen_queries(n : Int, ids : FixedArray[UInt]) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glGenQueriesARB : Dispatch = Dispatch::new("glGenQueriesARB")
+let d_glGenQueriesARB : Dispatch = Dispatch::with_aliases("glGenQueriesARB", ["glGenQueries"])
 
 ///|
 #borrow(ids)
@@ -8900,7 +8900,7 @@ pub fn gl_gen_query_resource_tag_nv(n : Int, tagIds : FixedArray[Int]) -> Unit r
 }
 
 ///|
-let d_glGenRenderbuffers : Dispatch = Dispatch::new("glGenRenderbuffers")
+let d_glGenRenderbuffers : Dispatch = Dispatch::with_aliases("glGenRenderbuffers", ["glGenRenderbuffersEXT"])
 
 ///|
 #borrow(renderbuffers)
@@ -8912,7 +8912,7 @@ pub fn gl_gen_renderbuffers(n : Int, renderbuffers : FixedArray[UInt]) -> Unit r
 }
 
 ///|
-let d_glGenRenderbuffersEXT : Dispatch = Dispatch::new("glGenRenderbuffersEXT")
+let d_glGenRenderbuffersEXT : Dispatch = Dispatch::with_aliases("glGenRenderbuffersEXT", ["glGenRenderbuffers"])
 
 ///|
 #borrow(renderbuffers)
@@ -8995,7 +8995,7 @@ pub fn gl_gen_textures_ext(n : Int, textures : FixedArray[UInt]) -> Unit raise R
 }
 
 ///|
-let d_glGenTransformFeedbacks : Dispatch = Dispatch::new("glGenTransformFeedbacks")
+let d_glGenTransformFeedbacks : Dispatch = Dispatch::with_aliases("glGenTransformFeedbacks", ["glGenTransformFeedbacksNV"])
 
 ///|
 #borrow(ids)
@@ -9007,7 +9007,7 @@ pub fn gl_gen_transform_feedbacks(n : Int, ids : FixedArray[UInt]) -> Unit raise
 }
 
 ///|
-let d_glGenTransformFeedbacksNV : Dispatch = Dispatch::new("glGenTransformFeedbacksNV")
+let d_glGenTransformFeedbacksNV : Dispatch = Dispatch::with_aliases("glGenTransformFeedbacksNV", ["glGenTransformFeedbacks"])
 
 ///|
 #borrow(ids)
@@ -9019,7 +9019,7 @@ pub fn gl_gen_transform_feedbacks_nv(n : Int, ids : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
-let d_glGenVertexArrays : Dispatch = Dispatch::new("glGenVertexArrays")
+let d_glGenVertexArrays : Dispatch = Dispatch::with_aliases("glGenVertexArrays", ["glGenVertexArraysAPPLE", "glGenVertexArraysOES"])
 
 ///|
 #borrow(arrays)
@@ -9031,7 +9031,7 @@ pub fn gl_gen_vertex_arrays(n : Int, arrays : FixedArray[UInt]) -> Unit raise Re
 }
 
 ///|
-let d_glGenVertexArraysAPPLE : Dispatch = Dispatch::new("glGenVertexArraysAPPLE")
+let d_glGenVertexArraysAPPLE : Dispatch = Dispatch::with_aliases("glGenVertexArraysAPPLE", ["glGenVertexArrays", "glGenVertexArraysOES"])
 
 ///|
 #borrow(arrays)
@@ -9043,7 +9043,7 @@ pub fn gl_gen_vertex_arrays_apple(n : Int, arrays : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
-let d_glGenVertexArraysOES : Dispatch = Dispatch::new("glGenVertexArraysOES")
+let d_glGenVertexArraysOES : Dispatch = Dispatch::with_aliases("glGenVertexArraysOES", ["glGenVertexArrays", "glGenVertexArraysAPPLE"])
 
 ///|
 #borrow(arrays)
@@ -9066,7 +9066,7 @@ pub fn gl_gen_vertex_shaders_ext(range : UInt) -> UInt raise ResolveError {
 }
 
 ///|
-let d_glGenerateMipmap : Dispatch = Dispatch::new("glGenerateMipmap")
+let d_glGenerateMipmap : Dispatch = Dispatch::with_aliases("glGenerateMipmap", ["glGenerateMipmapEXT"])
 
 ///|
 extern "c" fn epoxy_glGenerateMipmap(fp : CPtr, target : UInt) -> Unit = "epoxy_glGenerateMipmap"
@@ -9077,7 +9077,7 @@ pub fn gl_generate_mipmap(target : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glGenerateMipmapEXT : Dispatch = Dispatch::new("glGenerateMipmapEXT")
+let d_glGenerateMipmapEXT : Dispatch = Dispatch::with_aliases("glGenerateMipmapEXT", ["glGenerateMipmap"])
 
 ///|
 extern "c" fn epoxy_glGenerateMipmapEXT(fp : CPtr, target : UInt) -> Unit = "epoxy_glGenerateMipmapEXT"
@@ -9144,7 +9144,7 @@ pub fn gl_get_active_atomic_counter_bufferiv(program : UInt, bufferIndex : UInt,
 }
 
 ///|
-let d_glGetActiveAttrib : Dispatch = Dispatch::new("glGetActiveAttrib")
+let d_glGetActiveAttrib : Dispatch = Dispatch::with_aliases("glGetActiveAttrib", ["glGetActiveAttribARB"])
 
 ///|
 #borrow(length, size, type_, name)
@@ -9192,7 +9192,7 @@ pub fn gl_get_active_subroutine_uniformiv(program : UInt, shadertype : UInt, ind
 }
 
 ///|
-let d_glGetActiveUniform : Dispatch = Dispatch::new("glGetActiveUniform")
+let d_glGetActiveUniform : Dispatch = Dispatch::with_aliases("glGetActiveUniform", ["glGetActiveUniformARB"])
 
 ///|
 #borrow(length, size, type_, name)
@@ -9300,7 +9300,7 @@ pub fn gl_get_attached_shaders(program : UInt, maxCount : Int, count : FixedArra
 }
 
 ///|
-let d_glGetAttribLocation : Dispatch = Dispatch::new("glGetAttribLocation")
+let d_glGetAttribLocation : Dispatch = Dispatch::with_aliases("glGetAttribLocation", ["glGetAttribLocationARB"])
 
 ///|
 #borrow(name)
@@ -9312,7 +9312,7 @@ pub fn gl_get_attrib_location(program : UInt, name : Bytes) -> Int raise Resolve
 }
 
 ///|
-let d_glGetBooleanIndexedvEXT : Dispatch = Dispatch::new("glGetBooleanIndexedvEXT")
+let d_glGetBooleanIndexedvEXT : Dispatch = Dispatch::with_aliases("glGetBooleanIndexedvEXT", ["glGetBooleani_v"])
 
 ///|
 #borrow(data)
@@ -9324,7 +9324,7 @@ pub fn gl_get_boolean_indexedv_ext(target : UInt, index : UInt, data : Bytes) ->
 }
 
 ///|
-let d_glGetBooleani_v : Dispatch = Dispatch::new("glGetBooleani_v")
+let d_glGetBooleani_v : Dispatch = Dispatch::with_aliases("glGetBooleani_v", ["glGetBooleanIndexedvEXT"])
 
 ///|
 #borrow(data)
@@ -9360,7 +9360,7 @@ pub fn gl_get_buffer_parameteri64v(target : UInt, pname : UInt, params : FixedAr
 }
 
 ///|
-let d_glGetBufferParameteriv : Dispatch = Dispatch::new("glGetBufferParameteriv")
+let d_glGetBufferParameteriv : Dispatch = Dispatch::with_aliases("glGetBufferParameteriv", ["glGetBufferParameterivARB"])
 
 ///|
 #borrow(params)
@@ -9372,7 +9372,7 @@ pub fn gl_get_buffer_parameteriv(target : UInt, pname : UInt, params : FixedArra
 }
 
 ///|
-let d_glGetBufferParameterivARB : Dispatch = Dispatch::new("glGetBufferParameterivARB")
+let d_glGetBufferParameterivARB : Dispatch = Dispatch::with_aliases("glGetBufferParameterivARB", ["glGetBufferParameteriv"])
 
 ///|
 #borrow(params)
@@ -9396,7 +9396,7 @@ pub fn gl_get_buffer_parameterui64v_nv(target : UInt, pname : UInt, params : Fix
 }
 
 ///|
-let d_glGetBufferSubData : Dispatch = Dispatch::new("glGetBufferSubData")
+let d_glGetBufferSubData : Dispatch = Dispatch::with_aliases("glGetBufferSubData", ["glGetBufferSubDataARB"])
 
 ///|
 #borrow(data)
@@ -9408,7 +9408,7 @@ pub fn gl_get_buffer_sub_data(target : UInt, offset : Int64, size : Int64, data 
 }
 
 ///|
-let d_glGetBufferSubDataARB : Dispatch = Dispatch::new("glGetBufferSubDataARB")
+let d_glGetBufferSubDataARB : Dispatch = Dispatch::with_aliases("glGetBufferSubDataARB", ["glGetBufferSubData"])
 
 ///|
 #borrow(data)
@@ -9480,7 +9480,7 @@ pub fn gl_get_clip_planex_oes(plane : UInt, equation : FixedArray[Int]) -> Unit 
 }
 
 ///|
-let d_glGetColorTable : Dispatch = Dispatch::new("glGetColorTable")
+let d_glGetColorTable : Dispatch = Dispatch::with_aliases("glGetColorTable", ["glGetColorTableEXT"])
 
 ///|
 #borrow(table)
@@ -9492,7 +9492,7 @@ pub fn gl_get_color_table(target : UInt, format : UInt, type_ : UInt, table : By
 }
 
 ///|
-let d_glGetColorTableEXT : Dispatch = Dispatch::new("glGetColorTableEXT")
+let d_glGetColorTableEXT : Dispatch = Dispatch::with_aliases("glGetColorTableEXT", ["glGetColorTable"])
 
 ///|
 #borrow(data)
@@ -9504,7 +9504,7 @@ pub fn gl_get_color_table_ext(target : UInt, format : UInt, type_ : UInt, data :
 }
 
 ///|
-let d_glGetColorTableParameterfv : Dispatch = Dispatch::new("glGetColorTableParameterfv")
+let d_glGetColorTableParameterfv : Dispatch = Dispatch::with_aliases("glGetColorTableParameterfv", ["glGetColorTableParameterfvEXT"])
 
 ///|
 #borrow(params)
@@ -9516,7 +9516,7 @@ pub fn gl_get_color_table_parameterfv(target : UInt, pname : UInt, params : Fixe
 }
 
 ///|
-let d_glGetColorTableParameterfvEXT : Dispatch = Dispatch::new("glGetColorTableParameterfvEXT")
+let d_glGetColorTableParameterfvEXT : Dispatch = Dispatch::with_aliases("glGetColorTableParameterfvEXT", ["glGetColorTableParameterfv"])
 
 ///|
 #borrow(params)
@@ -9540,7 +9540,7 @@ pub fn gl_get_color_table_parameterfv_sgi(target : UInt, pname : UInt, params : 
 }
 
 ///|
-let d_glGetColorTableParameteriv : Dispatch = Dispatch::new("glGetColorTableParameteriv")
+let d_glGetColorTableParameteriv : Dispatch = Dispatch::with_aliases("glGetColorTableParameteriv", ["glGetColorTableParameterivEXT"])
 
 ///|
 #borrow(params)
@@ -9552,7 +9552,7 @@ pub fn gl_get_color_table_parameteriv(target : UInt, pname : UInt, params : Fixe
 }
 
 ///|
-let d_glGetColorTableParameterivEXT : Dispatch = Dispatch::new("glGetColorTableParameterivEXT")
+let d_glGetColorTableParameterivEXT : Dispatch = Dispatch::with_aliases("glGetColorTableParameterivEXT", ["glGetColorTableParameteriv"])
 
 ///|
 #borrow(params)
@@ -9671,7 +9671,7 @@ pub fn gl_get_compressed_multi_tex_image_ext(texunit : UInt, target : UInt, lod 
 }
 
 ///|
-let d_glGetCompressedTexImage : Dispatch = Dispatch::new("glGetCompressedTexImage")
+let d_glGetCompressedTexImage : Dispatch = Dispatch::with_aliases("glGetCompressedTexImage", ["glGetCompressedTexImageARB"])
 
 ///|
 #borrow(img)
@@ -9683,7 +9683,7 @@ pub fn gl_get_compressed_tex_image(target : UInt, level : Int, img : Bytes) -> U
 }
 
 ///|
-let d_glGetCompressedTexImageARB : Dispatch = Dispatch::new("glGetCompressedTexImageARB")
+let d_glGetCompressedTexImageARB : Dispatch = Dispatch::with_aliases("glGetCompressedTexImageARB", ["glGetCompressedTexImage"])
 
 ///|
 #borrow(img)
@@ -9827,7 +9827,7 @@ pub fn gl_get_coverage_modulation_table_nv(bufSize : Int, v : FixedArray[Float])
 }
 
 ///|
-let d_glGetDebugMessageLog : Dispatch = Dispatch::new("glGetDebugMessageLog")
+let d_glGetDebugMessageLog : Dispatch = Dispatch::with_aliases("glGetDebugMessageLog", ["glGetDebugMessageLogARB", "glGetDebugMessageLogKHR"])
 
 ///|
 #borrow(sources, types, ids, severities, lengths, messageLog)
@@ -9851,7 +9851,7 @@ pub fn gl_get_debug_message_log_amd(count : UInt, bufSize : Int, categories : Fi
 }
 
 ///|
-let d_glGetDebugMessageLogARB : Dispatch = Dispatch::new("glGetDebugMessageLogARB")
+let d_glGetDebugMessageLogARB : Dispatch = Dispatch::with_aliases("glGetDebugMessageLogARB", ["glGetDebugMessageLog", "glGetDebugMessageLogKHR"])
 
 ///|
 #borrow(sources, types, ids, severities, lengths, messageLog)
@@ -9863,7 +9863,7 @@ pub fn gl_get_debug_message_log_arb(count : UInt, bufSize : Int, sources : Fixed
 }
 
 ///|
-let d_glGetDebugMessageLogKHR : Dispatch = Dispatch::new("glGetDebugMessageLogKHR")
+let d_glGetDebugMessageLogKHR : Dispatch = Dispatch::with_aliases("glGetDebugMessageLogKHR", ["glGetDebugMessageLog", "glGetDebugMessageLogARB"])
 
 ///|
 #borrow(sources, types, ids, severities, lengths, messageLog)
@@ -9887,7 +9887,7 @@ pub fn gl_get_detail_tex_func_sgis(target : UInt, points : FixedArray[Float]) ->
 }
 
 ///|
-let d_glGetDoubleIndexedvEXT : Dispatch = Dispatch::new("glGetDoubleIndexedvEXT")
+let d_glGetDoubleIndexedvEXT : Dispatch = Dispatch::with_aliases("glGetDoubleIndexedvEXT", ["glGetDoublei_v", "glGetDoublei_vEXT"])
 
 ///|
 #borrow(data)
@@ -9899,7 +9899,7 @@ pub fn gl_get_double_indexedv_ext(target : UInt, index : UInt, data : FixedArray
 }
 
 ///|
-let d_glGetDoublei_v : Dispatch = Dispatch::new("glGetDoublei_v")
+let d_glGetDoublei_v : Dispatch = Dispatch::with_aliases("glGetDoublei_v", ["glGetDoubleIndexedvEXT", "glGetDoublei_vEXT"])
 
 ///|
 #borrow(data)
@@ -9911,7 +9911,7 @@ pub fn gl_get_doublei_v(target : UInt, index : UInt, data : FixedArray[Double]) 
 }
 
 ///|
-let d_glGetDoublei_vEXT : Dispatch = Dispatch::new("glGetDoublei_vEXT")
+let d_glGetDoublei_vEXT : Dispatch = Dispatch::with_aliases("glGetDoublei_vEXT", ["glGetDoubleIndexedvEXT", "glGetDoublei_v"])
 
 ///|
 #borrow(params)
@@ -10042,7 +10042,7 @@ pub fn gl_get_fixedv_oes(pname : UInt, params : FixedArray[Int]) -> Unit raise R
 }
 
 ///|
-let d_glGetFloatIndexedvEXT : Dispatch = Dispatch::new("glGetFloatIndexedvEXT")
+let d_glGetFloatIndexedvEXT : Dispatch = Dispatch::with_aliases("glGetFloatIndexedvEXT", ["glGetFloati_v", "glGetFloati_vEXT", "glGetFloati_vNV", "glGetFloati_vOES"])
 
 ///|
 #borrow(data)
@@ -10054,7 +10054,7 @@ pub fn gl_get_float_indexedv_ext(target : UInt, index : UInt, data : FixedArray[
 }
 
 ///|
-let d_glGetFloati_v : Dispatch = Dispatch::new("glGetFloati_v")
+let d_glGetFloati_v : Dispatch = Dispatch::with_aliases("glGetFloati_v", ["glGetFloatIndexedvEXT", "glGetFloati_vEXT", "glGetFloati_vNV", "glGetFloati_vOES"])
 
 ///|
 #borrow(data)
@@ -10066,7 +10066,7 @@ pub fn gl_get_floati_v(target : UInt, index : UInt, data : FixedArray[Float]) ->
 }
 
 ///|
-let d_glGetFloati_vEXT : Dispatch = Dispatch::new("glGetFloati_vEXT")
+let d_glGetFloati_vEXT : Dispatch = Dispatch::with_aliases("glGetFloati_vEXT", ["glGetFloatIndexedvEXT", "glGetFloati_v", "glGetFloati_vNV", "glGetFloati_vOES"])
 
 ///|
 #borrow(params)
@@ -10078,7 +10078,7 @@ pub fn gl_get_floati_v_ext(pname : UInt, index : UInt, params : FixedArray[Float
 }
 
 ///|
-let d_glGetFloati_vNV : Dispatch = Dispatch::new("glGetFloati_vNV")
+let d_glGetFloati_vNV : Dispatch = Dispatch::with_aliases("glGetFloati_vNV", ["glGetFloatIndexedvEXT", "glGetFloati_v", "glGetFloati_vEXT", "glGetFloati_vOES"])
 
 ///|
 #borrow(data)
@@ -10090,7 +10090,7 @@ pub fn gl_get_floati_v_nv(target : UInt, index : UInt, data : FixedArray[Float])
 }
 
 ///|
-let d_glGetFloati_vOES : Dispatch = Dispatch::new("glGetFloati_vOES")
+let d_glGetFloati_vOES : Dispatch = Dispatch::with_aliases("glGetFloati_vOES", ["glGetFloatIndexedvEXT", "glGetFloati_v", "glGetFloati_vEXT", "glGetFloati_vNV"])
 
 ///|
 #borrow(data)
@@ -10126,7 +10126,7 @@ pub fn gl_get_fog_func_sgis(points : FixedArray[Float]) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glGetFragDataIndex : Dispatch = Dispatch::new("glGetFragDataIndex")
+let d_glGetFragDataIndex : Dispatch = Dispatch::with_aliases("glGetFragDataIndex", ["glGetFragDataIndexEXT"])
 
 ///|
 #borrow(name)
@@ -10138,7 +10138,7 @@ pub fn gl_get_frag_data_index(program : UInt, name : Bytes) -> Int raise Resolve
 }
 
 ///|
-let d_glGetFragDataIndexEXT : Dispatch = Dispatch::new("glGetFragDataIndexEXT")
+let d_glGetFragDataIndexEXT : Dispatch = Dispatch::with_aliases("glGetFragDataIndexEXT", ["glGetFragDataIndex"])
 
 ///|
 #borrow(name)
@@ -10150,7 +10150,7 @@ pub fn gl_get_frag_data_index_ext(program : UInt, name : Bytes) -> Int raise Res
 }
 
 ///|
-let d_glGetFragDataLocation : Dispatch = Dispatch::new("glGetFragDataLocation")
+let d_glGetFragDataLocation : Dispatch = Dispatch::with_aliases("glGetFragDataLocation", ["glGetFragDataLocationEXT"])
 
 ///|
 #borrow(name)
@@ -10162,7 +10162,7 @@ pub fn gl_get_frag_data_location(program : UInt, name : Bytes) -> Int raise Reso
 }
 
 ///|
-let d_glGetFragDataLocationEXT : Dispatch = Dispatch::new("glGetFragDataLocationEXT")
+let d_glGetFragDataLocationEXT : Dispatch = Dispatch::with_aliases("glGetFragDataLocationEXT", ["glGetFragDataLocation"])
 
 ///|
 #borrow(name)
@@ -10234,7 +10234,7 @@ pub fn gl_get_fragment_shading_rates_ext(samples : Int, maxCount : Int, count : 
 }
 
 ///|
-let d_glGetFramebufferAttachmentParameteriv : Dispatch = Dispatch::new("glGetFramebufferAttachmentParameteriv")
+let d_glGetFramebufferAttachmentParameteriv : Dispatch = Dispatch::with_aliases("glGetFramebufferAttachmentParameteriv", ["glGetFramebufferAttachmentParameterivEXT"])
 
 ///|
 #borrow(params)
@@ -10246,7 +10246,7 @@ pub fn gl_get_framebuffer_attachment_parameteriv(target : UInt, attachment : UIn
 }
 
 ///|
-let d_glGetFramebufferAttachmentParameterivEXT : Dispatch = Dispatch::new("glGetFramebufferAttachmentParameterivEXT")
+let d_glGetFramebufferAttachmentParameterivEXT : Dispatch = Dispatch::with_aliases("glGetFramebufferAttachmentParameterivEXT", ["glGetFramebufferAttachmentParameteriv"])
 
 ///|
 #borrow(params)
@@ -10317,7 +10317,7 @@ pub fn gl_get_framebuffer_pixel_local_storage_size_ext(target : UInt) -> Int rai
 }
 
 ///|
-let d_glGetGraphicsResetStatus : Dispatch = Dispatch::new("glGetGraphicsResetStatus")
+let d_glGetGraphicsResetStatus : Dispatch = Dispatch::with_aliases("glGetGraphicsResetStatus", ["glGetGraphicsResetStatusEXT", "glGetGraphicsResetStatusKHR"])
 
 ///|
 extern "c" fn epoxy_glGetGraphicsResetStatus(fp : CPtr) -> UInt = "epoxy_glGetGraphicsResetStatus"
@@ -10339,7 +10339,7 @@ pub fn gl_get_graphics_reset_status_arb() -> UInt raise ResolveError {
 }
 
 ///|
-let d_glGetGraphicsResetStatusEXT : Dispatch = Dispatch::new("glGetGraphicsResetStatusEXT")
+let d_glGetGraphicsResetStatusEXT : Dispatch = Dispatch::with_aliases("glGetGraphicsResetStatusEXT", ["glGetGraphicsResetStatus", "glGetGraphicsResetStatusKHR"])
 
 ///|
 extern "c" fn epoxy_glGetGraphicsResetStatusEXT(fp : CPtr) -> UInt = "epoxy_glGetGraphicsResetStatusEXT"
@@ -10350,7 +10350,7 @@ pub fn gl_get_graphics_reset_status_ext() -> UInt raise ResolveError {
 }
 
 ///|
-let d_glGetGraphicsResetStatusKHR : Dispatch = Dispatch::new("glGetGraphicsResetStatusKHR")
+let d_glGetGraphicsResetStatusKHR : Dispatch = Dispatch::with_aliases("glGetGraphicsResetStatusKHR", ["glGetGraphicsResetStatus", "glGetGraphicsResetStatusEXT"])
 
 ///|
 extern "c" fn epoxy_glGetGraphicsResetStatusKHR(fp : CPtr) -> UInt = "epoxy_glGetGraphicsResetStatusKHR"
@@ -10514,7 +10514,7 @@ pub fn gl_get_integer64i_v(target : UInt, index : UInt, data : FixedArray[Int64]
 }
 
 ///|
-let d_glGetInteger64v : Dispatch = Dispatch::new("glGetInteger64v")
+let d_glGetInteger64v : Dispatch = Dispatch::with_aliases("glGetInteger64v", ["glGetInteger64vAPPLE", "glGetInteger64vEXT"])
 
 ///|
 #borrow(data)
@@ -10526,7 +10526,7 @@ pub fn gl_get_integer64v(pname : UInt, data : FixedArray[Int64]) -> Unit raise R
 }
 
 ///|
-let d_glGetInteger64vAPPLE : Dispatch = Dispatch::new("glGetInteger64vAPPLE")
+let d_glGetInteger64vAPPLE : Dispatch = Dispatch::with_aliases("glGetInteger64vAPPLE", ["glGetInteger64v", "glGetInteger64vEXT"])
 
 ///|
 #borrow(params)
@@ -10538,7 +10538,7 @@ pub fn gl_get_integer64v_apple(pname : UInt, params : FixedArray[Int64]) -> Unit
 }
 
 ///|
-let d_glGetInteger64vEXT : Dispatch = Dispatch::new("glGetInteger64vEXT")
+let d_glGetInteger64vEXT : Dispatch = Dispatch::with_aliases("glGetInteger64vEXT", ["glGetInteger64v", "glGetInteger64vAPPLE"])
 
 ///|
 #borrow(data)
@@ -10550,7 +10550,7 @@ pub fn gl_get_integer64v_ext(pname : UInt, data : FixedArray[Int64]) -> Unit rai
 }
 
 ///|
-let d_glGetIntegerIndexedvEXT : Dispatch = Dispatch::new("glGetIntegerIndexedvEXT")
+let d_glGetIntegerIndexedvEXT : Dispatch = Dispatch::with_aliases("glGetIntegerIndexedvEXT", ["glGetIntegeri_v"])
 
 ///|
 #borrow(data)
@@ -10562,7 +10562,7 @@ pub fn gl_get_integer_indexedv_ext(target : UInt, index : UInt, data : FixedArra
 }
 
 ///|
-let d_glGetIntegeri_v : Dispatch = Dispatch::new("glGetIntegeri_v")
+let d_glGetIntegeri_v : Dispatch = Dispatch::with_aliases("glGetIntegeri_v", ["glGetIntegerIndexedvEXT"])
 
 ///|
 #borrow(data)
@@ -11221,7 +11221,7 @@ pub fn gl_get_multi_tex_parameteriv_ext(texunit : UInt, target : UInt, pname : U
 }
 
 ///|
-let d_glGetMultisamplefv : Dispatch = Dispatch::new("glGetMultisamplefv")
+let d_glGetMultisamplefv : Dispatch = Dispatch::with_aliases("glGetMultisamplefv", ["glGetMultisamplefvNV"])
 
 ///|
 #borrow(val)
@@ -11233,7 +11233,7 @@ pub fn gl_get_multisamplefv(pname : UInt, index : UInt, val : FixedArray[Float])
 }
 
 ///|
-let d_glGetMultisamplefvNV : Dispatch = Dispatch::new("glGetMultisamplefvNV")
+let d_glGetMultisamplefvNV : Dispatch = Dispatch::with_aliases("glGetMultisamplefvNV", ["glGetMultisamplefv"])
 
 ///|
 #borrow(val)
@@ -11533,7 +11533,7 @@ pub fn gl_get_object_bufferiv_ati(buffer : UInt, pname : UInt, params : FixedArr
 }
 
 ///|
-let d_glGetObjectLabel : Dispatch = Dispatch::new("glGetObjectLabel")
+let d_glGetObjectLabel : Dispatch = Dispatch::with_aliases("glGetObjectLabel", ["glGetObjectLabelKHR"])
 
 ///|
 #borrow(length, label)
@@ -11557,7 +11557,7 @@ pub fn gl_get_object_label_ext(type_ : UInt, object : UInt, bufSize : Int, lengt
 }
 
 ///|
-let d_glGetObjectLabelKHR : Dispatch = Dispatch::new("glGetObjectLabelKHR")
+let d_glGetObjectLabelKHR : Dispatch = Dispatch::with_aliases("glGetObjectLabelKHR", ["glGetObjectLabel"])
 
 ///|
 #borrow(length, label)
@@ -11581,7 +11581,7 @@ pub fn gl_get_object_parameteriv_apple(objectType : UInt, name : UInt, pname : U
 }
 
 ///|
-let d_glGetObjectPtrLabel : Dispatch = Dispatch::new("glGetObjectPtrLabel")
+let d_glGetObjectPtrLabel : Dispatch = Dispatch::with_aliases("glGetObjectPtrLabel", ["glGetObjectPtrLabelKHR"])
 
 ///|
 #borrow(ptr, length, label)
@@ -11593,7 +11593,7 @@ pub fn gl_get_object_ptr_label(ptr : Bytes, bufSize : Int, length : FixedArray[I
 }
 
 ///|
-let d_glGetObjectPtrLabelKHR : Dispatch = Dispatch::new("glGetObjectPtrLabelKHR")
+let d_glGetObjectPtrLabelKHR : Dispatch = Dispatch::with_aliases("glGetObjectPtrLabelKHR", ["glGetObjectPtrLabel"])
 
 ///|
 #borrow(ptr, length, label)
@@ -12000,7 +12000,7 @@ pub fn gl_get_polygon_stipple(mask : Bytes) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glGetProgramBinary : Dispatch = Dispatch::new("glGetProgramBinary")
+let d_glGetProgramBinary : Dispatch = Dispatch::with_aliases("glGetProgramBinary", ["glGetProgramBinaryOES"])
 
 ///|
 #borrow(length, binaryFormat, binary)
@@ -12012,7 +12012,7 @@ pub fn gl_get_program_binary(program : UInt, bufSize : Int, length : FixedArray[
 }
 
 ///|
-let d_glGetProgramBinaryOES : Dispatch = Dispatch::new("glGetProgramBinaryOES")
+let d_glGetProgramBinaryOES : Dispatch = Dispatch::with_aliases("glGetProgramBinaryOES", ["glGetProgramBinary"])
 
 ///|
 #borrow(length, binaryFormat, binary)
@@ -12464,7 +12464,7 @@ pub fn gl_get_query_indexediv(target : UInt, index : UInt, pname : UInt, params 
 }
 
 ///|
-let d_glGetQueryObjecti64v : Dispatch = Dispatch::new("glGetQueryObjecti64v")
+let d_glGetQueryObjecti64v : Dispatch = Dispatch::with_aliases("glGetQueryObjecti64v", ["glGetQueryObjecti64vEXT"])
 
 ///|
 #borrow(params)
@@ -12476,7 +12476,7 @@ pub fn gl_get_query_objecti64v(id : UInt, pname : UInt, params : FixedArray[Int6
 }
 
 ///|
-let d_glGetQueryObjecti64vEXT : Dispatch = Dispatch::new("glGetQueryObjecti64vEXT")
+let d_glGetQueryObjecti64vEXT : Dispatch = Dispatch::with_aliases("glGetQueryObjecti64vEXT", ["glGetQueryObjecti64v"])
 
 ///|
 #borrow(params)
@@ -12488,7 +12488,7 @@ pub fn gl_get_query_objecti64v_ext(id : UInt, pname : UInt, params : FixedArray[
 }
 
 ///|
-let d_glGetQueryObjectiv : Dispatch = Dispatch::new("glGetQueryObjectiv")
+let d_glGetQueryObjectiv : Dispatch = Dispatch::with_aliases("glGetQueryObjectiv", ["glGetQueryObjectivARB", "glGetQueryObjectivEXT"])
 
 ///|
 #borrow(params)
@@ -12500,7 +12500,7 @@ pub fn gl_get_query_objectiv(id : UInt, pname : UInt, params : FixedArray[Int]) 
 }
 
 ///|
-let d_glGetQueryObjectivARB : Dispatch = Dispatch::new("glGetQueryObjectivARB")
+let d_glGetQueryObjectivARB : Dispatch = Dispatch::with_aliases("glGetQueryObjectivARB", ["glGetQueryObjectiv", "glGetQueryObjectivEXT"])
 
 ///|
 #borrow(params)
@@ -12512,7 +12512,7 @@ pub fn gl_get_query_objectiv_arb(id : UInt, pname : UInt, params : FixedArray[In
 }
 
 ///|
-let d_glGetQueryObjectivEXT : Dispatch = Dispatch::new("glGetQueryObjectivEXT")
+let d_glGetQueryObjectivEXT : Dispatch = Dispatch::with_aliases("glGetQueryObjectivEXT", ["glGetQueryObjectiv", "glGetQueryObjectivARB"])
 
 ///|
 #borrow(params)
@@ -12524,7 +12524,7 @@ pub fn gl_get_query_objectiv_ext(id : UInt, pname : UInt, params : FixedArray[In
 }
 
 ///|
-let d_glGetQueryObjectui64v : Dispatch = Dispatch::new("glGetQueryObjectui64v")
+let d_glGetQueryObjectui64v : Dispatch = Dispatch::with_aliases("glGetQueryObjectui64v", ["glGetQueryObjectui64vEXT"])
 
 ///|
 #borrow(params)
@@ -12536,7 +12536,7 @@ pub fn gl_get_query_objectui64v(id : UInt, pname : UInt, params : FixedArray[UIn
 }
 
 ///|
-let d_glGetQueryObjectui64vEXT : Dispatch = Dispatch::new("glGetQueryObjectui64vEXT")
+let d_glGetQueryObjectui64vEXT : Dispatch = Dispatch::with_aliases("glGetQueryObjectui64vEXT", ["glGetQueryObjectui64v"])
 
 ///|
 #borrow(params)
@@ -12548,7 +12548,7 @@ pub fn gl_get_query_objectui64v_ext(id : UInt, pname : UInt, params : FixedArray
 }
 
 ///|
-let d_glGetQueryObjectuiv : Dispatch = Dispatch::new("glGetQueryObjectuiv")
+let d_glGetQueryObjectuiv : Dispatch = Dispatch::with_aliases("glGetQueryObjectuiv", ["glGetQueryObjectuivARB"])
 
 ///|
 #borrow(params)
@@ -12560,7 +12560,7 @@ pub fn gl_get_query_objectuiv(id : UInt, pname : UInt, params : FixedArray[UInt]
 }
 
 ///|
-let d_glGetQueryObjectuivARB : Dispatch = Dispatch::new("glGetQueryObjectuivARB")
+let d_glGetQueryObjectuivARB : Dispatch = Dispatch::with_aliases("glGetQueryObjectuivARB", ["glGetQueryObjectuiv"])
 
 ///|
 #borrow(params)
@@ -12584,7 +12584,7 @@ pub fn gl_get_query_objectuiv_ext(id : UInt, pname : UInt, params : FixedArray[U
 }
 
 ///|
-let d_glGetQueryiv : Dispatch = Dispatch::new("glGetQueryiv")
+let d_glGetQueryiv : Dispatch = Dispatch::with_aliases("glGetQueryiv", ["glGetQueryivARB"])
 
 ///|
 #borrow(params)
@@ -12596,7 +12596,7 @@ pub fn gl_get_queryiv(target : UInt, pname : UInt, params : FixedArray[Int]) -> 
 }
 
 ///|
-let d_glGetQueryivARB : Dispatch = Dispatch::new("glGetQueryivARB")
+let d_glGetQueryivARB : Dispatch = Dispatch::with_aliases("glGetQueryivARB", ["glGetQueryiv"])
 
 ///|
 #borrow(params)
@@ -12620,7 +12620,7 @@ pub fn gl_get_queryiv_ext(target : UInt, pname : UInt, params : FixedArray[Int])
 }
 
 ///|
-let d_glGetRenderbufferParameteriv : Dispatch = Dispatch::new("glGetRenderbufferParameteriv")
+let d_glGetRenderbufferParameteriv : Dispatch = Dispatch::with_aliases("glGetRenderbufferParameteriv", ["glGetRenderbufferParameterivEXT"])
 
 ///|
 #borrow(params)
@@ -12632,7 +12632,7 @@ pub fn gl_get_renderbuffer_parameteriv(target : UInt, pname : UInt, params : Fix
 }
 
 ///|
-let d_glGetRenderbufferParameterivEXT : Dispatch = Dispatch::new("glGetRenderbufferParameterivEXT")
+let d_glGetRenderbufferParameterivEXT : Dispatch = Dispatch::with_aliases("glGetRenderbufferParameterivEXT", ["glGetRenderbufferParameteriv"])
 
 ///|
 #borrow(params)
@@ -12656,7 +12656,7 @@ pub fn gl_get_renderbuffer_parameteriv_oes(target : UInt, pname : UInt, params :
 }
 
 ///|
-let d_glGetSamplerParameterIiv : Dispatch = Dispatch::new("glGetSamplerParameterIiv")
+let d_glGetSamplerParameterIiv : Dispatch = Dispatch::with_aliases("glGetSamplerParameterIiv", ["glGetSamplerParameterIivEXT", "glGetSamplerParameterIivOES"])
 
 ///|
 #borrow(params)
@@ -12668,7 +12668,7 @@ pub fn gl_get_sampler_parameter_iiv(sampler : UInt, pname : UInt, params : Fixed
 }
 
 ///|
-let d_glGetSamplerParameterIivEXT : Dispatch = Dispatch::new("glGetSamplerParameterIivEXT")
+let d_glGetSamplerParameterIivEXT : Dispatch = Dispatch::with_aliases("glGetSamplerParameterIivEXT", ["glGetSamplerParameterIiv", "glGetSamplerParameterIivOES"])
 
 ///|
 #borrow(params)
@@ -12680,7 +12680,7 @@ pub fn gl_get_sampler_parameter_iiv_ext(sampler : UInt, pname : UInt, params : F
 }
 
 ///|
-let d_glGetSamplerParameterIivOES : Dispatch = Dispatch::new("glGetSamplerParameterIivOES")
+let d_glGetSamplerParameterIivOES : Dispatch = Dispatch::with_aliases("glGetSamplerParameterIivOES", ["glGetSamplerParameterIiv", "glGetSamplerParameterIivEXT"])
 
 ///|
 #borrow(params)
@@ -12692,7 +12692,7 @@ pub fn gl_get_sampler_parameter_iiv_oes(sampler : UInt, pname : UInt, params : F
 }
 
 ///|
-let d_glGetSamplerParameterIuiv : Dispatch = Dispatch::new("glGetSamplerParameterIuiv")
+let d_glGetSamplerParameterIuiv : Dispatch = Dispatch::with_aliases("glGetSamplerParameterIuiv", ["glGetSamplerParameterIuivEXT", "glGetSamplerParameterIuivOES"])
 
 ///|
 #borrow(params)
@@ -12704,7 +12704,7 @@ pub fn gl_get_sampler_parameter_iuiv(sampler : UInt, pname : UInt, params : Fixe
 }
 
 ///|
-let d_glGetSamplerParameterIuivEXT : Dispatch = Dispatch::new("glGetSamplerParameterIuivEXT")
+let d_glGetSamplerParameterIuivEXT : Dispatch = Dispatch::with_aliases("glGetSamplerParameterIuivEXT", ["glGetSamplerParameterIuiv", "glGetSamplerParameterIuivOES"])
 
 ///|
 #borrow(params)
@@ -12716,7 +12716,7 @@ pub fn gl_get_sampler_parameter_iuiv_ext(sampler : UInt, pname : UInt, params : 
 }
 
 ///|
-let d_glGetSamplerParameterIuivOES : Dispatch = Dispatch::new("glGetSamplerParameterIuivOES")
+let d_glGetSamplerParameterIuivOES : Dispatch = Dispatch::with_aliases("glGetSamplerParameterIuivOES", ["glGetSamplerParameterIuiv", "glGetSamplerParameterIuivEXT"])
 
 ///|
 #borrow(params)
@@ -12824,7 +12824,7 @@ pub fn gl_get_shader_precision_format(shadertype : UInt, precisiontype : UInt, r
 }
 
 ///|
-let d_glGetShaderSource : Dispatch = Dispatch::new("glGetShaderSource")
+let d_glGetShaderSource : Dispatch = Dispatch::with_aliases("glGetShaderSource", ["glGetShaderSourceARB"])
 
 ///|
 #borrow(length, source)
@@ -13145,7 +13145,7 @@ pub fn gl_get_tex_level_parameterxv_oes(target : UInt, level : Int, pname : UInt
 }
 
 ///|
-let d_glGetTexParameterIiv : Dispatch = Dispatch::new("glGetTexParameterIiv")
+let d_glGetTexParameterIiv : Dispatch = Dispatch::with_aliases("glGetTexParameterIiv", ["glGetTexParameterIivEXT", "glGetTexParameterIivOES"])
 
 ///|
 #borrow(params)
@@ -13157,7 +13157,7 @@ pub fn gl_get_tex_parameter_iiv(target : UInt, pname : UInt, params : FixedArray
 }
 
 ///|
-let d_glGetTexParameterIivEXT : Dispatch = Dispatch::new("glGetTexParameterIivEXT")
+let d_glGetTexParameterIivEXT : Dispatch = Dispatch::with_aliases("glGetTexParameterIivEXT", ["glGetTexParameterIiv", "glGetTexParameterIivOES"])
 
 ///|
 #borrow(params)
@@ -13169,7 +13169,7 @@ pub fn gl_get_tex_parameter_iiv_ext(target : UInt, pname : UInt, params : FixedA
 }
 
 ///|
-let d_glGetTexParameterIivOES : Dispatch = Dispatch::new("glGetTexParameterIivOES")
+let d_glGetTexParameterIivOES : Dispatch = Dispatch::with_aliases("glGetTexParameterIivOES", ["glGetTexParameterIiv", "glGetTexParameterIivEXT"])
 
 ///|
 #borrow(params)
@@ -13181,7 +13181,7 @@ pub fn gl_get_tex_parameter_iiv_oes(target : UInt, pname : UInt, params : FixedA
 }
 
 ///|
-let d_glGetTexParameterIuiv : Dispatch = Dispatch::new("glGetTexParameterIuiv")
+let d_glGetTexParameterIuiv : Dispatch = Dispatch::with_aliases("glGetTexParameterIuiv", ["glGetTexParameterIuivEXT", "glGetTexParameterIuivOES"])
 
 ///|
 #borrow(params)
@@ -13193,7 +13193,7 @@ pub fn gl_get_tex_parameter_iuiv(target : UInt, pname : UInt, params : FixedArra
 }
 
 ///|
-let d_glGetTexParameterIuivEXT : Dispatch = Dispatch::new("glGetTexParameterIuivEXT")
+let d_glGetTexParameterIuivEXT : Dispatch = Dispatch::with_aliases("glGetTexParameterIuivEXT", ["glGetTexParameterIuiv", "glGetTexParameterIuivOES"])
 
 ///|
 #borrow(params)
@@ -13205,7 +13205,7 @@ pub fn gl_get_tex_parameter_iuiv_ext(target : UInt, pname : UInt, params : Fixed
 }
 
 ///|
-let d_glGetTexParameterIuivOES : Dispatch = Dispatch::new("glGetTexParameterIuivOES")
+let d_glGetTexParameterIuivOES : Dispatch = Dispatch::with_aliases("glGetTexParameterIuivOES", ["glGetTexParameterIuiv", "glGetTexParameterIuivEXT"])
 
 ///|
 #borrow(params)
@@ -13265,7 +13265,7 @@ pub fn gl_get_tex_parameterxv_oes(target : UInt, pname : UInt, params : FixedArr
 }
 
 ///|
-let d_glGetTextureHandleARB : Dispatch = Dispatch::new("glGetTextureHandleARB")
+let d_glGetTextureHandleARB : Dispatch = Dispatch::with_aliases("glGetTextureHandleARB", ["glGetTextureHandleIMG"])
 
 ///|
 extern "c" fn epoxy_glGetTextureHandleARB(fp : CPtr, texture : UInt) -> UInt64 = "epoxy_glGetTextureHandleARB"
@@ -13276,7 +13276,7 @@ pub fn gl_get_texture_handle_arb(texture : UInt) -> UInt64 raise ResolveError {
 }
 
 ///|
-let d_glGetTextureHandleIMG : Dispatch = Dispatch::new("glGetTextureHandleIMG")
+let d_glGetTextureHandleIMG : Dispatch = Dispatch::with_aliases("glGetTextureHandleIMG", ["glGetTextureHandleARB"])
 
 ///|
 extern "c" fn epoxy_glGetTextureHandleIMG(fp : CPtr, texture : UInt) -> UInt64 = "epoxy_glGetTextureHandleIMG"
@@ -13466,7 +13466,7 @@ pub fn gl_get_texture_parameteriv_ext(texture : UInt, target : UInt, pname : UIn
 }
 
 ///|
-let d_glGetTextureSamplerHandleARB : Dispatch = Dispatch::new("glGetTextureSamplerHandleARB")
+let d_glGetTextureSamplerHandleARB : Dispatch = Dispatch::with_aliases("glGetTextureSamplerHandleARB", ["glGetTextureSamplerHandleIMG"])
 
 ///|
 extern "c" fn epoxy_glGetTextureSamplerHandleARB(fp : CPtr, texture : UInt, sampler : UInt) -> UInt64 = "epoxy_glGetTextureSamplerHandleARB"
@@ -13477,7 +13477,7 @@ pub fn gl_get_texture_sampler_handle_arb(texture : UInt, sampler : UInt) -> UInt
 }
 
 ///|
-let d_glGetTextureSamplerHandleIMG : Dispatch = Dispatch::new("glGetTextureSamplerHandleIMG")
+let d_glGetTextureSamplerHandleIMG : Dispatch = Dispatch::with_aliases("glGetTextureSamplerHandleIMG", ["glGetTextureSamplerHandleARB"])
 
 ///|
 extern "c" fn epoxy_glGetTextureSamplerHandleIMG(fp : CPtr, texture : UInt, sampler : UInt) -> UInt64 = "epoxy_glGetTextureSamplerHandleIMG"
@@ -13523,7 +13523,7 @@ pub fn gl_get_track_matrixiv_nv(target : UInt, address : UInt, pname : UInt, par
 }
 
 ///|
-let d_glGetTransformFeedbackVarying : Dispatch = Dispatch::new("glGetTransformFeedbackVarying")
+let d_glGetTransformFeedbackVarying : Dispatch = Dispatch::with_aliases("glGetTransformFeedbackVarying", ["glGetTransformFeedbackVaryingEXT"])
 
 ///|
 #borrow(length, size, type_, name)
@@ -13535,7 +13535,7 @@ pub fn gl_get_transform_feedback_varying(program : UInt, index : UInt, bufSize :
 }
 
 ///|
-let d_glGetTransformFeedbackVaryingEXT : Dispatch = Dispatch::new("glGetTransformFeedbackVaryingEXT")
+let d_glGetTransformFeedbackVaryingEXT : Dispatch = Dispatch::with_aliases("glGetTransformFeedbackVaryingEXT", ["glGetTransformFeedbackVarying"])
 
 ///|
 #borrow(length, size, type_, name)
@@ -13630,7 +13630,7 @@ pub fn gl_get_uniform_buffer_size_ext(program : UInt, location : Int) -> Int rai
 }
 
 ///|
-let d_glGetUniformLocation : Dispatch = Dispatch::new("glGetUniformLocation")
+let d_glGetUniformLocation : Dispatch = Dispatch::with_aliases("glGetUniformLocation", ["glGetUniformLocationARB"])
 
 ///|
 #borrow(name)
@@ -13677,7 +13677,7 @@ pub fn gl_get_uniformdv(program : UInt, location : Int, params : FixedArray[Doub
 }
 
 ///|
-let d_glGetUniformfv : Dispatch = Dispatch::new("glGetUniformfv")
+let d_glGetUniformfv : Dispatch = Dispatch::with_aliases("glGetUniformfv", ["glGetUniformfvARB"])
 
 ///|
 #borrow(params)
@@ -13713,7 +13713,7 @@ pub fn gl_get_uniformi64v_nv(program : UInt, location : Int, params : FixedArray
 }
 
 ///|
-let d_glGetUniformiv : Dispatch = Dispatch::new("glGetUniformiv")
+let d_glGetUniformiv : Dispatch = Dispatch::with_aliases("glGetUniformiv", ["glGetUniformivARB"])
 
 ///|
 #borrow(params)
@@ -13749,7 +13749,7 @@ pub fn gl_get_uniformui64v_nv(program : UInt, location : Int, params : FixedArra
 }
 
 ///|
-let d_glGetUniformuiv : Dispatch = Dispatch::new("glGetUniformuiv")
+let d_glGetUniformuiv : Dispatch = Dispatch::with_aliases("glGetUniformuiv", ["glGetUniformuivEXT"])
 
 ///|
 #borrow(params)
@@ -13761,7 +13761,7 @@ pub fn gl_get_uniformuiv(program : UInt, location : Int, params : FixedArray[UIn
 }
 
 ///|
-let d_glGetUniformuivEXT : Dispatch = Dispatch::new("glGetUniformuivEXT")
+let d_glGetUniformuivEXT : Dispatch = Dispatch::with_aliases("glGetUniformuivEXT", ["glGetUniformuiv"])
 
 ///|
 #borrow(params)
@@ -13953,7 +13953,7 @@ pub fn gl_get_vertex_attrib_array_objectiv_ati(index : UInt, pname : UInt, param
 }
 
 ///|
-let d_glGetVertexAttribIiv : Dispatch = Dispatch::new("glGetVertexAttribIiv")
+let d_glGetVertexAttribIiv : Dispatch = Dispatch::with_aliases("glGetVertexAttribIiv", ["glGetVertexAttribIivEXT"])
 
 ///|
 #borrow(params)
@@ -13965,7 +13965,7 @@ pub fn gl_get_vertex_attrib_iiv(index : UInt, pname : UInt, params : FixedArray[
 }
 
 ///|
-let d_glGetVertexAttribIivEXT : Dispatch = Dispatch::new("glGetVertexAttribIivEXT")
+let d_glGetVertexAttribIivEXT : Dispatch = Dispatch::with_aliases("glGetVertexAttribIivEXT", ["glGetVertexAttribIiv"])
 
 ///|
 #borrow(params)
@@ -13977,7 +13977,7 @@ pub fn gl_get_vertex_attrib_iiv_ext(index : UInt, pname : UInt, params : FixedAr
 }
 
 ///|
-let d_glGetVertexAttribIuiv : Dispatch = Dispatch::new("glGetVertexAttribIuiv")
+let d_glGetVertexAttribIuiv : Dispatch = Dispatch::with_aliases("glGetVertexAttribIuiv", ["glGetVertexAttribIuivEXT"])
 
 ///|
 #borrow(params)
@@ -13989,7 +13989,7 @@ pub fn gl_get_vertex_attrib_iuiv(index : UInt, pname : UInt, params : FixedArray
 }
 
 ///|
-let d_glGetVertexAttribIuivEXT : Dispatch = Dispatch::new("glGetVertexAttribIuivEXT")
+let d_glGetVertexAttribIuivEXT : Dispatch = Dispatch::with_aliases("glGetVertexAttribIuivEXT", ["glGetVertexAttribIuiv"])
 
 ///|
 #borrow(params)
@@ -14001,7 +14001,7 @@ pub fn gl_get_vertex_attrib_iuiv_ext(index : UInt, pname : UInt, params : FixedA
 }
 
 ///|
-let d_glGetVertexAttribLdv : Dispatch = Dispatch::new("glGetVertexAttribLdv")
+let d_glGetVertexAttribLdv : Dispatch = Dispatch::with_aliases("glGetVertexAttribLdv", ["glGetVertexAttribLdvEXT"])
 
 ///|
 #borrow(params)
@@ -14013,7 +14013,7 @@ pub fn gl_get_vertex_attrib_ldv(index : UInt, pname : UInt, params : FixedArray[
 }
 
 ///|
-let d_glGetVertexAttribLdvEXT : Dispatch = Dispatch::new("glGetVertexAttribLdvEXT")
+let d_glGetVertexAttribLdvEXT : Dispatch = Dispatch::with_aliases("glGetVertexAttribLdvEXT", ["glGetVertexAttribLdv"])
 
 ///|
 #borrow(params)
@@ -14061,7 +14061,7 @@ pub fn gl_get_vertex_attrib_lui64v_nv(index : UInt, pname : UInt, params : Fixed
 }
 
 ///|
-let d_glGetVertexAttribdv : Dispatch = Dispatch::new("glGetVertexAttribdv")
+let d_glGetVertexAttribdv : Dispatch = Dispatch::with_aliases("glGetVertexAttribdv", ["glGetVertexAttribdvARB", "glGetVertexAttribdvNV"])
 
 ///|
 #borrow(params)
@@ -14073,7 +14073,7 @@ pub fn gl_get_vertex_attribdv(index : UInt, pname : UInt, params : FixedArray[Do
 }
 
 ///|
-let d_glGetVertexAttribdvARB : Dispatch = Dispatch::new("glGetVertexAttribdvARB")
+let d_glGetVertexAttribdvARB : Dispatch = Dispatch::with_aliases("glGetVertexAttribdvARB", ["glGetVertexAttribdv", "glGetVertexAttribdvNV"])
 
 ///|
 #borrow(params)
@@ -14085,7 +14085,7 @@ pub fn gl_get_vertex_attribdv_arb(index : UInt, pname : UInt, params : FixedArra
 }
 
 ///|
-let d_glGetVertexAttribdvNV : Dispatch = Dispatch::new("glGetVertexAttribdvNV")
+let d_glGetVertexAttribdvNV : Dispatch = Dispatch::with_aliases("glGetVertexAttribdvNV", ["glGetVertexAttribdv", "glGetVertexAttribdvARB"])
 
 ///|
 #borrow(params)
@@ -14097,7 +14097,7 @@ pub fn gl_get_vertex_attribdv_nv(index : UInt, pname : UInt, params : FixedArray
 }
 
 ///|
-let d_glGetVertexAttribfv : Dispatch = Dispatch::new("glGetVertexAttribfv")
+let d_glGetVertexAttribfv : Dispatch = Dispatch::with_aliases("glGetVertexAttribfv", ["glGetVertexAttribfvARB", "glGetVertexAttribfvNV"])
 
 ///|
 #borrow(params)
@@ -14109,7 +14109,7 @@ pub fn gl_get_vertex_attribfv(index : UInt, pname : UInt, params : FixedArray[Fl
 }
 
 ///|
-let d_glGetVertexAttribfvARB : Dispatch = Dispatch::new("glGetVertexAttribfvARB")
+let d_glGetVertexAttribfvARB : Dispatch = Dispatch::with_aliases("glGetVertexAttribfvARB", ["glGetVertexAttribfv", "glGetVertexAttribfvNV"])
 
 ///|
 #borrow(params)
@@ -14121,7 +14121,7 @@ pub fn gl_get_vertex_attribfv_arb(index : UInt, pname : UInt, params : FixedArra
 }
 
 ///|
-let d_glGetVertexAttribfvNV : Dispatch = Dispatch::new("glGetVertexAttribfvNV")
+let d_glGetVertexAttribfvNV : Dispatch = Dispatch::with_aliases("glGetVertexAttribfvNV", ["glGetVertexAttribfv", "glGetVertexAttribfvARB"])
 
 ///|
 #borrow(params)
@@ -14133,7 +14133,7 @@ pub fn gl_get_vertex_attribfv_nv(index : UInt, pname : UInt, params : FixedArray
 }
 
 ///|
-let d_glGetVertexAttribiv : Dispatch = Dispatch::new("glGetVertexAttribiv")
+let d_glGetVertexAttribiv : Dispatch = Dispatch::with_aliases("glGetVertexAttribiv", ["glGetVertexAttribivARB", "glGetVertexAttribivNV"])
 
 ///|
 #borrow(params)
@@ -14145,7 +14145,7 @@ pub fn gl_get_vertex_attribiv(index : UInt, pname : UInt, params : FixedArray[In
 }
 
 ///|
-let d_glGetVertexAttribivARB : Dispatch = Dispatch::new("glGetVertexAttribivARB")
+let d_glGetVertexAttribivARB : Dispatch = Dispatch::with_aliases("glGetVertexAttribivARB", ["glGetVertexAttribiv", "glGetVertexAttribivNV"])
 
 ///|
 #borrow(params)
@@ -14157,7 +14157,7 @@ pub fn gl_get_vertex_attribiv_arb(index : UInt, pname : UInt, params : FixedArra
 }
 
 ///|
-let d_glGetVertexAttribivNV : Dispatch = Dispatch::new("glGetVertexAttribivNV")
+let d_glGetVertexAttribivNV : Dispatch = Dispatch::with_aliases("glGetVertexAttribivNV", ["glGetVertexAttribiv", "glGetVertexAttribivARB"])
 
 ///|
 #borrow(params)
@@ -14601,7 +14601,7 @@ pub fn gl_getn_uniformdv_arb(program : UInt, location : Int, bufSize : Int, para
 }
 
 ///|
-let d_glGetnUniformfv : Dispatch = Dispatch::new("glGetnUniformfv")
+let d_glGetnUniformfv : Dispatch = Dispatch::with_aliases("glGetnUniformfv", ["glGetnUniformfvEXT", "glGetnUniformfvKHR"])
 
 ///|
 #borrow(params)
@@ -14625,7 +14625,7 @@ pub fn gl_getn_uniformfv_arb(program : UInt, location : Int, bufSize : Int, para
 }
 
 ///|
-let d_glGetnUniformfvEXT : Dispatch = Dispatch::new("glGetnUniformfvEXT")
+let d_glGetnUniformfvEXT : Dispatch = Dispatch::with_aliases("glGetnUniformfvEXT", ["glGetnUniformfv", "glGetnUniformfvKHR"])
 
 ///|
 #borrow(params)
@@ -14637,7 +14637,7 @@ pub fn gl_getn_uniformfv_ext(program : UInt, location : Int, bufSize : Int, para
 }
 
 ///|
-let d_glGetnUniformfvKHR : Dispatch = Dispatch::new("glGetnUniformfvKHR")
+let d_glGetnUniformfvKHR : Dispatch = Dispatch::with_aliases("glGetnUniformfvKHR", ["glGetnUniformfv", "glGetnUniformfvEXT"])
 
 ///|
 #borrow(params)
@@ -14661,7 +14661,7 @@ pub fn gl_getn_uniformi64v_arb(program : UInt, location : Int, bufSize : Int, pa
 }
 
 ///|
-let d_glGetnUniformiv : Dispatch = Dispatch::new("glGetnUniformiv")
+let d_glGetnUniformiv : Dispatch = Dispatch::with_aliases("glGetnUniformiv", ["glGetnUniformivEXT", "glGetnUniformivKHR"])
 
 ///|
 #borrow(params)
@@ -14685,7 +14685,7 @@ pub fn gl_getn_uniformiv_arb(program : UInt, location : Int, bufSize : Int, para
 }
 
 ///|
-let d_glGetnUniformivEXT : Dispatch = Dispatch::new("glGetnUniformivEXT")
+let d_glGetnUniformivEXT : Dispatch = Dispatch::with_aliases("glGetnUniformivEXT", ["glGetnUniformiv", "glGetnUniformivKHR"])
 
 ///|
 #borrow(params)
@@ -14697,7 +14697,7 @@ pub fn gl_getn_uniformiv_ext(program : UInt, location : Int, bufSize : Int, para
 }
 
 ///|
-let d_glGetnUniformivKHR : Dispatch = Dispatch::new("glGetnUniformivKHR")
+let d_glGetnUniformivKHR : Dispatch = Dispatch::with_aliases("glGetnUniformivKHR", ["glGetnUniformiv", "glGetnUniformivEXT"])
 
 ///|
 #borrow(params)
@@ -14721,7 +14721,7 @@ pub fn gl_getn_uniformui64v_arb(program : UInt, location : Int, bufSize : Int, p
 }
 
 ///|
-let d_glGetnUniformuiv : Dispatch = Dispatch::new("glGetnUniformuiv")
+let d_glGetnUniformuiv : Dispatch = Dispatch::with_aliases("glGetnUniformuiv", ["glGetnUniformuivKHR"])
 
 ///|
 #borrow(params)
@@ -14745,7 +14745,7 @@ pub fn gl_getn_uniformuiv_arb(program : UInt, location : Int, bufSize : Int, par
 }
 
 ///|
-let d_glGetnUniformuivKHR : Dispatch = Dispatch::new("glGetnUniformuivKHR")
+let d_glGetnUniformuivKHR : Dispatch = Dispatch::with_aliases("glGetnUniformuivKHR", ["glGetnUniformuiv"])
 
 ///|
 #borrow(params)
@@ -14867,7 +14867,7 @@ pub fn gl_hint_pgi(target : UInt, mode : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glHistogram : Dispatch = Dispatch::new("glHistogram")
+let d_glHistogram : Dispatch = Dispatch::with_aliases("glHistogram", ["glHistogramEXT"])
 
 ///|
 extern "c" fn epoxy_glHistogram(fp : CPtr, target : UInt, width : Int, internalformat : UInt, sink : Bool) -> Unit = "epoxy_glHistogram"
@@ -14878,7 +14878,7 @@ pub fn gl_histogram(target : UInt, width : Int, internalformat : UInt, sink : Bo
 }
 
 ///|
-let d_glHistogramEXT : Dispatch = Dispatch::new("glHistogramEXT")
+let d_glHistogramEXT : Dispatch = Dispatch::with_aliases("glHistogramEXT", ["glHistogram"])
 
 ///|
 extern "c" fn epoxy_glHistogramEXT(fp : CPtr, target : UInt, width : Int, internalformat : UInt, sink : Bool) -> Unit = "epoxy_glHistogramEXT"
@@ -15383,7 +15383,7 @@ pub fn gl_is_async_marker_sgix(marker : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsBuffer : Dispatch = Dispatch::new("glIsBuffer")
+let d_glIsBuffer : Dispatch = Dispatch::with_aliases("glIsBuffer", ["glIsBufferARB"])
 
 ///|
 extern "c" fn epoxy_glIsBuffer(fp : CPtr, buffer : UInt) -> Bool = "epoxy_glIsBuffer"
@@ -15394,7 +15394,7 @@ pub fn gl_is_buffer(buffer : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsBufferARB : Dispatch = Dispatch::new("glIsBufferARB")
+let d_glIsBufferARB : Dispatch = Dispatch::with_aliases("glIsBufferARB", ["glIsBuffer"])
 
 ///|
 extern "c" fn epoxy_glIsBufferARB(fp : CPtr, buffer : UInt) -> Bool = "epoxy_glIsBufferARB"
@@ -15438,7 +15438,7 @@ pub fn gl_is_enabled(cap : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsEnabledIndexedEXT : Dispatch = Dispatch::new("glIsEnabledIndexedEXT")
+let d_glIsEnabledIndexedEXT : Dispatch = Dispatch::with_aliases("glIsEnabledIndexedEXT", ["glIsEnabledi", "glIsEnablediEXT", "glIsEnablediNV", "glIsEnablediOES"])
 
 ///|
 extern "c" fn epoxy_glIsEnabledIndexedEXT(fp : CPtr, target : UInt, index : UInt) -> Bool = "epoxy_glIsEnabledIndexedEXT"
@@ -15449,7 +15449,7 @@ pub fn gl_is_enabled_indexed_ext(target : UInt, index : UInt) -> Bool raise Reso
 }
 
 ///|
-let d_glIsEnabledi : Dispatch = Dispatch::new("glIsEnabledi")
+let d_glIsEnabledi : Dispatch = Dispatch::with_aliases("glIsEnabledi", ["glIsEnabledIndexedEXT", "glIsEnablediEXT", "glIsEnablediNV", "glIsEnablediOES"])
 
 ///|
 extern "c" fn epoxy_glIsEnabledi(fp : CPtr, target : UInt, index : UInt) -> Bool = "epoxy_glIsEnabledi"
@@ -15460,7 +15460,7 @@ pub fn gl_is_enabledi(target : UInt, index : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsEnablediEXT : Dispatch = Dispatch::new("glIsEnablediEXT")
+let d_glIsEnablediEXT : Dispatch = Dispatch::with_aliases("glIsEnablediEXT", ["glIsEnabledIndexedEXT", "glIsEnabledi", "glIsEnablediNV", "glIsEnablediOES"])
 
 ///|
 extern "c" fn epoxy_glIsEnablediEXT(fp : CPtr, target : UInt, index : UInt) -> Bool = "epoxy_glIsEnablediEXT"
@@ -15471,7 +15471,7 @@ pub fn gl_is_enabledi_ext(target : UInt, index : UInt) -> Bool raise ResolveErro
 }
 
 ///|
-let d_glIsEnablediNV : Dispatch = Dispatch::new("glIsEnablediNV")
+let d_glIsEnablediNV : Dispatch = Dispatch::with_aliases("glIsEnablediNV", ["glIsEnabledIndexedEXT", "glIsEnabledi", "glIsEnablediEXT", "glIsEnablediOES"])
 
 ///|
 extern "c" fn epoxy_glIsEnablediNV(fp : CPtr, target : UInt, index : UInt) -> Bool = "epoxy_glIsEnablediNV"
@@ -15482,7 +15482,7 @@ pub fn gl_is_enabledi_nv(target : UInt, index : UInt) -> Bool raise ResolveError
 }
 
 ///|
-let d_glIsEnablediOES : Dispatch = Dispatch::new("glIsEnablediOES")
+let d_glIsEnablediOES : Dispatch = Dispatch::with_aliases("glIsEnablediOES", ["glIsEnabledIndexedEXT", "glIsEnabledi", "glIsEnablediEXT", "glIsEnablediNV"])
 
 ///|
 extern "c" fn epoxy_glIsEnablediOES(fp : CPtr, target : UInt, index : UInt) -> Bool = "epoxy_glIsEnablediOES"
@@ -15515,7 +15515,7 @@ pub fn gl_is_fence_nv(fence : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsFramebuffer : Dispatch = Dispatch::new("glIsFramebuffer")
+let d_glIsFramebuffer : Dispatch = Dispatch::with_aliases("glIsFramebuffer", ["glIsFramebufferEXT"])
 
 ///|
 extern "c" fn epoxy_glIsFramebuffer(fp : CPtr, framebuffer : UInt) -> Bool = "epoxy_glIsFramebuffer"
@@ -15526,7 +15526,7 @@ pub fn gl_is_framebuffer(framebuffer : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsFramebufferEXT : Dispatch = Dispatch::new("glIsFramebufferEXT")
+let d_glIsFramebufferEXT : Dispatch = Dispatch::with_aliases("glIsFramebufferEXT", ["glIsFramebuffer"])
 
 ///|
 extern "c" fn epoxy_glIsFramebufferEXT(fp : CPtr, framebuffer : UInt) -> Bool = "epoxy_glIsFramebufferEXT"
@@ -15692,7 +15692,7 @@ pub fn gl_is_program(program : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsProgramARB : Dispatch = Dispatch::new("glIsProgramARB")
+let d_glIsProgramARB : Dispatch = Dispatch::with_aliases("glIsProgramARB", ["glIsProgramNV"])
 
 ///|
 extern "c" fn epoxy_glIsProgramARB(fp : CPtr, program : UInt) -> Bool = "epoxy_glIsProgramARB"
@@ -15703,7 +15703,7 @@ pub fn gl_is_program_arb(program : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsProgramNV : Dispatch = Dispatch::new("glIsProgramNV")
+let d_glIsProgramNV : Dispatch = Dispatch::with_aliases("glIsProgramNV", ["glIsProgramARB"])
 
 ///|
 extern "c" fn epoxy_glIsProgramNV(fp : CPtr, id : UInt) -> Bool = "epoxy_glIsProgramNV"
@@ -15736,7 +15736,7 @@ pub fn gl_is_program_pipeline_ext(pipeline : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsQuery : Dispatch = Dispatch::new("glIsQuery")
+let d_glIsQuery : Dispatch = Dispatch::with_aliases("glIsQuery", ["glIsQueryARB"])
 
 ///|
 extern "c" fn epoxy_glIsQuery(fp : CPtr, id : UInt) -> Bool = "epoxy_glIsQuery"
@@ -15747,7 +15747,7 @@ pub fn gl_is_query(id : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsQueryARB : Dispatch = Dispatch::new("glIsQueryARB")
+let d_glIsQueryARB : Dispatch = Dispatch::with_aliases("glIsQueryARB", ["glIsQuery"])
 
 ///|
 extern "c" fn epoxy_glIsQueryARB(fp : CPtr, id : UInt) -> Bool = "epoxy_glIsQueryARB"
@@ -15769,7 +15769,7 @@ pub fn gl_is_query_ext(id : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsRenderbuffer : Dispatch = Dispatch::new("glIsRenderbuffer")
+let d_glIsRenderbuffer : Dispatch = Dispatch::with_aliases("glIsRenderbuffer", ["glIsRenderbufferEXT"])
 
 ///|
 extern "c" fn epoxy_glIsRenderbuffer(fp : CPtr, renderbuffer : UInt) -> Bool = "epoxy_glIsRenderbuffer"
@@ -15780,7 +15780,7 @@ pub fn gl_is_renderbuffer(renderbuffer : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsRenderbufferEXT : Dispatch = Dispatch::new("glIsRenderbufferEXT")
+let d_glIsRenderbufferEXT : Dispatch = Dispatch::with_aliases("glIsRenderbufferEXT", ["glIsRenderbuffer"])
 
 ///|
 extern "c" fn epoxy_glIsRenderbufferEXT(fp : CPtr, renderbuffer : UInt) -> Bool = "epoxy_glIsRenderbufferEXT"
@@ -15890,7 +15890,7 @@ pub fn gl_is_texture_handle_resident_nv(handle : UInt64) -> Bool raise ResolveEr
 }
 
 ///|
-let d_glIsTransformFeedback : Dispatch = Dispatch::new("glIsTransformFeedback")
+let d_glIsTransformFeedback : Dispatch = Dispatch::with_aliases("glIsTransformFeedback", ["glIsTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glIsTransformFeedback(fp : CPtr, id : UInt) -> Bool = "epoxy_glIsTransformFeedback"
@@ -15901,7 +15901,7 @@ pub fn gl_is_transform_feedback(id : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsTransformFeedbackNV : Dispatch = Dispatch::new("glIsTransformFeedbackNV")
+let d_glIsTransformFeedbackNV : Dispatch = Dispatch::with_aliases("glIsTransformFeedbackNV", ["glIsTransformFeedback"])
 
 ///|
 extern "c" fn epoxy_glIsTransformFeedbackNV(fp : CPtr, id : UInt) -> Bool = "epoxy_glIsTransformFeedbackNV"
@@ -15923,7 +15923,7 @@ pub fn gl_is_variant_enabled_ext(id : UInt, cap : UInt) -> Bool raise ResolveErr
 }
 
 ///|
-let d_glIsVertexArray : Dispatch = Dispatch::new("glIsVertexArray")
+let d_glIsVertexArray : Dispatch = Dispatch::with_aliases("glIsVertexArray", ["glIsVertexArrayAPPLE", "glIsVertexArrayOES"])
 
 ///|
 extern "c" fn epoxy_glIsVertexArray(fp : CPtr, array : UInt) -> Bool = "epoxy_glIsVertexArray"
@@ -15934,7 +15934,7 @@ pub fn gl_is_vertex_array(array : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsVertexArrayAPPLE : Dispatch = Dispatch::new("glIsVertexArrayAPPLE")
+let d_glIsVertexArrayAPPLE : Dispatch = Dispatch::with_aliases("glIsVertexArrayAPPLE", ["glIsVertexArray", "glIsVertexArrayOES"])
 
 ///|
 extern "c" fn epoxy_glIsVertexArrayAPPLE(fp : CPtr, array : UInt) -> Bool = "epoxy_glIsVertexArrayAPPLE"
@@ -15945,7 +15945,7 @@ pub fn gl_is_vertex_array_apple(array : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glIsVertexArrayOES : Dispatch = Dispatch::new("glIsVertexArrayOES")
+let d_glIsVertexArrayOES : Dispatch = Dispatch::with_aliases("glIsVertexArrayOES", ["glIsVertexArray", "glIsVertexArrayAPPLE"])
 
 ///|
 extern "c" fn epoxy_glIsVertexArrayOES(fp : CPtr, array : UInt) -> Bool = "epoxy_glIsVertexArrayOES"
@@ -16252,7 +16252,7 @@ pub fn gl_line_widthx_oes(width : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glLinkProgram : Dispatch = Dispatch::new("glLinkProgram")
+let d_glLinkProgram : Dispatch = Dispatch::with_aliases("glLinkProgram", ["glLinkProgramARB"])
 
 ///|
 extern "c" fn epoxy_glLinkProgram(fp : CPtr, program : UInt) -> Unit = "epoxy_glLinkProgram"
@@ -16424,7 +16424,7 @@ pub fn gl_load_program_nv(target : UInt, id : UInt, len : Int, program : Bytes) 
 }
 
 ///|
-let d_glLoadTransposeMatrixd : Dispatch = Dispatch::new("glLoadTransposeMatrixd")
+let d_glLoadTransposeMatrixd : Dispatch = Dispatch::with_aliases("glLoadTransposeMatrixd", ["glLoadTransposeMatrixdARB"])
 
 ///|
 #borrow(m)
@@ -16436,7 +16436,7 @@ pub fn gl_load_transpose_matrixd(m : FixedArray[Double]) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glLoadTransposeMatrixdARB : Dispatch = Dispatch::new("glLoadTransposeMatrixdARB")
+let d_glLoadTransposeMatrixdARB : Dispatch = Dispatch::with_aliases("glLoadTransposeMatrixdARB", ["glLoadTransposeMatrixd"])
 
 ///|
 #borrow(m)
@@ -16448,7 +16448,7 @@ pub fn gl_load_transpose_matrixd_arb(m : FixedArray[Double]) -> Unit raise Resol
 }
 
 ///|
-let d_glLoadTransposeMatrixf : Dispatch = Dispatch::new("glLoadTransposeMatrixf")
+let d_glLoadTransposeMatrixf : Dispatch = Dispatch::with_aliases("glLoadTransposeMatrixf", ["glLoadTransposeMatrixfARB"])
 
 ///|
 #borrow(m)
@@ -16460,7 +16460,7 @@ pub fn gl_load_transpose_matrixf(m : FixedArray[Float]) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glLoadTransposeMatrixfARB : Dispatch = Dispatch::new("glLoadTransposeMatrixfARB")
+let d_glLoadTransposeMatrixfARB : Dispatch = Dispatch::with_aliases("glLoadTransposeMatrixfARB", ["glLoadTransposeMatrixf"])
 
 ///|
 #borrow(m)
@@ -17309,7 +17309,7 @@ pub fn gl_max_active_shader_cores_arm(count : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMaxShaderCompilerThreadsKHR : Dispatch = Dispatch::new("glMaxShaderCompilerThreadsKHR")
+let d_glMaxShaderCompilerThreadsKHR : Dispatch = Dispatch::with_aliases("glMaxShaderCompilerThreadsKHR", ["glMaxShaderCompilerThreadsARB"])
 
 ///|
 extern "c" fn epoxy_glMaxShaderCompilerThreadsKHR(fp : CPtr, count : UInt) -> Unit = "epoxy_glMaxShaderCompilerThreadsKHR"
@@ -17320,7 +17320,7 @@ pub fn gl_max_shader_compiler_threads_khr(count : UInt) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glMaxShaderCompilerThreadsARB : Dispatch = Dispatch::new("glMaxShaderCompilerThreadsARB")
+let d_glMaxShaderCompilerThreadsARB : Dispatch = Dispatch::with_aliases("glMaxShaderCompilerThreadsARB", ["glMaxShaderCompilerThreadsKHR"])
 
 ///|
 extern "c" fn epoxy_glMaxShaderCompilerThreadsARB(fp : CPtr, count : UInt) -> Unit = "epoxy_glMaxShaderCompilerThreadsARB"
@@ -17331,7 +17331,7 @@ pub fn gl_max_shader_compiler_threads_arb(count : UInt) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glMemoryBarrier : Dispatch = Dispatch::new("glMemoryBarrier")
+let d_glMemoryBarrier : Dispatch = Dispatch::with_aliases("glMemoryBarrier", ["glMemoryBarrierEXT"])
 
 ///|
 extern "c" fn epoxy_glMemoryBarrier(fp : CPtr, barriers : UInt) -> Unit = "epoxy_glMemoryBarrier"
@@ -17353,7 +17353,7 @@ pub fn gl_memory_barrier_by_region(barriers : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMemoryBarrierEXT : Dispatch = Dispatch::new("glMemoryBarrierEXT")
+let d_glMemoryBarrierEXT : Dispatch = Dispatch::with_aliases("glMemoryBarrierEXT", ["glMemoryBarrier"])
 
 ///|
 extern "c" fn epoxy_glMemoryBarrierEXT(fp : CPtr, barriers : UInt) -> Unit = "epoxy_glMemoryBarrierEXT"
@@ -17376,7 +17376,7 @@ pub fn gl_memory_object_parameteriv_ext(memoryObject : UInt, pname : UInt, param
 }
 
 ///|
-let d_glMinSampleShading : Dispatch = Dispatch::new("glMinSampleShading")
+let d_glMinSampleShading : Dispatch = Dispatch::with_aliases("glMinSampleShading", ["glMinSampleShadingARB", "glMinSampleShadingOES"])
 
 ///|
 extern "c" fn epoxy_glMinSampleShading(fp : CPtr, value : Float) -> Unit = "epoxy_glMinSampleShading"
@@ -17387,7 +17387,7 @@ pub fn gl_min_sample_shading(value : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMinSampleShadingARB : Dispatch = Dispatch::new("glMinSampleShadingARB")
+let d_glMinSampleShadingARB : Dispatch = Dispatch::with_aliases("glMinSampleShadingARB", ["glMinSampleShading", "glMinSampleShadingOES"])
 
 ///|
 extern "c" fn epoxy_glMinSampleShadingARB(fp : CPtr, value : Float) -> Unit = "epoxy_glMinSampleShadingARB"
@@ -17398,7 +17398,7 @@ pub fn gl_min_sample_shading_arb(value : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMinSampleShadingOES : Dispatch = Dispatch::new("glMinSampleShadingOES")
+let d_glMinSampleShadingOES : Dispatch = Dispatch::with_aliases("glMinSampleShadingOES", ["glMinSampleShading", "glMinSampleShadingARB"])
 
 ///|
 extern "c" fn epoxy_glMinSampleShadingOES(fp : CPtr, value : Float) -> Unit = "epoxy_glMinSampleShadingOES"
@@ -17409,7 +17409,7 @@ pub fn gl_min_sample_shading_oes(value : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMinmax : Dispatch = Dispatch::new("glMinmax")
+let d_glMinmax : Dispatch = Dispatch::with_aliases("glMinmax", ["glMinmaxEXT"])
 
 ///|
 extern "c" fn epoxy_glMinmax(fp : CPtr, target : UInt, internalformat : UInt, sink : Bool) -> Unit = "epoxy_glMinmax"
@@ -17420,7 +17420,7 @@ pub fn gl_minmax(target : UInt, internalformat : UInt, sink : Bool) -> Unit rais
 }
 
 ///|
-let d_glMinmaxEXT : Dispatch = Dispatch::new("glMinmaxEXT")
+let d_glMinmaxEXT : Dispatch = Dispatch::with_aliases("glMinmaxEXT", ["glMinmax"])
 
 ///|
 extern "c" fn epoxy_glMinmaxEXT(fp : CPtr, target : UInt, internalformat : UInt, sink : Bool) -> Unit = "epoxy_glMinmaxEXT"
@@ -17479,7 +17479,7 @@ pub fn gl_mult_matrixx_oes(m : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMultTransposeMatrixd : Dispatch = Dispatch::new("glMultTransposeMatrixd")
+let d_glMultTransposeMatrixd : Dispatch = Dispatch::with_aliases("glMultTransposeMatrixd", ["glMultTransposeMatrixdARB"])
 
 ///|
 #borrow(m)
@@ -17491,7 +17491,7 @@ pub fn gl_mult_transpose_matrixd(m : FixedArray[Double]) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glMultTransposeMatrixdARB : Dispatch = Dispatch::new("glMultTransposeMatrixdARB")
+let d_glMultTransposeMatrixdARB : Dispatch = Dispatch::with_aliases("glMultTransposeMatrixdARB", ["glMultTransposeMatrixd"])
 
 ///|
 #borrow(m)
@@ -17503,7 +17503,7 @@ pub fn gl_mult_transpose_matrixd_arb(m : FixedArray[Double]) -> Unit raise Resol
 }
 
 ///|
-let d_glMultTransposeMatrixf : Dispatch = Dispatch::new("glMultTransposeMatrixf")
+let d_glMultTransposeMatrixf : Dispatch = Dispatch::with_aliases("glMultTransposeMatrixf", ["glMultTransposeMatrixfARB"])
 
 ///|
 #borrow(m)
@@ -17515,7 +17515,7 @@ pub fn gl_mult_transpose_matrixf(m : FixedArray[Float]) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glMultTransposeMatrixfARB : Dispatch = Dispatch::new("glMultTransposeMatrixfARB")
+let d_glMultTransposeMatrixfARB : Dispatch = Dispatch::with_aliases("glMultTransposeMatrixfARB", ["glMultTransposeMatrixf"])
 
 ///|
 #borrow(m)
@@ -17539,7 +17539,7 @@ pub fn gl_mult_transpose_matrixx_oes(m : FixedArray[Int]) -> Unit raise ResolveE
 }
 
 ///|
-let d_glMultiDrawArrays : Dispatch = Dispatch::new("glMultiDrawArrays")
+let d_glMultiDrawArrays : Dispatch = Dispatch::with_aliases("glMultiDrawArrays", ["glMultiDrawArraysEXT"])
 
 ///|
 #borrow(first, count)
@@ -17551,7 +17551,7 @@ pub fn gl_multi_draw_arrays(mode : UInt, first : FixedArray[Int], count : FixedA
 }
 
 ///|
-let d_glMultiDrawArraysEXT : Dispatch = Dispatch::new("glMultiDrawArraysEXT")
+let d_glMultiDrawArraysEXT : Dispatch = Dispatch::with_aliases("glMultiDrawArraysEXT", ["glMultiDrawArrays"])
 
 ///|
 #borrow(first, count)
@@ -17563,7 +17563,7 @@ pub fn gl_multi_draw_arrays_ext(mode : UInt, first : FixedArray[Int], count : Fi
 }
 
 ///|
-let d_glMultiDrawArraysIndirect : Dispatch = Dispatch::new("glMultiDrawArraysIndirect")
+let d_glMultiDrawArraysIndirect : Dispatch = Dispatch::with_aliases("glMultiDrawArraysIndirect", ["glMultiDrawArraysIndirectAMD", "glMultiDrawArraysIndirectEXT"])
 
 ///|
 #borrow(indirect)
@@ -17575,7 +17575,7 @@ pub fn gl_multi_draw_arrays_indirect(mode : UInt, indirect : Bytes, drawcount : 
 }
 
 ///|
-let d_glMultiDrawArraysIndirectAMD : Dispatch = Dispatch::new("glMultiDrawArraysIndirectAMD")
+let d_glMultiDrawArraysIndirectAMD : Dispatch = Dispatch::with_aliases("glMultiDrawArraysIndirectAMD", ["glMultiDrawArraysIndirect", "glMultiDrawArraysIndirectEXT"])
 
 ///|
 #borrow(indirect)
@@ -17611,7 +17611,7 @@ pub fn gl_multi_draw_arrays_indirect_bindless_nv(mode : UInt, indirect : Bytes, 
 }
 
 ///|
-let d_glMultiDrawArraysIndirectCount : Dispatch = Dispatch::new("glMultiDrawArraysIndirectCount")
+let d_glMultiDrawArraysIndirectCount : Dispatch = Dispatch::with_aliases("glMultiDrawArraysIndirectCount", ["glMultiDrawArraysIndirectCountARB"])
 
 ///|
 #borrow(indirect)
@@ -17623,7 +17623,7 @@ pub fn gl_multi_draw_arrays_indirect_count(mode : UInt, indirect : Bytes, drawco
 }
 
 ///|
-let d_glMultiDrawArraysIndirectCountARB : Dispatch = Dispatch::new("glMultiDrawArraysIndirectCountARB")
+let d_glMultiDrawArraysIndirectCountARB : Dispatch = Dispatch::with_aliases("glMultiDrawArraysIndirectCountARB", ["glMultiDrawArraysIndirectCount"])
 
 ///|
 #borrow(indirect)
@@ -17635,7 +17635,7 @@ pub fn gl_multi_draw_arrays_indirect_count_arb(mode : UInt, indirect : Bytes, dr
 }
 
 ///|
-let d_glMultiDrawArraysIndirectEXT : Dispatch = Dispatch::new("glMultiDrawArraysIndirectEXT")
+let d_glMultiDrawArraysIndirectEXT : Dispatch = Dispatch::with_aliases("glMultiDrawArraysIndirectEXT", ["glMultiDrawArraysIndirect", "glMultiDrawArraysIndirectAMD"])
 
 ///|
 #borrow(indirect)
@@ -17659,7 +17659,7 @@ pub fn gl_multi_draw_element_array_apple(mode : UInt, first : FixedArray[Int], c
 }
 
 ///|
-let d_glMultiDrawElementsIndirect : Dispatch = Dispatch::new("glMultiDrawElementsIndirect")
+let d_glMultiDrawElementsIndirect : Dispatch = Dispatch::with_aliases("glMultiDrawElementsIndirect", ["glMultiDrawElementsIndirectAMD", "glMultiDrawElementsIndirectEXT"])
 
 ///|
 #borrow(indirect)
@@ -17671,7 +17671,7 @@ pub fn gl_multi_draw_elements_indirect(mode : UInt, type_ : UInt, indirect : Byt
 }
 
 ///|
-let d_glMultiDrawElementsIndirectAMD : Dispatch = Dispatch::new("glMultiDrawElementsIndirectAMD")
+let d_glMultiDrawElementsIndirectAMD : Dispatch = Dispatch::with_aliases("glMultiDrawElementsIndirectAMD", ["glMultiDrawElementsIndirect", "glMultiDrawElementsIndirectEXT"])
 
 ///|
 #borrow(indirect)
@@ -17707,7 +17707,7 @@ pub fn gl_multi_draw_elements_indirect_bindless_nv(mode : UInt, type_ : UInt, in
 }
 
 ///|
-let d_glMultiDrawElementsIndirectCount : Dispatch = Dispatch::new("glMultiDrawElementsIndirectCount")
+let d_glMultiDrawElementsIndirectCount : Dispatch = Dispatch::with_aliases("glMultiDrawElementsIndirectCount", ["glMultiDrawElementsIndirectCountARB"])
 
 ///|
 #borrow(indirect)
@@ -17719,7 +17719,7 @@ pub fn gl_multi_draw_elements_indirect_count(mode : UInt, type_ : UInt, indirect
 }
 
 ///|
-let d_glMultiDrawElementsIndirectCountARB : Dispatch = Dispatch::new("glMultiDrawElementsIndirectCountARB")
+let d_glMultiDrawElementsIndirectCountARB : Dispatch = Dispatch::with_aliases("glMultiDrawElementsIndirectCountARB", ["glMultiDrawElementsIndirectCount"])
 
 ///|
 #borrow(indirect)
@@ -17731,7 +17731,7 @@ pub fn gl_multi_draw_elements_indirect_count_arb(mode : UInt, type_ : UInt, indi
 }
 
 ///|
-let d_glMultiDrawElementsIndirectEXT : Dispatch = Dispatch::new("glMultiDrawElementsIndirectEXT")
+let d_glMultiDrawElementsIndirectEXT : Dispatch = Dispatch::with_aliases("glMultiDrawElementsIndirectEXT", ["glMultiDrawElementsIndirect", "glMultiDrawElementsIndirectAMD"])
 
 ///|
 #borrow(indirect)
@@ -17845,7 +17845,7 @@ pub fn gl_multi_tex_coord1bv_oes(texture : UInt, coords : Bytes) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord1d : Dispatch = Dispatch::new("glMultiTexCoord1d")
+let d_glMultiTexCoord1d : Dispatch = Dispatch::with_aliases("glMultiTexCoord1d", ["glMultiTexCoord1dARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1d(fp : CPtr, target : UInt, s : Double) -> Unit = "epoxy_glMultiTexCoord1d"
@@ -17856,7 +17856,7 @@ pub fn gl_multi_tex_coord1d(target : UInt, s : Double) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glMultiTexCoord1dARB : Dispatch = Dispatch::new("glMultiTexCoord1dARB")
+let d_glMultiTexCoord1dARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1dARB", ["glMultiTexCoord1d"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1dARB(fp : CPtr, target : UInt, s : Double) -> Unit = "epoxy_glMultiTexCoord1dARB"
@@ -17867,7 +17867,7 @@ pub fn gl_multi_tex_coord1d_arb(target : UInt, s : Double) -> Unit raise Resolve
 }
 
 ///|
-let d_glMultiTexCoord1dv : Dispatch = Dispatch::new("glMultiTexCoord1dv")
+let d_glMultiTexCoord1dv : Dispatch = Dispatch::with_aliases("glMultiTexCoord1dv", ["glMultiTexCoord1dvARB"])
 
 ///|
 #borrow(v)
@@ -17879,7 +17879,7 @@ pub fn gl_multi_tex_coord1dv(target : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glMultiTexCoord1dvARB : Dispatch = Dispatch::new("glMultiTexCoord1dvARB")
+let d_glMultiTexCoord1dvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1dvARB", ["glMultiTexCoord1dv"])
 
 ///|
 #borrow(v)
@@ -17891,7 +17891,7 @@ pub fn gl_multi_tex_coord1dv_arb(target : UInt, v : FixedArray[Double]) -> Unit 
 }
 
 ///|
-let d_glMultiTexCoord1f : Dispatch = Dispatch::new("glMultiTexCoord1f")
+let d_glMultiTexCoord1f : Dispatch = Dispatch::with_aliases("glMultiTexCoord1f", ["glMultiTexCoord1fARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1f(fp : CPtr, target : UInt, s : Float) -> Unit = "epoxy_glMultiTexCoord1f"
@@ -17902,7 +17902,7 @@ pub fn gl_multi_tex_coord1f(target : UInt, s : Float) -> Unit raise ResolveError
 }
 
 ///|
-let d_glMultiTexCoord1fARB : Dispatch = Dispatch::new("glMultiTexCoord1fARB")
+let d_glMultiTexCoord1fARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1fARB", ["glMultiTexCoord1f"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1fARB(fp : CPtr, target : UInt, s : Float) -> Unit = "epoxy_glMultiTexCoord1fARB"
@@ -17913,7 +17913,7 @@ pub fn gl_multi_tex_coord1f_arb(target : UInt, s : Float) -> Unit raise ResolveE
 }
 
 ///|
-let d_glMultiTexCoord1fv : Dispatch = Dispatch::new("glMultiTexCoord1fv")
+let d_glMultiTexCoord1fv : Dispatch = Dispatch::with_aliases("glMultiTexCoord1fv", ["glMultiTexCoord1fvARB"])
 
 ///|
 #borrow(v)
@@ -17925,7 +17925,7 @@ pub fn gl_multi_tex_coord1fv(target : UInt, v : FixedArray[Float]) -> Unit raise
 }
 
 ///|
-let d_glMultiTexCoord1fvARB : Dispatch = Dispatch::new("glMultiTexCoord1fvARB")
+let d_glMultiTexCoord1fvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1fvARB", ["glMultiTexCoord1fv"])
 
 ///|
 #borrow(v)
@@ -17948,7 +17948,7 @@ pub fn gl_multi_tex_coord1h_nv(target : UInt, s : Int) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glMultiTexCoord1i : Dispatch = Dispatch::new("glMultiTexCoord1i")
+let d_glMultiTexCoord1i : Dispatch = Dispatch::with_aliases("glMultiTexCoord1i", ["glMultiTexCoord1iARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1i(fp : CPtr, target : UInt, s : Int) -> Unit = "epoxy_glMultiTexCoord1i"
@@ -17959,7 +17959,7 @@ pub fn gl_multi_tex_coord1i(target : UInt, s : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMultiTexCoord1iARB : Dispatch = Dispatch::new("glMultiTexCoord1iARB")
+let d_glMultiTexCoord1iARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1iARB", ["glMultiTexCoord1i"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1iARB(fp : CPtr, target : UInt, s : Int) -> Unit = "epoxy_glMultiTexCoord1iARB"
@@ -17970,7 +17970,7 @@ pub fn gl_multi_tex_coord1i_arb(target : UInt, s : Int) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glMultiTexCoord1iv : Dispatch = Dispatch::new("glMultiTexCoord1iv")
+let d_glMultiTexCoord1iv : Dispatch = Dispatch::with_aliases("glMultiTexCoord1iv", ["glMultiTexCoord1ivARB"])
 
 ///|
 #borrow(v)
@@ -17982,7 +17982,7 @@ pub fn gl_multi_tex_coord1iv(target : UInt, v : FixedArray[Int]) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord1ivARB : Dispatch = Dispatch::new("glMultiTexCoord1ivARB")
+let d_glMultiTexCoord1ivARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1ivARB", ["glMultiTexCoord1iv"])
 
 ///|
 #borrow(v)
@@ -17994,7 +17994,7 @@ pub fn gl_multi_tex_coord1iv_arb(target : UInt, v : FixedArray[Int]) -> Unit rai
 }
 
 ///|
-let d_glMultiTexCoord1s : Dispatch = Dispatch::new("glMultiTexCoord1s")
+let d_glMultiTexCoord1s : Dispatch = Dispatch::with_aliases("glMultiTexCoord1s", ["glMultiTexCoord1sARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1s(fp : CPtr, target : UInt, s : Int) -> Unit = "epoxy_glMultiTexCoord1s"
@@ -18005,7 +18005,7 @@ pub fn gl_multi_tex_coord1s(target : UInt, s : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glMultiTexCoord1sARB : Dispatch = Dispatch::new("glMultiTexCoord1sARB")
+let d_glMultiTexCoord1sARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord1sARB", ["glMultiTexCoord1s"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord1sARB(fp : CPtr, target : UInt, s : Int) -> Unit = "epoxy_glMultiTexCoord1sARB"
@@ -18062,7 +18062,7 @@ pub fn gl_multi_tex_coord2bv_oes(texture : UInt, coords : Bytes) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord2d : Dispatch = Dispatch::new("glMultiTexCoord2d")
+let d_glMultiTexCoord2d : Dispatch = Dispatch::with_aliases("glMultiTexCoord2d", ["glMultiTexCoord2dARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2d(fp : CPtr, target : UInt, s : Double, t : Double) -> Unit = "epoxy_glMultiTexCoord2d"
@@ -18073,7 +18073,7 @@ pub fn gl_multi_tex_coord2d(target : UInt, s : Double, t : Double) -> Unit raise
 }
 
 ///|
-let d_glMultiTexCoord2dARB : Dispatch = Dispatch::new("glMultiTexCoord2dARB")
+let d_glMultiTexCoord2dARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2dARB", ["glMultiTexCoord2d"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2dARB(fp : CPtr, target : UInt, s : Double, t : Double) -> Unit = "epoxy_glMultiTexCoord2dARB"
@@ -18084,7 +18084,7 @@ pub fn gl_multi_tex_coord2d_arb(target : UInt, s : Double, t : Double) -> Unit r
 }
 
 ///|
-let d_glMultiTexCoord2dv : Dispatch = Dispatch::new("glMultiTexCoord2dv")
+let d_glMultiTexCoord2dv : Dispatch = Dispatch::with_aliases("glMultiTexCoord2dv", ["glMultiTexCoord2dvARB"])
 
 ///|
 #borrow(v)
@@ -18096,7 +18096,7 @@ pub fn gl_multi_tex_coord2dv(target : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glMultiTexCoord2dvARB : Dispatch = Dispatch::new("glMultiTexCoord2dvARB")
+let d_glMultiTexCoord2dvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2dvARB", ["glMultiTexCoord2dv"])
 
 ///|
 #borrow(v)
@@ -18108,7 +18108,7 @@ pub fn gl_multi_tex_coord2dv_arb(target : UInt, v : FixedArray[Double]) -> Unit 
 }
 
 ///|
-let d_glMultiTexCoord2f : Dispatch = Dispatch::new("glMultiTexCoord2f")
+let d_glMultiTexCoord2f : Dispatch = Dispatch::with_aliases("glMultiTexCoord2f", ["glMultiTexCoord2fARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2f(fp : CPtr, target : UInt, s : Float, t : Float) -> Unit = "epoxy_glMultiTexCoord2f"
@@ -18119,7 +18119,7 @@ pub fn gl_multi_tex_coord2f(target : UInt, s : Float, t : Float) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord2fARB : Dispatch = Dispatch::new("glMultiTexCoord2fARB")
+let d_glMultiTexCoord2fARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2fARB", ["glMultiTexCoord2f"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2fARB(fp : CPtr, target : UInt, s : Float, t : Float) -> Unit = "epoxy_glMultiTexCoord2fARB"
@@ -18130,7 +18130,7 @@ pub fn gl_multi_tex_coord2f_arb(target : UInt, s : Float, t : Float) -> Unit rai
 }
 
 ///|
-let d_glMultiTexCoord2fv : Dispatch = Dispatch::new("glMultiTexCoord2fv")
+let d_glMultiTexCoord2fv : Dispatch = Dispatch::with_aliases("glMultiTexCoord2fv", ["glMultiTexCoord2fvARB"])
 
 ///|
 #borrow(v)
@@ -18142,7 +18142,7 @@ pub fn gl_multi_tex_coord2fv(target : UInt, v : FixedArray[Float]) -> Unit raise
 }
 
 ///|
-let d_glMultiTexCoord2fvARB : Dispatch = Dispatch::new("glMultiTexCoord2fvARB")
+let d_glMultiTexCoord2fvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2fvARB", ["glMultiTexCoord2fv"])
 
 ///|
 #borrow(v)
@@ -18165,7 +18165,7 @@ pub fn gl_multi_tex_coord2h_nv(target : UInt, s : Int, t : Int) -> Unit raise Re
 }
 
 ///|
-let d_glMultiTexCoord2i : Dispatch = Dispatch::new("glMultiTexCoord2i")
+let d_glMultiTexCoord2i : Dispatch = Dispatch::with_aliases("glMultiTexCoord2i", ["glMultiTexCoord2iARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2i(fp : CPtr, target : UInt, s : Int, t : Int) -> Unit = "epoxy_glMultiTexCoord2i"
@@ -18176,7 +18176,7 @@ pub fn gl_multi_tex_coord2i(target : UInt, s : Int, t : Int) -> Unit raise Resol
 }
 
 ///|
-let d_glMultiTexCoord2iARB : Dispatch = Dispatch::new("glMultiTexCoord2iARB")
+let d_glMultiTexCoord2iARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2iARB", ["glMultiTexCoord2i"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2iARB(fp : CPtr, target : UInt, s : Int, t : Int) -> Unit = "epoxy_glMultiTexCoord2iARB"
@@ -18187,7 +18187,7 @@ pub fn gl_multi_tex_coord2i_arb(target : UInt, s : Int, t : Int) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord2iv : Dispatch = Dispatch::new("glMultiTexCoord2iv")
+let d_glMultiTexCoord2iv : Dispatch = Dispatch::with_aliases("glMultiTexCoord2iv", ["glMultiTexCoord2ivARB"])
 
 ///|
 #borrow(v)
@@ -18199,7 +18199,7 @@ pub fn gl_multi_tex_coord2iv(target : UInt, v : FixedArray[Int]) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord2ivARB : Dispatch = Dispatch::new("glMultiTexCoord2ivARB")
+let d_glMultiTexCoord2ivARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2ivARB", ["glMultiTexCoord2iv"])
 
 ///|
 #borrow(v)
@@ -18211,7 +18211,7 @@ pub fn gl_multi_tex_coord2iv_arb(target : UInt, v : FixedArray[Int]) -> Unit rai
 }
 
 ///|
-let d_glMultiTexCoord2s : Dispatch = Dispatch::new("glMultiTexCoord2s")
+let d_glMultiTexCoord2s : Dispatch = Dispatch::with_aliases("glMultiTexCoord2s", ["glMultiTexCoord2sARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2s(fp : CPtr, target : UInt, s : Int, t : Int) -> Unit = "epoxy_glMultiTexCoord2s"
@@ -18222,7 +18222,7 @@ pub fn gl_multi_tex_coord2s(target : UInt, s : Int, t : Int) -> Unit raise Resol
 }
 
 ///|
-let d_glMultiTexCoord2sARB : Dispatch = Dispatch::new("glMultiTexCoord2sARB")
+let d_glMultiTexCoord2sARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord2sARB", ["glMultiTexCoord2s"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord2sARB(fp : CPtr, target : UInt, s : Int, t : Int) -> Unit = "epoxy_glMultiTexCoord2sARB"
@@ -18279,7 +18279,7 @@ pub fn gl_multi_tex_coord3bv_oes(texture : UInt, coords : Bytes) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord3d : Dispatch = Dispatch::new("glMultiTexCoord3d")
+let d_glMultiTexCoord3d : Dispatch = Dispatch::with_aliases("glMultiTexCoord3d", ["glMultiTexCoord3dARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3d(fp : CPtr, target : UInt, s : Double, t : Double, r : Double) -> Unit = "epoxy_glMultiTexCoord3d"
@@ -18290,7 +18290,7 @@ pub fn gl_multi_tex_coord3d(target : UInt, s : Double, t : Double, r : Double) -
 }
 
 ///|
-let d_glMultiTexCoord3dARB : Dispatch = Dispatch::new("glMultiTexCoord3dARB")
+let d_glMultiTexCoord3dARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3dARB", ["glMultiTexCoord3d"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3dARB(fp : CPtr, target : UInt, s : Double, t : Double, r : Double) -> Unit = "epoxy_glMultiTexCoord3dARB"
@@ -18301,7 +18301,7 @@ pub fn gl_multi_tex_coord3d_arb(target : UInt, s : Double, t : Double, r : Doubl
 }
 
 ///|
-let d_glMultiTexCoord3dv : Dispatch = Dispatch::new("glMultiTexCoord3dv")
+let d_glMultiTexCoord3dv : Dispatch = Dispatch::with_aliases("glMultiTexCoord3dv", ["glMultiTexCoord3dvARB"])
 
 ///|
 #borrow(v)
@@ -18313,7 +18313,7 @@ pub fn gl_multi_tex_coord3dv(target : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glMultiTexCoord3dvARB : Dispatch = Dispatch::new("glMultiTexCoord3dvARB")
+let d_glMultiTexCoord3dvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3dvARB", ["glMultiTexCoord3dv"])
 
 ///|
 #borrow(v)
@@ -18325,7 +18325,7 @@ pub fn gl_multi_tex_coord3dv_arb(target : UInt, v : FixedArray[Double]) -> Unit 
 }
 
 ///|
-let d_glMultiTexCoord3f : Dispatch = Dispatch::new("glMultiTexCoord3f")
+let d_glMultiTexCoord3f : Dispatch = Dispatch::with_aliases("glMultiTexCoord3f", ["glMultiTexCoord3fARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3f(fp : CPtr, target : UInt, s : Float, t : Float, r : Float) -> Unit = "epoxy_glMultiTexCoord3f"
@@ -18336,7 +18336,7 @@ pub fn gl_multi_tex_coord3f(target : UInt, s : Float, t : Float, r : Float) -> U
 }
 
 ///|
-let d_glMultiTexCoord3fARB : Dispatch = Dispatch::new("glMultiTexCoord3fARB")
+let d_glMultiTexCoord3fARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3fARB", ["glMultiTexCoord3f"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3fARB(fp : CPtr, target : UInt, s : Float, t : Float, r : Float) -> Unit = "epoxy_glMultiTexCoord3fARB"
@@ -18347,7 +18347,7 @@ pub fn gl_multi_tex_coord3f_arb(target : UInt, s : Float, t : Float, r : Float) 
 }
 
 ///|
-let d_glMultiTexCoord3fv : Dispatch = Dispatch::new("glMultiTexCoord3fv")
+let d_glMultiTexCoord3fv : Dispatch = Dispatch::with_aliases("glMultiTexCoord3fv", ["glMultiTexCoord3fvARB"])
 
 ///|
 #borrow(v)
@@ -18359,7 +18359,7 @@ pub fn gl_multi_tex_coord3fv(target : UInt, v : FixedArray[Float]) -> Unit raise
 }
 
 ///|
-let d_glMultiTexCoord3fvARB : Dispatch = Dispatch::new("glMultiTexCoord3fvARB")
+let d_glMultiTexCoord3fvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3fvARB", ["glMultiTexCoord3fv"])
 
 ///|
 #borrow(v)
@@ -18382,7 +18382,7 @@ pub fn gl_multi_tex_coord3h_nv(target : UInt, s : Int, t : Int, r : Int) -> Unit
 }
 
 ///|
-let d_glMultiTexCoord3i : Dispatch = Dispatch::new("glMultiTexCoord3i")
+let d_glMultiTexCoord3i : Dispatch = Dispatch::with_aliases("glMultiTexCoord3i", ["glMultiTexCoord3iARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3i(fp : CPtr, target : UInt, s : Int, t : Int, r : Int) -> Unit = "epoxy_glMultiTexCoord3i"
@@ -18393,7 +18393,7 @@ pub fn gl_multi_tex_coord3i(target : UInt, s : Int, t : Int, r : Int) -> Unit ra
 }
 
 ///|
-let d_glMultiTexCoord3iARB : Dispatch = Dispatch::new("glMultiTexCoord3iARB")
+let d_glMultiTexCoord3iARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3iARB", ["glMultiTexCoord3i"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3iARB(fp : CPtr, target : UInt, s : Int, t : Int, r : Int) -> Unit = "epoxy_glMultiTexCoord3iARB"
@@ -18404,7 +18404,7 @@ pub fn gl_multi_tex_coord3i_arb(target : UInt, s : Int, t : Int, r : Int) -> Uni
 }
 
 ///|
-let d_glMultiTexCoord3iv : Dispatch = Dispatch::new("glMultiTexCoord3iv")
+let d_glMultiTexCoord3iv : Dispatch = Dispatch::with_aliases("glMultiTexCoord3iv", ["glMultiTexCoord3ivARB"])
 
 ///|
 #borrow(v)
@@ -18416,7 +18416,7 @@ pub fn gl_multi_tex_coord3iv(target : UInt, v : FixedArray[Int]) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord3ivARB : Dispatch = Dispatch::new("glMultiTexCoord3ivARB")
+let d_glMultiTexCoord3ivARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3ivARB", ["glMultiTexCoord3iv"])
 
 ///|
 #borrow(v)
@@ -18428,7 +18428,7 @@ pub fn gl_multi_tex_coord3iv_arb(target : UInt, v : FixedArray[Int]) -> Unit rai
 }
 
 ///|
-let d_glMultiTexCoord3s : Dispatch = Dispatch::new("glMultiTexCoord3s")
+let d_glMultiTexCoord3s : Dispatch = Dispatch::with_aliases("glMultiTexCoord3s", ["glMultiTexCoord3sARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3s(fp : CPtr, target : UInt, s : Int, t : Int, r : Int) -> Unit = "epoxy_glMultiTexCoord3s"
@@ -18439,7 +18439,7 @@ pub fn gl_multi_tex_coord3s(target : UInt, s : Int, t : Int, r : Int) -> Unit ra
 }
 
 ///|
-let d_glMultiTexCoord3sARB : Dispatch = Dispatch::new("glMultiTexCoord3sARB")
+let d_glMultiTexCoord3sARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord3sARB", ["glMultiTexCoord3s"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord3sARB(fp : CPtr, target : UInt, s : Int, t : Int, r : Int) -> Unit = "epoxy_glMultiTexCoord3sARB"
@@ -18496,7 +18496,7 @@ pub fn gl_multi_tex_coord4bv_oes(texture : UInt, coords : Bytes) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord4d : Dispatch = Dispatch::new("glMultiTexCoord4d")
+let d_glMultiTexCoord4d : Dispatch = Dispatch::with_aliases("glMultiTexCoord4d", ["glMultiTexCoord4dARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4d(fp : CPtr, target : UInt, s : Double, t : Double, r : Double, q : Double) -> Unit = "epoxy_glMultiTexCoord4d"
@@ -18507,7 +18507,7 @@ pub fn gl_multi_tex_coord4d(target : UInt, s : Double, t : Double, r : Double, q
 }
 
 ///|
-let d_glMultiTexCoord4dARB : Dispatch = Dispatch::new("glMultiTexCoord4dARB")
+let d_glMultiTexCoord4dARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4dARB", ["glMultiTexCoord4d"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4dARB(fp : CPtr, target : UInt, s : Double, t : Double, r : Double, q : Double) -> Unit = "epoxy_glMultiTexCoord4dARB"
@@ -18518,7 +18518,7 @@ pub fn gl_multi_tex_coord4d_arb(target : UInt, s : Double, t : Double, r : Doubl
 }
 
 ///|
-let d_glMultiTexCoord4dv : Dispatch = Dispatch::new("glMultiTexCoord4dv")
+let d_glMultiTexCoord4dv : Dispatch = Dispatch::with_aliases("glMultiTexCoord4dv", ["glMultiTexCoord4dvARB"])
 
 ///|
 #borrow(v)
@@ -18530,7 +18530,7 @@ pub fn gl_multi_tex_coord4dv(target : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glMultiTexCoord4dvARB : Dispatch = Dispatch::new("glMultiTexCoord4dvARB")
+let d_glMultiTexCoord4dvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4dvARB", ["glMultiTexCoord4dv"])
 
 ///|
 #borrow(v)
@@ -18542,7 +18542,7 @@ pub fn gl_multi_tex_coord4dv_arb(target : UInt, v : FixedArray[Double]) -> Unit 
 }
 
 ///|
-let d_glMultiTexCoord4f : Dispatch = Dispatch::new("glMultiTexCoord4f")
+let d_glMultiTexCoord4f : Dispatch = Dispatch::with_aliases("glMultiTexCoord4f", ["glMultiTexCoord4fARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4f(fp : CPtr, target : UInt, s : Float, t : Float, r : Float, q : Float) -> Unit = "epoxy_glMultiTexCoord4f"
@@ -18553,7 +18553,7 @@ pub fn gl_multi_tex_coord4f(target : UInt, s : Float, t : Float, r : Float, q : 
 }
 
 ///|
-let d_glMultiTexCoord4fARB : Dispatch = Dispatch::new("glMultiTexCoord4fARB")
+let d_glMultiTexCoord4fARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4fARB", ["glMultiTexCoord4f"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4fARB(fp : CPtr, target : UInt, s : Float, t : Float, r : Float, q : Float) -> Unit = "epoxy_glMultiTexCoord4fARB"
@@ -18564,7 +18564,7 @@ pub fn gl_multi_tex_coord4f_arb(target : UInt, s : Float, t : Float, r : Float, 
 }
 
 ///|
-let d_glMultiTexCoord4fv : Dispatch = Dispatch::new("glMultiTexCoord4fv")
+let d_glMultiTexCoord4fv : Dispatch = Dispatch::with_aliases("glMultiTexCoord4fv", ["glMultiTexCoord4fvARB"])
 
 ///|
 #borrow(v)
@@ -18576,7 +18576,7 @@ pub fn gl_multi_tex_coord4fv(target : UInt, v : FixedArray[Float]) -> Unit raise
 }
 
 ///|
-let d_glMultiTexCoord4fvARB : Dispatch = Dispatch::new("glMultiTexCoord4fvARB")
+let d_glMultiTexCoord4fvARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4fvARB", ["glMultiTexCoord4fv"])
 
 ///|
 #borrow(v)
@@ -18599,7 +18599,7 @@ pub fn gl_multi_tex_coord4h_nv(target : UInt, s : Int, t : Int, r : Int, q : Int
 }
 
 ///|
-let d_glMultiTexCoord4i : Dispatch = Dispatch::new("glMultiTexCoord4i")
+let d_glMultiTexCoord4i : Dispatch = Dispatch::with_aliases("glMultiTexCoord4i", ["glMultiTexCoord4iARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4i(fp : CPtr, target : UInt, s : Int, t : Int, r : Int, q : Int) -> Unit = "epoxy_glMultiTexCoord4i"
@@ -18610,7 +18610,7 @@ pub fn gl_multi_tex_coord4i(target : UInt, s : Int, t : Int, r : Int, q : Int) -
 }
 
 ///|
-let d_glMultiTexCoord4iARB : Dispatch = Dispatch::new("glMultiTexCoord4iARB")
+let d_glMultiTexCoord4iARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4iARB", ["glMultiTexCoord4i"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4iARB(fp : CPtr, target : UInt, s : Int, t : Int, r : Int, q : Int) -> Unit = "epoxy_glMultiTexCoord4iARB"
@@ -18621,7 +18621,7 @@ pub fn gl_multi_tex_coord4i_arb(target : UInt, s : Int, t : Int, r : Int, q : In
 }
 
 ///|
-let d_glMultiTexCoord4iv : Dispatch = Dispatch::new("glMultiTexCoord4iv")
+let d_glMultiTexCoord4iv : Dispatch = Dispatch::with_aliases("glMultiTexCoord4iv", ["glMultiTexCoord4ivARB"])
 
 ///|
 #borrow(v)
@@ -18633,7 +18633,7 @@ pub fn gl_multi_tex_coord4iv(target : UInt, v : FixedArray[Int]) -> Unit raise R
 }
 
 ///|
-let d_glMultiTexCoord4ivARB : Dispatch = Dispatch::new("glMultiTexCoord4ivARB")
+let d_glMultiTexCoord4ivARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4ivARB", ["glMultiTexCoord4iv"])
 
 ///|
 #borrow(v)
@@ -18645,7 +18645,7 @@ pub fn gl_multi_tex_coord4iv_arb(target : UInt, v : FixedArray[Int]) -> Unit rai
 }
 
 ///|
-let d_glMultiTexCoord4s : Dispatch = Dispatch::new("glMultiTexCoord4s")
+let d_glMultiTexCoord4s : Dispatch = Dispatch::with_aliases("glMultiTexCoord4s", ["glMultiTexCoord4sARB"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4s(fp : CPtr, target : UInt, s : Int, t : Int, r : Int, q : Int) -> Unit = "epoxy_glMultiTexCoord4s"
@@ -18656,7 +18656,7 @@ pub fn gl_multi_tex_coord4s(target : UInt, s : Int, t : Int, r : Int, q : Int) -
 }
 
 ///|
-let d_glMultiTexCoord4sARB : Dispatch = Dispatch::new("glMultiTexCoord4sARB")
+let d_glMultiTexCoord4sARB : Dispatch = Dispatch::with_aliases("glMultiTexCoord4sARB", ["glMultiTexCoord4s"])
 
 ///|
 extern "c" fn epoxy_glMultiTexCoord4sARB(fp : CPtr, target : UInt, s : Int, t : Int, r : Int, q : Int) -> Unit = "epoxy_glMultiTexCoord4sARB"
@@ -19303,7 +19303,7 @@ pub fn gl_named_buffer_page_commitment_mem_nv(buffer : UInt, offset : Int64, siz
 }
 
 ///|
-let d_glNamedBufferStorage : Dispatch = Dispatch::new("glNamedBufferStorage")
+let d_glNamedBufferStorage : Dispatch = Dispatch::with_aliases("glNamedBufferStorage", ["glNamedBufferStorageEXT"])
 
 ///|
 #borrow(data)
@@ -19315,7 +19315,7 @@ pub fn gl_named_buffer_storage(buffer : UInt, size : Int64, data : Bytes, flags 
 }
 
 ///|
-let d_glNamedBufferStorageEXT : Dispatch = Dispatch::new("glNamedBufferStorageEXT")
+let d_glNamedBufferStorageEXT : Dispatch = Dispatch::with_aliases("glNamedBufferStorageEXT", ["glNamedBufferStorage"])
 
 ///|
 #borrow(data)
@@ -19338,7 +19338,7 @@ pub fn gl_named_buffer_storage_mem_ext(buffer : UInt, size : Int64, memory : UIn
 }
 
 ///|
-let d_glNamedBufferSubData : Dispatch = Dispatch::new("glNamedBufferSubData")
+let d_glNamedBufferSubData : Dispatch = Dispatch::with_aliases("glNamedBufferSubData", ["glNamedBufferSubDataEXT"])
 
 ///|
 #borrow(data)
@@ -19350,7 +19350,7 @@ pub fn gl_named_buffer_sub_data(buffer : UInt, offset : Int64, size : Int64, dat
 }
 
 ///|
-let d_glNamedBufferSubDataEXT : Dispatch = Dispatch::new("glNamedBufferSubDataEXT")
+let d_glNamedBufferSubDataEXT : Dispatch = Dispatch::with_aliases("glNamedBufferSubDataEXT", ["glNamedBufferSubData"])
 
 ///|
 #borrow(data)
@@ -20159,7 +20159,7 @@ pub fn gl_normal_stream3s_ati(stream : UInt, nx : Int, ny : Int, nz : Int) -> Un
 }
 
 ///|
-let d_glObjectLabel : Dispatch = Dispatch::new("glObjectLabel")
+let d_glObjectLabel : Dispatch = Dispatch::with_aliases("glObjectLabel", ["glObjectLabelKHR"])
 
 ///|
 #borrow(label)
@@ -20171,7 +20171,7 @@ pub fn gl_object_label(identifier : UInt, name : UInt, length : Int, label : Byt
 }
 
 ///|
-let d_glObjectLabelKHR : Dispatch = Dispatch::new("glObjectLabelKHR")
+let d_glObjectLabelKHR : Dispatch = Dispatch::with_aliases("glObjectLabelKHR", ["glObjectLabel"])
 
 ///|
 #borrow(label)
@@ -20183,7 +20183,7 @@ pub fn gl_object_label_khr(identifier : UInt, name : UInt, length : Int, label :
 }
 
 ///|
-let d_glObjectPtrLabel : Dispatch = Dispatch::new("glObjectPtrLabel")
+let d_glObjectPtrLabel : Dispatch = Dispatch::with_aliases("glObjectPtrLabel", ["glObjectPtrLabelKHR"])
 
 ///|
 #borrow(ptr, label)
@@ -20195,7 +20195,7 @@ pub fn gl_object_ptr_label(ptr : Bytes, length : Int, label : Bytes) -> Unit rai
 }
 
 ///|
-let d_glObjectPtrLabelKHR : Dispatch = Dispatch::new("glObjectPtrLabelKHR")
+let d_glObjectPtrLabelKHR : Dispatch = Dispatch::with_aliases("glObjectPtrLabelKHR", ["glObjectPtrLabel"])
 
 ///|
 #borrow(ptr, label)
@@ -20351,7 +20351,7 @@ pub fn gl_patch_parameterfv(pname : UInt, values : FixedArray[Float]) -> Unit ra
 }
 
 ///|
-let d_glPatchParameteri : Dispatch = Dispatch::new("glPatchParameteri")
+let d_glPatchParameteri : Dispatch = Dispatch::with_aliases("glPatchParameteri", ["glPatchParameteriEXT", "glPatchParameteriOES"])
 
 ///|
 extern "c" fn epoxy_glPatchParameteri(fp : CPtr, pname : UInt, value : Int) -> Unit = "epoxy_glPatchParameteri"
@@ -20362,7 +20362,7 @@ pub fn gl_patch_parameteri(pname : UInt, value : Int) -> Unit raise ResolveError
 }
 
 ///|
-let d_glPatchParameteriEXT : Dispatch = Dispatch::new("glPatchParameteriEXT")
+let d_glPatchParameteriEXT : Dispatch = Dispatch::with_aliases("glPatchParameteriEXT", ["glPatchParameteri", "glPatchParameteriOES"])
 
 ///|
 extern "c" fn epoxy_glPatchParameteriEXT(fp : CPtr, pname : UInt, value : Int) -> Unit = "epoxy_glPatchParameteriEXT"
@@ -20373,7 +20373,7 @@ pub fn gl_patch_parameteri_ext(pname : UInt, value : Int) -> Unit raise ResolveE
 }
 
 ///|
-let d_glPatchParameteriOES : Dispatch = Dispatch::new("glPatchParameteriOES")
+let d_glPatchParameteriOES : Dispatch = Dispatch::with_aliases("glPatchParameteriOES", ["glPatchParameteri", "glPatchParameteriEXT"])
 
 ///|
 extern "c" fn epoxy_glPatchParameteriOES(fp : CPtr, pname : UInt, value : Int) -> Unit = "epoxy_glPatchParameteriOES"
@@ -20630,7 +20630,7 @@ pub fn gl_path_tex_gen_nv(texCoordSet : UInt, genMode : UInt, components : Int, 
 }
 
 ///|
-let d_glPauseTransformFeedback : Dispatch = Dispatch::new("glPauseTransformFeedback")
+let d_glPauseTransformFeedback : Dispatch = Dispatch::with_aliases("glPauseTransformFeedback", ["glPauseTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glPauseTransformFeedback(fp : CPtr) -> Unit = "epoxy_glPauseTransformFeedback"
@@ -20641,7 +20641,7 @@ pub fn gl_pause_transform_feedback() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glPauseTransformFeedbackNV : Dispatch = Dispatch::new("glPauseTransformFeedbackNV")
+let d_glPauseTransformFeedbackNV : Dispatch = Dispatch::with_aliases("glPauseTransformFeedbackNV", ["glPauseTransformFeedback"])
 
 ///|
 extern "c" fn epoxy_glPauseTransformFeedbackNV(fp : CPtr) -> Unit = "epoxy_glPauseTransformFeedbackNV"
@@ -20903,7 +20903,7 @@ pub fn gl_point_along_path_nv(path : UInt, startSegment : Int, numSegments : Int
 }
 
 ///|
-let d_glPointParameterf : Dispatch = Dispatch::new("glPointParameterf")
+let d_glPointParameterf : Dispatch = Dispatch::with_aliases("glPointParameterf", ["glPointParameterfARB", "glPointParameterfEXT", "glPointParameterfSGIS"])
 
 ///|
 extern "c" fn epoxy_glPointParameterf(fp : CPtr, pname : UInt, param : Float) -> Unit = "epoxy_glPointParameterf"
@@ -20914,7 +20914,7 @@ pub fn gl_point_parameterf(pname : UInt, param : Float) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glPointParameterfARB : Dispatch = Dispatch::new("glPointParameterfARB")
+let d_glPointParameterfARB : Dispatch = Dispatch::with_aliases("glPointParameterfARB", ["glPointParameterf", "glPointParameterfEXT", "glPointParameterfSGIS"])
 
 ///|
 extern "c" fn epoxy_glPointParameterfARB(fp : CPtr, pname : UInt, param : Float) -> Unit = "epoxy_glPointParameterfARB"
@@ -20925,7 +20925,7 @@ pub fn gl_point_parameterf_arb(pname : UInt, param : Float) -> Unit raise Resolv
 }
 
 ///|
-let d_glPointParameterfEXT : Dispatch = Dispatch::new("glPointParameterfEXT")
+let d_glPointParameterfEXT : Dispatch = Dispatch::with_aliases("glPointParameterfEXT", ["glPointParameterf", "glPointParameterfARB", "glPointParameterfSGIS"])
 
 ///|
 extern "c" fn epoxy_glPointParameterfEXT(fp : CPtr, pname : UInt, param : Float) -> Unit = "epoxy_glPointParameterfEXT"
@@ -20936,7 +20936,7 @@ pub fn gl_point_parameterf_ext(pname : UInt, param : Float) -> Unit raise Resolv
 }
 
 ///|
-let d_glPointParameterfSGIS : Dispatch = Dispatch::new("glPointParameterfSGIS")
+let d_glPointParameterfSGIS : Dispatch = Dispatch::with_aliases("glPointParameterfSGIS", ["glPointParameterf", "glPointParameterfARB", "glPointParameterfEXT"])
 
 ///|
 extern "c" fn epoxy_glPointParameterfSGIS(fp : CPtr, pname : UInt, param : Float) -> Unit = "epoxy_glPointParameterfSGIS"
@@ -20947,7 +20947,7 @@ pub fn gl_point_parameterf_sgis(pname : UInt, param : Float) -> Unit raise Resol
 }
 
 ///|
-let d_glPointParameterfv : Dispatch = Dispatch::new("glPointParameterfv")
+let d_glPointParameterfv : Dispatch = Dispatch::with_aliases("glPointParameterfv", ["glPointParameterfvARB", "glPointParameterfvEXT", "glPointParameterfvSGIS"])
 
 ///|
 #borrow(params)
@@ -20959,7 +20959,7 @@ pub fn gl_point_parameterfv(pname : UInt, params : FixedArray[Float]) -> Unit ra
 }
 
 ///|
-let d_glPointParameterfvARB : Dispatch = Dispatch::new("glPointParameterfvARB")
+let d_glPointParameterfvARB : Dispatch = Dispatch::with_aliases("glPointParameterfvARB", ["glPointParameterfv", "glPointParameterfvEXT", "glPointParameterfvSGIS"])
 
 ///|
 #borrow(params)
@@ -20971,7 +20971,7 @@ pub fn gl_point_parameterfv_arb(pname : UInt, params : FixedArray[Float]) -> Uni
 }
 
 ///|
-let d_glPointParameterfvEXT : Dispatch = Dispatch::new("glPointParameterfvEXT")
+let d_glPointParameterfvEXT : Dispatch = Dispatch::with_aliases("glPointParameterfvEXT", ["glPointParameterfv", "glPointParameterfvARB", "glPointParameterfvSGIS"])
 
 ///|
 #borrow(params)
@@ -20983,7 +20983,7 @@ pub fn gl_point_parameterfv_ext(pname : UInt, params : FixedArray[Float]) -> Uni
 }
 
 ///|
-let d_glPointParameterfvSGIS : Dispatch = Dispatch::new("glPointParameterfvSGIS")
+let d_glPointParameterfvSGIS : Dispatch = Dispatch::with_aliases("glPointParameterfvSGIS", ["glPointParameterfv", "glPointParameterfvARB", "glPointParameterfvEXT"])
 
 ///|
 #borrow(params)
@@ -20995,7 +20995,7 @@ pub fn gl_point_parameterfv_sgis(pname : UInt, params : FixedArray[Float]) -> Un
 }
 
 ///|
-let d_glPointParameteri : Dispatch = Dispatch::new("glPointParameteri")
+let d_glPointParameteri : Dispatch = Dispatch::with_aliases("glPointParameteri", ["glPointParameteriNV"])
 
 ///|
 extern "c" fn epoxy_glPointParameteri(fp : CPtr, pname : UInt, param : Int) -> Unit = "epoxy_glPointParameteri"
@@ -21006,7 +21006,7 @@ pub fn gl_point_parameteri(pname : UInt, param : Int) -> Unit raise ResolveError
 }
 
 ///|
-let d_glPointParameteriNV : Dispatch = Dispatch::new("glPointParameteriNV")
+let d_glPointParameteriNV : Dispatch = Dispatch::with_aliases("glPointParameteriNV", ["glPointParameteri"])
 
 ///|
 extern "c" fn epoxy_glPointParameteriNV(fp : CPtr, pname : UInt, param : Int) -> Unit = "epoxy_glPointParameteriNV"
@@ -21017,7 +21017,7 @@ pub fn gl_point_parameteri_nv(pname : UInt, param : Int) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glPointParameteriv : Dispatch = Dispatch::new("glPointParameteriv")
+let d_glPointParameteriv : Dispatch = Dispatch::with_aliases("glPointParameteriv", ["glPointParameterivNV"])
 
 ///|
 #borrow(params)
@@ -21029,7 +21029,7 @@ pub fn gl_point_parameteriv(pname : UInt, params : FixedArray[Int]) -> Unit rais
 }
 
 ///|
-let d_glPointParameterivNV : Dispatch = Dispatch::new("glPointParameterivNV")
+let d_glPointParameterivNV : Dispatch = Dispatch::with_aliases("glPointParameterivNV", ["glPointParameteriv"])
 
 ///|
 #borrow(params)
@@ -21156,7 +21156,7 @@ pub fn gl_poll_instruments_sgix(marker_p : FixedArray[Int]) -> Int raise Resolve
 }
 
 ///|
-let d_glPolygonMode : Dispatch = Dispatch::new("glPolygonMode")
+let d_glPolygonMode : Dispatch = Dispatch::with_aliases("glPolygonMode", ["glPolygonModeNV"])
 
 ///|
 extern "c" fn epoxy_glPolygonMode(fp : CPtr, face : UInt, mode : UInt) -> Unit = "epoxy_glPolygonMode"
@@ -21167,7 +21167,7 @@ pub fn gl_polygon_mode(face : UInt, mode : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glPolygonModeNV : Dispatch = Dispatch::new("glPolygonModeNV")
+let d_glPolygonModeNV : Dispatch = Dispatch::with_aliases("glPolygonModeNV", ["glPolygonMode"])
 
 ///|
 extern "c" fn epoxy_glPolygonModeNV(fp : CPtr, face : UInt, mode : UInt) -> Unit = "epoxy_glPolygonModeNV"
@@ -21189,7 +21189,7 @@ pub fn gl_polygon_offset(factor : Float, units : Float) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glPolygonOffsetClamp : Dispatch = Dispatch::new("glPolygonOffsetClamp")
+let d_glPolygonOffsetClamp : Dispatch = Dispatch::with_aliases("glPolygonOffsetClamp", ["glPolygonOffsetClampEXT"])
 
 ///|
 extern "c" fn epoxy_glPolygonOffsetClamp(fp : CPtr, factor : Float, units : Float, clamp : Float) -> Unit = "epoxy_glPolygonOffsetClamp"
@@ -21200,7 +21200,7 @@ pub fn gl_polygon_offset_clamp(factor : Float, units : Float, clamp : Float) -> 
 }
 
 ///|
-let d_glPolygonOffsetClampEXT : Dispatch = Dispatch::new("glPolygonOffsetClampEXT")
+let d_glPolygonOffsetClampEXT : Dispatch = Dispatch::with_aliases("glPolygonOffsetClampEXT", ["glPolygonOffsetClamp"])
 
 ///|
 extern "c" fn epoxy_glPolygonOffsetClampEXT(fp : CPtr, factor : Float, units : Float, clamp : Float) -> Unit = "epoxy_glPolygonOffsetClampEXT"
@@ -21278,7 +21278,7 @@ pub fn gl_pop_client_attrib() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glPopDebugGroup : Dispatch = Dispatch::new("glPopDebugGroup")
+let d_glPopDebugGroup : Dispatch = Dispatch::with_aliases("glPopDebugGroup", ["glPopDebugGroupKHR"])
 
 ///|
 extern "c" fn epoxy_glPopDebugGroup(fp : CPtr) -> Unit = "epoxy_glPopDebugGroup"
@@ -21289,7 +21289,7 @@ pub fn gl_pop_debug_group() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glPopDebugGroupKHR : Dispatch = Dispatch::new("glPopDebugGroupKHR")
+let d_glPopDebugGroupKHR : Dispatch = Dispatch::with_aliases("glPopDebugGroupKHR", ["glPopDebugGroup"])
 
 ///|
 extern "c" fn epoxy_glPopDebugGroupKHR(fp : CPtr) -> Unit = "epoxy_glPopDebugGroupKHR"
@@ -21355,7 +21355,7 @@ pub fn gl_present_frame_keyed_nv(video_slot : UInt, minPresentTime : UInt64, beg
 }
 
 ///|
-let d_glPrimitiveBoundingBox : Dispatch = Dispatch::new("glPrimitiveBoundingBox")
+let d_glPrimitiveBoundingBox : Dispatch = Dispatch::with_aliases("glPrimitiveBoundingBox", ["glPrimitiveBoundingBoxARB", "glPrimitiveBoundingBoxEXT", "glPrimitiveBoundingBoxOES"])
 
 ///|
 extern "c" fn epoxy_glPrimitiveBoundingBox(fp : CPtr, minX : Float, minY : Float, minZ : Float, minW : Float, maxX : Float, maxY : Float, maxZ : Float, maxW : Float) -> Unit = "epoxy_glPrimitiveBoundingBox"
@@ -21366,7 +21366,7 @@ pub fn gl_primitive_bounding_box(minX : Float, minY : Float, minZ : Float, minW 
 }
 
 ///|
-let d_glPrimitiveBoundingBoxARB : Dispatch = Dispatch::new("glPrimitiveBoundingBoxARB")
+let d_glPrimitiveBoundingBoxARB : Dispatch = Dispatch::with_aliases("glPrimitiveBoundingBoxARB", ["glPrimitiveBoundingBox", "glPrimitiveBoundingBoxEXT", "glPrimitiveBoundingBoxOES"])
 
 ///|
 extern "c" fn epoxy_glPrimitiveBoundingBoxARB(fp : CPtr, minX : Float, minY : Float, minZ : Float, minW : Float, maxX : Float, maxY : Float, maxZ : Float, maxW : Float) -> Unit = "epoxy_glPrimitiveBoundingBoxARB"
@@ -21377,7 +21377,7 @@ pub fn gl_primitive_bounding_box_arb(minX : Float, minY : Float, minZ : Float, m
 }
 
 ///|
-let d_glPrimitiveBoundingBoxEXT : Dispatch = Dispatch::new("glPrimitiveBoundingBoxEXT")
+let d_glPrimitiveBoundingBoxEXT : Dispatch = Dispatch::with_aliases("glPrimitiveBoundingBoxEXT", ["glPrimitiveBoundingBox", "glPrimitiveBoundingBoxARB", "glPrimitiveBoundingBoxOES"])
 
 ///|
 extern "c" fn epoxy_glPrimitiveBoundingBoxEXT(fp : CPtr, minX : Float, minY : Float, minZ : Float, minW : Float, maxX : Float, maxY : Float, maxZ : Float, maxW : Float) -> Unit = "epoxy_glPrimitiveBoundingBoxEXT"
@@ -21388,7 +21388,7 @@ pub fn gl_primitive_bounding_box_ext(minX : Float, minY : Float, minZ : Float, m
 }
 
 ///|
-let d_glPrimitiveBoundingBoxOES : Dispatch = Dispatch::new("glPrimitiveBoundingBoxOES")
+let d_glPrimitiveBoundingBoxOES : Dispatch = Dispatch::with_aliases("glPrimitiveBoundingBoxOES", ["glPrimitiveBoundingBox", "glPrimitiveBoundingBoxARB", "glPrimitiveBoundingBoxEXT"])
 
 ///|
 extern "c" fn epoxy_glPrimitiveBoundingBoxOES(fp : CPtr, minX : Float, minY : Float, minZ : Float, minW : Float, maxX : Float, maxY : Float, maxZ : Float, maxW : Float) -> Unit = "epoxy_glPrimitiveBoundingBoxOES"
@@ -21432,7 +21432,7 @@ pub fn gl_primitive_restart_nv() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glPrioritizeTextures : Dispatch = Dispatch::new("glPrioritizeTextures")
+let d_glPrioritizeTextures : Dispatch = Dispatch::with_aliases("glPrioritizeTextures", ["glPrioritizeTexturesEXT"])
 
 ///|
 #borrow(textures, priorities)
@@ -21444,7 +21444,7 @@ pub fn gl_prioritize_textures(n : Int, textures : FixedArray[UInt], priorities :
 }
 
 ///|
-let d_glPrioritizeTexturesEXT : Dispatch = Dispatch::new("glPrioritizeTexturesEXT")
+let d_glPrioritizeTexturesEXT : Dispatch = Dispatch::with_aliases("glPrioritizeTexturesEXT", ["glPrioritizeTextures"])
 
 ///|
 #borrow(textures, priorities)
@@ -21468,7 +21468,7 @@ pub fn gl_prioritize_texturesx_oes(n : Int, textures : FixedArray[UInt], priorit
 }
 
 ///|
-let d_glProgramBinary : Dispatch = Dispatch::new("glProgramBinary")
+let d_glProgramBinary : Dispatch = Dispatch::with_aliases("glProgramBinary", ["glProgramBinaryOES"])
 
 ///|
 #borrow(binary)
@@ -21480,7 +21480,7 @@ pub fn gl_program_binary(program : UInt, binaryFormat : UInt, binary : Bytes, le
 }
 
 ///|
-let d_glProgramBinaryOES : Dispatch = Dispatch::new("glProgramBinaryOES")
+let d_glProgramBinaryOES : Dispatch = Dispatch::with_aliases("glProgramBinaryOES", ["glProgramBinary"])
 
 ///|
 #borrow(binary)
@@ -21878,7 +21878,7 @@ pub fn gl_program_parameter4fv_nv(target : UInt, index : UInt, v : FixedArray[Fl
 }
 
 ///|
-let d_glProgramParameteri : Dispatch = Dispatch::new("glProgramParameteri")
+let d_glProgramParameteri : Dispatch = Dispatch::with_aliases("glProgramParameteri", ["glProgramParameteriARB", "glProgramParameteriEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramParameteri(fp : CPtr, program : UInt, pname : UInt, value : Int) -> Unit = "epoxy_glProgramParameteri"
@@ -21889,7 +21889,7 @@ pub fn gl_program_parameteri(program : UInt, pname : UInt, value : Int) -> Unit 
 }
 
 ///|
-let d_glProgramParameteriARB : Dispatch = Dispatch::new("glProgramParameteriARB")
+let d_glProgramParameteriARB : Dispatch = Dispatch::with_aliases("glProgramParameteriARB", ["glProgramParameteri", "glProgramParameteriEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramParameteriARB(fp : CPtr, program : UInt, pname : UInt, value : Int) -> Unit = "epoxy_glProgramParameteriARB"
@@ -21900,7 +21900,7 @@ pub fn gl_program_parameteri_arb(program : UInt, pname : UInt, value : Int) -> U
 }
 
 ///|
-let d_glProgramParameteriEXT : Dispatch = Dispatch::new("glProgramParameteriEXT")
+let d_glProgramParameteriEXT : Dispatch = Dispatch::with_aliases("glProgramParameteriEXT", ["glProgramParameteri", "glProgramParameteriARB"])
 
 ///|
 extern "c" fn epoxy_glProgramParameteriEXT(fp : CPtr, program : UInt, pname : UInt, value : Int) -> Unit = "epoxy_glProgramParameteriEXT"
@@ -22017,7 +22017,7 @@ pub fn gl_program_uniform1dv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform1f : Dispatch = Dispatch::new("glProgramUniform1f")
+let d_glProgramUniform1f : Dispatch = Dispatch::with_aliases("glProgramUniform1f", ["glProgramUniform1fEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform1f(fp : CPtr, program : UInt, location : Int, v0 : Float) -> Unit = "epoxy_glProgramUniform1f"
@@ -22028,7 +22028,7 @@ pub fn gl_program_uniform1f(program : UInt, location : Int, v0 : Float) -> Unit 
 }
 
 ///|
-let d_glProgramUniform1fEXT : Dispatch = Dispatch::new("glProgramUniform1fEXT")
+let d_glProgramUniform1fEXT : Dispatch = Dispatch::with_aliases("glProgramUniform1fEXT", ["glProgramUniform1f"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform1fEXT(fp : CPtr, program : UInt, location : Int, v0 : Float) -> Unit = "epoxy_glProgramUniform1fEXT"
@@ -22039,7 +22039,7 @@ pub fn gl_program_uniform1f_ext(program : UInt, location : Int, v0 : Float) -> U
 }
 
 ///|
-let d_glProgramUniform1fv : Dispatch = Dispatch::new("glProgramUniform1fv")
+let d_glProgramUniform1fv : Dispatch = Dispatch::with_aliases("glProgramUniform1fv", ["glProgramUniform1fvEXT"])
 
 ///|
 #borrow(value)
@@ -22051,7 +22051,7 @@ pub fn gl_program_uniform1fv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform1fvEXT : Dispatch = Dispatch::new("glProgramUniform1fvEXT")
+let d_glProgramUniform1fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniform1fvEXT", ["glProgramUniform1fv"])
 
 ///|
 #borrow(value)
@@ -22063,7 +22063,7 @@ pub fn gl_program_uniform1fv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform1i : Dispatch = Dispatch::new("glProgramUniform1i")
+let d_glProgramUniform1i : Dispatch = Dispatch::with_aliases("glProgramUniform1i", ["glProgramUniform1iEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform1i(fp : CPtr, program : UInt, location : Int, v0 : Int) -> Unit = "epoxy_glProgramUniform1i"
@@ -22120,7 +22120,7 @@ pub fn gl_program_uniform1i64v_nv(program : UInt, location : Int, count : Int, v
 }
 
 ///|
-let d_glProgramUniform1iEXT : Dispatch = Dispatch::new("glProgramUniform1iEXT")
+let d_glProgramUniform1iEXT : Dispatch = Dispatch::with_aliases("glProgramUniform1iEXT", ["glProgramUniform1i"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform1iEXT(fp : CPtr, program : UInt, location : Int, v0 : Int) -> Unit = "epoxy_glProgramUniform1iEXT"
@@ -22131,7 +22131,7 @@ pub fn gl_program_uniform1i_ext(program : UInt, location : Int, v0 : Int) -> Uni
 }
 
 ///|
-let d_glProgramUniform1iv : Dispatch = Dispatch::new("glProgramUniform1iv")
+let d_glProgramUniform1iv : Dispatch = Dispatch::with_aliases("glProgramUniform1iv", ["glProgramUniform1ivEXT"])
 
 ///|
 #borrow(value)
@@ -22143,7 +22143,7 @@ pub fn gl_program_uniform1iv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform1ivEXT : Dispatch = Dispatch::new("glProgramUniform1ivEXT")
+let d_glProgramUniform1ivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform1ivEXT", ["glProgramUniform1iv"])
 
 ///|
 #borrow(value)
@@ -22155,7 +22155,7 @@ pub fn gl_program_uniform1iv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform1ui : Dispatch = Dispatch::new("glProgramUniform1ui")
+let d_glProgramUniform1ui : Dispatch = Dispatch::with_aliases("glProgramUniform1ui", ["glProgramUniform1uiEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform1ui(fp : CPtr, program : UInt, location : Int, v0 : UInt) -> Unit = "epoxy_glProgramUniform1ui"
@@ -22212,7 +22212,7 @@ pub fn gl_program_uniform1ui64v_nv(program : UInt, location : Int, count : Int, 
 }
 
 ///|
-let d_glProgramUniform1uiEXT : Dispatch = Dispatch::new("glProgramUniform1uiEXT")
+let d_glProgramUniform1uiEXT : Dispatch = Dispatch::with_aliases("glProgramUniform1uiEXT", ["glProgramUniform1ui"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform1uiEXT(fp : CPtr, program : UInt, location : Int, v0 : UInt) -> Unit = "epoxy_glProgramUniform1uiEXT"
@@ -22223,7 +22223,7 @@ pub fn gl_program_uniform1ui_ext(program : UInt, location : Int, v0 : UInt) -> U
 }
 
 ///|
-let d_glProgramUniform1uiv : Dispatch = Dispatch::new("glProgramUniform1uiv")
+let d_glProgramUniform1uiv : Dispatch = Dispatch::with_aliases("glProgramUniform1uiv", ["glProgramUniform1uivEXT"])
 
 ///|
 #borrow(value)
@@ -22235,7 +22235,7 @@ pub fn gl_program_uniform1uiv(program : UInt, location : Int, count : Int, value
 }
 
 ///|
-let d_glProgramUniform1uivEXT : Dispatch = Dispatch::new("glProgramUniform1uivEXT")
+let d_glProgramUniform1uivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform1uivEXT", ["glProgramUniform1uiv"])
 
 ///|
 #borrow(value)
@@ -22293,7 +22293,7 @@ pub fn gl_program_uniform2dv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform2f : Dispatch = Dispatch::new("glProgramUniform2f")
+let d_glProgramUniform2f : Dispatch = Dispatch::with_aliases("glProgramUniform2f", ["glProgramUniform2fEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform2f(fp : CPtr, program : UInt, location : Int, v0 : Float, v1 : Float) -> Unit = "epoxy_glProgramUniform2f"
@@ -22304,7 +22304,7 @@ pub fn gl_program_uniform2f(program : UInt, location : Int, v0 : Float, v1 : Flo
 }
 
 ///|
-let d_glProgramUniform2fEXT : Dispatch = Dispatch::new("glProgramUniform2fEXT")
+let d_glProgramUniform2fEXT : Dispatch = Dispatch::with_aliases("glProgramUniform2fEXT", ["glProgramUniform2f"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform2fEXT(fp : CPtr, program : UInt, location : Int, v0 : Float, v1 : Float) -> Unit = "epoxy_glProgramUniform2fEXT"
@@ -22315,7 +22315,7 @@ pub fn gl_program_uniform2f_ext(program : UInt, location : Int, v0 : Float, v1 :
 }
 
 ///|
-let d_glProgramUniform2fv : Dispatch = Dispatch::new("glProgramUniform2fv")
+let d_glProgramUniform2fv : Dispatch = Dispatch::with_aliases("glProgramUniform2fv", ["glProgramUniform2fvEXT"])
 
 ///|
 #borrow(value)
@@ -22327,7 +22327,7 @@ pub fn gl_program_uniform2fv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform2fvEXT : Dispatch = Dispatch::new("glProgramUniform2fvEXT")
+let d_glProgramUniform2fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniform2fvEXT", ["glProgramUniform2fv"])
 
 ///|
 #borrow(value)
@@ -22339,7 +22339,7 @@ pub fn gl_program_uniform2fv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform2i : Dispatch = Dispatch::new("glProgramUniform2i")
+let d_glProgramUniform2i : Dispatch = Dispatch::with_aliases("glProgramUniform2i", ["glProgramUniform2iEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform2i(fp : CPtr, program : UInt, location : Int, v0 : Int, v1 : Int) -> Unit = "epoxy_glProgramUniform2i"
@@ -22396,7 +22396,7 @@ pub fn gl_program_uniform2i64v_nv(program : UInt, location : Int, count : Int, v
 }
 
 ///|
-let d_glProgramUniform2iEXT : Dispatch = Dispatch::new("glProgramUniform2iEXT")
+let d_glProgramUniform2iEXT : Dispatch = Dispatch::with_aliases("glProgramUniform2iEXT", ["glProgramUniform2i"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform2iEXT(fp : CPtr, program : UInt, location : Int, v0 : Int, v1 : Int) -> Unit = "epoxy_glProgramUniform2iEXT"
@@ -22407,7 +22407,7 @@ pub fn gl_program_uniform2i_ext(program : UInt, location : Int, v0 : Int, v1 : I
 }
 
 ///|
-let d_glProgramUniform2iv : Dispatch = Dispatch::new("glProgramUniform2iv")
+let d_glProgramUniform2iv : Dispatch = Dispatch::with_aliases("glProgramUniform2iv", ["glProgramUniform2ivEXT"])
 
 ///|
 #borrow(value)
@@ -22419,7 +22419,7 @@ pub fn gl_program_uniform2iv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform2ivEXT : Dispatch = Dispatch::new("glProgramUniform2ivEXT")
+let d_glProgramUniform2ivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform2ivEXT", ["glProgramUniform2iv"])
 
 ///|
 #borrow(value)
@@ -22431,7 +22431,7 @@ pub fn gl_program_uniform2iv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform2ui : Dispatch = Dispatch::new("glProgramUniform2ui")
+let d_glProgramUniform2ui : Dispatch = Dispatch::with_aliases("glProgramUniform2ui", ["glProgramUniform2uiEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform2ui(fp : CPtr, program : UInt, location : Int, v0 : UInt, v1 : UInt) -> Unit = "epoxy_glProgramUniform2ui"
@@ -22488,7 +22488,7 @@ pub fn gl_program_uniform2ui64v_nv(program : UInt, location : Int, count : Int, 
 }
 
 ///|
-let d_glProgramUniform2uiEXT : Dispatch = Dispatch::new("glProgramUniform2uiEXT")
+let d_glProgramUniform2uiEXT : Dispatch = Dispatch::with_aliases("glProgramUniform2uiEXT", ["glProgramUniform2ui"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform2uiEXT(fp : CPtr, program : UInt, location : Int, v0 : UInt, v1 : UInt) -> Unit = "epoxy_glProgramUniform2uiEXT"
@@ -22499,7 +22499,7 @@ pub fn gl_program_uniform2ui_ext(program : UInt, location : Int, v0 : UInt, v1 :
 }
 
 ///|
-let d_glProgramUniform2uiv : Dispatch = Dispatch::new("glProgramUniform2uiv")
+let d_glProgramUniform2uiv : Dispatch = Dispatch::with_aliases("glProgramUniform2uiv", ["glProgramUniform2uivEXT"])
 
 ///|
 #borrow(value)
@@ -22511,7 +22511,7 @@ pub fn gl_program_uniform2uiv(program : UInt, location : Int, count : Int, value
 }
 
 ///|
-let d_glProgramUniform2uivEXT : Dispatch = Dispatch::new("glProgramUniform2uivEXT")
+let d_glProgramUniform2uivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform2uivEXT", ["glProgramUniform2uiv"])
 
 ///|
 #borrow(value)
@@ -22569,7 +22569,7 @@ pub fn gl_program_uniform3dv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform3f : Dispatch = Dispatch::new("glProgramUniform3f")
+let d_glProgramUniform3f : Dispatch = Dispatch::with_aliases("glProgramUniform3f", ["glProgramUniform3fEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform3f(fp : CPtr, program : UInt, location : Int, v0 : Float, v1 : Float, v2 : Float) -> Unit = "epoxy_glProgramUniform3f"
@@ -22580,7 +22580,7 @@ pub fn gl_program_uniform3f(program : UInt, location : Int, v0 : Float, v1 : Flo
 }
 
 ///|
-let d_glProgramUniform3fEXT : Dispatch = Dispatch::new("glProgramUniform3fEXT")
+let d_glProgramUniform3fEXT : Dispatch = Dispatch::with_aliases("glProgramUniform3fEXT", ["glProgramUniform3f"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform3fEXT(fp : CPtr, program : UInt, location : Int, v0 : Float, v1 : Float, v2 : Float) -> Unit = "epoxy_glProgramUniform3fEXT"
@@ -22591,7 +22591,7 @@ pub fn gl_program_uniform3f_ext(program : UInt, location : Int, v0 : Float, v1 :
 }
 
 ///|
-let d_glProgramUniform3fv : Dispatch = Dispatch::new("glProgramUniform3fv")
+let d_glProgramUniform3fv : Dispatch = Dispatch::with_aliases("glProgramUniform3fv", ["glProgramUniform3fvEXT"])
 
 ///|
 #borrow(value)
@@ -22603,7 +22603,7 @@ pub fn gl_program_uniform3fv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform3fvEXT : Dispatch = Dispatch::new("glProgramUniform3fvEXT")
+let d_glProgramUniform3fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniform3fvEXT", ["glProgramUniform3fv"])
 
 ///|
 #borrow(value)
@@ -22615,7 +22615,7 @@ pub fn gl_program_uniform3fv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform3i : Dispatch = Dispatch::new("glProgramUniform3i")
+let d_glProgramUniform3i : Dispatch = Dispatch::with_aliases("glProgramUniform3i", ["glProgramUniform3iEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform3i(fp : CPtr, program : UInt, location : Int, v0 : Int, v1 : Int, v2 : Int) -> Unit = "epoxy_glProgramUniform3i"
@@ -22672,7 +22672,7 @@ pub fn gl_program_uniform3i64v_nv(program : UInt, location : Int, count : Int, v
 }
 
 ///|
-let d_glProgramUniform3iEXT : Dispatch = Dispatch::new("glProgramUniform3iEXT")
+let d_glProgramUniform3iEXT : Dispatch = Dispatch::with_aliases("glProgramUniform3iEXT", ["glProgramUniform3i"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform3iEXT(fp : CPtr, program : UInt, location : Int, v0 : Int, v1 : Int, v2 : Int) -> Unit = "epoxy_glProgramUniform3iEXT"
@@ -22683,7 +22683,7 @@ pub fn gl_program_uniform3i_ext(program : UInt, location : Int, v0 : Int, v1 : I
 }
 
 ///|
-let d_glProgramUniform3iv : Dispatch = Dispatch::new("glProgramUniform3iv")
+let d_glProgramUniform3iv : Dispatch = Dispatch::with_aliases("glProgramUniform3iv", ["glProgramUniform3ivEXT"])
 
 ///|
 #borrow(value)
@@ -22695,7 +22695,7 @@ pub fn gl_program_uniform3iv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform3ivEXT : Dispatch = Dispatch::new("glProgramUniform3ivEXT")
+let d_glProgramUniform3ivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform3ivEXT", ["glProgramUniform3iv"])
 
 ///|
 #borrow(value)
@@ -22707,7 +22707,7 @@ pub fn gl_program_uniform3iv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform3ui : Dispatch = Dispatch::new("glProgramUniform3ui")
+let d_glProgramUniform3ui : Dispatch = Dispatch::with_aliases("glProgramUniform3ui", ["glProgramUniform3uiEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform3ui(fp : CPtr, program : UInt, location : Int, v0 : UInt, v1 : UInt, v2 : UInt) -> Unit = "epoxy_glProgramUniform3ui"
@@ -22764,7 +22764,7 @@ pub fn gl_program_uniform3ui64v_nv(program : UInt, location : Int, count : Int, 
 }
 
 ///|
-let d_glProgramUniform3uiEXT : Dispatch = Dispatch::new("glProgramUniform3uiEXT")
+let d_glProgramUniform3uiEXT : Dispatch = Dispatch::with_aliases("glProgramUniform3uiEXT", ["glProgramUniform3ui"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform3uiEXT(fp : CPtr, program : UInt, location : Int, v0 : UInt, v1 : UInt, v2 : UInt) -> Unit = "epoxy_glProgramUniform3uiEXT"
@@ -22775,7 +22775,7 @@ pub fn gl_program_uniform3ui_ext(program : UInt, location : Int, v0 : UInt, v1 :
 }
 
 ///|
-let d_glProgramUniform3uiv : Dispatch = Dispatch::new("glProgramUniform3uiv")
+let d_glProgramUniform3uiv : Dispatch = Dispatch::with_aliases("glProgramUniform3uiv", ["glProgramUniform3uivEXT"])
 
 ///|
 #borrow(value)
@@ -22787,7 +22787,7 @@ pub fn gl_program_uniform3uiv(program : UInt, location : Int, count : Int, value
 }
 
 ///|
-let d_glProgramUniform3uivEXT : Dispatch = Dispatch::new("glProgramUniform3uivEXT")
+let d_glProgramUniform3uivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform3uivEXT", ["glProgramUniform3uiv"])
 
 ///|
 #borrow(value)
@@ -22845,7 +22845,7 @@ pub fn gl_program_uniform4dv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform4f : Dispatch = Dispatch::new("glProgramUniform4f")
+let d_glProgramUniform4f : Dispatch = Dispatch::with_aliases("glProgramUniform4f", ["glProgramUniform4fEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform4f(fp : CPtr, program : UInt, location : Int, v0 : Float, v1 : Float, v2 : Float, v3 : Float) -> Unit = "epoxy_glProgramUniform4f"
@@ -22856,7 +22856,7 @@ pub fn gl_program_uniform4f(program : UInt, location : Int, v0 : Float, v1 : Flo
 }
 
 ///|
-let d_glProgramUniform4fEXT : Dispatch = Dispatch::new("glProgramUniform4fEXT")
+let d_glProgramUniform4fEXT : Dispatch = Dispatch::with_aliases("glProgramUniform4fEXT", ["glProgramUniform4f"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform4fEXT(fp : CPtr, program : UInt, location : Int, v0 : Float, v1 : Float, v2 : Float, v3 : Float) -> Unit = "epoxy_glProgramUniform4fEXT"
@@ -22867,7 +22867,7 @@ pub fn gl_program_uniform4f_ext(program : UInt, location : Int, v0 : Float, v1 :
 }
 
 ///|
-let d_glProgramUniform4fv : Dispatch = Dispatch::new("glProgramUniform4fv")
+let d_glProgramUniform4fv : Dispatch = Dispatch::with_aliases("glProgramUniform4fv", ["glProgramUniform4fvEXT"])
 
 ///|
 #borrow(value)
@@ -22879,7 +22879,7 @@ pub fn gl_program_uniform4fv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform4fvEXT : Dispatch = Dispatch::new("glProgramUniform4fvEXT")
+let d_glProgramUniform4fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniform4fvEXT", ["glProgramUniform4fv"])
 
 ///|
 #borrow(value)
@@ -22891,7 +22891,7 @@ pub fn gl_program_uniform4fv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform4i : Dispatch = Dispatch::new("glProgramUniform4i")
+let d_glProgramUniform4i : Dispatch = Dispatch::with_aliases("glProgramUniform4i", ["glProgramUniform4iEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform4i(fp : CPtr, program : UInt, location : Int, v0 : Int, v1 : Int, v2 : Int, v3 : Int) -> Unit = "epoxy_glProgramUniform4i"
@@ -22948,7 +22948,7 @@ pub fn gl_program_uniform4i64v_nv(program : UInt, location : Int, count : Int, v
 }
 
 ///|
-let d_glProgramUniform4iEXT : Dispatch = Dispatch::new("glProgramUniform4iEXT")
+let d_glProgramUniform4iEXT : Dispatch = Dispatch::with_aliases("glProgramUniform4iEXT", ["glProgramUniform4i"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform4iEXT(fp : CPtr, program : UInt, location : Int, v0 : Int, v1 : Int, v2 : Int, v3 : Int) -> Unit = "epoxy_glProgramUniform4iEXT"
@@ -22959,7 +22959,7 @@ pub fn gl_program_uniform4i_ext(program : UInt, location : Int, v0 : Int, v1 : I
 }
 
 ///|
-let d_glProgramUniform4iv : Dispatch = Dispatch::new("glProgramUniform4iv")
+let d_glProgramUniform4iv : Dispatch = Dispatch::with_aliases("glProgramUniform4iv", ["glProgramUniform4ivEXT"])
 
 ///|
 #borrow(value)
@@ -22971,7 +22971,7 @@ pub fn gl_program_uniform4iv(program : UInt, location : Int, count : Int, value 
 }
 
 ///|
-let d_glProgramUniform4ivEXT : Dispatch = Dispatch::new("glProgramUniform4ivEXT")
+let d_glProgramUniform4ivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform4ivEXT", ["glProgramUniform4iv"])
 
 ///|
 #borrow(value)
@@ -22983,7 +22983,7 @@ pub fn gl_program_uniform4iv_ext(program : UInt, location : Int, count : Int, va
 }
 
 ///|
-let d_glProgramUniform4ui : Dispatch = Dispatch::new("glProgramUniform4ui")
+let d_glProgramUniform4ui : Dispatch = Dispatch::with_aliases("glProgramUniform4ui", ["glProgramUniform4uiEXT"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform4ui(fp : CPtr, program : UInt, location : Int, v0 : UInt, v1 : UInt, v2 : UInt, v3 : UInt) -> Unit = "epoxy_glProgramUniform4ui"
@@ -23040,7 +23040,7 @@ pub fn gl_program_uniform4ui64v_nv(program : UInt, location : Int, count : Int, 
 }
 
 ///|
-let d_glProgramUniform4uiEXT : Dispatch = Dispatch::new("glProgramUniform4uiEXT")
+let d_glProgramUniform4uiEXT : Dispatch = Dispatch::with_aliases("glProgramUniform4uiEXT", ["glProgramUniform4ui"])
 
 ///|
 extern "c" fn epoxy_glProgramUniform4uiEXT(fp : CPtr, program : UInt, location : Int, v0 : UInt, v1 : UInt, v2 : UInt, v3 : UInt) -> Unit = "epoxy_glProgramUniform4uiEXT"
@@ -23051,7 +23051,7 @@ pub fn gl_program_uniform4ui_ext(program : UInt, location : Int, v0 : UInt, v1 :
 }
 
 ///|
-let d_glProgramUniform4uiv : Dispatch = Dispatch::new("glProgramUniform4uiv")
+let d_glProgramUniform4uiv : Dispatch = Dispatch::with_aliases("glProgramUniform4uiv", ["glProgramUniform4uivEXT"])
 
 ///|
 #borrow(value)
@@ -23063,7 +23063,7 @@ pub fn gl_program_uniform4uiv(program : UInt, location : Int, count : Int, value
 }
 
 ///|
-let d_glProgramUniform4uivEXT : Dispatch = Dispatch::new("glProgramUniform4uivEXT")
+let d_glProgramUniform4uivEXT : Dispatch = Dispatch::with_aliases("glProgramUniform4uivEXT", ["glProgramUniform4uiv"])
 
 ///|
 #borrow(value)
@@ -23075,7 +23075,7 @@ pub fn gl_program_uniform4uiv_ext(program : UInt, location : Int, count : Int, v
 }
 
 ///|
-let d_glProgramUniformHandleui64ARB : Dispatch = Dispatch::new("glProgramUniformHandleui64ARB")
+let d_glProgramUniformHandleui64ARB : Dispatch = Dispatch::with_aliases("glProgramUniformHandleui64ARB", ["glProgramUniformHandleui64IMG"])
 
 ///|
 extern "c" fn epoxy_glProgramUniformHandleui64ARB(fp : CPtr, program : UInt, location : Int, value : UInt64) -> Unit = "epoxy_glProgramUniformHandleui64ARB"
@@ -23086,7 +23086,7 @@ pub fn gl_program_uniform_handleui64_arb(program : UInt, location : Int, value :
 }
 
 ///|
-let d_glProgramUniformHandleui64IMG : Dispatch = Dispatch::new("glProgramUniformHandleui64IMG")
+let d_glProgramUniformHandleui64IMG : Dispatch = Dispatch::with_aliases("glProgramUniformHandleui64IMG", ["glProgramUniformHandleui64ARB"])
 
 ///|
 extern "c" fn epoxy_glProgramUniformHandleui64IMG(fp : CPtr, program : UInt, location : Int, value : UInt64) -> Unit = "epoxy_glProgramUniformHandleui64IMG"
@@ -23108,7 +23108,7 @@ pub fn gl_program_uniform_handleui64_nv(program : UInt, location : Int, value : 
 }
 
 ///|
-let d_glProgramUniformHandleui64vARB : Dispatch = Dispatch::new("glProgramUniformHandleui64vARB")
+let d_glProgramUniformHandleui64vARB : Dispatch = Dispatch::with_aliases("glProgramUniformHandleui64vARB", ["glProgramUniformHandleui64vIMG"])
 
 ///|
 #borrow(values)
@@ -23120,7 +23120,7 @@ pub fn gl_program_uniform_handleui64v_arb(program : UInt, location : Int, count 
 }
 
 ///|
-let d_glProgramUniformHandleui64vIMG : Dispatch = Dispatch::new("glProgramUniformHandleui64vIMG")
+let d_glProgramUniformHandleui64vIMG : Dispatch = Dispatch::with_aliases("glProgramUniformHandleui64vIMG", ["glProgramUniformHandleui64vARB"])
 
 ///|
 #borrow(values)
@@ -23168,7 +23168,7 @@ pub fn gl_program_uniform_matrix2dv_ext(program : UInt, location : Int, count : 
 }
 
 ///|
-let d_glProgramUniformMatrix2fv : Dispatch = Dispatch::new("glProgramUniformMatrix2fv")
+let d_glProgramUniformMatrix2fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix2fv", ["glProgramUniformMatrix2fvEXT"])
 
 ///|
 #borrow(value)
@@ -23180,7 +23180,7 @@ pub fn gl_program_uniform_matrix2fv(program : UInt, location : Int, count : Int,
 }
 
 ///|
-let d_glProgramUniformMatrix2fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix2fvEXT")
+let d_glProgramUniformMatrix2fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix2fvEXT", ["glProgramUniformMatrix2fv"])
 
 ///|
 #borrow(value)
@@ -23216,7 +23216,7 @@ pub fn gl_program_uniform_matrix2x3dv_ext(program : UInt, location : Int, count 
 }
 
 ///|
-let d_glProgramUniformMatrix2x3fv : Dispatch = Dispatch::new("glProgramUniformMatrix2x3fv")
+let d_glProgramUniformMatrix2x3fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix2x3fv", ["glProgramUniformMatrix2x3fvEXT"])
 
 ///|
 #borrow(value)
@@ -23228,7 +23228,7 @@ pub fn gl_program_uniform_matrix2x3fv(program : UInt, location : Int, count : In
 }
 
 ///|
-let d_glProgramUniformMatrix2x3fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix2x3fvEXT")
+let d_glProgramUniformMatrix2x3fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix2x3fvEXT", ["glProgramUniformMatrix2x3fv"])
 
 ///|
 #borrow(value)
@@ -23264,7 +23264,7 @@ pub fn gl_program_uniform_matrix2x4dv_ext(program : UInt, location : Int, count 
 }
 
 ///|
-let d_glProgramUniformMatrix2x4fv : Dispatch = Dispatch::new("glProgramUniformMatrix2x4fv")
+let d_glProgramUniformMatrix2x4fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix2x4fv", ["glProgramUniformMatrix2x4fvEXT"])
 
 ///|
 #borrow(value)
@@ -23276,7 +23276,7 @@ pub fn gl_program_uniform_matrix2x4fv(program : UInt, location : Int, count : In
 }
 
 ///|
-let d_glProgramUniformMatrix2x4fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix2x4fvEXT")
+let d_glProgramUniformMatrix2x4fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix2x4fvEXT", ["glProgramUniformMatrix2x4fv"])
 
 ///|
 #borrow(value)
@@ -23312,7 +23312,7 @@ pub fn gl_program_uniform_matrix3dv_ext(program : UInt, location : Int, count : 
 }
 
 ///|
-let d_glProgramUniformMatrix3fv : Dispatch = Dispatch::new("glProgramUniformMatrix3fv")
+let d_glProgramUniformMatrix3fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix3fv", ["glProgramUniformMatrix3fvEXT"])
 
 ///|
 #borrow(value)
@@ -23324,7 +23324,7 @@ pub fn gl_program_uniform_matrix3fv(program : UInt, location : Int, count : Int,
 }
 
 ///|
-let d_glProgramUniformMatrix3fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix3fvEXT")
+let d_glProgramUniformMatrix3fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix3fvEXT", ["glProgramUniformMatrix3fv"])
 
 ///|
 #borrow(value)
@@ -23360,7 +23360,7 @@ pub fn gl_program_uniform_matrix3x2dv_ext(program : UInt, location : Int, count 
 }
 
 ///|
-let d_glProgramUniformMatrix3x2fv : Dispatch = Dispatch::new("glProgramUniformMatrix3x2fv")
+let d_glProgramUniformMatrix3x2fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix3x2fv", ["glProgramUniformMatrix3x2fvEXT"])
 
 ///|
 #borrow(value)
@@ -23372,7 +23372,7 @@ pub fn gl_program_uniform_matrix3x2fv(program : UInt, location : Int, count : In
 }
 
 ///|
-let d_glProgramUniformMatrix3x2fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix3x2fvEXT")
+let d_glProgramUniformMatrix3x2fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix3x2fvEXT", ["glProgramUniformMatrix3x2fv"])
 
 ///|
 #borrow(value)
@@ -23408,7 +23408,7 @@ pub fn gl_program_uniform_matrix3x4dv_ext(program : UInt, location : Int, count 
 }
 
 ///|
-let d_glProgramUniformMatrix3x4fv : Dispatch = Dispatch::new("glProgramUniformMatrix3x4fv")
+let d_glProgramUniformMatrix3x4fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix3x4fv", ["glProgramUniformMatrix3x4fvEXT"])
 
 ///|
 #borrow(value)
@@ -23420,7 +23420,7 @@ pub fn gl_program_uniform_matrix3x4fv(program : UInt, location : Int, count : In
 }
 
 ///|
-let d_glProgramUniformMatrix3x4fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix3x4fvEXT")
+let d_glProgramUniformMatrix3x4fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix3x4fvEXT", ["glProgramUniformMatrix3x4fv"])
 
 ///|
 #borrow(value)
@@ -23456,7 +23456,7 @@ pub fn gl_program_uniform_matrix4dv_ext(program : UInt, location : Int, count : 
 }
 
 ///|
-let d_glProgramUniformMatrix4fv : Dispatch = Dispatch::new("glProgramUniformMatrix4fv")
+let d_glProgramUniformMatrix4fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix4fv", ["glProgramUniformMatrix4fvEXT"])
 
 ///|
 #borrow(value)
@@ -23468,7 +23468,7 @@ pub fn gl_program_uniform_matrix4fv(program : UInt, location : Int, count : Int,
 }
 
 ///|
-let d_glProgramUniformMatrix4fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix4fvEXT")
+let d_glProgramUniformMatrix4fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix4fvEXT", ["glProgramUniformMatrix4fv"])
 
 ///|
 #borrow(value)
@@ -23504,7 +23504,7 @@ pub fn gl_program_uniform_matrix4x2dv_ext(program : UInt, location : Int, count 
 }
 
 ///|
-let d_glProgramUniformMatrix4x2fv : Dispatch = Dispatch::new("glProgramUniformMatrix4x2fv")
+let d_glProgramUniformMatrix4x2fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix4x2fv", ["glProgramUniformMatrix4x2fvEXT"])
 
 ///|
 #borrow(value)
@@ -23516,7 +23516,7 @@ pub fn gl_program_uniform_matrix4x2fv(program : UInt, location : Int, count : In
 }
 
 ///|
-let d_glProgramUniformMatrix4x2fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix4x2fvEXT")
+let d_glProgramUniformMatrix4x2fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix4x2fvEXT", ["glProgramUniformMatrix4x2fv"])
 
 ///|
 #borrow(value)
@@ -23552,7 +23552,7 @@ pub fn gl_program_uniform_matrix4x3dv_ext(program : UInt, location : Int, count 
 }
 
 ///|
-let d_glProgramUniformMatrix4x3fv : Dispatch = Dispatch::new("glProgramUniformMatrix4x3fv")
+let d_glProgramUniformMatrix4x3fv : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix4x3fv", ["glProgramUniformMatrix4x3fvEXT"])
 
 ///|
 #borrow(value)
@@ -23564,7 +23564,7 @@ pub fn gl_program_uniform_matrix4x3fv(program : UInt, location : Int, count : In
 }
 
 ///|
-let d_glProgramUniformMatrix4x3fvEXT : Dispatch = Dispatch::new("glProgramUniformMatrix4x3fvEXT")
+let d_glProgramUniformMatrix4x3fvEXT : Dispatch = Dispatch::with_aliases("glProgramUniformMatrix4x3fvEXT", ["glProgramUniformMatrix4x3fv"])
 
 ///|
 #borrow(value)
@@ -23610,7 +23610,7 @@ pub fn gl_program_vertex_limit_nv(target : UInt, limit : Int) -> Unit raise Reso
 }
 
 ///|
-let d_glProvokingVertex : Dispatch = Dispatch::new("glProvokingVertex")
+let d_glProvokingVertex : Dispatch = Dispatch::with_aliases("glProvokingVertex", ["glProvokingVertexEXT"])
 
 ///|
 extern "c" fn epoxy_glProvokingVertex(fp : CPtr, mode : UInt) -> Unit = "epoxy_glProvokingVertex"
@@ -23621,7 +23621,7 @@ pub fn gl_provoking_vertex(mode : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glProvokingVertexEXT : Dispatch = Dispatch::new("glProvokingVertexEXT")
+let d_glProvokingVertexEXT : Dispatch = Dispatch::with_aliases("glProvokingVertexEXT", ["glProvokingVertex"])
 
 ///|
 extern "c" fn epoxy_glProvokingVertexEXT(fp : CPtr, mode : UInt) -> Unit = "epoxy_glProvokingVertexEXT"
@@ -23665,7 +23665,7 @@ pub fn gl_push_client_attrib_default_ext(mask : UInt) -> Unit raise ResolveError
 }
 
 ///|
-let d_glPushDebugGroup : Dispatch = Dispatch::new("glPushDebugGroup")
+let d_glPushDebugGroup : Dispatch = Dispatch::with_aliases("glPushDebugGroup", ["glPushDebugGroupKHR"])
 
 ///|
 #borrow(message)
@@ -23677,7 +23677,7 @@ pub fn gl_push_debug_group(source : UInt, id : UInt, length : Int, message : Byt
 }
 
 ///|
-let d_glPushDebugGroupKHR : Dispatch = Dispatch::new("glPushDebugGroupKHR")
+let d_glPushDebugGroupKHR : Dispatch = Dispatch::with_aliases("glPushDebugGroupKHR", ["glPushDebugGroup"])
 
 ///|
 #borrow(message)
@@ -23723,7 +23723,7 @@ pub fn gl_push_name(name : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glQueryCounter : Dispatch = Dispatch::new("glQueryCounter")
+let d_glQueryCounter : Dispatch = Dispatch::with_aliases("glQueryCounter", ["glQueryCounterEXT"])
 
 ///|
 extern "c" fn epoxy_glQueryCounter(fp : CPtr, id : UInt, target : UInt) -> Unit = "epoxy_glQueryCounter"
@@ -23734,7 +23734,7 @@ pub fn gl_query_counter(id : UInt, target : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glQueryCounterEXT : Dispatch = Dispatch::new("glQueryCounterEXT")
+let d_glQueryCounterEXT : Dispatch = Dispatch::with_aliases("glQueryCounterEXT", ["glQueryCounter"])
 
 ///|
 extern "c" fn epoxy_glQueryCounterEXT(fp : CPtr, id : UInt, target : UInt) -> Unit = "epoxy_glQueryCounterEXT"
@@ -24168,7 +24168,7 @@ pub fn gl_read_pixels(x : Int, y : Int, width : Int, height : Int, format : UInt
 }
 
 ///|
-let d_glReadnPixels : Dispatch = Dispatch::new("glReadnPixels")
+let d_glReadnPixels : Dispatch = Dispatch::with_aliases("glReadnPixels", ["glReadnPixelsARB", "glReadnPixelsEXT", "glReadnPixelsKHR"])
 
 ///|
 #borrow(data)
@@ -24180,7 +24180,7 @@ pub fn gl_readn_pixels(x : Int, y : Int, width : Int, height : Int, format : UIn
 }
 
 ///|
-let d_glReadnPixelsARB : Dispatch = Dispatch::new("glReadnPixelsARB")
+let d_glReadnPixelsARB : Dispatch = Dispatch::with_aliases("glReadnPixelsARB", ["glReadnPixels", "glReadnPixelsEXT", "glReadnPixelsKHR"])
 
 ///|
 #borrow(data)
@@ -24192,7 +24192,7 @@ pub fn gl_readn_pixels_arb(x : Int, y : Int, width : Int, height : Int, format :
 }
 
 ///|
-let d_glReadnPixelsEXT : Dispatch = Dispatch::new("glReadnPixelsEXT")
+let d_glReadnPixelsEXT : Dispatch = Dispatch::with_aliases("glReadnPixelsEXT", ["glReadnPixels", "glReadnPixelsARB", "glReadnPixelsKHR"])
 
 ///|
 #borrow(data)
@@ -24204,7 +24204,7 @@ pub fn gl_readn_pixels_ext(x : Int, y : Int, width : Int, height : Int, format :
 }
 
 ///|
-let d_glReadnPixelsKHR : Dispatch = Dispatch::new("glReadnPixelsKHR")
+let d_glReadnPixelsKHR : Dispatch = Dispatch::with_aliases("glReadnPixelsKHR", ["glReadnPixels", "glReadnPixelsARB", "glReadnPixelsEXT"])
 
 ///|
 #borrow(data)
@@ -24375,7 +24375,7 @@ pub fn gl_render_mode(mode : UInt) -> Int raise ResolveError {
 }
 
 ///|
-let d_glRenderbufferStorage : Dispatch = Dispatch::new("glRenderbufferStorage")
+let d_glRenderbufferStorage : Dispatch = Dispatch::with_aliases("glRenderbufferStorage", ["glRenderbufferStorageEXT"])
 
 ///|
 extern "c" fn epoxy_glRenderbufferStorage(fp : CPtr, target : UInt, internalformat : UInt, width : Int, height : Int) -> Unit = "epoxy_glRenderbufferStorage"
@@ -24386,7 +24386,7 @@ pub fn gl_renderbuffer_storage(target : UInt, internalformat : UInt, width : Int
 }
 
 ///|
-let d_glRenderbufferStorageEXT : Dispatch = Dispatch::new("glRenderbufferStorageEXT")
+let d_glRenderbufferStorageEXT : Dispatch = Dispatch::with_aliases("glRenderbufferStorageEXT", ["glRenderbufferStorage"])
 
 ///|
 extern "c" fn epoxy_glRenderbufferStorageEXT(fp : CPtr, target : UInt, internalformat : UInt, width : Int, height : Int) -> Unit = "epoxy_glRenderbufferStorageEXT"
@@ -24397,7 +24397,7 @@ pub fn gl_renderbuffer_storage_ext(target : UInt, internalformat : UInt, width :
 }
 
 ///|
-let d_glRenderbufferStorageMultisample : Dispatch = Dispatch::new("glRenderbufferStorageMultisample")
+let d_glRenderbufferStorageMultisample : Dispatch = Dispatch::with_aliases("glRenderbufferStorageMultisample", ["glRenderbufferStorageMultisampleEXT", "glRenderbufferStorageMultisampleNV"])
 
 ///|
 extern "c" fn epoxy_glRenderbufferStorageMultisample(fp : CPtr, target : UInt, samples : Int, internalformat : UInt, width : Int, height : Int) -> Unit = "epoxy_glRenderbufferStorageMultisample"
@@ -24452,7 +24452,7 @@ pub fn gl_renderbuffer_storage_multisample_coverage_nv(target : UInt, coverageSa
 }
 
 ///|
-let d_glRenderbufferStorageMultisampleEXT : Dispatch = Dispatch::new("glRenderbufferStorageMultisampleEXT")
+let d_glRenderbufferStorageMultisampleEXT : Dispatch = Dispatch::with_aliases("glRenderbufferStorageMultisampleEXT", ["glRenderbufferStorageMultisample", "glRenderbufferStorageMultisampleNV"])
 
 ///|
 extern "c" fn epoxy_glRenderbufferStorageMultisampleEXT(fp : CPtr, target : UInt, samples : Int, internalformat : UInt, width : Int, height : Int) -> Unit = "epoxy_glRenderbufferStorageMultisampleEXT"
@@ -24474,7 +24474,7 @@ pub fn gl_renderbuffer_storage_multisample_img(target : UInt, samples : Int, int
 }
 
 ///|
-let d_glRenderbufferStorageMultisampleNV : Dispatch = Dispatch::new("glRenderbufferStorageMultisampleNV")
+let d_glRenderbufferStorageMultisampleNV : Dispatch = Dispatch::with_aliases("glRenderbufferStorageMultisampleNV", ["glRenderbufferStorageMultisample", "glRenderbufferStorageMultisampleEXT"])
 
 ///|
 extern "c" fn epoxy_glRenderbufferStorageMultisampleNV(fp : CPtr, target : UInt, samples : Int, internalformat : UInt, width : Int, height : Int) -> Unit = "epoxy_glRenderbufferStorageMultisampleNV"
@@ -24749,7 +24749,7 @@ pub fn gl_request_resident_programs_nv(n : Int, programs : FixedArray[UInt]) -> 
 }
 
 ///|
-let d_glResetHistogram : Dispatch = Dispatch::new("glResetHistogram")
+let d_glResetHistogram : Dispatch = Dispatch::with_aliases("glResetHistogram", ["glResetHistogramEXT"])
 
 ///|
 extern "c" fn epoxy_glResetHistogram(fp : CPtr, target : UInt) -> Unit = "epoxy_glResetHistogram"
@@ -24760,7 +24760,7 @@ pub fn gl_reset_histogram(target : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glResetHistogramEXT : Dispatch = Dispatch::new("glResetHistogramEXT")
+let d_glResetHistogramEXT : Dispatch = Dispatch::with_aliases("glResetHistogramEXT", ["glResetHistogram"])
 
 ///|
 extern "c" fn epoxy_glResetHistogramEXT(fp : CPtr, target : UInt) -> Unit = "epoxy_glResetHistogramEXT"
@@ -24782,7 +24782,7 @@ pub fn gl_reset_memory_object_parameter_nv(memory : UInt, pname : UInt) -> Unit 
 }
 
 ///|
-let d_glResetMinmax : Dispatch = Dispatch::new("glResetMinmax")
+let d_glResetMinmax : Dispatch = Dispatch::with_aliases("glResetMinmax", ["glResetMinmaxEXT"])
 
 ///|
 extern "c" fn epoxy_glResetMinmax(fp : CPtr, target : UInt) -> Unit = "epoxy_glResetMinmax"
@@ -24793,7 +24793,7 @@ pub fn gl_reset_minmax(target : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glResetMinmaxEXT : Dispatch = Dispatch::new("glResetMinmaxEXT")
+let d_glResetMinmaxEXT : Dispatch = Dispatch::with_aliases("glResetMinmaxEXT", ["glResetMinmax"])
 
 ///|
 extern "c" fn epoxy_glResetMinmaxEXT(fp : CPtr, target : UInt) -> Unit = "epoxy_glResetMinmaxEXT"
@@ -24837,7 +24837,7 @@ pub fn gl_resolve_multisample_framebuffer_apple() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glResumeTransformFeedback : Dispatch = Dispatch::new("glResumeTransformFeedback")
+let d_glResumeTransformFeedback : Dispatch = Dispatch::with_aliases("glResumeTransformFeedback", ["glResumeTransformFeedbackNV"])
 
 ///|
 extern "c" fn epoxy_glResumeTransformFeedback(fp : CPtr) -> Unit = "epoxy_glResumeTransformFeedback"
@@ -24848,7 +24848,7 @@ pub fn gl_resume_transform_feedback() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glResumeTransformFeedbackNV : Dispatch = Dispatch::new("glResumeTransformFeedbackNV")
+let d_glResumeTransformFeedbackNV : Dispatch = Dispatch::with_aliases("glResumeTransformFeedbackNV", ["glResumeTransformFeedback"])
 
 ///|
 extern "c" fn epoxy_glResumeTransformFeedbackNV(fp : CPtr) -> Unit = "epoxy_glResumeTransformFeedbackNV"
@@ -24903,7 +24903,7 @@ pub fn gl_rotatex_oes(angle : Int, x : Int, y : Int, z : Int) -> Unit raise Reso
 }
 
 ///|
-let d_glSampleCoverage : Dispatch = Dispatch::new("glSampleCoverage")
+let d_glSampleCoverage : Dispatch = Dispatch::with_aliases("glSampleCoverage", ["glSampleCoverageARB"])
 
 ///|
 extern "c" fn epoxy_glSampleCoverage(fp : CPtr, value : Float, invert : Bool) -> Unit = "epoxy_glSampleCoverage"
@@ -24914,7 +24914,7 @@ pub fn gl_sample_coverage(value : Float, invert : Bool) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glSampleCoverageARB : Dispatch = Dispatch::new("glSampleCoverageARB")
+let d_glSampleCoverageARB : Dispatch = Dispatch::with_aliases("glSampleCoverageARB", ["glSampleCoverage"])
 
 ///|
 extern "c" fn epoxy_glSampleCoverageARB(fp : CPtr, value : Float, invert : Bool) -> Unit = "epoxy_glSampleCoverageARB"
@@ -24958,7 +24958,7 @@ pub fn gl_sample_map_ati(dst : UInt, interp : UInt, swizzle : UInt) -> Unit rais
 }
 
 ///|
-let d_glSampleMaskEXT : Dispatch = Dispatch::new("glSampleMaskEXT")
+let d_glSampleMaskEXT : Dispatch = Dispatch::with_aliases("glSampleMaskEXT", ["glSampleMaskSGIS"])
 
 ///|
 extern "c" fn epoxy_glSampleMaskEXT(fp : CPtr, value : Float, invert : Bool) -> Unit = "epoxy_glSampleMaskEXT"
@@ -24980,7 +24980,7 @@ pub fn gl_sample_mask_indexed_nv(index : UInt, mask : UInt) -> Unit raise Resolv
 }
 
 ///|
-let d_glSampleMaskSGIS : Dispatch = Dispatch::new("glSampleMaskSGIS")
+let d_glSampleMaskSGIS : Dispatch = Dispatch::with_aliases("glSampleMaskSGIS", ["glSampleMaskEXT"])
 
 ///|
 extern "c" fn epoxy_glSampleMaskSGIS(fp : CPtr, value : Float, invert : Bool) -> Unit = "epoxy_glSampleMaskSGIS"
@@ -25002,7 +25002,7 @@ pub fn gl_sample_maski(maskNumber : UInt, mask : UInt) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glSamplePatternEXT : Dispatch = Dispatch::new("glSamplePatternEXT")
+let d_glSamplePatternEXT : Dispatch = Dispatch::with_aliases("glSamplePatternEXT", ["glSamplePatternSGIS"])
 
 ///|
 extern "c" fn epoxy_glSamplePatternEXT(fp : CPtr, pattern : UInt) -> Unit = "epoxy_glSamplePatternEXT"
@@ -25013,7 +25013,7 @@ pub fn gl_sample_pattern_ext(pattern : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSamplePatternSGIS : Dispatch = Dispatch::new("glSamplePatternSGIS")
+let d_glSamplePatternSGIS : Dispatch = Dispatch::with_aliases("glSamplePatternSGIS", ["glSamplePatternEXT"])
 
 ///|
 extern "c" fn epoxy_glSamplePatternSGIS(fp : CPtr, pattern : UInt) -> Unit = "epoxy_glSamplePatternSGIS"
@@ -25024,7 +25024,7 @@ pub fn gl_sample_pattern_sgis(pattern : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSamplerParameterIiv : Dispatch = Dispatch::new("glSamplerParameterIiv")
+let d_glSamplerParameterIiv : Dispatch = Dispatch::with_aliases("glSamplerParameterIiv", ["glSamplerParameterIivEXT", "glSamplerParameterIivOES"])
 
 ///|
 #borrow(param)
@@ -25036,7 +25036,7 @@ pub fn gl_sampler_parameter_iiv(sampler : UInt, pname : UInt, param : FixedArray
 }
 
 ///|
-let d_glSamplerParameterIivEXT : Dispatch = Dispatch::new("glSamplerParameterIivEXT")
+let d_glSamplerParameterIivEXT : Dispatch = Dispatch::with_aliases("glSamplerParameterIivEXT", ["glSamplerParameterIiv", "glSamplerParameterIivOES"])
 
 ///|
 #borrow(param)
@@ -25048,7 +25048,7 @@ pub fn gl_sampler_parameter_iiv_ext(sampler : UInt, pname : UInt, param : FixedA
 }
 
 ///|
-let d_glSamplerParameterIivOES : Dispatch = Dispatch::new("glSamplerParameterIivOES")
+let d_glSamplerParameterIivOES : Dispatch = Dispatch::with_aliases("glSamplerParameterIivOES", ["glSamplerParameterIiv", "glSamplerParameterIivEXT"])
 
 ///|
 #borrow(param)
@@ -25060,7 +25060,7 @@ pub fn gl_sampler_parameter_iiv_oes(sampler : UInt, pname : UInt, param : FixedA
 }
 
 ///|
-let d_glSamplerParameterIuiv : Dispatch = Dispatch::new("glSamplerParameterIuiv")
+let d_glSamplerParameterIuiv : Dispatch = Dispatch::with_aliases("glSamplerParameterIuiv", ["glSamplerParameterIuivEXT", "glSamplerParameterIuivOES"])
 
 ///|
 #borrow(param)
@@ -25072,7 +25072,7 @@ pub fn gl_sampler_parameter_iuiv(sampler : UInt, pname : UInt, param : FixedArra
 }
 
 ///|
-let d_glSamplerParameterIuivEXT : Dispatch = Dispatch::new("glSamplerParameterIuivEXT")
+let d_glSamplerParameterIuivEXT : Dispatch = Dispatch::with_aliases("glSamplerParameterIuivEXT", ["glSamplerParameterIuiv", "glSamplerParameterIuivOES"])
 
 ///|
 #borrow(param)
@@ -25084,7 +25084,7 @@ pub fn gl_sampler_parameter_iuiv_ext(sampler : UInt, pname : UInt, param : Fixed
 }
 
 ///|
-let d_glSamplerParameterIuivOES : Dispatch = Dispatch::new("glSamplerParameterIuivOES")
+let d_glSamplerParameterIuivOES : Dispatch = Dispatch::with_aliases("glSamplerParameterIuivOES", ["glSamplerParameterIuiv", "glSamplerParameterIuivEXT"])
 
 ///|
 #borrow(param)
@@ -25197,7 +25197,7 @@ pub fn gl_scissor(x : Int, y : Int, width : Int, height : Int) -> Unit raise Res
 }
 
 ///|
-let d_glScissorArrayv : Dispatch = Dispatch::new("glScissorArrayv")
+let d_glScissorArrayv : Dispatch = Dispatch::with_aliases("glScissorArrayv", ["glScissorArrayvNV", "glScissorArrayvOES"])
 
 ///|
 #borrow(v)
@@ -25209,7 +25209,7 @@ pub fn gl_scissor_arrayv(first : UInt, count : Int, v : FixedArray[Int]) -> Unit
 }
 
 ///|
-let d_glScissorArrayvNV : Dispatch = Dispatch::new("glScissorArrayvNV")
+let d_glScissorArrayvNV : Dispatch = Dispatch::with_aliases("glScissorArrayvNV", ["glScissorArrayv", "glScissorArrayvOES"])
 
 ///|
 #borrow(v)
@@ -25221,7 +25221,7 @@ pub fn gl_scissor_arrayv_nv(first : UInt, count : Int, v : FixedArray[Int]) -> U
 }
 
 ///|
-let d_glScissorArrayvOES : Dispatch = Dispatch::new("glScissorArrayvOES")
+let d_glScissorArrayvOES : Dispatch = Dispatch::with_aliases("glScissorArrayvOES", ["glScissorArrayv", "glScissorArrayvNV"])
 
 ///|
 #borrow(v)
@@ -25256,7 +25256,7 @@ pub fn gl_scissor_exclusive_nv(x : Int, y : Int, width : Int, height : Int) -> U
 }
 
 ///|
-let d_glScissorIndexed : Dispatch = Dispatch::new("glScissorIndexed")
+let d_glScissorIndexed : Dispatch = Dispatch::with_aliases("glScissorIndexed", ["glScissorIndexedNV", "glScissorIndexedOES"])
 
 ///|
 extern "c" fn epoxy_glScissorIndexed(fp : CPtr, index : UInt, left : Int, bottom : Int, width : Int, height : Int) -> Unit = "epoxy_glScissorIndexed"
@@ -25267,7 +25267,7 @@ pub fn gl_scissor_indexed(index : UInt, left : Int, bottom : Int, width : Int, h
 }
 
 ///|
-let d_glScissorIndexedNV : Dispatch = Dispatch::new("glScissorIndexedNV")
+let d_glScissorIndexedNV : Dispatch = Dispatch::with_aliases("glScissorIndexedNV", ["glScissorIndexed", "glScissorIndexedOES"])
 
 ///|
 extern "c" fn epoxy_glScissorIndexedNV(fp : CPtr, index : UInt, left : Int, bottom : Int, width : Int, height : Int) -> Unit = "epoxy_glScissorIndexedNV"
@@ -25278,7 +25278,7 @@ pub fn gl_scissor_indexed_nv(index : UInt, left : Int, bottom : Int, width : Int
 }
 
 ///|
-let d_glScissorIndexedOES : Dispatch = Dispatch::new("glScissorIndexedOES")
+let d_glScissorIndexedOES : Dispatch = Dispatch::with_aliases("glScissorIndexedOES", ["glScissorIndexed", "glScissorIndexedNV"])
 
 ///|
 extern "c" fn epoxy_glScissorIndexedOES(fp : CPtr, index : UInt, left : Int, bottom : Int, width : Int, height : Int) -> Unit = "epoxy_glScissorIndexedOES"
@@ -25289,7 +25289,7 @@ pub fn gl_scissor_indexed_oes(index : UInt, left : Int, bottom : Int, width : In
 }
 
 ///|
-let d_glScissorIndexedv : Dispatch = Dispatch::new("glScissorIndexedv")
+let d_glScissorIndexedv : Dispatch = Dispatch::with_aliases("glScissorIndexedv", ["glScissorIndexedvNV", "glScissorIndexedvOES"])
 
 ///|
 #borrow(v)
@@ -25301,7 +25301,7 @@ pub fn gl_scissor_indexedv(index : UInt, v : FixedArray[Int]) -> Unit raise Reso
 }
 
 ///|
-let d_glScissorIndexedvNV : Dispatch = Dispatch::new("glScissorIndexedvNV")
+let d_glScissorIndexedvNV : Dispatch = Dispatch::with_aliases("glScissorIndexedvNV", ["glScissorIndexedv", "glScissorIndexedvOES"])
 
 ///|
 #borrow(v)
@@ -25313,7 +25313,7 @@ pub fn gl_scissor_indexedv_nv(index : UInt, v : FixedArray[Int]) -> Unit raise R
 }
 
 ///|
-let d_glScissorIndexedvOES : Dispatch = Dispatch::new("glScissorIndexedvOES")
+let d_glScissorIndexedvOES : Dispatch = Dispatch::with_aliases("glScissorIndexedvOES", ["glScissorIndexedv", "glScissorIndexedvNV"])
 
 ///|
 #borrow(v)
@@ -25325,7 +25325,7 @@ pub fn gl_scissor_indexedv_oes(index : UInt, v : FixedArray[Int]) -> Unit raise 
 }
 
 ///|
-let d_glSecondaryColor3b : Dispatch = Dispatch::new("glSecondaryColor3b")
+let d_glSecondaryColor3b : Dispatch = Dispatch::with_aliases("glSecondaryColor3b", ["glSecondaryColor3bEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3b(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3b"
@@ -25336,7 +25336,7 @@ pub fn gl_secondary_color3b(red : Int, green : Int, blue : Int) -> Unit raise Re
 }
 
 ///|
-let d_glSecondaryColor3bEXT : Dispatch = Dispatch::new("glSecondaryColor3bEXT")
+let d_glSecondaryColor3bEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3bEXT", ["glSecondaryColor3b"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3bEXT(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3bEXT"
@@ -25347,7 +25347,7 @@ pub fn gl_secondary_color3b_ext(red : Int, green : Int, blue : Int) -> Unit rais
 }
 
 ///|
-let d_glSecondaryColor3bv : Dispatch = Dispatch::new("glSecondaryColor3bv")
+let d_glSecondaryColor3bv : Dispatch = Dispatch::with_aliases("glSecondaryColor3bv", ["glSecondaryColor3bvEXT"])
 
 ///|
 #borrow(v)
@@ -25359,7 +25359,7 @@ pub fn gl_secondary_color3bv(v : Bytes) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSecondaryColor3bvEXT : Dispatch = Dispatch::new("glSecondaryColor3bvEXT")
+let d_glSecondaryColor3bvEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3bvEXT", ["glSecondaryColor3bv"])
 
 ///|
 #borrow(v)
@@ -25371,7 +25371,7 @@ pub fn gl_secondary_color3bv_ext(v : Bytes) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSecondaryColor3d : Dispatch = Dispatch::new("glSecondaryColor3d")
+let d_glSecondaryColor3d : Dispatch = Dispatch::with_aliases("glSecondaryColor3d", ["glSecondaryColor3dEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3d(fp : CPtr, red : Double, green : Double, blue : Double) -> Unit = "epoxy_glSecondaryColor3d"
@@ -25382,7 +25382,7 @@ pub fn gl_secondary_color3d(red : Double, green : Double, blue : Double) -> Unit
 }
 
 ///|
-let d_glSecondaryColor3dEXT : Dispatch = Dispatch::new("glSecondaryColor3dEXT")
+let d_glSecondaryColor3dEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3dEXT", ["glSecondaryColor3d"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3dEXT(fp : CPtr, red : Double, green : Double, blue : Double) -> Unit = "epoxy_glSecondaryColor3dEXT"
@@ -25393,7 +25393,7 @@ pub fn gl_secondary_color3d_ext(red : Double, green : Double, blue : Double) -> 
 }
 
 ///|
-let d_glSecondaryColor3dv : Dispatch = Dispatch::new("glSecondaryColor3dv")
+let d_glSecondaryColor3dv : Dispatch = Dispatch::with_aliases("glSecondaryColor3dv", ["glSecondaryColor3dvEXT"])
 
 ///|
 #borrow(v)
@@ -25405,7 +25405,7 @@ pub fn gl_secondary_color3dv(v : FixedArray[Double]) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glSecondaryColor3dvEXT : Dispatch = Dispatch::new("glSecondaryColor3dvEXT")
+let d_glSecondaryColor3dvEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3dvEXT", ["glSecondaryColor3dv"])
 
 ///|
 #borrow(v)
@@ -25417,7 +25417,7 @@ pub fn gl_secondary_color3dv_ext(v : FixedArray[Double]) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glSecondaryColor3f : Dispatch = Dispatch::new("glSecondaryColor3f")
+let d_glSecondaryColor3f : Dispatch = Dispatch::with_aliases("glSecondaryColor3f", ["glSecondaryColor3fEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3f(fp : CPtr, red : Float, green : Float, blue : Float) -> Unit = "epoxy_glSecondaryColor3f"
@@ -25428,7 +25428,7 @@ pub fn gl_secondary_color3f(red : Float, green : Float, blue : Float) -> Unit ra
 }
 
 ///|
-let d_glSecondaryColor3fEXT : Dispatch = Dispatch::new("glSecondaryColor3fEXT")
+let d_glSecondaryColor3fEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3fEXT", ["glSecondaryColor3f"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3fEXT(fp : CPtr, red : Float, green : Float, blue : Float) -> Unit = "epoxy_glSecondaryColor3fEXT"
@@ -25439,7 +25439,7 @@ pub fn gl_secondary_color3f_ext(red : Float, green : Float, blue : Float) -> Uni
 }
 
 ///|
-let d_glSecondaryColor3fv : Dispatch = Dispatch::new("glSecondaryColor3fv")
+let d_glSecondaryColor3fv : Dispatch = Dispatch::with_aliases("glSecondaryColor3fv", ["glSecondaryColor3fvEXT"])
 
 ///|
 #borrow(v)
@@ -25451,7 +25451,7 @@ pub fn gl_secondary_color3fv(v : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSecondaryColor3fvEXT : Dispatch = Dispatch::new("glSecondaryColor3fvEXT")
+let d_glSecondaryColor3fvEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3fvEXT", ["glSecondaryColor3fv"])
 
 ///|
 #borrow(v)
@@ -25474,7 +25474,7 @@ pub fn gl_secondary_color3h_nv(red : Int, green : Int, blue : Int) -> Unit raise
 }
 
 ///|
-let d_glSecondaryColor3i : Dispatch = Dispatch::new("glSecondaryColor3i")
+let d_glSecondaryColor3i : Dispatch = Dispatch::with_aliases("glSecondaryColor3i", ["glSecondaryColor3iEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3i(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3i"
@@ -25485,7 +25485,7 @@ pub fn gl_secondary_color3i(red : Int, green : Int, blue : Int) -> Unit raise Re
 }
 
 ///|
-let d_glSecondaryColor3iEXT : Dispatch = Dispatch::new("glSecondaryColor3iEXT")
+let d_glSecondaryColor3iEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3iEXT", ["glSecondaryColor3i"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3iEXT(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3iEXT"
@@ -25496,7 +25496,7 @@ pub fn gl_secondary_color3i_ext(red : Int, green : Int, blue : Int) -> Unit rais
 }
 
 ///|
-let d_glSecondaryColor3iv : Dispatch = Dispatch::new("glSecondaryColor3iv")
+let d_glSecondaryColor3iv : Dispatch = Dispatch::with_aliases("glSecondaryColor3iv", ["glSecondaryColor3ivEXT"])
 
 ///|
 #borrow(v)
@@ -25508,7 +25508,7 @@ pub fn gl_secondary_color3iv(v : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSecondaryColor3ivEXT : Dispatch = Dispatch::new("glSecondaryColor3ivEXT")
+let d_glSecondaryColor3ivEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3ivEXT", ["glSecondaryColor3iv"])
 
 ///|
 #borrow(v)
@@ -25520,7 +25520,7 @@ pub fn gl_secondary_color3iv_ext(v : FixedArray[Int]) -> Unit raise ResolveError
 }
 
 ///|
-let d_glSecondaryColor3s : Dispatch = Dispatch::new("glSecondaryColor3s")
+let d_glSecondaryColor3s : Dispatch = Dispatch::with_aliases("glSecondaryColor3s", ["glSecondaryColor3sEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3s(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3s"
@@ -25531,7 +25531,7 @@ pub fn gl_secondary_color3s(red : Int, green : Int, blue : Int) -> Unit raise Re
 }
 
 ///|
-let d_glSecondaryColor3sEXT : Dispatch = Dispatch::new("glSecondaryColor3sEXT")
+let d_glSecondaryColor3sEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3sEXT", ["glSecondaryColor3s"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3sEXT(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3sEXT"
@@ -25542,7 +25542,7 @@ pub fn gl_secondary_color3s_ext(red : Int, green : Int, blue : Int) -> Unit rais
 }
 
 ///|
-let d_glSecondaryColor3ub : Dispatch = Dispatch::new("glSecondaryColor3ub")
+let d_glSecondaryColor3ub : Dispatch = Dispatch::with_aliases("glSecondaryColor3ub", ["glSecondaryColor3ubEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3ub(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3ub"
@@ -25553,7 +25553,7 @@ pub fn gl_secondary_color3ub(red : Int, green : Int, blue : Int) -> Unit raise R
 }
 
 ///|
-let d_glSecondaryColor3ubEXT : Dispatch = Dispatch::new("glSecondaryColor3ubEXT")
+let d_glSecondaryColor3ubEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3ubEXT", ["glSecondaryColor3ub"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3ubEXT(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3ubEXT"
@@ -25564,7 +25564,7 @@ pub fn gl_secondary_color3ub_ext(red : Int, green : Int, blue : Int) -> Unit rai
 }
 
 ///|
-let d_glSecondaryColor3ubv : Dispatch = Dispatch::new("glSecondaryColor3ubv")
+let d_glSecondaryColor3ubv : Dispatch = Dispatch::with_aliases("glSecondaryColor3ubv", ["glSecondaryColor3ubvEXT"])
 
 ///|
 #borrow(v)
@@ -25576,7 +25576,7 @@ pub fn gl_secondary_color3ubv(v : Bytes) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSecondaryColor3ubvEXT : Dispatch = Dispatch::new("glSecondaryColor3ubvEXT")
+let d_glSecondaryColor3ubvEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3ubvEXT", ["glSecondaryColor3ubv"])
 
 ///|
 #borrow(v)
@@ -25588,7 +25588,7 @@ pub fn gl_secondary_color3ubv_ext(v : Bytes) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSecondaryColor3ui : Dispatch = Dispatch::new("glSecondaryColor3ui")
+let d_glSecondaryColor3ui : Dispatch = Dispatch::with_aliases("glSecondaryColor3ui", ["glSecondaryColor3uiEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3ui(fp : CPtr, red : UInt, green : UInt, blue : UInt) -> Unit = "epoxy_glSecondaryColor3ui"
@@ -25599,7 +25599,7 @@ pub fn gl_secondary_color3ui(red : UInt, green : UInt, blue : UInt) -> Unit rais
 }
 
 ///|
-let d_glSecondaryColor3uiEXT : Dispatch = Dispatch::new("glSecondaryColor3uiEXT")
+let d_glSecondaryColor3uiEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3uiEXT", ["glSecondaryColor3ui"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3uiEXT(fp : CPtr, red : UInt, green : UInt, blue : UInt) -> Unit = "epoxy_glSecondaryColor3uiEXT"
@@ -25610,7 +25610,7 @@ pub fn gl_secondary_color3ui_ext(red : UInt, green : UInt, blue : UInt) -> Unit 
 }
 
 ///|
-let d_glSecondaryColor3uiv : Dispatch = Dispatch::new("glSecondaryColor3uiv")
+let d_glSecondaryColor3uiv : Dispatch = Dispatch::with_aliases("glSecondaryColor3uiv", ["glSecondaryColor3uivEXT"])
 
 ///|
 #borrow(v)
@@ -25622,7 +25622,7 @@ pub fn gl_secondary_color3uiv(v : FixedArray[UInt]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glSecondaryColor3uivEXT : Dispatch = Dispatch::new("glSecondaryColor3uivEXT")
+let d_glSecondaryColor3uivEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3uivEXT", ["glSecondaryColor3uiv"])
 
 ///|
 #borrow(v)
@@ -25634,7 +25634,7 @@ pub fn gl_secondary_color3uiv_ext(v : FixedArray[UInt]) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glSecondaryColor3us : Dispatch = Dispatch::new("glSecondaryColor3us")
+let d_glSecondaryColor3us : Dispatch = Dispatch::with_aliases("glSecondaryColor3us", ["glSecondaryColor3usEXT"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3us(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3us"
@@ -25645,7 +25645,7 @@ pub fn gl_secondary_color3us(red : Int, green : Int, blue : Int) -> Unit raise R
 }
 
 ///|
-let d_glSecondaryColor3usEXT : Dispatch = Dispatch::new("glSecondaryColor3usEXT")
+let d_glSecondaryColor3usEXT : Dispatch = Dispatch::with_aliases("glSecondaryColor3usEXT", ["glSecondaryColor3us"])
 
 ///|
 extern "c" fn epoxy_glSecondaryColor3usEXT(fp : CPtr, red : Int, green : Int, blue : Int) -> Unit = "epoxy_glSecondaryColor3usEXT"
@@ -25690,7 +25690,7 @@ pub fn gl_secondary_color_p3uiv(type_ : UInt, color : FixedArray[UInt]) -> Unit 
 }
 
 ///|
-let d_glSecondaryColorPointer : Dispatch = Dispatch::new("glSecondaryColorPointer")
+let d_glSecondaryColorPointer : Dispatch = Dispatch::with_aliases("glSecondaryColorPointer", ["glSecondaryColorPointerEXT"])
 
 ///|
 #borrow(pointer)
@@ -25702,7 +25702,7 @@ pub fn gl_secondary_color_pointer(size : Int, type_ : UInt, stride : Int, pointe
 }
 
 ///|
-let d_glSecondaryColorPointerEXT : Dispatch = Dispatch::new("glSecondaryColorPointerEXT")
+let d_glSecondaryColorPointerEXT : Dispatch = Dispatch::with_aliases("glSecondaryColorPointerEXT", ["glSecondaryColorPointer"])
 
 ///|
 #borrow(pointer)
@@ -25762,7 +25762,7 @@ pub fn gl_semaphore_parameterui64v_ext(semaphore : UInt, pname : UInt, params : 
 }
 
 ///|
-let d_glSeparableFilter2D : Dispatch = Dispatch::new("glSeparableFilter2D")
+let d_glSeparableFilter2D : Dispatch = Dispatch::with_aliases("glSeparableFilter2D", ["glSeparableFilter2DEXT"])
 
 ///|
 #borrow(row, column)
@@ -25774,7 +25774,7 @@ pub fn gl_separable_filter2_d(target : UInt, internalformat : UInt, width : Int,
 }
 
 ///|
-let d_glSeparableFilter2DEXT : Dispatch = Dispatch::new("glSeparableFilter2DEXT")
+let d_glSeparableFilter2DEXT : Dispatch = Dispatch::with_aliases("glSeparableFilter2DEXT", ["glSeparableFilter2D"])
 
 ///|
 #borrow(row, column)
@@ -26038,7 +26038,7 @@ pub fn gl_signal_semaphoreui64_nvx(signalGpu : UInt, fenceObjectCount : Int, sem
 }
 
 ///|
-let d_glSpecializeShader : Dispatch = Dispatch::new("glSpecializeShader")
+let d_glSpecializeShader : Dispatch = Dispatch::with_aliases("glSpecializeShader", ["glSpecializeShaderARB"])
 
 ///|
 #borrow(pEntryPoint, pConstantIndex, pConstantValue)
@@ -26050,7 +26050,7 @@ pub fn gl_specialize_shader(shader : UInt, pEntryPoint : Bytes, numSpecializatio
 }
 
 ///|
-let d_glSpecializeShaderARB : Dispatch = Dispatch::new("glSpecializeShaderARB")
+let d_glSpecializeShaderARB : Dispatch = Dispatch::with_aliases("glSpecializeShaderARB", ["glSpecializeShader"])
 
 ///|
 #borrow(pEntryPoint, pConstantIndex, pConstantValue)
@@ -26241,7 +26241,7 @@ pub fn gl_stencil_op(fail : UInt, zfail : UInt, zpass : UInt) -> Unit raise Reso
 }
 
 ///|
-let d_glStencilOpSeparate : Dispatch = Dispatch::new("glStencilOpSeparate")
+let d_glStencilOpSeparate : Dispatch = Dispatch::with_aliases("glStencilOpSeparate", ["glStencilOpSeparateATI"])
 
 ///|
 extern "c" fn epoxy_glStencilOpSeparate(fp : CPtr, face : UInt, sfail : UInt, dpfail : UInt, dppass : UInt) -> Unit = "epoxy_glStencilOpSeparate"
@@ -26252,7 +26252,7 @@ pub fn gl_stencil_op_separate(face : UInt, sfail : UInt, dpfail : UInt, dppass :
 }
 
 ///|
-let d_glStencilOpSeparateATI : Dispatch = Dispatch::new("glStencilOpSeparateATI")
+let d_glStencilOpSeparateATI : Dispatch = Dispatch::with_aliases("glStencilOpSeparateATI", ["glStencilOpSeparate"])
 
 ///|
 extern "c" fn epoxy_glStencilOpSeparateATI(fp : CPtr, face : UInt, sfail : UInt, dpfail : UInt, dppass : UInt) -> Unit = "epoxy_glStencilOpSeparateATI"
@@ -26602,7 +26602,7 @@ pub fn gl_tex_attach_memory_nv(target : UInt, memory : UInt, offset : UInt64) ->
 }
 
 ///|
-let d_glTexBuffer : Dispatch = Dispatch::new("glTexBuffer")
+let d_glTexBuffer : Dispatch = Dispatch::with_aliases("glTexBuffer", ["glTexBufferARB", "glTexBufferEXT", "glTexBufferOES"])
 
 ///|
 extern "c" fn epoxy_glTexBuffer(fp : CPtr, target : UInt, internalformat : UInt, buffer : UInt) -> Unit = "epoxy_glTexBuffer"
@@ -26613,7 +26613,7 @@ pub fn gl_tex_buffer(target : UInt, internalformat : UInt, buffer : UInt) -> Uni
 }
 
 ///|
-let d_glTexBufferARB : Dispatch = Dispatch::new("glTexBufferARB")
+let d_glTexBufferARB : Dispatch = Dispatch::with_aliases("glTexBufferARB", ["glTexBuffer", "glTexBufferEXT", "glTexBufferOES"])
 
 ///|
 extern "c" fn epoxy_glTexBufferARB(fp : CPtr, target : UInt, internalformat : UInt, buffer : UInt) -> Unit = "epoxy_glTexBufferARB"
@@ -26624,7 +26624,7 @@ pub fn gl_tex_buffer_arb(target : UInt, internalformat : UInt, buffer : UInt) ->
 }
 
 ///|
-let d_glTexBufferEXT : Dispatch = Dispatch::new("glTexBufferEXT")
+let d_glTexBufferEXT : Dispatch = Dispatch::with_aliases("glTexBufferEXT", ["glTexBuffer", "glTexBufferARB", "glTexBufferOES"])
 
 ///|
 extern "c" fn epoxy_glTexBufferEXT(fp : CPtr, target : UInt, internalformat : UInt, buffer : UInt) -> Unit = "epoxy_glTexBufferEXT"
@@ -26635,7 +26635,7 @@ pub fn gl_tex_buffer_ext(target : UInt, internalformat : UInt, buffer : UInt) ->
 }
 
 ///|
-let d_glTexBufferOES : Dispatch = Dispatch::new("glTexBufferOES")
+let d_glTexBufferOES : Dispatch = Dispatch::with_aliases("glTexBufferOES", ["glTexBuffer", "glTexBufferARB", "glTexBufferEXT"])
 
 ///|
 extern "c" fn epoxy_glTexBufferOES(fp : CPtr, target : UInt, internalformat : UInt, buffer : UInt) -> Unit = "epoxy_glTexBufferOES"
@@ -26646,7 +26646,7 @@ pub fn gl_tex_buffer_oes(target : UInt, internalformat : UInt, buffer : UInt) ->
 }
 
 ///|
-let d_glTexBufferRange : Dispatch = Dispatch::new("glTexBufferRange")
+let d_glTexBufferRange : Dispatch = Dispatch::with_aliases("glTexBufferRange", ["glTexBufferRangeEXT", "glTexBufferRangeOES"])
 
 ///|
 extern "c" fn epoxy_glTexBufferRange(fp : CPtr, target : UInt, internalformat : UInt, buffer : UInt, offset : Int64, size : Int64) -> Unit = "epoxy_glTexBufferRange"
@@ -26657,7 +26657,7 @@ pub fn gl_tex_buffer_range(target : UInt, internalformat : UInt, buffer : UInt, 
 }
 
 ///|
-let d_glTexBufferRangeEXT : Dispatch = Dispatch::new("glTexBufferRangeEXT")
+let d_glTexBufferRangeEXT : Dispatch = Dispatch::with_aliases("glTexBufferRangeEXT", ["glTexBufferRange", "glTexBufferRangeOES"])
 
 ///|
 extern "c" fn epoxy_glTexBufferRangeEXT(fp : CPtr, target : UInt, internalformat : UInt, buffer : UInt, offset : Int64, size : Int64) -> Unit = "epoxy_glTexBufferRangeEXT"
@@ -26668,7 +26668,7 @@ pub fn gl_tex_buffer_range_ext(target : UInt, internalformat : UInt, buffer : UI
 }
 
 ///|
-let d_glTexBufferRangeOES : Dispatch = Dispatch::new("glTexBufferRangeOES")
+let d_glTexBufferRangeOES : Dispatch = Dispatch::with_aliases("glTexBufferRangeOES", ["glTexBufferRange", "glTexBufferRangeEXT"])
 
 ///|
 extern "c" fn epoxy_glTexBufferRangeOES(fp : CPtr, target : UInt, internalformat : UInt, buffer : UInt, offset : Int64, size : Int64) -> Unit = "epoxy_glTexBufferRangeOES"
@@ -27860,7 +27860,7 @@ pub fn gl_tex_image2_d_multisample_coverage_nv(target : UInt, coverageSamples : 
 }
 
 ///|
-let d_glTexImage3D : Dispatch = Dispatch::new("glTexImage3D")
+let d_glTexImage3D : Dispatch = Dispatch::with_aliases("glTexImage3D", ["glTexImage3DEXT"])
 
 ///|
 #borrow(pixels)
@@ -27872,7 +27872,7 @@ pub fn gl_tex_image3_d(target : UInt, level : Int, internalformat : Int, width :
 }
 
 ///|
-let d_glTexImage3DEXT : Dispatch = Dispatch::new("glTexImage3DEXT")
+let d_glTexImage3DEXT : Dispatch = Dispatch::with_aliases("glTexImage3DEXT", ["glTexImage3D"])
 
 ///|
 #borrow(pixels)
@@ -27930,7 +27930,7 @@ pub fn gl_tex_image4_dsgis(target : UInt, level : Int, internalformat : UInt, wi
 }
 
 ///|
-let d_glTexPageCommitmentARB : Dispatch = Dispatch::new("glTexPageCommitmentARB")
+let d_glTexPageCommitmentARB : Dispatch = Dispatch::with_aliases("glTexPageCommitmentARB", ["glTexPageCommitmentEXT"])
 
 ///|
 extern "c" fn epoxy_glTexPageCommitmentARB(fp : CPtr, target : UInt, level : Int, xoffset : Int, yoffset : Int, zoffset : Int, width : Int, height : Int, depth : Int, commit : Bool) -> Unit = "epoxy_glTexPageCommitmentARB"
@@ -27941,7 +27941,7 @@ pub fn gl_tex_page_commitment_arb(target : UInt, level : Int, xoffset : Int, yof
 }
 
 ///|
-let d_glTexPageCommitmentEXT : Dispatch = Dispatch::new("glTexPageCommitmentEXT")
+let d_glTexPageCommitmentEXT : Dispatch = Dispatch::with_aliases("glTexPageCommitmentEXT", ["glTexPageCommitmentARB"])
 
 ///|
 extern "c" fn epoxy_glTexPageCommitmentEXT(fp : CPtr, target : UInt, level : Int, xoffset : Int, yoffset : Int, zoffset : Int, width : Int, height : Int, depth : Int, commit : Bool) -> Unit = "epoxy_glTexPageCommitmentEXT"
@@ -27963,7 +27963,7 @@ pub fn gl_tex_page_commitment_mem_nv(target : UInt, layer : Int, level : Int, xo
 }
 
 ///|
-let d_glTexParameterIiv : Dispatch = Dispatch::new("glTexParameterIiv")
+let d_glTexParameterIiv : Dispatch = Dispatch::with_aliases("glTexParameterIiv", ["glTexParameterIivEXT", "glTexParameterIivOES"])
 
 ///|
 #borrow(params)
@@ -27975,7 +27975,7 @@ pub fn gl_tex_parameter_iiv(target : UInt, pname : UInt, params : FixedArray[Int
 }
 
 ///|
-let d_glTexParameterIivEXT : Dispatch = Dispatch::new("glTexParameterIivEXT")
+let d_glTexParameterIivEXT : Dispatch = Dispatch::with_aliases("glTexParameterIivEXT", ["glTexParameterIiv", "glTexParameterIivOES"])
 
 ///|
 #borrow(params)
@@ -27987,7 +27987,7 @@ pub fn gl_tex_parameter_iiv_ext(target : UInt, pname : UInt, params : FixedArray
 }
 
 ///|
-let d_glTexParameterIivOES : Dispatch = Dispatch::new("glTexParameterIivOES")
+let d_glTexParameterIivOES : Dispatch = Dispatch::with_aliases("glTexParameterIivOES", ["glTexParameterIiv", "glTexParameterIivEXT"])
 
 ///|
 #borrow(params)
@@ -27999,7 +27999,7 @@ pub fn gl_tex_parameter_iiv_oes(target : UInt, pname : UInt, params : FixedArray
 }
 
 ///|
-let d_glTexParameterIuiv : Dispatch = Dispatch::new("glTexParameterIuiv")
+let d_glTexParameterIuiv : Dispatch = Dispatch::with_aliases("glTexParameterIuiv", ["glTexParameterIuivEXT", "glTexParameterIuivOES"])
 
 ///|
 #borrow(params)
@@ -28011,7 +28011,7 @@ pub fn gl_tex_parameter_iuiv(target : UInt, pname : UInt, params : FixedArray[UI
 }
 
 ///|
-let d_glTexParameterIuivEXT : Dispatch = Dispatch::new("glTexParameterIuivEXT")
+let d_glTexParameterIuivEXT : Dispatch = Dispatch::with_aliases("glTexParameterIuivEXT", ["glTexParameterIuiv", "glTexParameterIuivOES"])
 
 ///|
 #borrow(params)
@@ -28023,7 +28023,7 @@ pub fn gl_tex_parameter_iuiv_ext(target : UInt, pname : UInt, params : FixedArra
 }
 
 ///|
-let d_glTexParameterIuivOES : Dispatch = Dispatch::new("glTexParameterIuivOES")
+let d_glTexParameterIuivOES : Dispatch = Dispatch::with_aliases("glTexParameterIuivOES", ["glTexParameterIuiv", "glTexParameterIuivEXT"])
 
 ///|
 #borrow(params)
@@ -28138,7 +28138,7 @@ pub fn gl_tex_renderbuffer_nv(target : UInt, renderbuffer : UInt) -> Unit raise 
 }
 
 ///|
-let d_glTexStorage1D : Dispatch = Dispatch::new("glTexStorage1D")
+let d_glTexStorage1D : Dispatch = Dispatch::with_aliases("glTexStorage1D", ["glTexStorage1DEXT"])
 
 ///|
 extern "c" fn epoxy_glTexStorage1D(fp : CPtr, target : UInt, levels : Int, internalformat : UInt, width : Int) -> Unit = "epoxy_glTexStorage1D"
@@ -28149,7 +28149,7 @@ pub fn gl_tex_storage1_d(target : UInt, levels : Int, internalformat : UInt, wid
 }
 
 ///|
-let d_glTexStorage1DEXT : Dispatch = Dispatch::new("glTexStorage1DEXT")
+let d_glTexStorage1DEXT : Dispatch = Dispatch::with_aliases("glTexStorage1DEXT", ["glTexStorage1D"])
 
 ///|
 extern "c" fn epoxy_glTexStorage1DEXT(fp : CPtr, target : UInt, levels : Int, internalformat : UInt, width : Int) -> Unit = "epoxy_glTexStorage1DEXT"
@@ -28160,7 +28160,7 @@ pub fn gl_tex_storage1_dext(target : UInt, levels : Int, internalformat : UInt, 
 }
 
 ///|
-let d_glTexStorage2D : Dispatch = Dispatch::new("glTexStorage2D")
+let d_glTexStorage2D : Dispatch = Dispatch::with_aliases("glTexStorage2D", ["glTexStorage2DEXT"])
 
 ///|
 extern "c" fn epoxy_glTexStorage2D(fp : CPtr, target : UInt, levels : Int, internalformat : UInt, width : Int, height : Int) -> Unit = "epoxy_glTexStorage2D"
@@ -28171,7 +28171,7 @@ pub fn gl_tex_storage2_d(target : UInt, levels : Int, internalformat : UInt, wid
 }
 
 ///|
-let d_glTexStorage2DEXT : Dispatch = Dispatch::new("glTexStorage2DEXT")
+let d_glTexStorage2DEXT : Dispatch = Dispatch::with_aliases("glTexStorage2DEXT", ["glTexStorage2D"])
 
 ///|
 extern "c" fn epoxy_glTexStorage2DEXT(fp : CPtr, target : UInt, levels : Int, internalformat : UInt, width : Int, height : Int) -> Unit = "epoxy_glTexStorage2DEXT"
@@ -28193,7 +28193,7 @@ pub fn gl_tex_storage2_d_multisample(target : UInt, samples : Int, internalforma
 }
 
 ///|
-let d_glTexStorage3D : Dispatch = Dispatch::new("glTexStorage3D")
+let d_glTexStorage3D : Dispatch = Dispatch::with_aliases("glTexStorage3D", ["glTexStorage3DEXT"])
 
 ///|
 extern "c" fn epoxy_glTexStorage3D(fp : CPtr, target : UInt, levels : Int, internalformat : UInt, width : Int, height : Int, depth : Int) -> Unit = "epoxy_glTexStorage3D"
@@ -28204,7 +28204,7 @@ pub fn gl_tex_storage3_d(target : UInt, levels : Int, internalformat : UInt, wid
 }
 
 ///|
-let d_glTexStorage3DEXT : Dispatch = Dispatch::new("glTexStorage3DEXT")
+let d_glTexStorage3DEXT : Dispatch = Dispatch::with_aliases("glTexStorage3DEXT", ["glTexStorage3D"])
 
 ///|
 extern "c" fn epoxy_glTexStorage3DEXT(fp : CPtr, target : UInt, levels : Int, internalformat : UInt, width : Int, height : Int, depth : Int) -> Unit = "epoxy_glTexStorage3DEXT"
@@ -28215,7 +28215,7 @@ pub fn gl_tex_storage3_dext(target : UInt, levels : Int, internalformat : UInt, 
 }
 
 ///|
-let d_glTexStorage3DMultisample : Dispatch = Dispatch::new("glTexStorage3DMultisample")
+let d_glTexStorage3DMultisample : Dispatch = Dispatch::with_aliases("glTexStorage3DMultisample", ["glTexStorage3DMultisampleOES"])
 
 ///|
 extern "c" fn epoxy_glTexStorage3DMultisample(fp : CPtr, target : UInt, samples : Int, internalformat : UInt, width : Int, height : Int, depth : Int, fixedsamplelocations : Bool) -> Unit = "epoxy_glTexStorage3DMultisample"
@@ -28226,7 +28226,7 @@ pub fn gl_tex_storage3_d_multisample(target : UInt, samples : Int, internalforma
 }
 
 ///|
-let d_glTexStorage3DMultisampleOES : Dispatch = Dispatch::new("glTexStorage3DMultisampleOES")
+let d_glTexStorage3DMultisampleOES : Dispatch = Dispatch::with_aliases("glTexStorage3DMultisampleOES", ["glTexStorage3DMultisample"])
 
 ///|
 extern "c" fn epoxy_glTexStorage3DMultisampleOES(fp : CPtr, target : UInt, samples : Int, internalformat : UInt, width : Int, height : Int, depth : Int, fixedsamplelocations : Bool) -> Unit = "epoxy_glTexStorage3DMultisampleOES"
@@ -28327,7 +28327,7 @@ pub fn gl_tex_storage_sparse_amd(target : UInt, internalFormat : UInt, width : I
 }
 
 ///|
-let d_glTexSubImage1D : Dispatch = Dispatch::new("glTexSubImage1D")
+let d_glTexSubImage1D : Dispatch = Dispatch::with_aliases("glTexSubImage1D", ["glTexSubImage1DEXT"])
 
 ///|
 #borrow(pixels)
@@ -28339,7 +28339,7 @@ pub fn gl_tex_sub_image1_d(target : UInt, level : Int, xoffset : Int, width : In
 }
 
 ///|
-let d_glTexSubImage1DEXT : Dispatch = Dispatch::new("glTexSubImage1DEXT")
+let d_glTexSubImage1DEXT : Dispatch = Dispatch::with_aliases("glTexSubImage1DEXT", ["glTexSubImage1D"])
 
 ///|
 #borrow(pixels)
@@ -28351,7 +28351,7 @@ pub fn gl_tex_sub_image1_dext(target : UInt, level : Int, xoffset : Int, width :
 }
 
 ///|
-let d_glTexSubImage2D : Dispatch = Dispatch::new("glTexSubImage2D")
+let d_glTexSubImage2D : Dispatch = Dispatch::with_aliases("glTexSubImage2D", ["glTexSubImage2DEXT"])
 
 ///|
 #borrow(pixels)
@@ -28363,7 +28363,7 @@ pub fn gl_tex_sub_image2_d(target : UInt, level : Int, xoffset : Int, yoffset : 
 }
 
 ///|
-let d_glTexSubImage2DEXT : Dispatch = Dispatch::new("glTexSubImage2DEXT")
+let d_glTexSubImage2DEXT : Dispatch = Dispatch::with_aliases("glTexSubImage2DEXT", ["glTexSubImage2D"])
 
 ///|
 #borrow(pixels)
@@ -28375,7 +28375,7 @@ pub fn gl_tex_sub_image2_dext(target : UInt, level : Int, xoffset : Int, yoffset
 }
 
 ///|
-let d_glTexSubImage3D : Dispatch = Dispatch::new("glTexSubImage3D")
+let d_glTexSubImage3D : Dispatch = Dispatch::with_aliases("glTexSubImage3D", ["glTexSubImage3DEXT"])
 
 ///|
 #borrow(pixels)
@@ -28387,7 +28387,7 @@ pub fn gl_tex_sub_image3_d(target : UInt, level : Int, xoffset : Int, yoffset : 
 }
 
 ///|
-let d_glTexSubImage3DEXT : Dispatch = Dispatch::new("glTexSubImage3DEXT")
+let d_glTexSubImage3DEXT : Dispatch = Dispatch::with_aliases("glTexSubImage3DEXT", ["glTexSubImage3D"])
 
 ///|
 #borrow(pixels)
@@ -29068,7 +29068,7 @@ pub fn gl_texture_sub_image3_dext(texture : UInt, target : UInt, level : Int, xo
 }
 
 ///|
-let d_glTextureView : Dispatch = Dispatch::new("glTextureView")
+let d_glTextureView : Dispatch = Dispatch::with_aliases("glTextureView", ["glTextureViewEXT", "glTextureViewOES"])
 
 ///|
 extern "c" fn epoxy_glTextureView(fp : CPtr, texture : UInt, target : UInt, origtexture : UInt, internalformat : UInt, minlevel : UInt, numlevels : UInt, minlayer : UInt, numlayers : UInt) -> Unit = "epoxy_glTextureView"
@@ -29079,7 +29079,7 @@ pub fn gl_texture_view(texture : UInt, target : UInt, origtexture : UInt, intern
 }
 
 ///|
-let d_glTextureViewEXT : Dispatch = Dispatch::new("glTextureViewEXT")
+let d_glTextureViewEXT : Dispatch = Dispatch::with_aliases("glTextureViewEXT", ["glTextureView", "glTextureViewOES"])
 
 ///|
 extern "c" fn epoxy_glTextureViewEXT(fp : CPtr, texture : UInt, target : UInt, origtexture : UInt, internalformat : UInt, minlevel : UInt, numlevels : UInt, minlayer : UInt, numlayers : UInt) -> Unit = "epoxy_glTextureViewEXT"
@@ -29090,7 +29090,7 @@ pub fn gl_texture_view_ext(texture : UInt, target : UInt, origtexture : UInt, in
 }
 
 ///|
-let d_glTextureViewOES : Dispatch = Dispatch::new("glTextureViewOES")
+let d_glTextureViewOES : Dispatch = Dispatch::with_aliases("glTextureViewOES", ["glTextureView", "glTextureViewEXT"])
 
 ///|
 extern "c" fn epoxy_glTextureViewOES(fp : CPtr, texture : UInt, target : UInt, origtexture : UInt, internalformat : UInt, minlevel : UInt, numlevels : UInt, minlayer : UInt, numlayers : UInt) -> Unit = "epoxy_glTextureViewOES"
@@ -29249,7 +29249,7 @@ pub fn gl_uniform1dv(location : Int, count : Int, value : FixedArray[Double]) ->
 }
 
 ///|
-let d_glUniform1f : Dispatch = Dispatch::new("glUniform1f")
+let d_glUniform1f : Dispatch = Dispatch::with_aliases("glUniform1f", ["glUniform1fARB"])
 
 ///|
 extern "c" fn epoxy_glUniform1f(fp : CPtr, location : Int, v0 : Float) -> Unit = "epoxy_glUniform1f"
@@ -29260,7 +29260,7 @@ pub fn gl_uniform1f(location : Int, v0 : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glUniform1fARB : Dispatch = Dispatch::new("glUniform1fARB")
+let d_glUniform1fARB : Dispatch = Dispatch::with_aliases("glUniform1fARB", ["glUniform1f"])
 
 ///|
 extern "c" fn epoxy_glUniform1fARB(fp : CPtr, location : Int, v0 : Float) -> Unit = "epoxy_glUniform1fARB"
@@ -29271,7 +29271,7 @@ pub fn gl_uniform1f_arb(location : Int, v0 : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glUniform1fv : Dispatch = Dispatch::new("glUniform1fv")
+let d_glUniform1fv : Dispatch = Dispatch::with_aliases("glUniform1fv", ["glUniform1fvARB"])
 
 ///|
 #borrow(value)
@@ -29283,7 +29283,7 @@ pub fn gl_uniform1fv(location : Int, count : Int, value : FixedArray[Float]) -> 
 }
 
 ///|
-let d_glUniform1fvARB : Dispatch = Dispatch::new("glUniform1fvARB")
+let d_glUniform1fvARB : Dispatch = Dispatch::with_aliases("glUniform1fvARB", ["glUniform1fv"])
 
 ///|
 #borrow(value)
@@ -29295,7 +29295,7 @@ pub fn gl_uniform1fv_arb(location : Int, count : Int, value : FixedArray[Float])
 }
 
 ///|
-let d_glUniform1i : Dispatch = Dispatch::new("glUniform1i")
+let d_glUniform1i : Dispatch = Dispatch::with_aliases("glUniform1i", ["glUniform1iARB"])
 
 ///|
 extern "c" fn epoxy_glUniform1i(fp : CPtr, location : Int, v0 : Int) -> Unit = "epoxy_glUniform1i"
@@ -29352,7 +29352,7 @@ pub fn gl_uniform1i64v_nv(location : Int, count : Int, value : FixedArray[Int64]
 }
 
 ///|
-let d_glUniform1iARB : Dispatch = Dispatch::new("glUniform1iARB")
+let d_glUniform1iARB : Dispatch = Dispatch::with_aliases("glUniform1iARB", ["glUniform1i"])
 
 ///|
 extern "c" fn epoxy_glUniform1iARB(fp : CPtr, location : Int, v0 : Int) -> Unit = "epoxy_glUniform1iARB"
@@ -29363,7 +29363,7 @@ pub fn gl_uniform1i_arb(location : Int, v0 : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glUniform1iv : Dispatch = Dispatch::new("glUniform1iv")
+let d_glUniform1iv : Dispatch = Dispatch::with_aliases("glUniform1iv", ["glUniform1ivARB"])
 
 ///|
 #borrow(value)
@@ -29375,7 +29375,7 @@ pub fn gl_uniform1iv(location : Int, count : Int, value : FixedArray[Int]) -> Un
 }
 
 ///|
-let d_glUniform1ivARB : Dispatch = Dispatch::new("glUniform1ivARB")
+let d_glUniform1ivARB : Dispatch = Dispatch::with_aliases("glUniform1ivARB", ["glUniform1iv"])
 
 ///|
 #borrow(value)
@@ -29387,7 +29387,7 @@ pub fn gl_uniform1iv_arb(location : Int, count : Int, value : FixedArray[Int]) -
 }
 
 ///|
-let d_glUniform1ui : Dispatch = Dispatch::new("glUniform1ui")
+let d_glUniform1ui : Dispatch = Dispatch::with_aliases("glUniform1ui", ["glUniform1uiEXT"])
 
 ///|
 extern "c" fn epoxy_glUniform1ui(fp : CPtr, location : Int, v0 : UInt) -> Unit = "epoxy_glUniform1ui"
@@ -29444,7 +29444,7 @@ pub fn gl_uniform1ui64v_nv(location : Int, count : Int, value : FixedArray[UInt6
 }
 
 ///|
-let d_glUniform1uiEXT : Dispatch = Dispatch::new("glUniform1uiEXT")
+let d_glUniform1uiEXT : Dispatch = Dispatch::with_aliases("glUniform1uiEXT", ["glUniform1ui"])
 
 ///|
 extern "c" fn epoxy_glUniform1uiEXT(fp : CPtr, location : Int, v0 : UInt) -> Unit = "epoxy_glUniform1uiEXT"
@@ -29455,7 +29455,7 @@ pub fn gl_uniform1ui_ext(location : Int, v0 : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glUniform1uiv : Dispatch = Dispatch::new("glUniform1uiv")
+let d_glUniform1uiv : Dispatch = Dispatch::with_aliases("glUniform1uiv", ["glUniform1uivEXT"])
 
 ///|
 #borrow(value)
@@ -29467,7 +29467,7 @@ pub fn gl_uniform1uiv(location : Int, count : Int, value : FixedArray[UInt]) -> 
 }
 
 ///|
-let d_glUniform1uivEXT : Dispatch = Dispatch::new("glUniform1uivEXT")
+let d_glUniform1uivEXT : Dispatch = Dispatch::with_aliases("glUniform1uivEXT", ["glUniform1uiv"])
 
 ///|
 #borrow(value)
@@ -29502,7 +29502,7 @@ pub fn gl_uniform2dv(location : Int, count : Int, value : FixedArray[Double]) ->
 }
 
 ///|
-let d_glUniform2f : Dispatch = Dispatch::new("glUniform2f")
+let d_glUniform2f : Dispatch = Dispatch::with_aliases("glUniform2f", ["glUniform2fARB"])
 
 ///|
 extern "c" fn epoxy_glUniform2f(fp : CPtr, location : Int, v0 : Float, v1 : Float) -> Unit = "epoxy_glUniform2f"
@@ -29513,7 +29513,7 @@ pub fn gl_uniform2f(location : Int, v0 : Float, v1 : Float) -> Unit raise Resolv
 }
 
 ///|
-let d_glUniform2fARB : Dispatch = Dispatch::new("glUniform2fARB")
+let d_glUniform2fARB : Dispatch = Dispatch::with_aliases("glUniform2fARB", ["glUniform2f"])
 
 ///|
 extern "c" fn epoxy_glUniform2fARB(fp : CPtr, location : Int, v0 : Float, v1 : Float) -> Unit = "epoxy_glUniform2fARB"
@@ -29524,7 +29524,7 @@ pub fn gl_uniform2f_arb(location : Int, v0 : Float, v1 : Float) -> Unit raise Re
 }
 
 ///|
-let d_glUniform2fv : Dispatch = Dispatch::new("glUniform2fv")
+let d_glUniform2fv : Dispatch = Dispatch::with_aliases("glUniform2fv", ["glUniform2fvARB"])
 
 ///|
 #borrow(value)
@@ -29536,7 +29536,7 @@ pub fn gl_uniform2fv(location : Int, count : Int, value : FixedArray[Float]) -> 
 }
 
 ///|
-let d_glUniform2fvARB : Dispatch = Dispatch::new("glUniform2fvARB")
+let d_glUniform2fvARB : Dispatch = Dispatch::with_aliases("glUniform2fvARB", ["glUniform2fv"])
 
 ///|
 #borrow(value)
@@ -29548,7 +29548,7 @@ pub fn gl_uniform2fv_arb(location : Int, count : Int, value : FixedArray[Float])
 }
 
 ///|
-let d_glUniform2i : Dispatch = Dispatch::new("glUniform2i")
+let d_glUniform2i : Dispatch = Dispatch::with_aliases("glUniform2i", ["glUniform2iARB"])
 
 ///|
 extern "c" fn epoxy_glUniform2i(fp : CPtr, location : Int, v0 : Int, v1 : Int) -> Unit = "epoxy_glUniform2i"
@@ -29605,7 +29605,7 @@ pub fn gl_uniform2i64v_nv(location : Int, count : Int, value : FixedArray[Int64]
 }
 
 ///|
-let d_glUniform2iARB : Dispatch = Dispatch::new("glUniform2iARB")
+let d_glUniform2iARB : Dispatch = Dispatch::with_aliases("glUniform2iARB", ["glUniform2i"])
 
 ///|
 extern "c" fn epoxy_glUniform2iARB(fp : CPtr, location : Int, v0 : Int, v1 : Int) -> Unit = "epoxy_glUniform2iARB"
@@ -29616,7 +29616,7 @@ pub fn gl_uniform2i_arb(location : Int, v0 : Int, v1 : Int) -> Unit raise Resolv
 }
 
 ///|
-let d_glUniform2iv : Dispatch = Dispatch::new("glUniform2iv")
+let d_glUniform2iv : Dispatch = Dispatch::with_aliases("glUniform2iv", ["glUniform2ivARB"])
 
 ///|
 #borrow(value)
@@ -29628,7 +29628,7 @@ pub fn gl_uniform2iv(location : Int, count : Int, value : FixedArray[Int]) -> Un
 }
 
 ///|
-let d_glUniform2ivARB : Dispatch = Dispatch::new("glUniform2ivARB")
+let d_glUniform2ivARB : Dispatch = Dispatch::with_aliases("glUniform2ivARB", ["glUniform2iv"])
 
 ///|
 #borrow(value)
@@ -29640,7 +29640,7 @@ pub fn gl_uniform2iv_arb(location : Int, count : Int, value : FixedArray[Int]) -
 }
 
 ///|
-let d_glUniform2ui : Dispatch = Dispatch::new("glUniform2ui")
+let d_glUniform2ui : Dispatch = Dispatch::with_aliases("glUniform2ui", ["glUniform2uiEXT"])
 
 ///|
 extern "c" fn epoxy_glUniform2ui(fp : CPtr, location : Int, v0 : UInt, v1 : UInt) -> Unit = "epoxy_glUniform2ui"
@@ -29697,7 +29697,7 @@ pub fn gl_uniform2ui64v_nv(location : Int, count : Int, value : FixedArray[UInt6
 }
 
 ///|
-let d_glUniform2uiEXT : Dispatch = Dispatch::new("glUniform2uiEXT")
+let d_glUniform2uiEXT : Dispatch = Dispatch::with_aliases("glUniform2uiEXT", ["glUniform2ui"])
 
 ///|
 extern "c" fn epoxy_glUniform2uiEXT(fp : CPtr, location : Int, v0 : UInt, v1 : UInt) -> Unit = "epoxy_glUniform2uiEXT"
@@ -29708,7 +29708,7 @@ pub fn gl_uniform2ui_ext(location : Int, v0 : UInt, v1 : UInt) -> Unit raise Res
 }
 
 ///|
-let d_glUniform2uiv : Dispatch = Dispatch::new("glUniform2uiv")
+let d_glUniform2uiv : Dispatch = Dispatch::with_aliases("glUniform2uiv", ["glUniform2uivEXT"])
 
 ///|
 #borrow(value)
@@ -29720,7 +29720,7 @@ pub fn gl_uniform2uiv(location : Int, count : Int, value : FixedArray[UInt]) -> 
 }
 
 ///|
-let d_glUniform2uivEXT : Dispatch = Dispatch::new("glUniform2uivEXT")
+let d_glUniform2uivEXT : Dispatch = Dispatch::with_aliases("glUniform2uivEXT", ["glUniform2uiv"])
 
 ///|
 #borrow(value)
@@ -29755,7 +29755,7 @@ pub fn gl_uniform3dv(location : Int, count : Int, value : FixedArray[Double]) ->
 }
 
 ///|
-let d_glUniform3f : Dispatch = Dispatch::new("glUniform3f")
+let d_glUniform3f : Dispatch = Dispatch::with_aliases("glUniform3f", ["glUniform3fARB"])
 
 ///|
 extern "c" fn epoxy_glUniform3f(fp : CPtr, location : Int, v0 : Float, v1 : Float, v2 : Float) -> Unit = "epoxy_glUniform3f"
@@ -29766,7 +29766,7 @@ pub fn gl_uniform3f(location : Int, v0 : Float, v1 : Float, v2 : Float) -> Unit 
 }
 
 ///|
-let d_glUniform3fARB : Dispatch = Dispatch::new("glUniform3fARB")
+let d_glUniform3fARB : Dispatch = Dispatch::with_aliases("glUniform3fARB", ["glUniform3f"])
 
 ///|
 extern "c" fn epoxy_glUniform3fARB(fp : CPtr, location : Int, v0 : Float, v1 : Float, v2 : Float) -> Unit = "epoxy_glUniform3fARB"
@@ -29777,7 +29777,7 @@ pub fn gl_uniform3f_arb(location : Int, v0 : Float, v1 : Float, v2 : Float) -> U
 }
 
 ///|
-let d_glUniform3fv : Dispatch = Dispatch::new("glUniform3fv")
+let d_glUniform3fv : Dispatch = Dispatch::with_aliases("glUniform3fv", ["glUniform3fvARB"])
 
 ///|
 #borrow(value)
@@ -29789,7 +29789,7 @@ pub fn gl_uniform3fv(location : Int, count : Int, value : FixedArray[Float]) -> 
 }
 
 ///|
-let d_glUniform3fvARB : Dispatch = Dispatch::new("glUniform3fvARB")
+let d_glUniform3fvARB : Dispatch = Dispatch::with_aliases("glUniform3fvARB", ["glUniform3fv"])
 
 ///|
 #borrow(value)
@@ -29801,7 +29801,7 @@ pub fn gl_uniform3fv_arb(location : Int, count : Int, value : FixedArray[Float])
 }
 
 ///|
-let d_glUniform3i : Dispatch = Dispatch::new("glUniform3i")
+let d_glUniform3i : Dispatch = Dispatch::with_aliases("glUniform3i", ["glUniform3iARB"])
 
 ///|
 extern "c" fn epoxy_glUniform3i(fp : CPtr, location : Int, v0 : Int, v1 : Int, v2 : Int) -> Unit = "epoxy_glUniform3i"
@@ -29858,7 +29858,7 @@ pub fn gl_uniform3i64v_nv(location : Int, count : Int, value : FixedArray[Int64]
 }
 
 ///|
-let d_glUniform3iARB : Dispatch = Dispatch::new("glUniform3iARB")
+let d_glUniform3iARB : Dispatch = Dispatch::with_aliases("glUniform3iARB", ["glUniform3i"])
 
 ///|
 extern "c" fn epoxy_glUniform3iARB(fp : CPtr, location : Int, v0 : Int, v1 : Int, v2 : Int) -> Unit = "epoxy_glUniform3iARB"
@@ -29869,7 +29869,7 @@ pub fn gl_uniform3i_arb(location : Int, v0 : Int, v1 : Int, v2 : Int) -> Unit ra
 }
 
 ///|
-let d_glUniform3iv : Dispatch = Dispatch::new("glUniform3iv")
+let d_glUniform3iv : Dispatch = Dispatch::with_aliases("glUniform3iv", ["glUniform3ivARB"])
 
 ///|
 #borrow(value)
@@ -29881,7 +29881,7 @@ pub fn gl_uniform3iv(location : Int, count : Int, value : FixedArray[Int]) -> Un
 }
 
 ///|
-let d_glUniform3ivARB : Dispatch = Dispatch::new("glUniform3ivARB")
+let d_glUniform3ivARB : Dispatch = Dispatch::with_aliases("glUniform3ivARB", ["glUniform3iv"])
 
 ///|
 #borrow(value)
@@ -29893,7 +29893,7 @@ pub fn gl_uniform3iv_arb(location : Int, count : Int, value : FixedArray[Int]) -
 }
 
 ///|
-let d_glUniform3ui : Dispatch = Dispatch::new("glUniform3ui")
+let d_glUniform3ui : Dispatch = Dispatch::with_aliases("glUniform3ui", ["glUniform3uiEXT"])
 
 ///|
 extern "c" fn epoxy_glUniform3ui(fp : CPtr, location : Int, v0 : UInt, v1 : UInt, v2 : UInt) -> Unit = "epoxy_glUniform3ui"
@@ -29950,7 +29950,7 @@ pub fn gl_uniform3ui64v_nv(location : Int, count : Int, value : FixedArray[UInt6
 }
 
 ///|
-let d_glUniform3uiEXT : Dispatch = Dispatch::new("glUniform3uiEXT")
+let d_glUniform3uiEXT : Dispatch = Dispatch::with_aliases("glUniform3uiEXT", ["glUniform3ui"])
 
 ///|
 extern "c" fn epoxy_glUniform3uiEXT(fp : CPtr, location : Int, v0 : UInt, v1 : UInt, v2 : UInt) -> Unit = "epoxy_glUniform3uiEXT"
@@ -29961,7 +29961,7 @@ pub fn gl_uniform3ui_ext(location : Int, v0 : UInt, v1 : UInt, v2 : UInt) -> Uni
 }
 
 ///|
-let d_glUniform3uiv : Dispatch = Dispatch::new("glUniform3uiv")
+let d_glUniform3uiv : Dispatch = Dispatch::with_aliases("glUniform3uiv", ["glUniform3uivEXT"])
 
 ///|
 #borrow(value)
@@ -29973,7 +29973,7 @@ pub fn gl_uniform3uiv(location : Int, count : Int, value : FixedArray[UInt]) -> 
 }
 
 ///|
-let d_glUniform3uivEXT : Dispatch = Dispatch::new("glUniform3uivEXT")
+let d_glUniform3uivEXT : Dispatch = Dispatch::with_aliases("glUniform3uivEXT", ["glUniform3uiv"])
 
 ///|
 #borrow(value)
@@ -30008,7 +30008,7 @@ pub fn gl_uniform4dv(location : Int, count : Int, value : FixedArray[Double]) ->
 }
 
 ///|
-let d_glUniform4f : Dispatch = Dispatch::new("glUniform4f")
+let d_glUniform4f : Dispatch = Dispatch::with_aliases("glUniform4f", ["glUniform4fARB"])
 
 ///|
 extern "c" fn epoxy_glUniform4f(fp : CPtr, location : Int, v0 : Float, v1 : Float, v2 : Float, v3 : Float) -> Unit = "epoxy_glUniform4f"
@@ -30019,7 +30019,7 @@ pub fn gl_uniform4f(location : Int, v0 : Float, v1 : Float, v2 : Float, v3 : Flo
 }
 
 ///|
-let d_glUniform4fARB : Dispatch = Dispatch::new("glUniform4fARB")
+let d_glUniform4fARB : Dispatch = Dispatch::with_aliases("glUniform4fARB", ["glUniform4f"])
 
 ///|
 extern "c" fn epoxy_glUniform4fARB(fp : CPtr, location : Int, v0 : Float, v1 : Float, v2 : Float, v3 : Float) -> Unit = "epoxy_glUniform4fARB"
@@ -30030,7 +30030,7 @@ pub fn gl_uniform4f_arb(location : Int, v0 : Float, v1 : Float, v2 : Float, v3 :
 }
 
 ///|
-let d_glUniform4fv : Dispatch = Dispatch::new("glUniform4fv")
+let d_glUniform4fv : Dispatch = Dispatch::with_aliases("glUniform4fv", ["glUniform4fvARB"])
 
 ///|
 #borrow(value)
@@ -30042,7 +30042,7 @@ pub fn gl_uniform4fv(location : Int, count : Int, value : FixedArray[Float]) -> 
 }
 
 ///|
-let d_glUniform4fvARB : Dispatch = Dispatch::new("glUniform4fvARB")
+let d_glUniform4fvARB : Dispatch = Dispatch::with_aliases("glUniform4fvARB", ["glUniform4fv"])
 
 ///|
 #borrow(value)
@@ -30054,7 +30054,7 @@ pub fn gl_uniform4fv_arb(location : Int, count : Int, value : FixedArray[Float])
 }
 
 ///|
-let d_glUniform4i : Dispatch = Dispatch::new("glUniform4i")
+let d_glUniform4i : Dispatch = Dispatch::with_aliases("glUniform4i", ["glUniform4iARB"])
 
 ///|
 extern "c" fn epoxy_glUniform4i(fp : CPtr, location : Int, v0 : Int, v1 : Int, v2 : Int, v3 : Int) -> Unit = "epoxy_glUniform4i"
@@ -30111,7 +30111,7 @@ pub fn gl_uniform4i64v_nv(location : Int, count : Int, value : FixedArray[Int64]
 }
 
 ///|
-let d_glUniform4iARB : Dispatch = Dispatch::new("glUniform4iARB")
+let d_glUniform4iARB : Dispatch = Dispatch::with_aliases("glUniform4iARB", ["glUniform4i"])
 
 ///|
 extern "c" fn epoxy_glUniform4iARB(fp : CPtr, location : Int, v0 : Int, v1 : Int, v2 : Int, v3 : Int) -> Unit = "epoxy_glUniform4iARB"
@@ -30122,7 +30122,7 @@ pub fn gl_uniform4i_arb(location : Int, v0 : Int, v1 : Int, v2 : Int, v3 : Int) 
 }
 
 ///|
-let d_glUniform4iv : Dispatch = Dispatch::new("glUniform4iv")
+let d_glUniform4iv : Dispatch = Dispatch::with_aliases("glUniform4iv", ["glUniform4ivARB"])
 
 ///|
 #borrow(value)
@@ -30134,7 +30134,7 @@ pub fn gl_uniform4iv(location : Int, count : Int, value : FixedArray[Int]) -> Un
 }
 
 ///|
-let d_glUniform4ivARB : Dispatch = Dispatch::new("glUniform4ivARB")
+let d_glUniform4ivARB : Dispatch = Dispatch::with_aliases("glUniform4ivARB", ["glUniform4iv"])
 
 ///|
 #borrow(value)
@@ -30146,7 +30146,7 @@ pub fn gl_uniform4iv_arb(location : Int, count : Int, value : FixedArray[Int]) -
 }
 
 ///|
-let d_glUniform4ui : Dispatch = Dispatch::new("glUniform4ui")
+let d_glUniform4ui : Dispatch = Dispatch::with_aliases("glUniform4ui", ["glUniform4uiEXT"])
 
 ///|
 extern "c" fn epoxy_glUniform4ui(fp : CPtr, location : Int, v0 : UInt, v1 : UInt, v2 : UInt, v3 : UInt) -> Unit = "epoxy_glUniform4ui"
@@ -30203,7 +30203,7 @@ pub fn gl_uniform4ui64v_nv(location : Int, count : Int, value : FixedArray[UInt6
 }
 
 ///|
-let d_glUniform4uiEXT : Dispatch = Dispatch::new("glUniform4uiEXT")
+let d_glUniform4uiEXT : Dispatch = Dispatch::with_aliases("glUniform4uiEXT", ["glUniform4ui"])
 
 ///|
 extern "c" fn epoxy_glUniform4uiEXT(fp : CPtr, location : Int, v0 : UInt, v1 : UInt, v2 : UInt, v3 : UInt) -> Unit = "epoxy_glUniform4uiEXT"
@@ -30214,7 +30214,7 @@ pub fn gl_uniform4ui_ext(location : Int, v0 : UInt, v1 : UInt, v2 : UInt, v3 : U
 }
 
 ///|
-let d_glUniform4uiv : Dispatch = Dispatch::new("glUniform4uiv")
+let d_glUniform4uiv : Dispatch = Dispatch::with_aliases("glUniform4uiv", ["glUniform4uivEXT"])
 
 ///|
 #borrow(value)
@@ -30226,7 +30226,7 @@ pub fn gl_uniform4uiv(location : Int, count : Int, value : FixedArray[UInt]) -> 
 }
 
 ///|
-let d_glUniform4uivEXT : Dispatch = Dispatch::new("glUniform4uivEXT")
+let d_glUniform4uivEXT : Dispatch = Dispatch::with_aliases("glUniform4uivEXT", ["glUniform4uiv"])
 
 ///|
 #borrow(value)
@@ -30260,7 +30260,7 @@ pub fn gl_uniform_buffer_ext(program : UInt, location : Int, buffer : UInt) -> U
 }
 
 ///|
-let d_glUniformHandleui64ARB : Dispatch = Dispatch::new("glUniformHandleui64ARB")
+let d_glUniformHandleui64ARB : Dispatch = Dispatch::with_aliases("glUniformHandleui64ARB", ["glUniformHandleui64IMG"])
 
 ///|
 extern "c" fn epoxy_glUniformHandleui64ARB(fp : CPtr, location : Int, value : UInt64) -> Unit = "epoxy_glUniformHandleui64ARB"
@@ -30271,7 +30271,7 @@ pub fn gl_uniform_handleui64_arb(location : Int, value : UInt64) -> Unit raise R
 }
 
 ///|
-let d_glUniformHandleui64IMG : Dispatch = Dispatch::new("glUniformHandleui64IMG")
+let d_glUniformHandleui64IMG : Dispatch = Dispatch::with_aliases("glUniformHandleui64IMG", ["glUniformHandleui64ARB"])
 
 ///|
 extern "c" fn epoxy_glUniformHandleui64IMG(fp : CPtr, location : Int, value : UInt64) -> Unit = "epoxy_glUniformHandleui64IMG"
@@ -30293,7 +30293,7 @@ pub fn gl_uniform_handleui64_nv(location : Int, value : UInt64) -> Unit raise Re
 }
 
 ///|
-let d_glUniformHandleui64vARB : Dispatch = Dispatch::new("glUniformHandleui64vARB")
+let d_glUniformHandleui64vARB : Dispatch = Dispatch::with_aliases("glUniformHandleui64vARB", ["glUniformHandleui64vIMG"])
 
 ///|
 #borrow(value)
@@ -30305,7 +30305,7 @@ pub fn gl_uniform_handleui64v_arb(location : Int, count : Int, value : FixedArra
 }
 
 ///|
-let d_glUniformHandleui64vIMG : Dispatch = Dispatch::new("glUniformHandleui64vIMG")
+let d_glUniformHandleui64vIMG : Dispatch = Dispatch::with_aliases("glUniformHandleui64vIMG", ["glUniformHandleui64vARB"])
 
 ///|
 #borrow(value)
@@ -30341,7 +30341,7 @@ pub fn gl_uniform_matrix2dv(location : Int, count : Int, transpose : Bool, value
 }
 
 ///|
-let d_glUniformMatrix2fv : Dispatch = Dispatch::new("glUniformMatrix2fv")
+let d_glUniformMatrix2fv : Dispatch = Dispatch::with_aliases("glUniformMatrix2fv", ["glUniformMatrix2fvARB"])
 
 ///|
 #borrow(value)
@@ -30353,7 +30353,7 @@ pub fn gl_uniform_matrix2fv(location : Int, count : Int, transpose : Bool, value
 }
 
 ///|
-let d_glUniformMatrix2fvARB : Dispatch = Dispatch::new("glUniformMatrix2fvARB")
+let d_glUniformMatrix2fvARB : Dispatch = Dispatch::with_aliases("glUniformMatrix2fvARB", ["glUniformMatrix2fv"])
 
 ///|
 #borrow(value)
@@ -30377,7 +30377,7 @@ pub fn gl_uniform_matrix2x3dv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix2x3fv : Dispatch = Dispatch::new("glUniformMatrix2x3fv")
+let d_glUniformMatrix2x3fv : Dispatch = Dispatch::with_aliases("glUniformMatrix2x3fv", ["glUniformMatrix2x3fvNV"])
 
 ///|
 #borrow(value)
@@ -30389,7 +30389,7 @@ pub fn gl_uniform_matrix2x3fv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix2x3fvNV : Dispatch = Dispatch::new("glUniformMatrix2x3fvNV")
+let d_glUniformMatrix2x3fvNV : Dispatch = Dispatch::with_aliases("glUniformMatrix2x3fvNV", ["glUniformMatrix2x3fv"])
 
 ///|
 #borrow(value)
@@ -30413,7 +30413,7 @@ pub fn gl_uniform_matrix2x4dv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix2x4fv : Dispatch = Dispatch::new("glUniformMatrix2x4fv")
+let d_glUniformMatrix2x4fv : Dispatch = Dispatch::with_aliases("glUniformMatrix2x4fv", ["glUniformMatrix2x4fvNV"])
 
 ///|
 #borrow(value)
@@ -30425,7 +30425,7 @@ pub fn gl_uniform_matrix2x4fv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix2x4fvNV : Dispatch = Dispatch::new("glUniformMatrix2x4fvNV")
+let d_glUniformMatrix2x4fvNV : Dispatch = Dispatch::with_aliases("glUniformMatrix2x4fvNV", ["glUniformMatrix2x4fv"])
 
 ///|
 #borrow(value)
@@ -30449,7 +30449,7 @@ pub fn gl_uniform_matrix3dv(location : Int, count : Int, transpose : Bool, value
 }
 
 ///|
-let d_glUniformMatrix3fv : Dispatch = Dispatch::new("glUniformMatrix3fv")
+let d_glUniformMatrix3fv : Dispatch = Dispatch::with_aliases("glUniformMatrix3fv", ["glUniformMatrix3fvARB"])
 
 ///|
 #borrow(value)
@@ -30461,7 +30461,7 @@ pub fn gl_uniform_matrix3fv(location : Int, count : Int, transpose : Bool, value
 }
 
 ///|
-let d_glUniformMatrix3fvARB : Dispatch = Dispatch::new("glUniformMatrix3fvARB")
+let d_glUniformMatrix3fvARB : Dispatch = Dispatch::with_aliases("glUniformMatrix3fvARB", ["glUniformMatrix3fv"])
 
 ///|
 #borrow(value)
@@ -30485,7 +30485,7 @@ pub fn gl_uniform_matrix3x2dv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix3x2fv : Dispatch = Dispatch::new("glUniformMatrix3x2fv")
+let d_glUniformMatrix3x2fv : Dispatch = Dispatch::with_aliases("glUniformMatrix3x2fv", ["glUniformMatrix3x2fvNV"])
 
 ///|
 #borrow(value)
@@ -30497,7 +30497,7 @@ pub fn gl_uniform_matrix3x2fv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix3x2fvNV : Dispatch = Dispatch::new("glUniformMatrix3x2fvNV")
+let d_glUniformMatrix3x2fvNV : Dispatch = Dispatch::with_aliases("glUniformMatrix3x2fvNV", ["glUniformMatrix3x2fv"])
 
 ///|
 #borrow(value)
@@ -30521,7 +30521,7 @@ pub fn gl_uniform_matrix3x4dv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix3x4fv : Dispatch = Dispatch::new("glUniformMatrix3x4fv")
+let d_glUniformMatrix3x4fv : Dispatch = Dispatch::with_aliases("glUniformMatrix3x4fv", ["glUniformMatrix3x4fvNV"])
 
 ///|
 #borrow(value)
@@ -30533,7 +30533,7 @@ pub fn gl_uniform_matrix3x4fv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix3x4fvNV : Dispatch = Dispatch::new("glUniformMatrix3x4fvNV")
+let d_glUniformMatrix3x4fvNV : Dispatch = Dispatch::with_aliases("glUniformMatrix3x4fvNV", ["glUniformMatrix3x4fv"])
 
 ///|
 #borrow(value)
@@ -30557,7 +30557,7 @@ pub fn gl_uniform_matrix4dv(location : Int, count : Int, transpose : Bool, value
 }
 
 ///|
-let d_glUniformMatrix4fv : Dispatch = Dispatch::new("glUniformMatrix4fv")
+let d_glUniformMatrix4fv : Dispatch = Dispatch::with_aliases("glUniformMatrix4fv", ["glUniformMatrix4fvARB"])
 
 ///|
 #borrow(value)
@@ -30569,7 +30569,7 @@ pub fn gl_uniform_matrix4fv(location : Int, count : Int, transpose : Bool, value
 }
 
 ///|
-let d_glUniformMatrix4fvARB : Dispatch = Dispatch::new("glUniformMatrix4fvARB")
+let d_glUniformMatrix4fvARB : Dispatch = Dispatch::with_aliases("glUniformMatrix4fvARB", ["glUniformMatrix4fv"])
 
 ///|
 #borrow(value)
@@ -30593,7 +30593,7 @@ pub fn gl_uniform_matrix4x2dv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix4x2fv : Dispatch = Dispatch::new("glUniformMatrix4x2fv")
+let d_glUniformMatrix4x2fv : Dispatch = Dispatch::with_aliases("glUniformMatrix4x2fv", ["glUniformMatrix4x2fvNV"])
 
 ///|
 #borrow(value)
@@ -30605,7 +30605,7 @@ pub fn gl_uniform_matrix4x2fv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix4x2fvNV : Dispatch = Dispatch::new("glUniformMatrix4x2fvNV")
+let d_glUniformMatrix4x2fvNV : Dispatch = Dispatch::with_aliases("glUniformMatrix4x2fvNV", ["glUniformMatrix4x2fv"])
 
 ///|
 #borrow(value)
@@ -30629,7 +30629,7 @@ pub fn gl_uniform_matrix4x3dv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix4x3fv : Dispatch = Dispatch::new("glUniformMatrix4x3fv")
+let d_glUniformMatrix4x3fv : Dispatch = Dispatch::with_aliases("glUniformMatrix4x3fv", ["glUniformMatrix4x3fvNV"])
 
 ///|
 #borrow(value)
@@ -30641,7 +30641,7 @@ pub fn gl_uniform_matrix4x3fv(location : Int, count : Int, transpose : Bool, val
 }
 
 ///|
-let d_glUniformMatrix4x3fvNV : Dispatch = Dispatch::new("glUniformMatrix4x3fvNV")
+let d_glUniformMatrix4x3fvNV : Dispatch = Dispatch::with_aliases("glUniformMatrix4x3fvNV", ["glUniformMatrix4x3fv"])
 
 ///|
 #borrow(value)
@@ -30699,7 +30699,7 @@ pub fn gl_unlock_arrays_ext() -> Unit raise ResolveError {
 }
 
 ///|
-let d_glUnmapBuffer : Dispatch = Dispatch::new("glUnmapBuffer")
+let d_glUnmapBuffer : Dispatch = Dispatch::with_aliases("glUnmapBuffer", ["glUnmapBufferARB", "glUnmapBufferOES"])
 
 ///|
 extern "c" fn epoxy_glUnmapBuffer(fp : CPtr, target : UInt) -> Bool = "epoxy_glUnmapBuffer"
@@ -30710,7 +30710,7 @@ pub fn gl_unmap_buffer(target : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glUnmapBufferARB : Dispatch = Dispatch::new("glUnmapBufferARB")
+let d_glUnmapBufferARB : Dispatch = Dispatch::with_aliases("glUnmapBufferARB", ["glUnmapBuffer", "glUnmapBufferOES"])
 
 ///|
 extern "c" fn epoxy_glUnmapBufferARB(fp : CPtr, target : UInt) -> Bool = "epoxy_glUnmapBufferARB"
@@ -30721,7 +30721,7 @@ pub fn gl_unmap_buffer_arb(target : UInt) -> Bool raise ResolveError {
 }
 
 ///|
-let d_glUnmapBufferOES : Dispatch = Dispatch::new("glUnmapBufferOES")
+let d_glUnmapBufferOES : Dispatch = Dispatch::with_aliases("glUnmapBufferOES", ["glUnmapBuffer", "glUnmapBufferARB"])
 
 ///|
 extern "c" fn epoxy_glUnmapBufferOES(fp : CPtr, target : UInt) -> Bool = "epoxy_glUnmapBufferOES"
@@ -30799,7 +30799,7 @@ pub fn gl_upload_gpu_mask_nvx(mask : UInt) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glUseProgram : Dispatch = Dispatch::new("glUseProgram")
+let d_glUseProgram : Dispatch = Dispatch::with_aliases("glUseProgram", ["glUseProgramObjectARB"])
 
 ///|
 extern "c" fn epoxy_glUseProgram(fp : CPtr, program : UInt) -> Unit = "epoxy_glUseProgram"
@@ -30947,7 +30947,7 @@ pub fn gl_vdpau_unregister_surface_nv(surface : Int64) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glValidateProgram : Dispatch = Dispatch::new("glValidateProgram")
+let d_glValidateProgram : Dispatch = Dispatch::with_aliases("glValidateProgram", ["glValidateProgramARB"])
 
 ///|
 extern "c" fn epoxy_glValidateProgram(fp : CPtr, program : UInt) -> Unit = "epoxy_glValidateProgram"
@@ -31807,7 +31807,7 @@ pub fn gl_vertex_array_vertex_offset_ext(vaobj : UInt, buffer : UInt, size : Int
 }
 
 ///|
-let d_glVertexAttrib1d : Dispatch = Dispatch::new("glVertexAttrib1d")
+let d_glVertexAttrib1d : Dispatch = Dispatch::with_aliases("glVertexAttrib1d", ["glVertexAttrib1dARB", "glVertexAttrib1dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1d(fp : CPtr, index : UInt, x : Double) -> Unit = "epoxy_glVertexAttrib1d"
@@ -31818,7 +31818,7 @@ pub fn gl_vertex_attrib1d(index : UInt, x : Double) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glVertexAttrib1dARB : Dispatch = Dispatch::new("glVertexAttrib1dARB")
+let d_glVertexAttrib1dARB : Dispatch = Dispatch::with_aliases("glVertexAttrib1dARB", ["glVertexAttrib1d", "glVertexAttrib1dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1dARB(fp : CPtr, index : UInt, x : Double) -> Unit = "epoxy_glVertexAttrib1dARB"
@@ -31829,7 +31829,7 @@ pub fn gl_vertex_attrib1d_arb(index : UInt, x : Double) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glVertexAttrib1dNV : Dispatch = Dispatch::new("glVertexAttrib1dNV")
+let d_glVertexAttrib1dNV : Dispatch = Dispatch::with_aliases("glVertexAttrib1dNV", ["glVertexAttrib1d", "glVertexAttrib1dARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1dNV(fp : CPtr, index : UInt, x : Double) -> Unit = "epoxy_glVertexAttrib1dNV"
@@ -31840,7 +31840,7 @@ pub fn gl_vertex_attrib1d_nv(index : UInt, x : Double) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glVertexAttrib1dv : Dispatch = Dispatch::new("glVertexAttrib1dv")
+let d_glVertexAttrib1dv : Dispatch = Dispatch::with_aliases("glVertexAttrib1dv", ["glVertexAttrib1dvARB", "glVertexAttrib1dvNV"])
 
 ///|
 #borrow(v)
@@ -31852,7 +31852,7 @@ pub fn gl_vertex_attrib1dv(index : UInt, v : FixedArray[Double]) -> Unit raise R
 }
 
 ///|
-let d_glVertexAttrib1dvARB : Dispatch = Dispatch::new("glVertexAttrib1dvARB")
+let d_glVertexAttrib1dvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib1dvARB", ["glVertexAttrib1dv", "glVertexAttrib1dvNV"])
 
 ///|
 #borrow(v)
@@ -31864,7 +31864,7 @@ pub fn gl_vertex_attrib1dv_arb(index : UInt, v : FixedArray[Double]) -> Unit rai
 }
 
 ///|
-let d_glVertexAttrib1dvNV : Dispatch = Dispatch::new("glVertexAttrib1dvNV")
+let d_glVertexAttrib1dvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib1dvNV", ["glVertexAttrib1dv", "glVertexAttrib1dvARB"])
 
 ///|
 #borrow(v)
@@ -31876,7 +31876,7 @@ pub fn gl_vertex_attrib1dv_nv(index : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib1f : Dispatch = Dispatch::new("glVertexAttrib1f")
+let d_glVertexAttrib1f : Dispatch = Dispatch::with_aliases("glVertexAttrib1f", ["glVertexAttrib1fARB", "glVertexAttrib1fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1f(fp : CPtr, index : UInt, x : Float) -> Unit = "epoxy_glVertexAttrib1f"
@@ -31887,7 +31887,7 @@ pub fn gl_vertex_attrib1f(index : UInt, x : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glVertexAttrib1fARB : Dispatch = Dispatch::new("glVertexAttrib1fARB")
+let d_glVertexAttrib1fARB : Dispatch = Dispatch::with_aliases("glVertexAttrib1fARB", ["glVertexAttrib1f", "glVertexAttrib1fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1fARB(fp : CPtr, index : UInt, x : Float) -> Unit = "epoxy_glVertexAttrib1fARB"
@@ -31898,7 +31898,7 @@ pub fn gl_vertex_attrib1f_arb(index : UInt, x : Float) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glVertexAttrib1fNV : Dispatch = Dispatch::new("glVertexAttrib1fNV")
+let d_glVertexAttrib1fNV : Dispatch = Dispatch::with_aliases("glVertexAttrib1fNV", ["glVertexAttrib1f", "glVertexAttrib1fARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1fNV(fp : CPtr, index : UInt, x : Float) -> Unit = "epoxy_glVertexAttrib1fNV"
@@ -31909,7 +31909,7 @@ pub fn gl_vertex_attrib1f_nv(index : UInt, x : Float) -> Unit raise ResolveError
 }
 
 ///|
-let d_glVertexAttrib1fv : Dispatch = Dispatch::new("glVertexAttrib1fv")
+let d_glVertexAttrib1fv : Dispatch = Dispatch::with_aliases("glVertexAttrib1fv", ["glVertexAttrib1fvARB", "glVertexAttrib1fvNV"])
 
 ///|
 #borrow(v)
@@ -31921,7 +31921,7 @@ pub fn gl_vertex_attrib1fv(index : UInt, v : FixedArray[Float]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttrib1fvARB : Dispatch = Dispatch::new("glVertexAttrib1fvARB")
+let d_glVertexAttrib1fvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib1fvARB", ["glVertexAttrib1fv", "glVertexAttrib1fvNV"])
 
 ///|
 #borrow(v)
@@ -31933,7 +31933,7 @@ pub fn gl_vertex_attrib1fv_arb(index : UInt, v : FixedArray[Float]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib1fvNV : Dispatch = Dispatch::new("glVertexAttrib1fvNV")
+let d_glVertexAttrib1fvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib1fvNV", ["glVertexAttrib1fv", "glVertexAttrib1fvARB"])
 
 ///|
 #borrow(v)
@@ -31956,7 +31956,7 @@ pub fn gl_vertex_attrib1h_nv(index : UInt, x : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glVertexAttrib1s : Dispatch = Dispatch::new("glVertexAttrib1s")
+let d_glVertexAttrib1s : Dispatch = Dispatch::with_aliases("glVertexAttrib1s", ["glVertexAttrib1sARB", "glVertexAttrib1sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1s(fp : CPtr, index : UInt, x : Int) -> Unit = "epoxy_glVertexAttrib1s"
@@ -31967,7 +31967,7 @@ pub fn gl_vertex_attrib1s(index : UInt, x : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glVertexAttrib1sARB : Dispatch = Dispatch::new("glVertexAttrib1sARB")
+let d_glVertexAttrib1sARB : Dispatch = Dispatch::with_aliases("glVertexAttrib1sARB", ["glVertexAttrib1s", "glVertexAttrib1sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1sARB(fp : CPtr, index : UInt, x : Int) -> Unit = "epoxy_glVertexAttrib1sARB"
@@ -31978,7 +31978,7 @@ pub fn gl_vertex_attrib1s_arb(index : UInt, x : Int) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glVertexAttrib1sNV : Dispatch = Dispatch::new("glVertexAttrib1sNV")
+let d_glVertexAttrib1sNV : Dispatch = Dispatch::with_aliases("glVertexAttrib1sNV", ["glVertexAttrib1s", "glVertexAttrib1sARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib1sNV(fp : CPtr, index : UInt, x : Int) -> Unit = "epoxy_glVertexAttrib1sNV"
@@ -31989,7 +31989,7 @@ pub fn gl_vertex_attrib1s_nv(index : UInt, x : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glVertexAttrib2d : Dispatch = Dispatch::new("glVertexAttrib2d")
+let d_glVertexAttrib2d : Dispatch = Dispatch::with_aliases("glVertexAttrib2d", ["glVertexAttrib2dARB", "glVertexAttrib2dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2d(fp : CPtr, index : UInt, x : Double, y : Double) -> Unit = "epoxy_glVertexAttrib2d"
@@ -32000,7 +32000,7 @@ pub fn gl_vertex_attrib2d(index : UInt, x : Double, y : Double) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttrib2dARB : Dispatch = Dispatch::new("glVertexAttrib2dARB")
+let d_glVertexAttrib2dARB : Dispatch = Dispatch::with_aliases("glVertexAttrib2dARB", ["glVertexAttrib2d", "glVertexAttrib2dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2dARB(fp : CPtr, index : UInt, x : Double, y : Double) -> Unit = "epoxy_glVertexAttrib2dARB"
@@ -32011,7 +32011,7 @@ pub fn gl_vertex_attrib2d_arb(index : UInt, x : Double, y : Double) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib2dNV : Dispatch = Dispatch::new("glVertexAttrib2dNV")
+let d_glVertexAttrib2dNV : Dispatch = Dispatch::with_aliases("glVertexAttrib2dNV", ["glVertexAttrib2d", "glVertexAttrib2dARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2dNV(fp : CPtr, index : UInt, x : Double, y : Double) -> Unit = "epoxy_glVertexAttrib2dNV"
@@ -32022,7 +32022,7 @@ pub fn gl_vertex_attrib2d_nv(index : UInt, x : Double, y : Double) -> Unit raise
 }
 
 ///|
-let d_glVertexAttrib2dv : Dispatch = Dispatch::new("glVertexAttrib2dv")
+let d_glVertexAttrib2dv : Dispatch = Dispatch::with_aliases("glVertexAttrib2dv", ["glVertexAttrib2dvARB", "glVertexAttrib2dvNV"])
 
 ///|
 #borrow(v)
@@ -32034,7 +32034,7 @@ pub fn gl_vertex_attrib2dv(index : UInt, v : FixedArray[Double]) -> Unit raise R
 }
 
 ///|
-let d_glVertexAttrib2dvARB : Dispatch = Dispatch::new("glVertexAttrib2dvARB")
+let d_glVertexAttrib2dvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib2dvARB", ["glVertexAttrib2dv", "glVertexAttrib2dvNV"])
 
 ///|
 #borrow(v)
@@ -32046,7 +32046,7 @@ pub fn gl_vertex_attrib2dv_arb(index : UInt, v : FixedArray[Double]) -> Unit rai
 }
 
 ///|
-let d_glVertexAttrib2dvNV : Dispatch = Dispatch::new("glVertexAttrib2dvNV")
+let d_glVertexAttrib2dvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib2dvNV", ["glVertexAttrib2dv", "glVertexAttrib2dvARB"])
 
 ///|
 #borrow(v)
@@ -32058,7 +32058,7 @@ pub fn gl_vertex_attrib2dv_nv(index : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib2f : Dispatch = Dispatch::new("glVertexAttrib2f")
+let d_glVertexAttrib2f : Dispatch = Dispatch::with_aliases("glVertexAttrib2f", ["glVertexAttrib2fARB", "glVertexAttrib2fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2f(fp : CPtr, index : UInt, x : Float, y : Float) -> Unit = "epoxy_glVertexAttrib2f"
@@ -32069,7 +32069,7 @@ pub fn gl_vertex_attrib2f(index : UInt, x : Float, y : Float) -> Unit raise Reso
 }
 
 ///|
-let d_glVertexAttrib2fARB : Dispatch = Dispatch::new("glVertexAttrib2fARB")
+let d_glVertexAttrib2fARB : Dispatch = Dispatch::with_aliases("glVertexAttrib2fARB", ["glVertexAttrib2f", "glVertexAttrib2fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2fARB(fp : CPtr, index : UInt, x : Float, y : Float) -> Unit = "epoxy_glVertexAttrib2fARB"
@@ -32080,7 +32080,7 @@ pub fn gl_vertex_attrib2f_arb(index : UInt, x : Float, y : Float) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttrib2fNV : Dispatch = Dispatch::new("glVertexAttrib2fNV")
+let d_glVertexAttrib2fNV : Dispatch = Dispatch::with_aliases("glVertexAttrib2fNV", ["glVertexAttrib2f", "glVertexAttrib2fARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2fNV(fp : CPtr, index : UInt, x : Float, y : Float) -> Unit = "epoxy_glVertexAttrib2fNV"
@@ -32091,7 +32091,7 @@ pub fn gl_vertex_attrib2f_nv(index : UInt, x : Float, y : Float) -> Unit raise R
 }
 
 ///|
-let d_glVertexAttrib2fv : Dispatch = Dispatch::new("glVertexAttrib2fv")
+let d_glVertexAttrib2fv : Dispatch = Dispatch::with_aliases("glVertexAttrib2fv", ["glVertexAttrib2fvARB", "glVertexAttrib2fvNV"])
 
 ///|
 #borrow(v)
@@ -32103,7 +32103,7 @@ pub fn gl_vertex_attrib2fv(index : UInt, v : FixedArray[Float]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttrib2fvARB : Dispatch = Dispatch::new("glVertexAttrib2fvARB")
+let d_glVertexAttrib2fvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib2fvARB", ["glVertexAttrib2fv", "glVertexAttrib2fvNV"])
 
 ///|
 #borrow(v)
@@ -32115,7 +32115,7 @@ pub fn gl_vertex_attrib2fv_arb(index : UInt, v : FixedArray[Float]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib2fvNV : Dispatch = Dispatch::new("glVertexAttrib2fvNV")
+let d_glVertexAttrib2fvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib2fvNV", ["glVertexAttrib2fv", "glVertexAttrib2fvARB"])
 
 ///|
 #borrow(v)
@@ -32138,7 +32138,7 @@ pub fn gl_vertex_attrib2h_nv(index : UInt, x : Int, y : Int) -> Unit raise Resol
 }
 
 ///|
-let d_glVertexAttrib2s : Dispatch = Dispatch::new("glVertexAttrib2s")
+let d_glVertexAttrib2s : Dispatch = Dispatch::with_aliases("glVertexAttrib2s", ["glVertexAttrib2sARB", "glVertexAttrib2sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2s(fp : CPtr, index : UInt, x : Int, y : Int) -> Unit = "epoxy_glVertexAttrib2s"
@@ -32149,7 +32149,7 @@ pub fn gl_vertex_attrib2s(index : UInt, x : Int, y : Int) -> Unit raise ResolveE
 }
 
 ///|
-let d_glVertexAttrib2sARB : Dispatch = Dispatch::new("glVertexAttrib2sARB")
+let d_glVertexAttrib2sARB : Dispatch = Dispatch::with_aliases("glVertexAttrib2sARB", ["glVertexAttrib2s", "glVertexAttrib2sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2sARB(fp : CPtr, index : UInt, x : Int, y : Int) -> Unit = "epoxy_glVertexAttrib2sARB"
@@ -32160,7 +32160,7 @@ pub fn gl_vertex_attrib2s_arb(index : UInt, x : Int, y : Int) -> Unit raise Reso
 }
 
 ///|
-let d_glVertexAttrib2sNV : Dispatch = Dispatch::new("glVertexAttrib2sNV")
+let d_glVertexAttrib2sNV : Dispatch = Dispatch::with_aliases("glVertexAttrib2sNV", ["glVertexAttrib2s", "glVertexAttrib2sARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib2sNV(fp : CPtr, index : UInt, x : Int, y : Int) -> Unit = "epoxy_glVertexAttrib2sNV"
@@ -32171,7 +32171,7 @@ pub fn gl_vertex_attrib2s_nv(index : UInt, x : Int, y : Int) -> Unit raise Resol
 }
 
 ///|
-let d_glVertexAttrib3d : Dispatch = Dispatch::new("glVertexAttrib3d")
+let d_glVertexAttrib3d : Dispatch = Dispatch::with_aliases("glVertexAttrib3d", ["glVertexAttrib3dARB", "glVertexAttrib3dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3d(fp : CPtr, index : UInt, x : Double, y : Double, z : Double) -> Unit = "epoxy_glVertexAttrib3d"
@@ -32182,7 +32182,7 @@ pub fn gl_vertex_attrib3d(index : UInt, x : Double, y : Double, z : Double) -> U
 }
 
 ///|
-let d_glVertexAttrib3dARB : Dispatch = Dispatch::new("glVertexAttrib3dARB")
+let d_glVertexAttrib3dARB : Dispatch = Dispatch::with_aliases("glVertexAttrib3dARB", ["glVertexAttrib3d", "glVertexAttrib3dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3dARB(fp : CPtr, index : UInt, x : Double, y : Double, z : Double) -> Unit = "epoxy_glVertexAttrib3dARB"
@@ -32193,7 +32193,7 @@ pub fn gl_vertex_attrib3d_arb(index : UInt, x : Double, y : Double, z : Double) 
 }
 
 ///|
-let d_glVertexAttrib3dNV : Dispatch = Dispatch::new("glVertexAttrib3dNV")
+let d_glVertexAttrib3dNV : Dispatch = Dispatch::with_aliases("glVertexAttrib3dNV", ["glVertexAttrib3d", "glVertexAttrib3dARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3dNV(fp : CPtr, index : UInt, x : Double, y : Double, z : Double) -> Unit = "epoxy_glVertexAttrib3dNV"
@@ -32204,7 +32204,7 @@ pub fn gl_vertex_attrib3d_nv(index : UInt, x : Double, y : Double, z : Double) -
 }
 
 ///|
-let d_glVertexAttrib3dv : Dispatch = Dispatch::new("glVertexAttrib3dv")
+let d_glVertexAttrib3dv : Dispatch = Dispatch::with_aliases("glVertexAttrib3dv", ["glVertexAttrib3dvARB", "glVertexAttrib3dvNV"])
 
 ///|
 #borrow(v)
@@ -32216,7 +32216,7 @@ pub fn gl_vertex_attrib3dv(index : UInt, v : FixedArray[Double]) -> Unit raise R
 }
 
 ///|
-let d_glVertexAttrib3dvARB : Dispatch = Dispatch::new("glVertexAttrib3dvARB")
+let d_glVertexAttrib3dvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib3dvARB", ["glVertexAttrib3dv", "glVertexAttrib3dvNV"])
 
 ///|
 #borrow(v)
@@ -32228,7 +32228,7 @@ pub fn gl_vertex_attrib3dv_arb(index : UInt, v : FixedArray[Double]) -> Unit rai
 }
 
 ///|
-let d_glVertexAttrib3dvNV : Dispatch = Dispatch::new("glVertexAttrib3dvNV")
+let d_glVertexAttrib3dvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib3dvNV", ["glVertexAttrib3dv", "glVertexAttrib3dvARB"])
 
 ///|
 #borrow(v)
@@ -32240,7 +32240,7 @@ pub fn gl_vertex_attrib3dv_nv(index : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib3f : Dispatch = Dispatch::new("glVertexAttrib3f")
+let d_glVertexAttrib3f : Dispatch = Dispatch::with_aliases("glVertexAttrib3f", ["glVertexAttrib3fARB", "glVertexAttrib3fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3f(fp : CPtr, index : UInt, x : Float, y : Float, z : Float) -> Unit = "epoxy_glVertexAttrib3f"
@@ -32251,7 +32251,7 @@ pub fn gl_vertex_attrib3f(index : UInt, x : Float, y : Float, z : Float) -> Unit
 }
 
 ///|
-let d_glVertexAttrib3fARB : Dispatch = Dispatch::new("glVertexAttrib3fARB")
+let d_glVertexAttrib3fARB : Dispatch = Dispatch::with_aliases("glVertexAttrib3fARB", ["glVertexAttrib3f", "glVertexAttrib3fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3fARB(fp : CPtr, index : UInt, x : Float, y : Float, z : Float) -> Unit = "epoxy_glVertexAttrib3fARB"
@@ -32262,7 +32262,7 @@ pub fn gl_vertex_attrib3f_arb(index : UInt, x : Float, y : Float, z : Float) -> 
 }
 
 ///|
-let d_glVertexAttrib3fNV : Dispatch = Dispatch::new("glVertexAttrib3fNV")
+let d_glVertexAttrib3fNV : Dispatch = Dispatch::with_aliases("glVertexAttrib3fNV", ["glVertexAttrib3f", "glVertexAttrib3fARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3fNV(fp : CPtr, index : UInt, x : Float, y : Float, z : Float) -> Unit = "epoxy_glVertexAttrib3fNV"
@@ -32273,7 +32273,7 @@ pub fn gl_vertex_attrib3f_nv(index : UInt, x : Float, y : Float, z : Float) -> U
 }
 
 ///|
-let d_glVertexAttrib3fv : Dispatch = Dispatch::new("glVertexAttrib3fv")
+let d_glVertexAttrib3fv : Dispatch = Dispatch::with_aliases("glVertexAttrib3fv", ["glVertexAttrib3fvARB", "glVertexAttrib3fvNV"])
 
 ///|
 #borrow(v)
@@ -32285,7 +32285,7 @@ pub fn gl_vertex_attrib3fv(index : UInt, v : FixedArray[Float]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttrib3fvARB : Dispatch = Dispatch::new("glVertexAttrib3fvARB")
+let d_glVertexAttrib3fvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib3fvARB", ["glVertexAttrib3fv", "glVertexAttrib3fvNV"])
 
 ///|
 #borrow(v)
@@ -32297,7 +32297,7 @@ pub fn gl_vertex_attrib3fv_arb(index : UInt, v : FixedArray[Float]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib3fvNV : Dispatch = Dispatch::new("glVertexAttrib3fvNV")
+let d_glVertexAttrib3fvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib3fvNV", ["glVertexAttrib3fv", "glVertexAttrib3fvARB"])
 
 ///|
 #borrow(v)
@@ -32320,7 +32320,7 @@ pub fn gl_vertex_attrib3h_nv(index : UInt, x : Int, y : Int, z : Int) -> Unit ra
 }
 
 ///|
-let d_glVertexAttrib3s : Dispatch = Dispatch::new("glVertexAttrib3s")
+let d_glVertexAttrib3s : Dispatch = Dispatch::with_aliases("glVertexAttrib3s", ["glVertexAttrib3sARB", "glVertexAttrib3sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3s(fp : CPtr, index : UInt, x : Int, y : Int, z : Int) -> Unit = "epoxy_glVertexAttrib3s"
@@ -32331,7 +32331,7 @@ pub fn gl_vertex_attrib3s(index : UInt, x : Int, y : Int, z : Int) -> Unit raise
 }
 
 ///|
-let d_glVertexAttrib3sARB : Dispatch = Dispatch::new("glVertexAttrib3sARB")
+let d_glVertexAttrib3sARB : Dispatch = Dispatch::with_aliases("glVertexAttrib3sARB", ["glVertexAttrib3s", "glVertexAttrib3sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3sARB(fp : CPtr, index : UInt, x : Int, y : Int, z : Int) -> Unit = "epoxy_glVertexAttrib3sARB"
@@ -32342,7 +32342,7 @@ pub fn gl_vertex_attrib3s_arb(index : UInt, x : Int, y : Int, z : Int) -> Unit r
 }
 
 ///|
-let d_glVertexAttrib3sNV : Dispatch = Dispatch::new("glVertexAttrib3sNV")
+let d_glVertexAttrib3sNV : Dispatch = Dispatch::with_aliases("glVertexAttrib3sNV", ["glVertexAttrib3s", "glVertexAttrib3sARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib3sNV(fp : CPtr, index : UInt, x : Int, y : Int, z : Int) -> Unit = "epoxy_glVertexAttrib3sNV"
@@ -32353,7 +32353,7 @@ pub fn gl_vertex_attrib3s_nv(index : UInt, x : Int, y : Int, z : Int) -> Unit ra
 }
 
 ///|
-let d_glVertexAttrib4Nbv : Dispatch = Dispatch::new("glVertexAttrib4Nbv")
+let d_glVertexAttrib4Nbv : Dispatch = Dispatch::with_aliases("glVertexAttrib4Nbv", ["glVertexAttrib4NbvARB"])
 
 ///|
 #borrow(v)
@@ -32365,7 +32365,7 @@ pub fn gl_vertex_attrib4_nbv(index : UInt, v : Bytes) -> Unit raise ResolveError
 }
 
 ///|
-let d_glVertexAttrib4NbvARB : Dispatch = Dispatch::new("glVertexAttrib4NbvARB")
+let d_glVertexAttrib4NbvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4NbvARB", ["glVertexAttrib4Nbv"])
 
 ///|
 #borrow(v)
@@ -32377,7 +32377,7 @@ pub fn gl_vertex_attrib4_nbv_arb(index : UInt, v : Bytes) -> Unit raise ResolveE
 }
 
 ///|
-let d_glVertexAttrib4Niv : Dispatch = Dispatch::new("glVertexAttrib4Niv")
+let d_glVertexAttrib4Niv : Dispatch = Dispatch::with_aliases("glVertexAttrib4Niv", ["glVertexAttrib4NivARB"])
 
 ///|
 #borrow(v)
@@ -32389,7 +32389,7 @@ pub fn gl_vertex_attrib4_niv(index : UInt, v : FixedArray[Int]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttrib4NivARB : Dispatch = Dispatch::new("glVertexAttrib4NivARB")
+let d_glVertexAttrib4NivARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4NivARB", ["glVertexAttrib4Niv"])
 
 ///|
 #borrow(v)
@@ -32401,7 +32401,7 @@ pub fn gl_vertex_attrib4_niv_arb(index : UInt, v : FixedArray[Int]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib4Nub : Dispatch = Dispatch::new("glVertexAttrib4Nub")
+let d_glVertexAttrib4Nub : Dispatch = Dispatch::with_aliases("glVertexAttrib4Nub", ["glVertexAttrib4NubARB", "glVertexAttrib4ubNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4Nub(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttrib4Nub"
@@ -32412,7 +32412,7 @@ pub fn gl_vertex_attrib4_nub(index : UInt, x : Int, y : Int, z : Int, w : Int) -
 }
 
 ///|
-let d_glVertexAttrib4NubARB : Dispatch = Dispatch::new("glVertexAttrib4NubARB")
+let d_glVertexAttrib4NubARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4NubARB", ["glVertexAttrib4Nub", "glVertexAttrib4ubNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4NubARB(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttrib4NubARB"
@@ -32423,7 +32423,7 @@ pub fn gl_vertex_attrib4_nub_arb(index : UInt, x : Int, y : Int, z : Int, w : In
 }
 
 ///|
-let d_glVertexAttrib4Nubv : Dispatch = Dispatch::new("glVertexAttrib4Nubv")
+let d_glVertexAttrib4Nubv : Dispatch = Dispatch::with_aliases("glVertexAttrib4Nubv", ["glVertexAttrib4NubvARB", "glVertexAttrib4ubvNV"])
 
 ///|
 #borrow(v)
@@ -32435,7 +32435,7 @@ pub fn gl_vertex_attrib4_nubv(index : UInt, v : Bytes) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glVertexAttrib4NubvARB : Dispatch = Dispatch::new("glVertexAttrib4NubvARB")
+let d_glVertexAttrib4NubvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4NubvARB", ["glVertexAttrib4Nubv", "glVertexAttrib4ubvNV"])
 
 ///|
 #borrow(v)
@@ -32447,7 +32447,7 @@ pub fn gl_vertex_attrib4_nubv_arb(index : UInt, v : Bytes) -> Unit raise Resolve
 }
 
 ///|
-let d_glVertexAttrib4Nuiv : Dispatch = Dispatch::new("glVertexAttrib4Nuiv")
+let d_glVertexAttrib4Nuiv : Dispatch = Dispatch::with_aliases("glVertexAttrib4Nuiv", ["glVertexAttrib4NuivARB"])
 
 ///|
 #borrow(v)
@@ -32459,7 +32459,7 @@ pub fn gl_vertex_attrib4_nuiv(index : UInt, v : FixedArray[UInt]) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttrib4NuivARB : Dispatch = Dispatch::new("glVertexAttrib4NuivARB")
+let d_glVertexAttrib4NuivARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4NuivARB", ["glVertexAttrib4Nuiv"])
 
 ///|
 #borrow(v)
@@ -32471,7 +32471,7 @@ pub fn gl_vertex_attrib4_nuiv_arb(index : UInt, v : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
-let d_glVertexAttrib4bv : Dispatch = Dispatch::new("glVertexAttrib4bv")
+let d_glVertexAttrib4bv : Dispatch = Dispatch::with_aliases("glVertexAttrib4bv", ["glVertexAttrib4bvARB"])
 
 ///|
 #borrow(v)
@@ -32483,7 +32483,7 @@ pub fn gl_vertex_attrib4bv(index : UInt, v : Bytes) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glVertexAttrib4bvARB : Dispatch = Dispatch::new("glVertexAttrib4bvARB")
+let d_glVertexAttrib4bvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4bvARB", ["glVertexAttrib4bv"])
 
 ///|
 #borrow(v)
@@ -32495,7 +32495,7 @@ pub fn gl_vertex_attrib4bv_arb(index : UInt, v : Bytes) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glVertexAttrib4d : Dispatch = Dispatch::new("glVertexAttrib4d")
+let d_glVertexAttrib4d : Dispatch = Dispatch::with_aliases("glVertexAttrib4d", ["glVertexAttrib4dARB", "glVertexAttrib4dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4d(fp : CPtr, index : UInt, x : Double, y : Double, z : Double, w : Double) -> Unit = "epoxy_glVertexAttrib4d"
@@ -32506,7 +32506,7 @@ pub fn gl_vertex_attrib4d(index : UInt, x : Double, y : Double, z : Double, w : 
 }
 
 ///|
-let d_glVertexAttrib4dARB : Dispatch = Dispatch::new("glVertexAttrib4dARB")
+let d_glVertexAttrib4dARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4dARB", ["glVertexAttrib4d", "glVertexAttrib4dNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4dARB(fp : CPtr, index : UInt, x : Double, y : Double, z : Double, w : Double) -> Unit = "epoxy_glVertexAttrib4dARB"
@@ -32517,7 +32517,7 @@ pub fn gl_vertex_attrib4d_arb(index : UInt, x : Double, y : Double, z : Double, 
 }
 
 ///|
-let d_glVertexAttrib4dNV : Dispatch = Dispatch::new("glVertexAttrib4dNV")
+let d_glVertexAttrib4dNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4dNV", ["glVertexAttrib4d", "glVertexAttrib4dARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4dNV(fp : CPtr, index : UInt, x : Double, y : Double, z : Double, w : Double) -> Unit = "epoxy_glVertexAttrib4dNV"
@@ -32528,7 +32528,7 @@ pub fn gl_vertex_attrib4d_nv(index : UInt, x : Double, y : Double, z : Double, w
 }
 
 ///|
-let d_glVertexAttrib4dv : Dispatch = Dispatch::new("glVertexAttrib4dv")
+let d_glVertexAttrib4dv : Dispatch = Dispatch::with_aliases("glVertexAttrib4dv", ["glVertexAttrib4dvARB", "glVertexAttrib4dvNV"])
 
 ///|
 #borrow(v)
@@ -32540,7 +32540,7 @@ pub fn gl_vertex_attrib4dv(index : UInt, v : FixedArray[Double]) -> Unit raise R
 }
 
 ///|
-let d_glVertexAttrib4dvARB : Dispatch = Dispatch::new("glVertexAttrib4dvARB")
+let d_glVertexAttrib4dvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4dvARB", ["glVertexAttrib4dv", "glVertexAttrib4dvNV"])
 
 ///|
 #borrow(v)
@@ -32552,7 +32552,7 @@ pub fn gl_vertex_attrib4dv_arb(index : UInt, v : FixedArray[Double]) -> Unit rai
 }
 
 ///|
-let d_glVertexAttrib4dvNV : Dispatch = Dispatch::new("glVertexAttrib4dvNV")
+let d_glVertexAttrib4dvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4dvNV", ["glVertexAttrib4dv", "glVertexAttrib4dvARB"])
 
 ///|
 #borrow(v)
@@ -32564,7 +32564,7 @@ pub fn gl_vertex_attrib4dv_nv(index : UInt, v : FixedArray[Double]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib4f : Dispatch = Dispatch::new("glVertexAttrib4f")
+let d_glVertexAttrib4f : Dispatch = Dispatch::with_aliases("glVertexAttrib4f", ["glVertexAttrib4fARB", "glVertexAttrib4fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4f(fp : CPtr, index : UInt, x : Float, y : Float, z : Float, w : Float) -> Unit = "epoxy_glVertexAttrib4f"
@@ -32575,7 +32575,7 @@ pub fn gl_vertex_attrib4f(index : UInt, x : Float, y : Float, z : Float, w : Flo
 }
 
 ///|
-let d_glVertexAttrib4fARB : Dispatch = Dispatch::new("glVertexAttrib4fARB")
+let d_glVertexAttrib4fARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4fARB", ["glVertexAttrib4f", "glVertexAttrib4fNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4fARB(fp : CPtr, index : UInt, x : Float, y : Float, z : Float, w : Float) -> Unit = "epoxy_glVertexAttrib4fARB"
@@ -32586,7 +32586,7 @@ pub fn gl_vertex_attrib4f_arb(index : UInt, x : Float, y : Float, z : Float, w :
 }
 
 ///|
-let d_glVertexAttrib4fNV : Dispatch = Dispatch::new("glVertexAttrib4fNV")
+let d_glVertexAttrib4fNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4fNV", ["glVertexAttrib4f", "glVertexAttrib4fARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4fNV(fp : CPtr, index : UInt, x : Float, y : Float, z : Float, w : Float) -> Unit = "epoxy_glVertexAttrib4fNV"
@@ -32597,7 +32597,7 @@ pub fn gl_vertex_attrib4f_nv(index : UInt, x : Float, y : Float, z : Float, w : 
 }
 
 ///|
-let d_glVertexAttrib4fv : Dispatch = Dispatch::new("glVertexAttrib4fv")
+let d_glVertexAttrib4fv : Dispatch = Dispatch::with_aliases("glVertexAttrib4fv", ["glVertexAttrib4fvARB", "glVertexAttrib4fvNV"])
 
 ///|
 #borrow(v)
@@ -32609,7 +32609,7 @@ pub fn gl_vertex_attrib4fv(index : UInt, v : FixedArray[Float]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttrib4fvARB : Dispatch = Dispatch::new("glVertexAttrib4fvARB")
+let d_glVertexAttrib4fvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4fvARB", ["glVertexAttrib4fv", "glVertexAttrib4fvNV"])
 
 ///|
 #borrow(v)
@@ -32621,7 +32621,7 @@ pub fn gl_vertex_attrib4fv_arb(index : UInt, v : FixedArray[Float]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttrib4fvNV : Dispatch = Dispatch::new("glVertexAttrib4fvNV")
+let d_glVertexAttrib4fvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4fvNV", ["glVertexAttrib4fv", "glVertexAttrib4fvARB"])
 
 ///|
 #borrow(v)
@@ -32644,7 +32644,7 @@ pub fn gl_vertex_attrib4h_nv(index : UInt, x : Int, y : Int, z : Int, w : Int) -
 }
 
 ///|
-let d_glVertexAttrib4iv : Dispatch = Dispatch::new("glVertexAttrib4iv")
+let d_glVertexAttrib4iv : Dispatch = Dispatch::with_aliases("glVertexAttrib4iv", ["glVertexAttrib4ivARB"])
 
 ///|
 #borrow(v)
@@ -32656,7 +32656,7 @@ pub fn gl_vertex_attrib4iv(index : UInt, v : FixedArray[Int]) -> Unit raise Reso
 }
 
 ///|
-let d_glVertexAttrib4ivARB : Dispatch = Dispatch::new("glVertexAttrib4ivARB")
+let d_glVertexAttrib4ivARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4ivARB", ["glVertexAttrib4iv"])
 
 ///|
 #borrow(v)
@@ -32668,7 +32668,7 @@ pub fn gl_vertex_attrib4iv_arb(index : UInt, v : FixedArray[Int]) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttrib4s : Dispatch = Dispatch::new("glVertexAttrib4s")
+let d_glVertexAttrib4s : Dispatch = Dispatch::with_aliases("glVertexAttrib4s", ["glVertexAttrib4sARB", "glVertexAttrib4sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4s(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttrib4s"
@@ -32679,7 +32679,7 @@ pub fn gl_vertex_attrib4s(index : UInt, x : Int, y : Int, z : Int, w : Int) -> U
 }
 
 ///|
-let d_glVertexAttrib4sARB : Dispatch = Dispatch::new("glVertexAttrib4sARB")
+let d_glVertexAttrib4sARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4sARB", ["glVertexAttrib4s", "glVertexAttrib4sNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4sARB(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttrib4sARB"
@@ -32690,7 +32690,7 @@ pub fn gl_vertex_attrib4s_arb(index : UInt, x : Int, y : Int, z : Int, w : Int) 
 }
 
 ///|
-let d_glVertexAttrib4sNV : Dispatch = Dispatch::new("glVertexAttrib4sNV")
+let d_glVertexAttrib4sNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4sNV", ["glVertexAttrib4s", "glVertexAttrib4sARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4sNV(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttrib4sNV"
@@ -32701,7 +32701,7 @@ pub fn gl_vertex_attrib4s_nv(index : UInt, x : Int, y : Int, z : Int, w : Int) -
 }
 
 ///|
-let d_glVertexAttrib4ubNV : Dispatch = Dispatch::new("glVertexAttrib4ubNV")
+let d_glVertexAttrib4ubNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4ubNV", ["glVertexAttrib4Nub", "glVertexAttrib4NubARB"])
 
 ///|
 extern "c" fn epoxy_glVertexAttrib4ubNV(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttrib4ubNV"
@@ -32712,7 +32712,7 @@ pub fn gl_vertex_attrib4ub_nv(index : UInt, x : Int, y : Int, z : Int, w : Int) 
 }
 
 ///|
-let d_glVertexAttrib4ubv : Dispatch = Dispatch::new("glVertexAttrib4ubv")
+let d_glVertexAttrib4ubv : Dispatch = Dispatch::with_aliases("glVertexAttrib4ubv", ["glVertexAttrib4ubvARB"])
 
 ///|
 #borrow(v)
@@ -32724,7 +32724,7 @@ pub fn gl_vertex_attrib4ubv(index : UInt, v : Bytes) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glVertexAttrib4ubvARB : Dispatch = Dispatch::new("glVertexAttrib4ubvARB")
+let d_glVertexAttrib4ubvARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4ubvARB", ["glVertexAttrib4ubv"])
 
 ///|
 #borrow(v)
@@ -32736,7 +32736,7 @@ pub fn gl_vertex_attrib4ubv_arb(index : UInt, v : Bytes) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glVertexAttrib4ubvNV : Dispatch = Dispatch::new("glVertexAttrib4ubvNV")
+let d_glVertexAttrib4ubvNV : Dispatch = Dispatch::with_aliases("glVertexAttrib4ubvNV", ["glVertexAttrib4Nubv", "glVertexAttrib4NubvARB"])
 
 ///|
 #borrow(v)
@@ -32748,7 +32748,7 @@ pub fn gl_vertex_attrib4ubv_nv(index : UInt, v : Bytes) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glVertexAttrib4uiv : Dispatch = Dispatch::new("glVertexAttrib4uiv")
+let d_glVertexAttrib4uiv : Dispatch = Dispatch::with_aliases("glVertexAttrib4uiv", ["glVertexAttrib4uivARB"])
 
 ///|
 #borrow(v)
@@ -32760,7 +32760,7 @@ pub fn gl_vertex_attrib4uiv(index : UInt, v : FixedArray[UInt]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttrib4uivARB : Dispatch = Dispatch::new("glVertexAttrib4uivARB")
+let d_glVertexAttrib4uivARB : Dispatch = Dispatch::with_aliases("glVertexAttrib4uivARB", ["glVertexAttrib4uiv"])
 
 ///|
 #borrow(v)
@@ -32794,7 +32794,7 @@ pub fn gl_vertex_attrib_binding(attribindex : UInt, bindingindex : UInt) -> Unit
 }
 
 ///|
-let d_glVertexAttribDivisor : Dispatch = Dispatch::new("glVertexAttribDivisor")
+let d_glVertexAttribDivisor : Dispatch = Dispatch::with_aliases("glVertexAttribDivisor", ["glVertexAttribDivisorANGLE", "glVertexAttribDivisorARB", "glVertexAttribDivisorEXT", "glVertexAttribDivisorNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribDivisor(fp : CPtr, index : UInt, divisor : UInt) -> Unit = "epoxy_glVertexAttribDivisor"
@@ -32805,7 +32805,7 @@ pub fn gl_vertex_attrib_divisor(index : UInt, divisor : UInt) -> Unit raise Reso
 }
 
 ///|
-let d_glVertexAttribDivisorANGLE : Dispatch = Dispatch::new("glVertexAttribDivisorANGLE")
+let d_glVertexAttribDivisorANGLE : Dispatch = Dispatch::with_aliases("glVertexAttribDivisorANGLE", ["glVertexAttribDivisor", "glVertexAttribDivisorARB", "glVertexAttribDivisorEXT", "glVertexAttribDivisorNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribDivisorANGLE(fp : CPtr, index : UInt, divisor : UInt) -> Unit = "epoxy_glVertexAttribDivisorANGLE"
@@ -32816,7 +32816,7 @@ pub fn gl_vertex_attrib_divisor_angle(index : UInt, divisor : UInt) -> Unit rais
 }
 
 ///|
-let d_glVertexAttribDivisorARB : Dispatch = Dispatch::new("glVertexAttribDivisorARB")
+let d_glVertexAttribDivisorARB : Dispatch = Dispatch::with_aliases("glVertexAttribDivisorARB", ["glVertexAttribDivisor", "glVertexAttribDivisorANGLE", "glVertexAttribDivisorEXT", "glVertexAttribDivisorNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribDivisorARB(fp : CPtr, index : UInt, divisor : UInt) -> Unit = "epoxy_glVertexAttribDivisorARB"
@@ -32827,7 +32827,7 @@ pub fn gl_vertex_attrib_divisor_arb(index : UInt, divisor : UInt) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttribDivisorEXT : Dispatch = Dispatch::new("glVertexAttribDivisorEXT")
+let d_glVertexAttribDivisorEXT : Dispatch = Dispatch::with_aliases("glVertexAttribDivisorEXT", ["glVertexAttribDivisor", "glVertexAttribDivisorANGLE", "glVertexAttribDivisorARB", "glVertexAttribDivisorNV"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribDivisorEXT(fp : CPtr, index : UInt, divisor : UInt) -> Unit = "epoxy_glVertexAttribDivisorEXT"
@@ -32838,7 +32838,7 @@ pub fn gl_vertex_attrib_divisor_ext(index : UInt, divisor : UInt) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttribDivisorNV : Dispatch = Dispatch::new("glVertexAttribDivisorNV")
+let d_glVertexAttribDivisorNV : Dispatch = Dispatch::with_aliases("glVertexAttribDivisorNV", ["glVertexAttribDivisor", "glVertexAttribDivisorANGLE", "glVertexAttribDivisorARB", "glVertexAttribDivisorEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribDivisorNV(fp : CPtr, index : UInt, divisor : UInt) -> Unit = "epoxy_glVertexAttribDivisorNV"
@@ -32871,7 +32871,7 @@ pub fn gl_vertex_attrib_format_nv(index : UInt, size : Int, type_ : UInt, normal
 }
 
 ///|
-let d_glVertexAttribI1i : Dispatch = Dispatch::new("glVertexAttribI1i")
+let d_glVertexAttribI1i : Dispatch = Dispatch::with_aliases("glVertexAttribI1i", ["glVertexAttribI1iEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI1i(fp : CPtr, index : UInt, x : Int) -> Unit = "epoxy_glVertexAttribI1i"
@@ -32882,7 +32882,7 @@ pub fn gl_vertex_attrib_i1i(index : UInt, x : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glVertexAttribI1iEXT : Dispatch = Dispatch::new("glVertexAttribI1iEXT")
+let d_glVertexAttribI1iEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI1iEXT", ["glVertexAttribI1i"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI1iEXT(fp : CPtr, index : UInt, x : Int) -> Unit = "epoxy_glVertexAttribI1iEXT"
@@ -32893,7 +32893,7 @@ pub fn gl_vertex_attrib_i1i_ext(index : UInt, x : Int) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glVertexAttribI1iv : Dispatch = Dispatch::new("glVertexAttribI1iv")
+let d_glVertexAttribI1iv : Dispatch = Dispatch::with_aliases("glVertexAttribI1iv", ["glVertexAttribI1ivEXT"])
 
 ///|
 #borrow(v)
@@ -32905,7 +32905,7 @@ pub fn gl_vertex_attrib_i1iv(index : UInt, v : FixedArray[Int]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttribI1ivEXT : Dispatch = Dispatch::new("glVertexAttribI1ivEXT")
+let d_glVertexAttribI1ivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI1ivEXT", ["glVertexAttribI1iv"])
 
 ///|
 #borrow(v)
@@ -32917,7 +32917,7 @@ pub fn gl_vertex_attrib_i1iv_ext(index : UInt, v : FixedArray[Int]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttribI1ui : Dispatch = Dispatch::new("glVertexAttribI1ui")
+let d_glVertexAttribI1ui : Dispatch = Dispatch::with_aliases("glVertexAttribI1ui", ["glVertexAttribI1uiEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI1ui(fp : CPtr, index : UInt, x : UInt) -> Unit = "epoxy_glVertexAttribI1ui"
@@ -32928,7 +32928,7 @@ pub fn gl_vertex_attrib_i1ui(index : UInt, x : UInt) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glVertexAttribI1uiEXT : Dispatch = Dispatch::new("glVertexAttribI1uiEXT")
+let d_glVertexAttribI1uiEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI1uiEXT", ["glVertexAttribI1ui"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI1uiEXT(fp : CPtr, index : UInt, x : UInt) -> Unit = "epoxy_glVertexAttribI1uiEXT"
@@ -32939,7 +32939,7 @@ pub fn gl_vertex_attrib_i1ui_ext(index : UInt, x : UInt) -> Unit raise ResolveEr
 }
 
 ///|
-let d_glVertexAttribI1uiv : Dispatch = Dispatch::new("glVertexAttribI1uiv")
+let d_glVertexAttribI1uiv : Dispatch = Dispatch::with_aliases("glVertexAttribI1uiv", ["glVertexAttribI1uivEXT"])
 
 ///|
 #borrow(v)
@@ -32951,7 +32951,7 @@ pub fn gl_vertex_attrib_i1uiv(index : UInt, v : FixedArray[UInt]) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttribI1uivEXT : Dispatch = Dispatch::new("glVertexAttribI1uivEXT")
+let d_glVertexAttribI1uivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI1uivEXT", ["glVertexAttribI1uiv"])
 
 ///|
 #borrow(v)
@@ -32963,7 +32963,7 @@ pub fn gl_vertex_attrib_i1uiv_ext(index : UInt, v : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
-let d_glVertexAttribI2i : Dispatch = Dispatch::new("glVertexAttribI2i")
+let d_glVertexAttribI2i : Dispatch = Dispatch::with_aliases("glVertexAttribI2i", ["glVertexAttribI2iEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI2i(fp : CPtr, index : UInt, x : Int, y : Int) -> Unit = "epoxy_glVertexAttribI2i"
@@ -32974,7 +32974,7 @@ pub fn gl_vertex_attrib_i2i(index : UInt, x : Int, y : Int) -> Unit raise Resolv
 }
 
 ///|
-let d_glVertexAttribI2iEXT : Dispatch = Dispatch::new("glVertexAttribI2iEXT")
+let d_glVertexAttribI2iEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI2iEXT", ["glVertexAttribI2i"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI2iEXT(fp : CPtr, index : UInt, x : Int, y : Int) -> Unit = "epoxy_glVertexAttribI2iEXT"
@@ -32985,7 +32985,7 @@ pub fn gl_vertex_attrib_i2i_ext(index : UInt, x : Int, y : Int) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttribI2iv : Dispatch = Dispatch::new("glVertexAttribI2iv")
+let d_glVertexAttribI2iv : Dispatch = Dispatch::with_aliases("glVertexAttribI2iv", ["glVertexAttribI2ivEXT"])
 
 ///|
 #borrow(v)
@@ -32997,7 +32997,7 @@ pub fn gl_vertex_attrib_i2iv(index : UInt, v : FixedArray[Int]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttribI2ivEXT : Dispatch = Dispatch::new("glVertexAttribI2ivEXT")
+let d_glVertexAttribI2ivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI2ivEXT", ["glVertexAttribI2iv"])
 
 ///|
 #borrow(v)
@@ -33009,7 +33009,7 @@ pub fn gl_vertex_attrib_i2iv_ext(index : UInt, v : FixedArray[Int]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttribI2ui : Dispatch = Dispatch::new("glVertexAttribI2ui")
+let d_glVertexAttribI2ui : Dispatch = Dispatch::with_aliases("glVertexAttribI2ui", ["glVertexAttribI2uiEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI2ui(fp : CPtr, index : UInt, x : UInt, y : UInt) -> Unit = "epoxy_glVertexAttribI2ui"
@@ -33020,7 +33020,7 @@ pub fn gl_vertex_attrib_i2ui(index : UInt, x : UInt, y : UInt) -> Unit raise Res
 }
 
 ///|
-let d_glVertexAttribI2uiEXT : Dispatch = Dispatch::new("glVertexAttribI2uiEXT")
+let d_glVertexAttribI2uiEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI2uiEXT", ["glVertexAttribI2ui"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI2uiEXT(fp : CPtr, index : UInt, x : UInt, y : UInt) -> Unit = "epoxy_glVertexAttribI2uiEXT"
@@ -33031,7 +33031,7 @@ pub fn gl_vertex_attrib_i2ui_ext(index : UInt, x : UInt, y : UInt) -> Unit raise
 }
 
 ///|
-let d_glVertexAttribI2uiv : Dispatch = Dispatch::new("glVertexAttribI2uiv")
+let d_glVertexAttribI2uiv : Dispatch = Dispatch::with_aliases("glVertexAttribI2uiv", ["glVertexAttribI2uivEXT"])
 
 ///|
 #borrow(v)
@@ -33043,7 +33043,7 @@ pub fn gl_vertex_attrib_i2uiv(index : UInt, v : FixedArray[UInt]) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttribI2uivEXT : Dispatch = Dispatch::new("glVertexAttribI2uivEXT")
+let d_glVertexAttribI2uivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI2uivEXT", ["glVertexAttribI2uiv"])
 
 ///|
 #borrow(v)
@@ -33055,7 +33055,7 @@ pub fn gl_vertex_attrib_i2uiv_ext(index : UInt, v : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
-let d_glVertexAttribI3i : Dispatch = Dispatch::new("glVertexAttribI3i")
+let d_glVertexAttribI3i : Dispatch = Dispatch::with_aliases("glVertexAttribI3i", ["glVertexAttribI3iEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI3i(fp : CPtr, index : UInt, x : Int, y : Int, z : Int) -> Unit = "epoxy_glVertexAttribI3i"
@@ -33066,7 +33066,7 @@ pub fn gl_vertex_attrib_i3i(index : UInt, x : Int, y : Int, z : Int) -> Unit rai
 }
 
 ///|
-let d_glVertexAttribI3iEXT : Dispatch = Dispatch::new("glVertexAttribI3iEXT")
+let d_glVertexAttribI3iEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI3iEXT", ["glVertexAttribI3i"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI3iEXT(fp : CPtr, index : UInt, x : Int, y : Int, z : Int) -> Unit = "epoxy_glVertexAttribI3iEXT"
@@ -33077,7 +33077,7 @@ pub fn gl_vertex_attrib_i3i_ext(index : UInt, x : Int, y : Int, z : Int) -> Unit
 }
 
 ///|
-let d_glVertexAttribI3iv : Dispatch = Dispatch::new("glVertexAttribI3iv")
+let d_glVertexAttribI3iv : Dispatch = Dispatch::with_aliases("glVertexAttribI3iv", ["glVertexAttribI3ivEXT"])
 
 ///|
 #borrow(v)
@@ -33089,7 +33089,7 @@ pub fn gl_vertex_attrib_i3iv(index : UInt, v : FixedArray[Int]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttribI3ivEXT : Dispatch = Dispatch::new("glVertexAttribI3ivEXT")
+let d_glVertexAttribI3ivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI3ivEXT", ["glVertexAttribI3iv"])
 
 ///|
 #borrow(v)
@@ -33101,7 +33101,7 @@ pub fn gl_vertex_attrib_i3iv_ext(index : UInt, v : FixedArray[Int]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttribI3ui : Dispatch = Dispatch::new("glVertexAttribI3ui")
+let d_glVertexAttribI3ui : Dispatch = Dispatch::with_aliases("glVertexAttribI3ui", ["glVertexAttribI3uiEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI3ui(fp : CPtr, index : UInt, x : UInt, y : UInt, z : UInt) -> Unit = "epoxy_glVertexAttribI3ui"
@@ -33112,7 +33112,7 @@ pub fn gl_vertex_attrib_i3ui(index : UInt, x : UInt, y : UInt, z : UInt) -> Unit
 }
 
 ///|
-let d_glVertexAttribI3uiEXT : Dispatch = Dispatch::new("glVertexAttribI3uiEXT")
+let d_glVertexAttribI3uiEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI3uiEXT", ["glVertexAttribI3ui"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI3uiEXT(fp : CPtr, index : UInt, x : UInt, y : UInt, z : UInt) -> Unit = "epoxy_glVertexAttribI3uiEXT"
@@ -33123,7 +33123,7 @@ pub fn gl_vertex_attrib_i3ui_ext(index : UInt, x : UInt, y : UInt, z : UInt) -> 
 }
 
 ///|
-let d_glVertexAttribI3uiv : Dispatch = Dispatch::new("glVertexAttribI3uiv")
+let d_glVertexAttribI3uiv : Dispatch = Dispatch::with_aliases("glVertexAttribI3uiv", ["glVertexAttribI3uivEXT"])
 
 ///|
 #borrow(v)
@@ -33135,7 +33135,7 @@ pub fn gl_vertex_attrib_i3uiv(index : UInt, v : FixedArray[UInt]) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttribI3uivEXT : Dispatch = Dispatch::new("glVertexAttribI3uivEXT")
+let d_glVertexAttribI3uivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI3uivEXT", ["glVertexAttribI3uiv"])
 
 ///|
 #borrow(v)
@@ -33147,7 +33147,7 @@ pub fn gl_vertex_attrib_i3uiv_ext(index : UInt, v : FixedArray[UInt]) -> Unit ra
 }
 
 ///|
-let d_glVertexAttribI4bv : Dispatch = Dispatch::new("glVertexAttribI4bv")
+let d_glVertexAttribI4bv : Dispatch = Dispatch::with_aliases("glVertexAttribI4bv", ["glVertexAttribI4bvEXT"])
 
 ///|
 #borrow(v)
@@ -33159,7 +33159,7 @@ pub fn gl_vertex_attrib_i4bv(index : UInt, v : Bytes) -> Unit raise ResolveError
 }
 
 ///|
-let d_glVertexAttribI4bvEXT : Dispatch = Dispatch::new("glVertexAttribI4bvEXT")
+let d_glVertexAttribI4bvEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4bvEXT", ["glVertexAttribI4bv"])
 
 ///|
 #borrow(v)
@@ -33171,7 +33171,7 @@ pub fn gl_vertex_attrib_i4bv_ext(index : UInt, v : Bytes) -> Unit raise ResolveE
 }
 
 ///|
-let d_glVertexAttribI4i : Dispatch = Dispatch::new("glVertexAttribI4i")
+let d_glVertexAttribI4i : Dispatch = Dispatch::with_aliases("glVertexAttribI4i", ["glVertexAttribI4iEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI4i(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttribI4i"
@@ -33182,7 +33182,7 @@ pub fn gl_vertex_attrib_i4i(index : UInt, x : Int, y : Int, z : Int, w : Int) ->
 }
 
 ///|
-let d_glVertexAttribI4iEXT : Dispatch = Dispatch::new("glVertexAttribI4iEXT")
+let d_glVertexAttribI4iEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4iEXT", ["glVertexAttribI4i"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI4iEXT(fp : CPtr, index : UInt, x : Int, y : Int, z : Int, w : Int) -> Unit = "epoxy_glVertexAttribI4iEXT"
@@ -33193,7 +33193,7 @@ pub fn gl_vertex_attrib_i4i_ext(index : UInt, x : Int, y : Int, z : Int, w : Int
 }
 
 ///|
-let d_glVertexAttribI4iv : Dispatch = Dispatch::new("glVertexAttribI4iv")
+let d_glVertexAttribI4iv : Dispatch = Dispatch::with_aliases("glVertexAttribI4iv", ["glVertexAttribI4ivEXT"])
 
 ///|
 #borrow(v)
@@ -33205,7 +33205,7 @@ pub fn gl_vertex_attrib_i4iv(index : UInt, v : FixedArray[Int]) -> Unit raise Re
 }
 
 ///|
-let d_glVertexAttribI4ivEXT : Dispatch = Dispatch::new("glVertexAttribI4ivEXT")
+let d_glVertexAttribI4ivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4ivEXT", ["glVertexAttribI4iv"])
 
 ///|
 #borrow(v)
@@ -33217,7 +33217,7 @@ pub fn gl_vertex_attrib_i4iv_ext(index : UInt, v : FixedArray[Int]) -> Unit rais
 }
 
 ///|
-let d_glVertexAttribI4ubv : Dispatch = Dispatch::new("glVertexAttribI4ubv")
+let d_glVertexAttribI4ubv : Dispatch = Dispatch::with_aliases("glVertexAttribI4ubv", ["glVertexAttribI4ubvEXT"])
 
 ///|
 #borrow(v)
@@ -33229,7 +33229,7 @@ pub fn gl_vertex_attrib_i4ubv(index : UInt, v : Bytes) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glVertexAttribI4ubvEXT : Dispatch = Dispatch::new("glVertexAttribI4ubvEXT")
+let d_glVertexAttribI4ubvEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4ubvEXT", ["glVertexAttribI4ubv"])
 
 ///|
 #borrow(v)
@@ -33241,7 +33241,7 @@ pub fn gl_vertex_attrib_i4ubv_ext(index : UInt, v : Bytes) -> Unit raise Resolve
 }
 
 ///|
-let d_glVertexAttribI4ui : Dispatch = Dispatch::new("glVertexAttribI4ui")
+let d_glVertexAttribI4ui : Dispatch = Dispatch::with_aliases("glVertexAttribI4ui", ["glVertexAttribI4uiEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI4ui(fp : CPtr, index : UInt, x : UInt, y : UInt, z : UInt, w : UInt) -> Unit = "epoxy_glVertexAttribI4ui"
@@ -33252,7 +33252,7 @@ pub fn gl_vertex_attrib_i4ui(index : UInt, x : UInt, y : UInt, z : UInt, w : UIn
 }
 
 ///|
-let d_glVertexAttribI4uiEXT : Dispatch = Dispatch::new("glVertexAttribI4uiEXT")
+let d_glVertexAttribI4uiEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4uiEXT", ["glVertexAttribI4ui"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribI4uiEXT(fp : CPtr, index : UInt, x : UInt, y : UInt, z : UInt, w : UInt) -> Unit = "epoxy_glVertexAttribI4uiEXT"
@@ -33263,7 +33263,7 @@ pub fn gl_vertex_attrib_i4ui_ext(index : UInt, x : UInt, y : UInt, z : UInt, w :
 }
 
 ///|
-let d_glVertexAttribI4uiv : Dispatch = Dispatch::new("glVertexAttribI4uiv")
+let d_glVertexAttribI4uiv : Dispatch = Dispatch::with_aliases("glVertexAttribI4uiv", ["glVertexAttribI4uivEXT"])
 
 ///|
 #borrow(v)
@@ -33275,7 +33275,7 @@ pub fn gl_vertex_attrib_i4uiv(index : UInt, v : FixedArray[UInt]) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttribI4uivEXT : Dispatch = Dispatch::new("glVertexAttribI4uivEXT")
+let d_glVertexAttribI4uivEXT : Dispatch = Dispatch::with_aliases("glVertexAttribI4uivEXT", ["glVertexAttribI4uiv"])
 
 ///|
 #borrow(v)
@@ -33309,7 +33309,7 @@ pub fn gl_vertex_attrib_i_format_nv(index : UInt, size : Int, type_ : UInt, stri
 }
 
 ///|
-let d_glVertexAttribIPointer : Dispatch = Dispatch::new("glVertexAttribIPointer")
+let d_glVertexAttribIPointer : Dispatch = Dispatch::with_aliases("glVertexAttribIPointer", ["glVertexAttribIPointerEXT"])
 
 ///|
 #borrow(pointer)
@@ -33321,7 +33321,7 @@ pub fn gl_vertex_attrib_i_pointer(index : UInt, size : Int, type_ : UInt, stride
 }
 
 ///|
-let d_glVertexAttribIPointerEXT : Dispatch = Dispatch::new("glVertexAttribIPointerEXT")
+let d_glVertexAttribIPointerEXT : Dispatch = Dispatch::with_aliases("glVertexAttribIPointerEXT", ["glVertexAttribIPointer"])
 
 ///|
 #borrow(pointer)
@@ -33333,7 +33333,7 @@ pub fn gl_vertex_attrib_i_pointer_ext(index : UInt, size : Int, type_ : UInt, st
 }
 
 ///|
-let d_glVertexAttribL1d : Dispatch = Dispatch::new("glVertexAttribL1d")
+let d_glVertexAttribL1d : Dispatch = Dispatch::with_aliases("glVertexAttribL1d", ["glVertexAttribL1dEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL1d(fp : CPtr, index : UInt, x : Double) -> Unit = "epoxy_glVertexAttribL1d"
@@ -33344,7 +33344,7 @@ pub fn gl_vertex_attrib_l1d(index : UInt, x : Double) -> Unit raise ResolveError
 }
 
 ///|
-let d_glVertexAttribL1dEXT : Dispatch = Dispatch::new("glVertexAttribL1dEXT")
+let d_glVertexAttribL1dEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL1dEXT", ["glVertexAttribL1d"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL1dEXT(fp : CPtr, index : UInt, x : Double) -> Unit = "epoxy_glVertexAttribL1dEXT"
@@ -33355,7 +33355,7 @@ pub fn gl_vertex_attrib_l1d_ext(index : UInt, x : Double) -> Unit raise ResolveE
 }
 
 ///|
-let d_glVertexAttribL1dv : Dispatch = Dispatch::new("glVertexAttribL1dv")
+let d_glVertexAttribL1dv : Dispatch = Dispatch::with_aliases("glVertexAttribL1dv", ["glVertexAttribL1dvEXT"])
 
 ///|
 #borrow(v)
@@ -33367,7 +33367,7 @@ pub fn gl_vertex_attrib_l1dv(index : UInt, v : FixedArray[Double]) -> Unit raise
 }
 
 ///|
-let d_glVertexAttribL1dvEXT : Dispatch = Dispatch::new("glVertexAttribL1dvEXT")
+let d_glVertexAttribL1dvEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL1dvEXT", ["glVertexAttribL1dv"])
 
 ///|
 #borrow(v)
@@ -33448,7 +33448,7 @@ pub fn gl_vertex_attrib_l1ui64v_nv(index : UInt, v : FixedArray[UInt64]) -> Unit
 }
 
 ///|
-let d_glVertexAttribL2d : Dispatch = Dispatch::new("glVertexAttribL2d")
+let d_glVertexAttribL2d : Dispatch = Dispatch::with_aliases("glVertexAttribL2d", ["glVertexAttribL2dEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL2d(fp : CPtr, index : UInt, x : Double, y : Double) -> Unit = "epoxy_glVertexAttribL2d"
@@ -33459,7 +33459,7 @@ pub fn gl_vertex_attrib_l2d(index : UInt, x : Double, y : Double) -> Unit raise 
 }
 
 ///|
-let d_glVertexAttribL2dEXT : Dispatch = Dispatch::new("glVertexAttribL2dEXT")
+let d_glVertexAttribL2dEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL2dEXT", ["glVertexAttribL2d"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL2dEXT(fp : CPtr, index : UInt, x : Double, y : Double) -> Unit = "epoxy_glVertexAttribL2dEXT"
@@ -33470,7 +33470,7 @@ pub fn gl_vertex_attrib_l2d_ext(index : UInt, x : Double, y : Double) -> Unit ra
 }
 
 ///|
-let d_glVertexAttribL2dv : Dispatch = Dispatch::new("glVertexAttribL2dv")
+let d_glVertexAttribL2dv : Dispatch = Dispatch::with_aliases("glVertexAttribL2dv", ["glVertexAttribL2dvEXT"])
 
 ///|
 #borrow(v)
@@ -33482,7 +33482,7 @@ pub fn gl_vertex_attrib_l2dv(index : UInt, v : FixedArray[Double]) -> Unit raise
 }
 
 ///|
-let d_glVertexAttribL2dvEXT : Dispatch = Dispatch::new("glVertexAttribL2dvEXT")
+let d_glVertexAttribL2dvEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL2dvEXT", ["glVertexAttribL2dv"])
 
 ///|
 #borrow(v)
@@ -33540,7 +33540,7 @@ pub fn gl_vertex_attrib_l2ui64v_nv(index : UInt, v : FixedArray[UInt64]) -> Unit
 }
 
 ///|
-let d_glVertexAttribL3d : Dispatch = Dispatch::new("glVertexAttribL3d")
+let d_glVertexAttribL3d : Dispatch = Dispatch::with_aliases("glVertexAttribL3d", ["glVertexAttribL3dEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL3d(fp : CPtr, index : UInt, x : Double, y : Double, z : Double) -> Unit = "epoxy_glVertexAttribL3d"
@@ -33551,7 +33551,7 @@ pub fn gl_vertex_attrib_l3d(index : UInt, x : Double, y : Double, z : Double) ->
 }
 
 ///|
-let d_glVertexAttribL3dEXT : Dispatch = Dispatch::new("glVertexAttribL3dEXT")
+let d_glVertexAttribL3dEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL3dEXT", ["glVertexAttribL3d"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL3dEXT(fp : CPtr, index : UInt, x : Double, y : Double, z : Double) -> Unit = "epoxy_glVertexAttribL3dEXT"
@@ -33562,7 +33562,7 @@ pub fn gl_vertex_attrib_l3d_ext(index : UInt, x : Double, y : Double, z : Double
 }
 
 ///|
-let d_glVertexAttribL3dv : Dispatch = Dispatch::new("glVertexAttribL3dv")
+let d_glVertexAttribL3dv : Dispatch = Dispatch::with_aliases("glVertexAttribL3dv", ["glVertexAttribL3dvEXT"])
 
 ///|
 #borrow(v)
@@ -33574,7 +33574,7 @@ pub fn gl_vertex_attrib_l3dv(index : UInt, v : FixedArray[Double]) -> Unit raise
 }
 
 ///|
-let d_glVertexAttribL3dvEXT : Dispatch = Dispatch::new("glVertexAttribL3dvEXT")
+let d_glVertexAttribL3dvEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL3dvEXT", ["glVertexAttribL3dv"])
 
 ///|
 #borrow(v)
@@ -33632,7 +33632,7 @@ pub fn gl_vertex_attrib_l3ui64v_nv(index : UInt, v : FixedArray[UInt64]) -> Unit
 }
 
 ///|
-let d_glVertexAttribL4d : Dispatch = Dispatch::new("glVertexAttribL4d")
+let d_glVertexAttribL4d : Dispatch = Dispatch::with_aliases("glVertexAttribL4d", ["glVertexAttribL4dEXT"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL4d(fp : CPtr, index : UInt, x : Double, y : Double, z : Double, w : Double) -> Unit = "epoxy_glVertexAttribL4d"
@@ -33643,7 +33643,7 @@ pub fn gl_vertex_attrib_l4d(index : UInt, x : Double, y : Double, z : Double, w 
 }
 
 ///|
-let d_glVertexAttribL4dEXT : Dispatch = Dispatch::new("glVertexAttribL4dEXT")
+let d_glVertexAttribL4dEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL4dEXT", ["glVertexAttribL4d"])
 
 ///|
 extern "c" fn epoxy_glVertexAttribL4dEXT(fp : CPtr, index : UInt, x : Double, y : Double, z : Double, w : Double) -> Unit = "epoxy_glVertexAttribL4dEXT"
@@ -33654,7 +33654,7 @@ pub fn gl_vertex_attrib_l4d_ext(index : UInt, x : Double, y : Double, z : Double
 }
 
 ///|
-let d_glVertexAttribL4dv : Dispatch = Dispatch::new("glVertexAttribL4dv")
+let d_glVertexAttribL4dv : Dispatch = Dispatch::with_aliases("glVertexAttribL4dv", ["glVertexAttribL4dvEXT"])
 
 ///|
 #borrow(v)
@@ -33666,7 +33666,7 @@ pub fn gl_vertex_attrib_l4dv(index : UInt, v : FixedArray[Double]) -> Unit raise
 }
 
 ///|
-let d_glVertexAttribL4dvEXT : Dispatch = Dispatch::new("glVertexAttribL4dvEXT")
+let d_glVertexAttribL4dvEXT : Dispatch = Dispatch::with_aliases("glVertexAttribL4dvEXT", ["glVertexAttribL4dv"])
 
 ///|
 #borrow(v)
@@ -33746,7 +33746,7 @@ pub fn gl_vertex_attrib_l_format_nv(index : UInt, size : Int, type_ : UInt, stri
 }
 
 ///|
-let d_glVertexAttribLPointer : Dispatch = Dispatch::new("glVertexAttribLPointer")
+let d_glVertexAttribLPointer : Dispatch = Dispatch::with_aliases("glVertexAttribLPointer", ["glVertexAttribLPointerEXT"])
 
 ///|
 #borrow(pointer)
@@ -33758,7 +33758,7 @@ pub fn gl_vertex_attrib_l_pointer(index : UInt, size : Int, type_ : UInt, stride
 }
 
 ///|
-let d_glVertexAttribLPointerEXT : Dispatch = Dispatch::new("glVertexAttribLPointerEXT")
+let d_glVertexAttribLPointerEXT : Dispatch = Dispatch::with_aliases("glVertexAttribLPointerEXT", ["glVertexAttribLPointer"])
 
 ///|
 #borrow(pointer)
@@ -33873,7 +33873,7 @@ pub fn gl_vertex_attrib_parameteri_amd(index : UInt, pname : UInt, param : Int) 
 }
 
 ///|
-let d_glVertexAttribPointer : Dispatch = Dispatch::new("glVertexAttribPointer")
+let d_glVertexAttribPointer : Dispatch = Dispatch::with_aliases("glVertexAttribPointer", ["glVertexAttribPointerARB"])
 
 ///|
 #borrow(pointer)
@@ -33885,7 +33885,7 @@ pub fn gl_vertex_attrib_pointer(index : UInt, size : Int, type_ : UInt, normaliz
 }
 
 ///|
-let d_glVertexAttribPointerARB : Dispatch = Dispatch::new("glVertexAttribPointerARB")
+let d_glVertexAttribPointerARB : Dispatch = Dispatch::with_aliases("glVertexAttribPointerARB", ["glVertexAttribPointer"])
 
 ///|
 #borrow(pointer)
@@ -34590,7 +34590,7 @@ pub fn gl_viewport(x : Int, y : Int, width : Int, height : Int) -> Unit raise Re
 }
 
 ///|
-let d_glViewportArrayv : Dispatch = Dispatch::new("glViewportArrayv")
+let d_glViewportArrayv : Dispatch = Dispatch::with_aliases("glViewportArrayv", ["glViewportArrayvNV", "glViewportArrayvOES"])
 
 ///|
 #borrow(v)
@@ -34602,7 +34602,7 @@ pub fn gl_viewport_arrayv(first : UInt, count : Int, v : FixedArray[Float]) -> U
 }
 
 ///|
-let d_glViewportArrayvNV : Dispatch = Dispatch::new("glViewportArrayvNV")
+let d_glViewportArrayvNV : Dispatch = Dispatch::with_aliases("glViewportArrayvNV", ["glViewportArrayv", "glViewportArrayvOES"])
 
 ///|
 #borrow(v)
@@ -34614,7 +34614,7 @@ pub fn gl_viewport_arrayv_nv(first : UInt, count : Int, v : FixedArray[Float]) -
 }
 
 ///|
-let d_glViewportArrayvOES : Dispatch = Dispatch::new("glViewportArrayvOES")
+let d_glViewportArrayvOES : Dispatch = Dispatch::with_aliases("glViewportArrayvOES", ["glViewportArrayv", "glViewportArrayvNV"])
 
 ///|
 #borrow(v)
@@ -34626,7 +34626,7 @@ pub fn gl_viewport_arrayv_oes(first : UInt, count : Int, v : FixedArray[Float]) 
 }
 
 ///|
-let d_glViewportIndexedf : Dispatch = Dispatch::new("glViewportIndexedf")
+let d_glViewportIndexedf : Dispatch = Dispatch::with_aliases("glViewportIndexedf", ["glViewportIndexedfNV", "glViewportIndexedfOES"])
 
 ///|
 extern "c" fn epoxy_glViewportIndexedf(fp : CPtr, index : UInt, x : Float, y : Float, w : Float, h : Float) -> Unit = "epoxy_glViewportIndexedf"
@@ -34637,7 +34637,7 @@ pub fn gl_viewport_indexedf(index : UInt, x : Float, y : Float, w : Float, h : F
 }
 
 ///|
-let d_glViewportIndexedfOES : Dispatch = Dispatch::new("glViewportIndexedfOES")
+let d_glViewportIndexedfOES : Dispatch = Dispatch::with_aliases("glViewportIndexedfOES", ["glViewportIndexedf", "glViewportIndexedfNV"])
 
 ///|
 extern "c" fn epoxy_glViewportIndexedfOES(fp : CPtr, index : UInt, x : Float, y : Float, w : Float, h : Float) -> Unit = "epoxy_glViewportIndexedfOES"
@@ -34648,7 +34648,7 @@ pub fn gl_viewport_indexedf_oes(index : UInt, x : Float, y : Float, w : Float, h
 }
 
 ///|
-let d_glViewportIndexedfNV : Dispatch = Dispatch::new("glViewportIndexedfNV")
+let d_glViewportIndexedfNV : Dispatch = Dispatch::with_aliases("glViewportIndexedfNV", ["glViewportIndexedf", "glViewportIndexedfOES"])
 
 ///|
 extern "c" fn epoxy_glViewportIndexedfNV(fp : CPtr, index : UInt, x : Float, y : Float, w : Float, h : Float) -> Unit = "epoxy_glViewportIndexedfNV"
@@ -34659,7 +34659,7 @@ pub fn gl_viewport_indexedf_nv(index : UInt, x : Float, y : Float, w : Float, h 
 }
 
 ///|
-let d_glViewportIndexedfv : Dispatch = Dispatch::new("glViewportIndexedfv")
+let d_glViewportIndexedfv : Dispatch = Dispatch::with_aliases("glViewportIndexedfv", ["glViewportIndexedfvNV", "glViewportIndexedfvOES"])
 
 ///|
 #borrow(v)
@@ -34671,7 +34671,7 @@ pub fn gl_viewport_indexedfv(index : UInt, v : FixedArray[Float]) -> Unit raise 
 }
 
 ///|
-let d_glViewportIndexedfvOES : Dispatch = Dispatch::new("glViewportIndexedfvOES")
+let d_glViewportIndexedfvOES : Dispatch = Dispatch::with_aliases("glViewportIndexedfvOES", ["glViewportIndexedfv", "glViewportIndexedfvNV"])
 
 ///|
 #borrow(v)
@@ -34683,7 +34683,7 @@ pub fn gl_viewport_indexedfv_oes(index : UInt, v : FixedArray[Float]) -> Unit ra
 }
 
 ///|
-let d_glViewportIndexedfvNV : Dispatch = Dispatch::new("glViewportIndexedfvNV")
+let d_glViewportIndexedfvNV : Dispatch = Dispatch::with_aliases("glViewportIndexedfvNV", ["glViewportIndexedfv", "glViewportIndexedfvOES"])
 
 ///|
 #borrow(v)
@@ -34849,7 +34849,7 @@ pub fn gl_weightuiv_arb(size : Int, weights : FixedArray[UInt]) -> Unit raise Re
 }
 
 ///|
-let d_glWindowPos2d : Dispatch = Dispatch::new("glWindowPos2d")
+let d_glWindowPos2d : Dispatch = Dispatch::with_aliases("glWindowPos2d", ["glWindowPos2dARB", "glWindowPos2dMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2d(fp : CPtr, x : Double, y : Double) -> Unit = "epoxy_glWindowPos2d"
@@ -34860,7 +34860,7 @@ pub fn gl_window_pos2d(x : Double, y : Double) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2dARB : Dispatch = Dispatch::new("glWindowPos2dARB")
+let d_glWindowPos2dARB : Dispatch = Dispatch::with_aliases("glWindowPos2dARB", ["glWindowPos2d", "glWindowPos2dMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2dARB(fp : CPtr, x : Double, y : Double) -> Unit = "epoxy_glWindowPos2dARB"
@@ -34871,7 +34871,7 @@ pub fn gl_window_pos2d_arb(x : Double, y : Double) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2dMESA : Dispatch = Dispatch::new("glWindowPos2dMESA")
+let d_glWindowPos2dMESA : Dispatch = Dispatch::with_aliases("glWindowPos2dMESA", ["glWindowPos2d", "glWindowPos2dARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2dMESA(fp : CPtr, x : Double, y : Double) -> Unit = "epoxy_glWindowPos2dMESA"
@@ -34882,7 +34882,7 @@ pub fn gl_window_pos2d_mesa(x : Double, y : Double) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2dv : Dispatch = Dispatch::new("glWindowPos2dv")
+let d_glWindowPos2dv : Dispatch = Dispatch::with_aliases("glWindowPos2dv", ["glWindowPos2dvARB", "glWindowPos2dvMESA"])
 
 ///|
 #borrow(v)
@@ -34894,7 +34894,7 @@ pub fn gl_window_pos2dv(v : FixedArray[Double]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2dvARB : Dispatch = Dispatch::new("glWindowPos2dvARB")
+let d_glWindowPos2dvARB : Dispatch = Dispatch::with_aliases("glWindowPos2dvARB", ["glWindowPos2dv", "glWindowPos2dvMESA"])
 
 ///|
 #borrow(v)
@@ -34906,7 +34906,7 @@ pub fn gl_window_pos2dv_arb(v : FixedArray[Double]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2dvMESA : Dispatch = Dispatch::new("glWindowPos2dvMESA")
+let d_glWindowPos2dvMESA : Dispatch = Dispatch::with_aliases("glWindowPos2dvMESA", ["glWindowPos2dv", "glWindowPos2dvARB"])
 
 ///|
 #borrow(v)
@@ -34918,7 +34918,7 @@ pub fn gl_window_pos2dv_mesa(v : FixedArray[Double]) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glWindowPos2f : Dispatch = Dispatch::new("glWindowPos2f")
+let d_glWindowPos2f : Dispatch = Dispatch::with_aliases("glWindowPos2f", ["glWindowPos2fARB", "glWindowPos2fMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2f(fp : CPtr, x : Float, y : Float) -> Unit = "epoxy_glWindowPos2f"
@@ -34929,7 +34929,7 @@ pub fn gl_window_pos2f(x : Float, y : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2fARB : Dispatch = Dispatch::new("glWindowPos2fARB")
+let d_glWindowPos2fARB : Dispatch = Dispatch::with_aliases("glWindowPos2fARB", ["glWindowPos2f", "glWindowPos2fMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2fARB(fp : CPtr, x : Float, y : Float) -> Unit = "epoxy_glWindowPos2fARB"
@@ -34940,7 +34940,7 @@ pub fn gl_window_pos2f_arb(x : Float, y : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2fMESA : Dispatch = Dispatch::new("glWindowPos2fMESA")
+let d_glWindowPos2fMESA : Dispatch = Dispatch::with_aliases("glWindowPos2fMESA", ["glWindowPos2f", "glWindowPos2fARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2fMESA(fp : CPtr, x : Float, y : Float) -> Unit = "epoxy_glWindowPos2fMESA"
@@ -34951,7 +34951,7 @@ pub fn gl_window_pos2f_mesa(x : Float, y : Float) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2fv : Dispatch = Dispatch::new("glWindowPos2fv")
+let d_glWindowPos2fv : Dispatch = Dispatch::with_aliases("glWindowPos2fv", ["glWindowPos2fvARB", "glWindowPos2fvMESA"])
 
 ///|
 #borrow(v)
@@ -34963,7 +34963,7 @@ pub fn gl_window_pos2fv(v : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2fvARB : Dispatch = Dispatch::new("glWindowPos2fvARB")
+let d_glWindowPos2fvARB : Dispatch = Dispatch::with_aliases("glWindowPos2fvARB", ["glWindowPos2fv", "glWindowPos2fvMESA"])
 
 ///|
 #borrow(v)
@@ -34975,7 +34975,7 @@ pub fn gl_window_pos2fv_arb(v : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2fvMESA : Dispatch = Dispatch::new("glWindowPos2fvMESA")
+let d_glWindowPos2fvMESA : Dispatch = Dispatch::with_aliases("glWindowPos2fvMESA", ["glWindowPos2fv", "glWindowPos2fvARB"])
 
 ///|
 #borrow(v)
@@ -34987,7 +34987,7 @@ pub fn gl_window_pos2fv_mesa(v : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2i : Dispatch = Dispatch::new("glWindowPos2i")
+let d_glWindowPos2i : Dispatch = Dispatch::with_aliases("glWindowPos2i", ["glWindowPos2iARB", "glWindowPos2iMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2i(fp : CPtr, x : Int, y : Int) -> Unit = "epoxy_glWindowPos2i"
@@ -34998,7 +34998,7 @@ pub fn gl_window_pos2i(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2iARB : Dispatch = Dispatch::new("glWindowPos2iARB")
+let d_glWindowPos2iARB : Dispatch = Dispatch::with_aliases("glWindowPos2iARB", ["glWindowPos2i", "glWindowPos2iMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2iARB(fp : CPtr, x : Int, y : Int) -> Unit = "epoxy_glWindowPos2iARB"
@@ -35009,7 +35009,7 @@ pub fn gl_window_pos2i_arb(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2iMESA : Dispatch = Dispatch::new("glWindowPos2iMESA")
+let d_glWindowPos2iMESA : Dispatch = Dispatch::with_aliases("glWindowPos2iMESA", ["glWindowPos2i", "glWindowPos2iARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2iMESA(fp : CPtr, x : Int, y : Int) -> Unit = "epoxy_glWindowPos2iMESA"
@@ -35020,7 +35020,7 @@ pub fn gl_window_pos2i_mesa(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2iv : Dispatch = Dispatch::new("glWindowPos2iv")
+let d_glWindowPos2iv : Dispatch = Dispatch::with_aliases("glWindowPos2iv", ["glWindowPos2ivARB", "glWindowPos2ivMESA"])
 
 ///|
 #borrow(v)
@@ -35032,7 +35032,7 @@ pub fn gl_window_pos2iv(v : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2ivARB : Dispatch = Dispatch::new("glWindowPos2ivARB")
+let d_glWindowPos2ivARB : Dispatch = Dispatch::with_aliases("glWindowPos2ivARB", ["glWindowPos2iv", "glWindowPos2ivMESA"])
 
 ///|
 #borrow(v)
@@ -35044,7 +35044,7 @@ pub fn gl_window_pos2iv_arb(v : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2ivMESA : Dispatch = Dispatch::new("glWindowPos2ivMESA")
+let d_glWindowPos2ivMESA : Dispatch = Dispatch::with_aliases("glWindowPos2ivMESA", ["glWindowPos2iv", "glWindowPos2ivARB"])
 
 ///|
 #borrow(v)
@@ -35056,7 +35056,7 @@ pub fn gl_window_pos2iv_mesa(v : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2s : Dispatch = Dispatch::new("glWindowPos2s")
+let d_glWindowPos2s : Dispatch = Dispatch::with_aliases("glWindowPos2s", ["glWindowPos2sARB", "glWindowPos2sMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2s(fp : CPtr, x : Int, y : Int) -> Unit = "epoxy_glWindowPos2s"
@@ -35067,7 +35067,7 @@ pub fn gl_window_pos2s(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2sARB : Dispatch = Dispatch::new("glWindowPos2sARB")
+let d_glWindowPos2sARB : Dispatch = Dispatch::with_aliases("glWindowPos2sARB", ["glWindowPos2s", "glWindowPos2sMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2sARB(fp : CPtr, x : Int, y : Int) -> Unit = "epoxy_glWindowPos2sARB"
@@ -35078,7 +35078,7 @@ pub fn gl_window_pos2s_arb(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos2sMESA : Dispatch = Dispatch::new("glWindowPos2sMESA")
+let d_glWindowPos2sMESA : Dispatch = Dispatch::with_aliases("glWindowPos2sMESA", ["glWindowPos2s", "glWindowPos2sARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos2sMESA(fp : CPtr, x : Int, y : Int) -> Unit = "epoxy_glWindowPos2sMESA"
@@ -35089,7 +35089,7 @@ pub fn gl_window_pos2s_mesa(x : Int, y : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3d : Dispatch = Dispatch::new("glWindowPos3d")
+let d_glWindowPos3d : Dispatch = Dispatch::with_aliases("glWindowPos3d", ["glWindowPos3dARB", "glWindowPos3dMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3d(fp : CPtr, x : Double, y : Double, z : Double) -> Unit = "epoxy_glWindowPos3d"
@@ -35100,7 +35100,7 @@ pub fn gl_window_pos3d(x : Double, y : Double, z : Double) -> Unit raise Resolve
 }
 
 ///|
-let d_glWindowPos3dARB : Dispatch = Dispatch::new("glWindowPos3dARB")
+let d_glWindowPos3dARB : Dispatch = Dispatch::with_aliases("glWindowPos3dARB", ["glWindowPos3d", "glWindowPos3dMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3dARB(fp : CPtr, x : Double, y : Double, z : Double) -> Unit = "epoxy_glWindowPos3dARB"
@@ -35111,7 +35111,7 @@ pub fn gl_window_pos3d_arb(x : Double, y : Double, z : Double) -> Unit raise Res
 }
 
 ///|
-let d_glWindowPos3dMESA : Dispatch = Dispatch::new("glWindowPos3dMESA")
+let d_glWindowPos3dMESA : Dispatch = Dispatch::with_aliases("glWindowPos3dMESA", ["glWindowPos3d", "glWindowPos3dARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3dMESA(fp : CPtr, x : Double, y : Double, z : Double) -> Unit = "epoxy_glWindowPos3dMESA"
@@ -35122,7 +35122,7 @@ pub fn gl_window_pos3d_mesa(x : Double, y : Double, z : Double) -> Unit raise Re
 }
 
 ///|
-let d_glWindowPos3dv : Dispatch = Dispatch::new("glWindowPos3dv")
+let d_glWindowPos3dv : Dispatch = Dispatch::with_aliases("glWindowPos3dv", ["glWindowPos3dvARB", "glWindowPos3dvMESA"])
 
 ///|
 #borrow(v)
@@ -35134,7 +35134,7 @@ pub fn gl_window_pos3dv(v : FixedArray[Double]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3dvARB : Dispatch = Dispatch::new("glWindowPos3dvARB")
+let d_glWindowPos3dvARB : Dispatch = Dispatch::with_aliases("glWindowPos3dvARB", ["glWindowPos3dv", "glWindowPos3dvMESA"])
 
 ///|
 #borrow(v)
@@ -35146,7 +35146,7 @@ pub fn gl_window_pos3dv_arb(v : FixedArray[Double]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3dvMESA : Dispatch = Dispatch::new("glWindowPos3dvMESA")
+let d_glWindowPos3dvMESA : Dispatch = Dispatch::with_aliases("glWindowPos3dvMESA", ["glWindowPos3dv", "glWindowPos3dvARB"])
 
 ///|
 #borrow(v)
@@ -35158,7 +35158,7 @@ pub fn gl_window_pos3dv_mesa(v : FixedArray[Double]) -> Unit raise ResolveError 
 }
 
 ///|
-let d_glWindowPos3f : Dispatch = Dispatch::new("glWindowPos3f")
+let d_glWindowPos3f : Dispatch = Dispatch::with_aliases("glWindowPos3f", ["glWindowPos3fARB", "glWindowPos3fMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3f(fp : CPtr, x : Float, y : Float, z : Float) -> Unit = "epoxy_glWindowPos3f"
@@ -35169,7 +35169,7 @@ pub fn gl_window_pos3f(x : Float, y : Float, z : Float) -> Unit raise ResolveErr
 }
 
 ///|
-let d_glWindowPos3fARB : Dispatch = Dispatch::new("glWindowPos3fARB")
+let d_glWindowPos3fARB : Dispatch = Dispatch::with_aliases("glWindowPos3fARB", ["glWindowPos3f", "glWindowPos3fMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3fARB(fp : CPtr, x : Float, y : Float, z : Float) -> Unit = "epoxy_glWindowPos3fARB"
@@ -35180,7 +35180,7 @@ pub fn gl_window_pos3f_arb(x : Float, y : Float, z : Float) -> Unit raise Resolv
 }
 
 ///|
-let d_glWindowPos3fMESA : Dispatch = Dispatch::new("glWindowPos3fMESA")
+let d_glWindowPos3fMESA : Dispatch = Dispatch::with_aliases("glWindowPos3fMESA", ["glWindowPos3f", "glWindowPos3fARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3fMESA(fp : CPtr, x : Float, y : Float, z : Float) -> Unit = "epoxy_glWindowPos3fMESA"
@@ -35191,7 +35191,7 @@ pub fn gl_window_pos3f_mesa(x : Float, y : Float, z : Float) -> Unit raise Resol
 }
 
 ///|
-let d_glWindowPos3fv : Dispatch = Dispatch::new("glWindowPos3fv")
+let d_glWindowPos3fv : Dispatch = Dispatch::with_aliases("glWindowPos3fv", ["glWindowPos3fvARB", "glWindowPos3fvMESA"])
 
 ///|
 #borrow(v)
@@ -35203,7 +35203,7 @@ pub fn gl_window_pos3fv(v : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3fvARB : Dispatch = Dispatch::new("glWindowPos3fvARB")
+let d_glWindowPos3fvARB : Dispatch = Dispatch::with_aliases("glWindowPos3fvARB", ["glWindowPos3fv", "glWindowPos3fvMESA"])
 
 ///|
 #borrow(v)
@@ -35215,7 +35215,7 @@ pub fn gl_window_pos3fv_arb(v : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3fvMESA : Dispatch = Dispatch::new("glWindowPos3fvMESA")
+let d_glWindowPos3fvMESA : Dispatch = Dispatch::with_aliases("glWindowPos3fvMESA", ["glWindowPos3fv", "glWindowPos3fvARB"])
 
 ///|
 #borrow(v)
@@ -35227,7 +35227,7 @@ pub fn gl_window_pos3fv_mesa(v : FixedArray[Float]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3i : Dispatch = Dispatch::new("glWindowPos3i")
+let d_glWindowPos3i : Dispatch = Dispatch::with_aliases("glWindowPos3i", ["glWindowPos3iARB", "glWindowPos3iMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3i(fp : CPtr, x : Int, y : Int, z : Int) -> Unit = "epoxy_glWindowPos3i"
@@ -35238,7 +35238,7 @@ pub fn gl_window_pos3i(x : Int, y : Int, z : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3iARB : Dispatch = Dispatch::new("glWindowPos3iARB")
+let d_glWindowPos3iARB : Dispatch = Dispatch::with_aliases("glWindowPos3iARB", ["glWindowPos3i", "glWindowPos3iMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3iARB(fp : CPtr, x : Int, y : Int, z : Int) -> Unit = "epoxy_glWindowPos3iARB"
@@ -35249,7 +35249,7 @@ pub fn gl_window_pos3i_arb(x : Int, y : Int, z : Int) -> Unit raise ResolveError
 }
 
 ///|
-let d_glWindowPos3iMESA : Dispatch = Dispatch::new("glWindowPos3iMESA")
+let d_glWindowPos3iMESA : Dispatch = Dispatch::with_aliases("glWindowPos3iMESA", ["glWindowPos3i", "glWindowPos3iARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3iMESA(fp : CPtr, x : Int, y : Int, z : Int) -> Unit = "epoxy_glWindowPos3iMESA"
@@ -35260,7 +35260,7 @@ pub fn gl_window_pos3i_mesa(x : Int, y : Int, z : Int) -> Unit raise ResolveErro
 }
 
 ///|
-let d_glWindowPos3iv : Dispatch = Dispatch::new("glWindowPos3iv")
+let d_glWindowPos3iv : Dispatch = Dispatch::with_aliases("glWindowPos3iv", ["glWindowPos3ivARB", "glWindowPos3ivMESA"])
 
 ///|
 #borrow(v)
@@ -35272,7 +35272,7 @@ pub fn gl_window_pos3iv(v : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3ivARB : Dispatch = Dispatch::new("glWindowPos3ivARB")
+let d_glWindowPos3ivARB : Dispatch = Dispatch::with_aliases("glWindowPos3ivARB", ["glWindowPos3iv", "glWindowPos3ivMESA"])
 
 ///|
 #borrow(v)
@@ -35284,7 +35284,7 @@ pub fn gl_window_pos3iv_arb(v : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3ivMESA : Dispatch = Dispatch::new("glWindowPos3ivMESA")
+let d_glWindowPos3ivMESA : Dispatch = Dispatch::with_aliases("glWindowPos3ivMESA", ["glWindowPos3iv", "glWindowPos3ivARB"])
 
 ///|
 #borrow(v)
@@ -35296,7 +35296,7 @@ pub fn gl_window_pos3iv_mesa(v : FixedArray[Int]) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3s : Dispatch = Dispatch::new("glWindowPos3s")
+let d_glWindowPos3s : Dispatch = Dispatch::with_aliases("glWindowPos3s", ["glWindowPos3sARB", "glWindowPos3sMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3s(fp : CPtr, x : Int, y : Int, z : Int) -> Unit = "epoxy_glWindowPos3s"
@@ -35307,7 +35307,7 @@ pub fn gl_window_pos3s(x : Int, y : Int, z : Int) -> Unit raise ResolveError {
 }
 
 ///|
-let d_glWindowPos3sARB : Dispatch = Dispatch::new("glWindowPos3sARB")
+let d_glWindowPos3sARB : Dispatch = Dispatch::with_aliases("glWindowPos3sARB", ["glWindowPos3s", "glWindowPos3sMESA"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3sARB(fp : CPtr, x : Int, y : Int, z : Int) -> Unit = "epoxy_glWindowPos3sARB"
@@ -35318,7 +35318,7 @@ pub fn gl_window_pos3s_arb(x : Int, y : Int, z : Int) -> Unit raise ResolveError
 }
 
 ///|
-let d_glWindowPos3sMESA : Dispatch = Dispatch::new("glWindowPos3sMESA")
+let d_glWindowPos3sMESA : Dispatch = Dispatch::with_aliases("glWindowPos3sMESA", ["glWindowPos3s", "glWindowPos3sARB"])
 
 ///|
 extern "c" fn epoxy_glWindowPos3sMESA(fp : CPtr, x : Int, y : Int, z : Int) -> Unit = "epoxy_glWindowPos3sMESA"
