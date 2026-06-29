@@ -101,6 +101,16 @@ priv enum Token {
 }
 
 ///|
+/// Classify a lexed word as a keyword token or a plain type name.
+fn Token::of_word(w : String) -> Token {
+  match w {
+    "const" => Const
+    "struct" => Struct
+    _ => Word(w)
+  }
+}
+
+///|
 /// Lex a C declarator fragment: whitespace separates words, each `*` is its own
 /// token, and the `const`/`struct` keywords are recognised. e.g. "const  *" ->
 /// [Const, Star], "struct _cl_event" -> [Struct, Word("_cl_event")].
@@ -110,11 +120,7 @@ fn tokenize_declarator(s : String) -> Array[Token] {
   fn flush() -> Unit {
     let w = cur.to_string()
     if w != "" {
-      toks.push(match w {
-        "const" => Const
-        "struct" => Struct
-        _ => Word(w)
-      })
+      toks.push(Token::of_word(w))
     }
     cur = StringBuilder::new()
   }
@@ -139,28 +145,22 @@ fn tokenize_declarator(s : String) -> Array[Token] {
 /// in one pointer level per `*`; the innermost carries the pointee's const-ness
 /// (a `const` appearing before the first `*`).
 fn Decl::to_gltype(self : Decl) -> GlType {
-  let mut stars = 0
-  let mut seen_star = false
-  let mut pointee_const = false
-  let words : Array[String] = []
+  // Start from the base leaf and wrap it outward, one pointer per `*`. The base
+  // is the explicit <ptype> if the registry tagged one; otherwise a bare type
+  // word in the declarator (e.g. "void") fills it in.
+  let ptype = self.ptype.to_string()
+  let mut ty : GlType = Base(ptype)
+  let mut pending_const = false // a `const` not yet attached to a pointer
   for t in tokenize_declarator(self.text.to_string()) {
     match t {
+      Word(w) => if ptype == "" { ty = Base(w) }
+      Const => pending_const = true
       Star => {
-        stars += 1
-        seen_star = true
+        ty = Ptr(ty, is_const=pending_const)
+        pending_const = false
       }
-      Const => if !seen_star { pointee_const = true }
       Struct => ()
-      Word(w) => words.push(w)
     }
-  }
-  // The base type is the explicit <ptype> if the registry tagged one, otherwise
-  // the bare word(s) left in the declarator (e.g. "void").
-  let ptype = self.ptype.to_string()
-  let base = if ptype != "" { ptype } else { words.join(" ") }
-  let mut ty : GlType = Base(base)
-  for i in 0..<stars {
-    ty = Ptr(ty, is_const=i == 0 && pointee_const)
   }
   ty
 }
