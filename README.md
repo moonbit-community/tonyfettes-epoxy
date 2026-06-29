@@ -6,11 +6,17 @@ OpenGL function-pointer dispatch that resolves entry points lazily via
 `glGetString` without worrying about loaders, versions, or extensions.
 
 The library package is the module root: import it as `feihaoxiang/epoxy`. A
-binding generator parses the Khronos registry (`registry/gl.xml`, 3299 commands)
-with the [xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and
-emits MoonBit dispatch wrappers + C call shims for the **3197** commands it can
+separate module — `feihaoxiang/epoxy-generator` under `generator/` — parses the
+Khronos registry (`registry/gl.xml`, 3299 commands) with the
+[xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and emits
+MoonBit dispatch wrappers + C call shims for the **3197** commands it can
 express. The rest (callbacks, opaque handles, a few exotic pointer shapes) are
 skipped, never miscompiled.
+
+Keeping the generator in its own module means the library's dependency closure
+stays minimal: consumers of `feihaoxiang/epoxy` never inherit the build-time
+toolchain (xml parser, async IO). The library depends only on
+`moonbitlang/core`.
 
 ## Status
 
@@ -33,19 +39,16 @@ See [`examples/hello_gl`](examples/hello_gl/) for what each line proves.
 
 ## Layout
 
-The module is a root package plus a handful of internal support packages. The
-generator runs as a normal `moon run`, writing its output into the root package.
+Three modules share one `moon.work` workspace: the library (root), the
+generator, and the examples.
 
 | Path | Role |
 |------|------|
 | `gl.mbt`, `resolver.mbt`, `version.mbt` | **The epoxy library** (module root, `feihaoxiang/epoxy`): GL enum constants, the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, and the version/extension introspection API. |
 | `epoxy_stub.c` | Hand-written C: the `dlopen`/`dlsym` resolver. |
 | `gl_generated.mbt` / `gl_generated_stub.c` | **Generated** dispatch wrappers + per-signature C call shims (3197). |
-| `gen/` | **The type-mapping table** — single source of truth mapping every `GLxxx` typedef to its MoonBit type, C type, and FFI marshalling category. Drives the generator. |
-| `cdecl/` | C-declarator parser for the registry's `<param>`/`<proto>` fragments. |
-| `aliasgroup/` | Union-find over `<alias>` edges, so a binding can fall back to its equivalent entry-point names. |
-| `glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). |
-| `generator/` | **The binding generator**: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (driver). |
+| `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
+| `generator/` | **The binding generator** — its own module, `feihaoxiang/epoxy-generator`: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (CLI driver), plus its private support packages `gen/` (the `GLxxx`→type table), `cdecl/` (C-declarator parser), `aliasgroup/` (union-find over `<alias>` edges). |
 | `examples/` | A separate module (`feihaoxiang/epoxy-examples`); see `hello_gl`. |
 | `upstream/libepoxy` | The reference C implementation (submodule), incl. `registry/*.xml`. |
 
@@ -67,7 +70,7 @@ provides. epoxy itself only `dlopen`s.
 ## FFI marshalling categories
 
 The ~40 `GLxxx` typedefs collapse onto a handful of representations, all decided
-in `gen/types.mbt`:
+in `generator/gen/types.mbt`:
 
 - **Scalar** (most params): `GLenum/GLuint`→`UInt`, `GLint/GLsizei`→`Int`,
   `GLfloat`→`Float`, `GLdouble`→`Double`, `GL(u)int64`→`(U)Int64`. Direct.
@@ -88,9 +91,20 @@ This is a multi-module workspace (`moon.work`). The module sets
 computed per-platform by a `build.js` prebuild script.
 
 ```sh
-moon run generator                         # regenerate bindings from gl.xml
-moon test                                  # all unit tests
-moon -C examples run hello_gl/main --release   # the demo (release: see examples/hello_gl)
+moon -C generator run .                     # regenerate bindings from gl.xml
+moon test                                   # all unit tests
+moon -C examples run hello_gl/main --release    # the demo (release: see examples/hello_gl)
+```
+
+The generator takes its paths on the command line (run `moon -C generator run .
+-- --help` for the full list); the defaults point at the in-tree registry and
+the library package, so the bare command above regenerates in place:
+
+```sh
+moon -C generator run . -- \
+  --registry ../upstream/libepoxy/registry/gl.xml \
+  --out-mbt  ../gl_generated.mbt \
+  --out-c    ../gl_generated_stub.c
 ```
 
 ## Generator coverage

@@ -5,17 +5,55 @@
 /// non-string pointer returns) are simply skipped — never miscompiled.
 
 ///|
-const REGISTRY : String = "upstream/libepoxy/registry/gl.xml"
+/// Defaults are relative to this module's root (`generator/`): the registry
+/// lives in the parent module and the generated output lands in the epoxy
+/// library package one level up. Override any of them on the command line.
+const DEFAULT_REGISTRY : String = "../upstream/libepoxy/registry/gl.xml"
 
 ///|
-const OUT_MBT : String = "gl_generated.mbt"
+const DEFAULT_OUT_MBT : String = "../gl_generated.mbt"
 
 ///|
-const OUT_C : String = "gl_generated_stub.c"
+const DEFAULT_OUT_C : String = "../gl_generated_stub.c"
+
+///|
+/// Read a single-valued option. Every option below carries a default, so the
+/// value map is always populated — a missing key would be a generator bug.
+fn option(matches : @argparse.Matches, name : String) -> String {
+  guard matches.values.get(name) is Some([value, ..]) else {
+    abort("option '\{name}' has no value")
+  }
+  value
+}
 
 ///|
 async fn main {
-  let content = @fs.read_file(REGISTRY).text() catch {
+  let cmd = @argparse.Command(
+    "epoxy-generator",
+    about="Parse the Khronos GL registry and emit MoonBit dispatch wrappers + C call shims.",
+    options=[
+      @argparse.OptionArg(
+        "registry",
+        about="Path to the Khronos gl.xml registry.",
+        default_values=[DEFAULT_REGISTRY],
+      ),
+      @argparse.OptionArg(
+        "out-mbt",
+        about="Output path for the generated MoonBit dispatch wrappers.",
+        default_values=[DEFAULT_OUT_MBT],
+      ),
+      @argparse.OptionArg(
+        "out-c",
+        about="Output path for the generated C call shims.",
+        default_values=[DEFAULT_OUT_C],
+      ),
+    ],
+  )
+  let matches = cmd.parse()
+  let registry = option(matches, "registry")
+  let out_mbt = option(matches, "out-mbt")
+  let out_c = option(matches, "out-c")
+  let content = @fs.read_file(registry).text() catch {
     error if @async.is_being_cancelled() => raise error
     e => {
       println("read failed: \{e}")
@@ -74,8 +112,8 @@ async fn main {
     }
   }
   try {
-    @fs.write_file(OUT_MBT, mbt.to_string())
-    @fs.write_file(OUT_C, cc.to_string())
+    @fs.write_file(out_mbt, mbt.to_string(), create_mode=CreateOrTruncate)
+    @fs.write_file(out_c, cc.to_string(), create_mode=CreateOrTruncate)
   } catch {
     error if @async.is_being_cancelled() => raise error
     e => {
@@ -84,5 +122,5 @@ async fn main {
     }
   }
   println("generated \{emitted} of \{total} commands")
-  println("wrote \{OUT_MBT} and \{OUT_C}")
+  println("wrote \{out_mbt} and \{out_c}")
 }

@@ -1,6 +1,6 @@
 import {
   "moonbitlang/core/encoding/utf8",
-  "feihaoxiang/epoxy/glinfo",
+  "feihaoxiang/epoxy/internal/glinfo",
 }
 
 options(

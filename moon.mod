@@ -6,11 +6,6 @@ description = "A MoonBit reimplementation of libepoxy: OpenGL function pointer d
 
 preferred_target = "native"
 
-import {
-  "Milky2018/xml@0.2.0",
-  "moonbitlang/async@0.19.4",
-}
-
 options(
   source: ".",
   exclude: [ "upstream" ],

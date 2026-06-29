@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "feihaoxiang/epoxy/gen"
+package "feihaoxiang/epoxy-generator/gen"
 
 // Values
 pub fn lookup(String) -> TypeInfo?
