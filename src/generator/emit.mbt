@@ -221,7 +221,7 @@ fn emit(c : Command) -> (String, String) {
   let mbt = StringBuilder::new()
   let cc = StringBuilder::new()
   let fn_name = snake(c.name)
-  let shim = "epoxy_call_" + c.name
+  let shim = "epoxy_" + c.name
   let slot = "d_" + c.name
 
   // --- per-parameter bindings (scalar by-value or pointer passthrough) --
@@ -253,26 +253,26 @@ fn emit(c : Command) -> (String, String) {
   mbt.write_string("///|\n")
   let ffi_params = ["fp : CPtr", ..mbt_params]
   if is_string_ret(c) {
-    mbt.write_string("\{borrow_line}extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Bytes = \"\{shim}\"\n\n")
+    mbt.write_string("\{borrow_line}extern \"c\" fn epoxy_\{c.name}(\{ffi_params.join(", ")}) -> Bytes = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
     mbt.write_string("pub fn \{fn_name}(\{mbt_params.join(", ")}) -> String raise ResolveError {\n")
     let args = [slot + ".get()", ..call_args]
-    mbt.write_string("  decode_utf8(ffi_\{c.name}(\{args.join(", ")}))\n")
+    mbt.write_string("  decode_utf8(epoxy_\{c.name}(\{args.join(", ")}))\n")
     mbt.write_string("}\n\n")
   } else if c.ret.is_void() {
-    mbt.write_string("\{borrow_line}extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> Unit = \"\{shim}\"\n\n")
+    mbt.write_string("\{borrow_line}extern \"c\" fn epoxy_\{c.name}(\{ffi_params.join(", ")}) -> Unit = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
     mbt.write_string("pub fn \{fn_name}(\{mbt_params.join(", ")}) -> Unit raise ResolveError {\n")
     let args = [slot + ".get()", ..call_args]
-    mbt.write_string("  ffi_\{c.name}(\{args.join(", ")})\n")
+    mbt.write_string("  epoxy_\{c.name}(\{args.join(", ")})\n")
     mbt.write_string("}\n\n")
   } else {
     let ret_mbt = mbt_scalar_type(c.ret.base_name()).unwrap()
-    mbt.write_string("\{borrow_line}extern \"c\" fn ffi_\{c.name}(\{ffi_params.join(", ")}) -> \{ret_mbt} = \"\{shim}\"\n\n")
+    mbt.write_string("\{borrow_line}extern \"c\" fn epoxy_\{c.name}(\{ffi_params.join(", ")}) -> \{ret_mbt} = \"\{shim}\"\n\n")
     mbt.write_string("///|\n")
     mbt.write_string("pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} raise ResolveError {\n")
     let args = [slot + ".get()", ..call_args]
-    mbt.write_string("  ffi_\{c.name}(\{args.join(", ")})\n")
+    mbt.write_string("  epoxy_\{c.name}(\{args.join(", ")})\n")
     mbt.write_string("}\n\n")
   }
 

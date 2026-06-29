@@ -18,14 +18,10 @@ pub const GL_RENDERER : UInt = 0x1F01
 pub const GL_VERSION : UInt = 0x1F02
 
 ///|
-/// Decode a NUL-free byte buffer (GL version/vendor strings are ASCII) into a
-/// MoonBit String. Shared by every generated string-returning entry point.
+/// Decode a GL-returned byte buffer into a MoonBit String. Shared by every
+/// generated string-returning entry point.
 fn decode_utf8(bytes : Bytes) -> String {
-  let sb = StringBuilder::new()
-  for b in bytes {
-    sb.write_char((b.to_int() & 0xff).unsafe_to_char())
-  }
-  sb.to_string()
+  @utf8.decode_lossy(bytes[:])
 }
 
 ///|

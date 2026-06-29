@@ -43,6 +43,9 @@ void *epoxy_dlsym(void *handle, moonbit_bytes_t name) {
   return dlsym(handle, (const char *)name);
 }
 
+// A null CPtr, used as the unresolved sentinel on the MoonBit side.
+void *epoxy_null(void) { return NULL; }
+
 // NULL check, so MoonBit can detect failed dlopen/dlsym across the #external
 // boundary (it can't compare an opaque pointer to null directly).
 int epoxy_ptr_is_null(void *p) { return p == NULL; }
