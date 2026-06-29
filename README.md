@@ -9,9 +9,9 @@ The library package is the module root: import it as `tonyfettes/epoxy`. A
 separate module — `tonyfettes/epoxy-generator` under `generator/` — parses the
 Khronos registry (`registry/gl.xml`, 3299 commands) with the
 [xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and emits
-MoonBit dispatch wrappers + C call shims for the **3197** commands it can
-express. The rest (callbacks, opaque handles, a few exotic pointer shapes) are
-skipped, never miscompiled.
+MoonBit dispatch wrappers + C call shims for the **3217** commands it can
+express. The rest (callbacks, a few exotic pointer shapes, the platform-variant
+`GLhandleARB`) are skipped, never miscompiled.
 
 Keeping the generator in its own module means the library's dependency closure
 stays minimal: consumers of `tonyfettes/epoxy` never inherit the build-time
@@ -81,8 +81,13 @@ in `generator/gen/types.mbt`:
 - **String arrays**: `const GLchar *const *` → `FixedArray[Bytes]` (the layout
   already *is* the `char**` GL wants — `glShaderSource` &c.).
 - **16-bit arrays**: `const GLshort*`/`GLhalf*` → `FixedArray[Int16]`/`[UInt16]`.
-- **Deferred**: callbacks (`GLDEBUGPROC`), opaque handles (`GLsync`), non-string
-  pointer returns, `void**`/non-char double pointers.
+- **Opaque handles**: `GLsync`/`GLeglImageOES`/`GLeglClientBufferEXT`/
+  `GLVULKANPROCNV` → distinct `#external` types (`pub type GLsync` &c.). All
+  share the `void *` ABI, so the C cast needs no GL headers; the names keep the
+  handles from being interchangeable.
+- **Deferred**: callbacks (`GLDEBUGPROC`), `GLhandleARB` (a split ABI — `unsigned
+  int` elsewhere, `void *` on Apple — we won't miscompile either), non-string
+  pointer returns, `void**`/pointer-width arrays, OpenCL interop.
 
 ## Build & run
 
@@ -111,11 +116,14 @@ moon -C generator run . -- \
 
 | Category | Count | Status |
 |----------|------:|--------|
-| scalar / void / string + scalar-array + string-array + 16-bit-array | 3197 | ✅ generated |
-| remaining pointer shape (`void**`, pointer-width, non-char `**`) | 43 | deferred |
-| unknown / opaque scalar type (`GLsync`, `GLhandleARB`, …) | 44 | deferred |
+| scalar / void / string + scalar/string/16-bit arrays + opaque handles | 3217 | ✅ generated |
+| `void**` out-pointers (`glGetPointerv`, `glMultiDrawElements`, …) | 36 | deferred |
+| `GLhandleARB` (platform-variant ABI; modern `GLuint` form is bound) | 23 | deferred |
 | non-string pointer return (`void* glMapBuffer`) | 11 | deferred |
+| pointer-width arrays (`GLintptr*` in `glBindBuffersRange`, …) | 5 | deferred |
 | callback argument (`GLDEBUGPROC`) | 4 | deferred |
+| non-char double-pointer arrays (`GLvdpauSurfaceNV*`) | 2 | deferred |
+| OpenCL interop type (`glCreateSyncFromCLeventARB`) | 1 | deferred |
 
 ## Roadmap
 
@@ -125,6 +133,9 @@ moon -C generator run . -- \
 4. ✅ Alias groups (`<alias>` fallback) + `epoxy_gl_version` / `is_desktop_gl` /
    `has_gl_extension`.
 5. ✅ String arrays (`const GLchar *const *`) + 16-bit arrays.
-6. Remaining shapes: non-string pointer returns (→ opaque `CPtr`), `void**`
-   out-pointers, callbacks (`GLDEBUGPROC` trampoline).
-7. GLES / EGL / GLX / WGL window-system layers; Linux + Windows loaders.
+6. ✅ Opaque object handles (`GLsync`, `GLeglImageOES`, `GLeglClientBufferEXT`,
+   `GLVULKANPROCNV`) → distinct `#external` types.
+7. Remaining shapes: non-string pointer returns (→ opaque `CPtr`), `void**`
+   out-pointers, callbacks (`GLDEBUGPROC` trampoline). `GLhandleARB` needs a
+   platform `#ifdef` typedef (split ABI) to bind without miscompiling.
+8. GLES / EGL / GLX / WGL window-system layers; Linux + Windows loaders.

@@ -3966,6 +3966,39 @@ pub fn gl_buffer_storage_ext(
 }
 
 ///|
+let d_glBufferStorageExternalEXT : Dispatch = Dispatch::new(
+  "glBufferStorageExternalEXT",
+)
+
+///|
+extern "c" fn epoxy_glBufferStorageExternalEXT(
+  fp : CPtr,
+  target : UInt,
+  offset : Int64,
+  size : Int64,
+  clientBuffer : GLeglClientBufferEXT,
+  flags : UInt,
+) -> Unit = "epoxy_glBufferStorageExternalEXT"
+
+///|
+pub fn gl_buffer_storage_external_ext(
+  target : UInt,
+  offset : Int64,
+  size : Int64,
+  clientBuffer : GLeglClientBufferEXT,
+  flags : UInt,
+) -> Unit raise ResolveError {
+  epoxy_glBufferStorageExternalEXT(
+    d_glBufferStorageExternalEXT.get(),
+    target,
+    offset,
+    size,
+    clientBuffer,
+    flags,
+  )
+}
+
+///|
 let d_glBufferStorageMemEXT : Dispatch = Dispatch::new("glBufferStorageMemEXT")
 
 ///|
@@ -5211,6 +5244,56 @@ pub fn gl_client_wait_semaphoreui64_nvx(
     fenceObjectCount,
     semaphoreArray,
     fenceValueArray,
+  )
+}
+
+///|
+let d_glClientWaitSync : Dispatch = Dispatch::with_aliases("glClientWaitSync", [
+  "glClientWaitSyncAPPLE",
+])
+
+///|
+extern "c" fn epoxy_glClientWaitSync(
+  fp : CPtr,
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> UInt = "epoxy_glClientWaitSync"
+
+///|
+pub fn gl_client_wait_sync(
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> UInt raise ResolveError {
+  epoxy_glClientWaitSync(d_glClientWaitSync.get(), sync, flags, timeout)
+}
+
+///|
+let d_glClientWaitSyncAPPLE : Dispatch = Dispatch::with_aliases(
+  "glClientWaitSyncAPPLE",
+  ["glClientWaitSync"],
+)
+
+///|
+extern "c" fn epoxy_glClientWaitSyncAPPLE(
+  fp : CPtr,
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> UInt = "epoxy_glClientWaitSyncAPPLE"
+
+///|
+pub fn gl_client_wait_sync_apple(
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> UInt raise ResolveError {
+  epoxy_glClientWaitSyncAPPLE(
+    d_glClientWaitSyncAPPLE.get(),
+    sync,
+    flags,
+    timeout,
   )
 }
 
@@ -12638,6 +12721,33 @@ pub fn gl_delete_states_nv(
 }
 
 ///|
+let d_glDeleteSync : Dispatch = Dispatch::with_aliases("glDeleteSync", [
+  "glDeleteSyncAPPLE",
+])
+
+///|
+extern "c" fn epoxy_glDeleteSync(fp : CPtr, sync : GLsync) -> Unit = "epoxy_glDeleteSync"
+
+///|
+pub fn gl_delete_sync(sync : GLsync) -> Unit raise ResolveError {
+  epoxy_glDeleteSync(d_glDeleteSync.get(), sync)
+}
+
+///|
+let d_glDeleteSyncAPPLE : Dispatch = Dispatch::with_aliases(
+  "glDeleteSyncAPPLE",
+  ["glDeleteSync"],
+)
+
+///|
+extern "c" fn epoxy_glDeleteSyncAPPLE(fp : CPtr, sync : GLsync) -> Unit = "epoxy_glDeleteSyncAPPLE"
+
+///|
+pub fn gl_delete_sync_apple(sync : GLsync) -> Unit raise ResolveError {
+  epoxy_glDeleteSyncAPPLE(d_glDeleteSyncAPPLE.get(), sync)
+}
+
+///|
 let d_glDeleteTextures : Dispatch = Dispatch::new("glDeleteTextures")
 
 ///|
@@ -15521,6 +15631,110 @@ pub fn gl_draw_transform_feedback_stream_instanced(
 }
 
 ///|
+let d_glEGLImageTargetRenderbufferStorageOES : Dispatch = Dispatch::new(
+  "glEGLImageTargetRenderbufferStorageOES",
+)
+
+///|
+extern "c" fn epoxy_glEGLImageTargetRenderbufferStorageOES(
+  fp : CPtr,
+  target : UInt,
+  image : GLeglImageOES,
+) -> Unit = "epoxy_glEGLImageTargetRenderbufferStorageOES"
+
+///|
+pub fn gl_egl_image_target_renderbuffer_storage_oes(
+  target : UInt,
+  image : GLeglImageOES,
+) -> Unit raise ResolveError {
+  epoxy_glEGLImageTargetRenderbufferStorageOES(
+    d_glEGLImageTargetRenderbufferStorageOES.get(),
+    target,
+    image,
+  )
+}
+
+///|
+let d_glEGLImageTargetTexStorageEXT : Dispatch = Dispatch::new(
+  "glEGLImageTargetTexStorageEXT",
+)
+
+///|
+#borrow(attrib_list)
+extern "c" fn epoxy_glEGLImageTargetTexStorageEXT(
+  fp : CPtr,
+  target : UInt,
+  image : GLeglImageOES,
+  attrib_list : FixedArray[Int],
+) -> Unit = "epoxy_glEGLImageTargetTexStorageEXT"
+
+///|
+pub fn gl_egl_image_target_tex_storage_ext(
+  target : UInt,
+  image : GLeglImageOES,
+  attrib_list : FixedArray[Int],
+) -> Unit raise ResolveError {
+  epoxy_glEGLImageTargetTexStorageEXT(
+    d_glEGLImageTargetTexStorageEXT.get(),
+    target,
+    image,
+    attrib_list,
+  )
+}
+
+///|
+let d_glEGLImageTargetTexture2DOES : Dispatch = Dispatch::new(
+  "glEGLImageTargetTexture2DOES",
+)
+
+///|
+extern "c" fn epoxy_glEGLImageTargetTexture2DOES(
+  fp : CPtr,
+  target : UInt,
+  image : GLeglImageOES,
+) -> Unit = "epoxy_glEGLImageTargetTexture2DOES"
+
+///|
+pub fn gl_egl_image_target_texture2_does(
+  target : UInt,
+  image : GLeglImageOES,
+) -> Unit raise ResolveError {
+  epoxy_glEGLImageTargetTexture2DOES(
+    d_glEGLImageTargetTexture2DOES.get(),
+    target,
+    image,
+  )
+}
+
+///|
+let d_glEGLImageTargetTextureStorageEXT : Dispatch = Dispatch::new(
+  "glEGLImageTargetTextureStorageEXT",
+)
+
+///|
+#borrow(attrib_list)
+extern "c" fn epoxy_glEGLImageTargetTextureStorageEXT(
+  fp : CPtr,
+  texture : UInt,
+  image : GLeglImageOES,
+  attrib_list : FixedArray[Int],
+) -> Unit = "epoxy_glEGLImageTargetTextureStorageEXT"
+
+///|
+pub fn gl_egl_image_target_texture_storage_ext(
+  texture : UInt,
+  image : GLeglImageOES,
+  attrib_list : FixedArray[Int],
+) -> Unit raise ResolveError {
+  epoxy_glEGLImageTargetTextureStorageEXT(
+    d_glEGLImageTargetTextureStorageEXT.get(),
+    texture,
+    image,
+    attrib_list,
+  )
+}
+
+///|
 let d_glEdgeFlag : Dispatch = Dispatch::new("glEdgeFlag")
 
 ///|
@@ -16855,6 +17069,46 @@ pub fn gl_feedback_bufferx_oes(
   buffer : FixedArray[Int],
 ) -> Unit raise ResolveError {
   epoxy_glFeedbackBufferxOES(d_glFeedbackBufferxOES.get(), n, type_, buffer)
+}
+
+///|
+let d_glFenceSync : Dispatch = Dispatch::with_aliases("glFenceSync", [
+  "glFenceSyncAPPLE",
+])
+
+///|
+extern "c" fn epoxy_glFenceSync(
+  fp : CPtr,
+  condition : UInt,
+  flags : UInt,
+) -> GLsync = "epoxy_glFenceSync"
+
+///|
+pub fn gl_fence_sync(
+  condition : UInt,
+  flags : UInt,
+) -> GLsync raise ResolveError {
+  epoxy_glFenceSync(d_glFenceSync.get(), condition, flags)
+}
+
+///|
+let d_glFenceSyncAPPLE : Dispatch = Dispatch::with_aliases("glFenceSyncAPPLE", [
+  "glFenceSync",
+])
+
+///|
+extern "c" fn epoxy_glFenceSyncAPPLE(
+  fp : CPtr,
+  condition : UInt,
+  flags : UInt,
+) -> GLsync = "epoxy_glFenceSyncAPPLE"
+
+///|
+pub fn gl_fence_sync_apple(
+  condition : UInt,
+  flags : UInt,
+) -> GLsync raise ResolveError {
+  epoxy_glFenceSyncAPPLE(d_glFenceSyncAPPLE.get(), condition, flags)
 }
 
 ///|
@@ -28988,6 +29242,67 @@ pub fn gl_get_subroutine_uniform_location(
 }
 
 ///|
+let d_glGetSynciv : Dispatch = Dispatch::with_aliases("glGetSynciv", [
+  "glGetSyncivAPPLE",
+])
+
+///|
+#borrow(length, values)
+extern "c" fn epoxy_glGetSynciv(
+  fp : CPtr,
+  sync : GLsync,
+  pname : UInt,
+  count : Int,
+  length : FixedArray[Int],
+  values : FixedArray[Int],
+) -> Unit = "epoxy_glGetSynciv"
+
+///|
+pub fn gl_get_synciv(
+  sync : GLsync,
+  pname : UInt,
+  count : Int,
+  length : FixedArray[Int],
+  values : FixedArray[Int],
+) -> Unit raise ResolveError {
+  epoxy_glGetSynciv(d_glGetSynciv.get(), sync, pname, count, length, values)
+}
+
+///|
+let d_glGetSyncivAPPLE : Dispatch = Dispatch::with_aliases("glGetSyncivAPPLE", [
+  "glGetSynciv",
+])
+
+///|
+#borrow(length, values)
+extern "c" fn epoxy_glGetSyncivAPPLE(
+  fp : CPtr,
+  sync : GLsync,
+  pname : UInt,
+  count : Int,
+  length : FixedArray[Int],
+  values : FixedArray[Int],
+) -> Unit = "epoxy_glGetSyncivAPPLE"
+
+///|
+pub fn gl_get_synciv_apple(
+  sync : GLsync,
+  pname : UInt,
+  count : Int,
+  length : FixedArray[Int],
+  values : FixedArray[Int],
+) -> Unit raise ResolveError {
+  epoxy_glGetSyncivAPPLE(
+    d_glGetSyncivAPPLE.get(),
+    sync,
+    pname,
+    count,
+    length,
+    values,
+  )
+}
+
+///|
 let d_glGetTexBumpParameterfvATI : Dispatch = Dispatch::new(
   "glGetTexBumpParameterfvATI",
 )
@@ -33727,6 +34042,31 @@ pub fn gl_import_semaphore_win32_name_ext(
 }
 
 ///|
+let d_glImportSyncEXT : Dispatch = Dispatch::new("glImportSyncEXT")
+
+///|
+extern "c" fn epoxy_glImportSyncEXT(
+  fp : CPtr,
+  external_sync_type : UInt,
+  external_sync : Int64,
+  flags : UInt,
+) -> GLsync = "epoxy_glImportSyncEXT"
+
+///|
+pub fn gl_import_sync_ext(
+  external_sync_type : UInt,
+  external_sync : Int64,
+  flags : UInt,
+) -> GLsync raise ResolveError {
+  epoxy_glImportSyncEXT(
+    d_glImportSyncEXT.get(),
+    external_sync_type,
+    external_sync,
+    flags,
+  )
+}
+
+///|
 let d_glIndexFormatNV : Dispatch = Dispatch::new("glIndexFormatNV")
 
 ///|
@@ -34933,6 +35273,30 @@ extern "c" fn epoxy_glIsStateNV(fp : CPtr, state : UInt) -> Bool = "epoxy_glIsSt
 ///|
 pub fn gl_is_state_nv(state : UInt) -> Bool raise ResolveError {
   epoxy_glIsStateNV(d_glIsStateNV.get(), state)
+}
+
+///|
+let d_glIsSync : Dispatch = Dispatch::with_aliases("glIsSync", ["glIsSyncAPPLE"])
+
+///|
+extern "c" fn epoxy_glIsSync(fp : CPtr, sync : GLsync) -> Bool = "epoxy_glIsSync"
+
+///|
+pub fn gl_is_sync(sync : GLsync) -> Bool raise ResolveError {
+  epoxy_glIsSync(d_glIsSync.get(), sync)
+}
+
+///|
+let d_glIsSyncAPPLE : Dispatch = Dispatch::with_aliases("glIsSyncAPPLE", [
+  "glIsSync",
+])
+
+///|
+extern "c" fn epoxy_glIsSyncAPPLE(fp : CPtr, sync : GLsync) -> Bool = "epoxy_glIsSyncAPPLE"
+
+///|
+pub fn gl_is_sync_apple(sync : GLsync) -> Bool raise ResolveError {
+  epoxy_glIsSyncAPPLE(d_glIsSyncAPPLE.get(), sync)
 }
 
 ///|
@@ -42488,6 +42852,39 @@ pub fn gl_named_buffer_storage(
     buffer,
     size,
     data,
+    flags,
+  )
+}
+
+///|
+let d_glNamedBufferStorageExternalEXT : Dispatch = Dispatch::new(
+  "glNamedBufferStorageExternalEXT",
+)
+
+///|
+extern "c" fn epoxy_glNamedBufferStorageExternalEXT(
+  fp : CPtr,
+  buffer : UInt,
+  offset : Int64,
+  size : Int64,
+  clientBuffer : GLeglClientBufferEXT,
+  flags : UInt,
+) -> Unit = "epoxy_glNamedBufferStorageExternalEXT"
+
+///|
+pub fn gl_named_buffer_storage_external_ext(
+  buffer : UInt,
+  offset : Int64,
+  size : Int64,
+  clientBuffer : GLeglClientBufferEXT,
+  flags : UInt,
+) -> Unit raise ResolveError {
+  epoxy_glNamedBufferStorageExternalEXT(
+    d_glNamedBufferStorageExternalEXT.get(),
+    buffer,
+    offset,
+    size,
+    clientBuffer,
     flags,
   )
 }
@@ -77524,6 +77921,50 @@ pub fn gl_wait_semaphoreui64_nvx(
 }
 
 ///|
+let d_glWaitSync : Dispatch = Dispatch::with_aliases("glWaitSync", [
+  "glWaitSyncAPPLE",
+])
+
+///|
+extern "c" fn epoxy_glWaitSync(
+  fp : CPtr,
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> Unit = "epoxy_glWaitSync"
+
+///|
+pub fn gl_wait_sync(
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> Unit raise ResolveError {
+  epoxy_glWaitSync(d_glWaitSync.get(), sync, flags, timeout)
+}
+
+///|
+let d_glWaitSyncAPPLE : Dispatch = Dispatch::with_aliases("glWaitSyncAPPLE", [
+  "glWaitSync",
+])
+
+///|
+extern "c" fn epoxy_glWaitSyncAPPLE(
+  fp : CPtr,
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> Unit = "epoxy_glWaitSyncAPPLE"
+
+///|
+pub fn gl_wait_sync_apple(
+  sync : GLsync,
+  flags : UInt,
+  timeout : UInt64,
+) -> Unit raise ResolveError {
+  epoxy_glWaitSyncAPPLE(d_glWaitSyncAPPLE.get(), sync, flags, timeout)
+}
+
+///|
 let d_glWeightPathsNV : Dispatch = Dispatch::new("glWeightPathsNV")
 
 ///|
@@ -78785,6 +79226,23 @@ pub fn gl_draw_vk_image_nv(
     s1,
     t1,
   )
+}
+
+///|
+let d_glGetVkProcAddrNV : Dispatch = Dispatch::new("glGetVkProcAddrNV")
+
+///|
+#borrow(name)
+extern "c" fn epoxy_glGetVkProcAddrNV(
+  fp : CPtr,
+  name : Bytes,
+) -> GLVULKANPROCNV = "epoxy_glGetVkProcAddrNV"
+
+///|
+pub fn gl_get_vk_proc_addr_nv(
+  name : Bytes,
+) -> GLVULKANPROCNV raise ResolveError {
+  epoxy_glGetVkProcAddrNV(d_glGetVkProcAddrNV.get(), name)
 }
 
 ///|

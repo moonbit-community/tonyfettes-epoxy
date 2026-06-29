@@ -35,8 +35,21 @@ test "16-bit array element types are packed int16_t/uint16_t" {
 }
 
 ///|
-test "opaque handles and callbacks are unsupported (absent from the table)" {
-  inspect(lookup("GLsync") is None, content="true")
+test "opaque object handles map to a named external pointer" {
+  // GLsync &c. cross the FFI as a bare pointer but keep a distinct MoonBit type.
+  guard lookup("GLsync") is Some(s) else { fail("GLsync should be mapped") }
+  inspect(s.c_type.c(), content="void *")
+  inspect(s.m_type.moonbit(), content="GLsync")
+  inspect(s.m_type.c_abi(), content="void *")
+  guard lookup("GLeglImageOES") is Some(egl) else {
+    fail("GLeglImageOES should be mapped")
+  }
+  inspect(egl.m_type.moonbit(), content="GLeglImageOES")
+}
+
+///|
+test "callbacks and platform-variant handles stay unsupported (absent)" {
+  // GLhandleARB is unsigned int / Apple void * — a split ABI we won't miscompile.
   inspect(lookup("GLDEBUGPROC") is None, content="true")
   inspect(lookup("GLhandleARB") is None, content="true")
 }

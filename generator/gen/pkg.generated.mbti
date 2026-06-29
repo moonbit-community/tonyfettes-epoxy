@@ -24,6 +24,7 @@ pub(all) enum CType {
   UShort
   IntPtr
   SizePtr
+  OpaquePtr
   Pointer(CType, is_const~ : Bool)
 }
 pub fn CType::c(Self) -> String
@@ -39,6 +40,7 @@ pub(all) enum MType {
   UInt16
   Bool
   Bytes
+  Handle(String)
   Array(MType)
 }
 pub fn MType::c_abi(Self) -> String

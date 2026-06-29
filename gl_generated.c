@@ -667,6 +667,10 @@ void epoxy_glBufferStorageEXT(void *fp, uint32_t target, int64_t size, moonbit_b
   ((void(*)(unsigned int, ssize_t, const void *, unsigned int))fp)((unsigned int)target, (ssize_t)size, (const void *)data, (unsigned int)flags);
 }
 
+void epoxy_glBufferStorageExternalEXT(void *fp, uint32_t target, int64_t offset, int64_t size, void * clientBuffer, uint32_t flags) {
+  ((void(*)(unsigned int, intptr_t, ssize_t, void *, unsigned int))fp)((unsigned int)target, (intptr_t)offset, (ssize_t)size, (void *)clientBuffer, (unsigned int)flags);
+}
+
 void epoxy_glBufferStorageMemEXT(void *fp, uint32_t target, int64_t size, uint32_t memory, uint64_t offset) {
   ((void(*)(unsigned int, ssize_t, unsigned int, uint64_t))fp)((unsigned int)target, (ssize_t)size, (unsigned int)memory, (uint64_t)offset);
 }
@@ -877,6 +881,14 @@ void epoxy_glClientAttribDefaultEXT(void *fp, uint32_t mask) {
 
 void epoxy_glClientWaitSemaphoreui64NVX(void *fp, int32_t fenceObjectCount, uint32_t * semaphoreArray, uint64_t * fenceValueArray) {
   ((void(*)(int, const unsigned int *, const uint64_t *))fp)((int)fenceObjectCount, (const unsigned int *)semaphoreArray, (const uint64_t *)fenceValueArray);
+}
+
+uint32_t epoxy_glClientWaitSync(void *fp, void * sync, uint32_t flags, uint64_t timeout) {
+  return (uint32_t)((unsigned int(*)(void *, unsigned int, uint64_t))fp)((void *)sync, (unsigned int)flags, (uint64_t)timeout);
+}
+
+uint32_t epoxy_glClientWaitSyncAPPLE(void *fp, void * sync, uint32_t flags, uint64_t timeout) {
+  return (uint32_t)((unsigned int(*)(void *, unsigned int, uint64_t))fp)((void *)sync, (unsigned int)flags, (uint64_t)timeout);
 }
 
 void epoxy_glClipControl(void *fp, uint32_t origin, uint32_t depth) {
@@ -1915,6 +1927,14 @@ void epoxy_glDeleteStatesNV(void *fp, int32_t n, uint32_t * states) {
   ((void(*)(int, const unsigned int *))fp)((int)n, (const unsigned int *)states);
 }
 
+void epoxy_glDeleteSync(void *fp, void * sync) {
+  ((void(*)(void *))fp)((void *)sync);
+}
+
+void epoxy_glDeleteSyncAPPLE(void *fp, void * sync) {
+  ((void(*)(void *))fp)((void *)sync);
+}
+
 void epoxy_glDeleteTextures(void *fp, int32_t n, uint32_t * textures) {
   ((void(*)(int, const unsigned int *))fp)((int)n, (const unsigned int *)textures);
 }
@@ -2379,6 +2399,22 @@ void epoxy_glDrawTransformFeedbackStreamInstanced(void *fp, uint32_t mode, uint3
   ((void(*)(unsigned int, unsigned int, unsigned int, int))fp)((unsigned int)mode, (unsigned int)id, (unsigned int)stream, (int)instancecount);
 }
 
+void epoxy_glEGLImageTargetRenderbufferStorageOES(void *fp, uint32_t target, void * image) {
+  ((void(*)(unsigned int, void *))fp)((unsigned int)target, (void *)image);
+}
+
+void epoxy_glEGLImageTargetTexStorageEXT(void *fp, uint32_t target, void * image, int32_t * attrib_list) {
+  ((void(*)(unsigned int, void *, const int *))fp)((unsigned int)target, (void *)image, (const int *)attrib_list);
+}
+
+void epoxy_glEGLImageTargetTexture2DOES(void *fp, uint32_t target, void * image) {
+  ((void(*)(unsigned int, void *))fp)((unsigned int)target, (void *)image);
+}
+
+void epoxy_glEGLImageTargetTextureStorageEXT(void *fp, uint32_t texture, void * image, int32_t * attrib_list) {
+  ((void(*)(unsigned int, void *, const int *))fp)((unsigned int)texture, (void *)image, (const int *)attrib_list);
+}
+
 void epoxy_glEdgeFlag(void *fp, int32_t flag) {
   ((void(*)(unsigned char))fp)((unsigned char)flag);
 }
@@ -2685,6 +2721,14 @@ void epoxy_glFeedbackBuffer(void *fp, int32_t size, uint32_t type_, float * buff
 
 void epoxy_glFeedbackBufferxOES(void *fp, int32_t n, uint32_t type_, int32_t * buffer) {
   ((void(*)(int, unsigned int, const int *))fp)((int)n, (unsigned int)type_, (const int *)buffer);
+}
+
+void * epoxy_glFenceSync(void *fp, uint32_t condition, uint32_t flags) {
+  return (void *)((void *(*)(unsigned int, unsigned int))fp)((unsigned int)condition, (unsigned int)flags);
+}
+
+void * epoxy_glFenceSyncAPPLE(void *fp, uint32_t condition, uint32_t flags) {
+  return (void *)((void *(*)(unsigned int, unsigned int))fp)((unsigned int)condition, (unsigned int)flags);
 }
 
 void epoxy_glFinalCombinerInputNV(void *fp, uint32_t variable, uint32_t input, uint32_t mapping, uint32_t componentUsage) {
@@ -4555,6 +4599,14 @@ int32_t epoxy_glGetSubroutineUniformLocation(void *fp, uint32_t program, uint32_
   return (int32_t)((int(*)(unsigned int, unsigned int, const char *))fp)((unsigned int)program, (unsigned int)shadertype, (const char *)name);
 }
 
+void epoxy_glGetSynciv(void *fp, void * sync, uint32_t pname, int32_t count, int32_t * length, int32_t * values) {
+  ((void(*)(void *, unsigned int, int, int *, int *))fp)((void *)sync, (unsigned int)pname, (int)count, (int *)length, (int *)values);
+}
+
+void epoxy_glGetSyncivAPPLE(void *fp, void * sync, uint32_t pname, int32_t count, int32_t * length, int32_t * values) {
+  ((void(*)(void *, unsigned int, int, int *, int *))fp)((void *)sync, (unsigned int)pname, (int)count, (int *)length, (int *)values);
+}
+
 void epoxy_glGetTexBumpParameterfvATI(void *fp, uint32_t pname, float * param) {
   ((void(*)(unsigned int, float *))fp)((unsigned int)pname, (float *)param);
 }
@@ -5267,6 +5319,10 @@ void epoxy_glImportSemaphoreWin32NameEXT(void *fp, uint32_t semaphore, uint32_t 
   ((void(*)(unsigned int, unsigned int, const void *))fp)((unsigned int)semaphore, (unsigned int)handleType, (const void *)name);
 }
 
+void * epoxy_glImportSyncEXT(void *fp, uint32_t external_sync_type, int64_t external_sync, uint32_t flags) {
+  return (void *)((void *(*)(unsigned int, intptr_t, unsigned int))fp)((unsigned int)external_sync_type, (intptr_t)external_sync, (unsigned int)flags);
+}
+
 void epoxy_glIndexFormatNV(void *fp, uint32_t type_, int32_t stride) {
   ((void(*)(unsigned int, int))fp)((unsigned int)type_, (int)stride);
 }
@@ -5565,6 +5621,14 @@ int32_t epoxy_glIsShader(void *fp, uint32_t shader) {
 
 int32_t epoxy_glIsStateNV(void *fp, uint32_t state) {
   return (int32_t)(((unsigned char(*)(unsigned int))fp)((unsigned int)state) != 0);
+}
+
+int32_t epoxy_glIsSync(void *fp, void * sync) {
+  return (int32_t)(((unsigned char(*)(void *))fp)((void *)sync) != 0);
+}
+
+int32_t epoxy_glIsSyncAPPLE(void *fp, void * sync) {
+  return (int32_t)(((unsigned char(*)(void *))fp)((void *)sync) != 0);
 }
 
 int32_t epoxy_glIsTexture(void *fp, uint32_t texture) {
@@ -6825,6 +6889,10 @@ void epoxy_glNamedBufferPageCommitmentMemNV(void *fp, uint32_t buffer, int64_t o
 
 void epoxy_glNamedBufferStorage(void *fp, uint32_t buffer, int64_t size, moonbit_bytes_t data, uint32_t flags) {
   ((void(*)(unsigned int, ssize_t, const void *, unsigned int))fp)((unsigned int)buffer, (ssize_t)size, (const void *)data, (unsigned int)flags);
+}
+
+void epoxy_glNamedBufferStorageExternalEXT(void *fp, uint32_t buffer, int64_t offset, int64_t size, void * clientBuffer, uint32_t flags) {
+  ((void(*)(unsigned int, intptr_t, ssize_t, void *, unsigned int))fp)((unsigned int)buffer, (intptr_t)offset, (ssize_t)size, (void *)clientBuffer, (unsigned int)flags);
 }
 
 void epoxy_glNamedBufferStorageEXT(void *fp, uint32_t buffer, int64_t size, moonbit_bytes_t data, uint32_t flags) {
@@ -12503,6 +12571,14 @@ void epoxy_glWaitSemaphoreui64NVX(void *fp, uint32_t waitGpu, int32_t fenceObjec
   ((void(*)(unsigned int, int, const unsigned int *, const uint64_t *))fp)((unsigned int)waitGpu, (int)fenceObjectCount, (const unsigned int *)semaphoreArray, (const uint64_t *)fenceValueArray);
 }
 
+void epoxy_glWaitSync(void *fp, void * sync, uint32_t flags, uint64_t timeout) {
+  ((void(*)(void *, unsigned int, uint64_t))fp)((void *)sync, (unsigned int)flags, (uint64_t)timeout);
+}
+
+void epoxy_glWaitSyncAPPLE(void *fp, void * sync, uint32_t flags, uint64_t timeout) {
+  ((void(*)(void *, unsigned int, uint64_t))fp)((void *)sync, (unsigned int)flags, (uint64_t)timeout);
+}
+
 void epoxy_glWeightPathsNV(void *fp, uint32_t resultPath, int32_t numPaths, uint32_t * paths, float * weights) {
   ((void(*)(unsigned int, int, const unsigned int *, const float *))fp)((unsigned int)resultPath, (int)numPaths, (const unsigned int *)paths, (const float *)weights);
 }
@@ -12781,6 +12857,10 @@ void epoxy_glWriteMaskEXT(void *fp, uint32_t res, uint32_t in_, uint32_t outX, u
 
 void epoxy_glDrawVkImageNV(void *fp, uint64_t vkImage, uint32_t sampler, float x0, float y0, float x1, float y1, float z, float s0, float t0, float s1, float t1) {
   ((void(*)(uint64_t, unsigned int, float, float, float, float, float, float, float, float, float))fp)((uint64_t)vkImage, (unsigned int)sampler, (float)x0, (float)y0, (float)x1, (float)y1, (float)z, (float)s0, (float)t0, (float)s1, (float)t1);
+}
+
+void * epoxy_glGetVkProcAddrNV(void *fp, moonbit_bytes_t name) {
+  return (void *)((void *(*)(const char *))fp)((const char *)name);
 }
 
 void epoxy_glWaitVkSemaphoreNV(void *fp, uint64_t vkSemaphore) {

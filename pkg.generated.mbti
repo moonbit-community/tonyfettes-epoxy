@@ -352,6 +352,8 @@ pub fn gl_buffer_storage(UInt, Int64, Bytes, UInt) -> Unit raise ResolveError
 
 pub fn gl_buffer_storage_ext(UInt, Int64, Bytes, UInt) -> Unit raise ResolveError
 
+pub fn gl_buffer_storage_external_ext(UInt, Int64, Int64, GLeglClientBufferEXT, UInt) -> Unit raise ResolveError
+
 pub fn gl_buffer_storage_mem_ext(UInt, Int64, UInt, UInt64) -> Unit raise ResolveError
 
 pub fn gl_buffer_sub_data(UInt, Int64, Int64, Bytes) -> Unit raise ResolveError
@@ -457,6 +459,10 @@ pub fn gl_client_active_vertex_stream_ati(UInt) -> Unit raise ResolveError
 pub fn gl_client_attrib_default_ext(UInt) -> Unit raise ResolveError
 
 pub fn gl_client_wait_semaphoreui64_nvx(Int, FixedArray[UInt], FixedArray[UInt64]) -> Unit raise ResolveError
+
+pub fn gl_client_wait_sync(GLsync, UInt, UInt64) -> UInt raise ResolveError
+
+pub fn gl_client_wait_sync_apple(GLsync, UInt, UInt64) -> UInt raise ResolveError
 
 pub fn gl_clip_control(UInt, UInt) -> Unit raise ResolveError
 
@@ -976,6 +982,10 @@ pub fn gl_delete_shader(UInt) -> Unit raise ResolveError
 
 pub fn gl_delete_states_nv(Int, FixedArray[UInt]) -> Unit raise ResolveError
 
+pub fn gl_delete_sync(GLsync) -> Unit raise ResolveError
+
+pub fn gl_delete_sync_apple(GLsync) -> Unit raise ResolveError
+
 pub fn gl_delete_textures(Int, FixedArray[UInt]) -> Unit raise ResolveError
 
 pub fn gl_delete_textures_ext(Int, FixedArray[UInt]) -> Unit raise ResolveError
@@ -1222,6 +1232,14 @@ pub fn gl_edge_flag_pointer_list_ibm(Int, FixedArray[Bytes], Int) -> Unit raise 
 
 pub fn gl_edge_flagv(Bytes) -> Unit raise ResolveError
 
+pub fn gl_egl_image_target_renderbuffer_storage_oes(UInt, GLeglImageOES) -> Unit raise ResolveError
+
+pub fn gl_egl_image_target_tex_storage_ext(UInt, GLeglImageOES, FixedArray[Int]) -> Unit raise ResolveError
+
+pub fn gl_egl_image_target_texture2_does(UInt, GLeglImageOES) -> Unit raise ResolveError
+
+pub fn gl_egl_image_target_texture_storage_ext(UInt, GLeglImageOES, FixedArray[Int]) -> Unit raise ResolveError
+
 pub fn gl_element_pointer_apple(UInt, Bytes) -> Unit raise ResolveError
 
 pub fn gl_element_pointer_ati(UInt, Bytes) -> Unit raise ResolveError
@@ -1365,6 +1383,10 @@ pub fn gl_extrapolate_tex2_dqcom(UInt, UInt, UInt, Float) -> Unit raise ResolveE
 pub fn gl_feedback_buffer(Int, UInt, FixedArray[Float]) -> Unit raise ResolveError
 
 pub fn gl_feedback_bufferx_oes(Int, UInt, FixedArray[Int]) -> Unit raise ResolveError
+
+pub fn gl_fence_sync(UInt, UInt) -> GLsync raise ResolveError
+
+pub fn gl_fence_sync_apple(UInt, UInt) -> GLsync raise ResolveError
 
 pub fn gl_final_combiner_input_nv(UInt, UInt, UInt, UInt) -> Unit raise ResolveError
 
@@ -2298,6 +2320,10 @@ pub fn gl_get_subroutine_index(UInt, UInt, Bytes) -> UInt raise ResolveError
 
 pub fn gl_get_subroutine_uniform_location(UInt, UInt, Bytes) -> Int raise ResolveError
 
+pub fn gl_get_synciv(GLsync, UInt, Int, FixedArray[Int], FixedArray[Int]) -> Unit raise ResolveError
+
+pub fn gl_get_synciv_apple(GLsync, UInt, Int, FixedArray[Int], FixedArray[Int]) -> Unit raise ResolveError
+
 pub fn gl_get_tex_bump_parameterfv_ati(UInt, FixedArray[Float]) -> Unit raise ResolveError
 
 pub fn gl_get_tex_bump_parameteriv_ati(UInt, FixedArray[Int]) -> Unit raise ResolveError
@@ -2522,6 +2548,8 @@ pub fn gl_get_videoui64v_nv(UInt, UInt, FixedArray[UInt64]) -> Unit raise Resolv
 
 pub fn gl_get_videouiv_nv(UInt, UInt, FixedArray[UInt]) -> Unit raise ResolveError
 
+pub fn gl_get_vk_proc_addr_nv(Bytes) -> GLVULKANPROCNV raise ResolveError
+
 pub fn gl_getn_color_table(UInt, UInt, UInt, Int, Bytes) -> Unit raise ResolveError
 
 pub fn gl_getn_color_table_arb(UInt, UInt, UInt, Int, Bytes) -> Unit raise ResolveError
@@ -2653,6 +2681,8 @@ pub fn gl_import_semaphore_fd_ext(UInt, UInt, Int) -> Unit raise ResolveError
 pub fn gl_import_semaphore_win32_handle_ext(UInt, UInt, Bytes) -> Unit raise ResolveError
 
 pub fn gl_import_semaphore_win32_name_ext(UInt, UInt, Bytes) -> Unit raise ResolveError
+
+pub fn gl_import_sync_ext(UInt, Int64, UInt) -> GLsync raise ResolveError
 
 pub fn gl_index_format_nv(UInt, Int) -> Unit raise ResolveError
 
@@ -2803,6 +2833,10 @@ pub fn gl_is_semaphore_ext(UInt) -> Bool raise ResolveError
 pub fn gl_is_shader(UInt) -> Bool raise ResolveError
 
 pub fn gl_is_state_nv(UInt) -> Bool raise ResolveError
+
+pub fn gl_is_sync(GLsync) -> Bool raise ResolveError
+
+pub fn gl_is_sync_apple(GLsync) -> Bool raise ResolveError
 
 pub fn gl_is_texture(UInt) -> Bool raise ResolveError
 
@@ -3435,6 +3469,8 @@ pub fn gl_named_buffer_page_commitment_mem_nv(UInt, Int64, Int64, UInt, UInt64, 
 pub fn gl_named_buffer_storage(UInt, Int64, Bytes, UInt) -> Unit raise ResolveError
 
 pub fn gl_named_buffer_storage_ext(UInt, Int64, Bytes, UInt) -> Unit raise ResolveError
+
+pub fn gl_named_buffer_storage_external_ext(UInt, Int64, Int64, GLeglClientBufferEXT, UInt) -> Unit raise ResolveError
 
 pub fn gl_named_buffer_storage_mem_ext(UInt, Int64, UInt, UInt64) -> Unit raise ResolveError
 
@@ -6276,6 +6312,10 @@ pub fn gl_wait_semaphore_ext(UInt, UInt, FixedArray[UInt], UInt, FixedArray[UInt
 
 pub fn gl_wait_semaphoreui64_nvx(UInt, Int, FixedArray[UInt], FixedArray[UInt64]) -> Unit raise ResolveError
 
+pub fn gl_wait_sync(GLsync, UInt, UInt64) -> Unit raise ResolveError
+
+pub fn gl_wait_sync_apple(GLsync, UInt, UInt64) -> Unit raise ResolveError
+
 pub fn gl_wait_vk_semaphore_nv(UInt64) -> Unit raise ResolveError
 
 pub fn gl_weight_paths_nv(UInt, Int, FixedArray[UInt], FixedArray[Float]) -> Unit raise ResolveError
@@ -6428,6 +6468,17 @@ pub suberror ResolveError {
 pub impl Show for ResolveError
 
 // Types and methods
+#external
+pub type GLVULKANPROCNV
+
+#external
+pub type GLeglClientBufferEXT
+
+#external
+pub type GLeglImageOES
+
+#external
+pub type GLsync
 
 // Type aliases
 

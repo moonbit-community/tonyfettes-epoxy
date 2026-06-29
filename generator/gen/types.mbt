@@ -25,6 +25,10 @@ pub(all) enum CType {
   UShort // unsigned short
   IntPtr // intptr_t
   SizePtr // ssize_t
+  // An opaque object handle (`GLsync`, `GLeglImageOES`, …). Every GL object
+  // pointer shares the `void *` ABI, so the cast needs no GL headers and no
+  // per-handle spelling — the distinction lives on the MoonBit side instead.
+  OpaquePtr
   Pointer(CType, is_const~ : Bool)
 }
 
@@ -46,6 +50,7 @@ pub fn CType::c(self : CType) -> String {
     UShort => "unsigned short"
     IntPtr => "intptr_t"
     SizePtr => "ssize_t"
+    OpaquePtr => "void *"
     // A `const` qualifier reads differently depending on what it qualifies: when
     // the pointee is a scalar leaf, west-const (`const char *`) is idiomatic;
     // when the pointee is itself a pointer, the `const` must follow that
@@ -74,6 +79,10 @@ pub(all) enum MType {
   UInt16 // ditto — also carries GLhalf, whose bits we hand through verbatim
   Bool
   Bytes
+  // An opaque GL object handle, named by the MoonBit external type it is
+  // exposed as (`GLsync`, `GLeglImageOES`, …). Crosses the FFI as a bare
+  // pointer; distinct names keep the handles from being interchangeable.
+  Handle(String)
   Array(MType) // FixedArray[elem]
 }
 
@@ -91,6 +100,7 @@ pub fn MType::moonbit(self : MType) -> String {
     UInt16 => "UInt16"
     Bool => "Bool"
     Bytes => "Bytes"
+    Handle(name) => name
     Array(e) => "FixedArray[\{e.moonbit()}]"
   }
 }
@@ -109,6 +119,7 @@ pub fn MType::c_abi(self : MType) -> String {
     UInt16 => "uint16_t"
     Bool => "int32_t"
     Bytes => "moonbit_bytes_t"
+    Handle(_) => "void *"
     Array(e) => e.c_abi() + " *"
   }
 }
@@ -173,6 +184,18 @@ pub let table : Map[String, TypeInfo] = {
   "GLsizeiptr": { c_type: SizePtr, m_type: Int64 },
   "GLsizeiptrARB": { c_type: SizePtr, m_type: Int64 },
   "GLvdpauSurfaceNV": { c_type: IntPtr, m_type: Int64 },
+  // opaque object handles: pointer-valued tokens received from GL and handed
+  // back unchanged. `GLhandleARB` is deliberately absent — it is `unsigned int`
+  // on most platforms but `void *` on Apple, a platform-variant ABI this
+  // single-ABI, header-free generator cannot express without miscompiling one
+  // of them (its modern `GLuint` replacement, glCreateProgram &c., is bound).
+  "GLsync": { c_type: OpaquePtr, m_type: Handle("GLsync") },
+  "GLeglImageOES": { c_type: OpaquePtr, m_type: Handle("GLeglImageOES") },
+  "GLeglClientBufferEXT": {
+    c_type: OpaquePtr,
+    m_type: Handle("GLeglClientBufferEXT"),
+  },
+  "GLVULKANPROCNV": { c_type: OpaquePtr, m_type: Handle("GLVULKANPROCNV") },
 }
 
 ///|
