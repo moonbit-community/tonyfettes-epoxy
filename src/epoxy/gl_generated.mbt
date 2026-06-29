@@ -3445,6 +3445,18 @@ pub fn gl_compile_shader(shader : UInt) -> Unit raise ResolveError {
 }
 
 ///|
+let d_glCompileShaderIncludeARB : Dispatch = Dispatch::new("glCompileShaderIncludeARB")
+
+///|
+#borrow(path, length)
+extern "c" fn epoxy_glCompileShaderIncludeARB(fp : CPtr, shader : UInt, count : Int, path : FixedArray[Bytes], length : FixedArray[Int]) -> Unit = "epoxy_glCompileShaderIncludeARB"
+
+///|
+pub fn gl_compile_shader_include_arb(shader : UInt, count : Int, path : FixedArray[Bytes], length : FixedArray[Int]) -> Unit raise ResolveError {
+  epoxy_glCompileShaderIncludeARB(d_glCompileShaderIncludeARB.get(), shader, count, path, length)
+}
+
+///|
 let d_glCompressedMultiTexImage1DEXT : Dispatch = Dispatch::new("glCompressedMultiTexImage1DEXT")
 
 ///|
@@ -4693,6 +4705,30 @@ extern "c" fn epoxy_glCreateShaderProgramEXT(fp : CPtr, type_ : UInt, string : B
 ///|
 pub fn gl_create_shader_program_ext(type_ : UInt, string : Bytes) -> UInt raise ResolveError {
   epoxy_glCreateShaderProgramEXT(d_glCreateShaderProgramEXT.get(), type_, string)
+}
+
+///|
+let d_glCreateShaderProgramv : Dispatch = Dispatch::new("glCreateShaderProgramv")
+
+///|
+#borrow(strings)
+extern "c" fn epoxy_glCreateShaderProgramv(fp : CPtr, type_ : UInt, count : Int, strings : FixedArray[Bytes]) -> UInt = "epoxy_glCreateShaderProgramv"
+
+///|
+pub fn gl_create_shader_programv(type_ : UInt, count : Int, strings : FixedArray[Bytes]) -> UInt raise ResolveError {
+  epoxy_glCreateShaderProgramv(d_glCreateShaderProgramv.get(), type_, count, strings)
+}
+
+///|
+let d_glCreateShaderProgramvEXT : Dispatch = Dispatch::new("glCreateShaderProgramvEXT")
+
+///|
+#borrow(strings)
+extern "c" fn epoxy_glCreateShaderProgramvEXT(fp : CPtr, type_ : UInt, count : Int, strings : FixedArray[Bytes]) -> UInt = "epoxy_glCreateShaderProgramvEXT"
+
+///|
+pub fn gl_create_shader_programv_ext(type_ : UInt, count : Int, strings : FixedArray[Bytes]) -> UInt raise ResolveError {
+  epoxy_glCreateShaderProgramvEXT(d_glCreateShaderProgramvEXT.get(), type_, count, strings)
 }
 
 ///|
@@ -6689,6 +6725,18 @@ extern "c" fn epoxy_glEdgeFlagPointerEXT(fp : CPtr, stride : Int, count : Int, p
 ///|
 pub fn gl_edge_flag_pointer_ext(stride : Int, count : Int, pointer : Bytes) -> Unit raise ResolveError {
   epoxy_glEdgeFlagPointerEXT(d_glEdgeFlagPointerEXT.get(), stride, count, pointer)
+}
+
+///|
+let d_glEdgeFlagPointerListIBM : Dispatch = Dispatch::new("glEdgeFlagPointerListIBM")
+
+///|
+#borrow(pointer)
+extern "c" fn epoxy_glEdgeFlagPointerListIBM(fp : CPtr, stride : Int, pointer : FixedArray[Bytes], ptrstride : Int) -> Unit = "epoxy_glEdgeFlagPointerListIBM"
+
+///|
+pub fn gl_edge_flag_pointer_list_ibm(stride : Int, pointer : FixedArray[Bytes], ptrstride : Int) -> Unit raise ResolveError {
+  epoxy_glEdgeFlagPointerListIBM(d_glEdgeFlagPointerListIBM.get(), stride, pointer, ptrstride)
 }
 
 ///|
@@ -13627,6 +13675,18 @@ extern "c" fn epoxy_glGetUniformBufferSizeEXT(fp : CPtr, program : UInt, locatio
 ///|
 pub fn gl_get_uniform_buffer_size_ext(program : UInt, location : Int) -> Int raise ResolveError {
   epoxy_glGetUniformBufferSizeEXT(d_glGetUniformBufferSizeEXT.get(), program, location)
+}
+
+///|
+let d_glGetUniformIndices : Dispatch = Dispatch::new("glGetUniformIndices")
+
+///|
+#borrow(uniformNames, uniformIndices)
+extern "c" fn epoxy_glGetUniformIndices(fp : CPtr, program : UInt, uniformCount : Int, uniformNames : FixedArray[Bytes], uniformIndices : FixedArray[UInt]) -> Unit = "epoxy_glGetUniformIndices"
+
+///|
+pub fn gl_get_uniform_indices(program : UInt, uniformCount : Int, uniformNames : FixedArray[Bytes], uniformIndices : FixedArray[UInt]) -> Unit raise ResolveError {
+  epoxy_glGetUniformIndices(d_glGetUniformIndices.get(), program, uniformCount, uniformNames, uniformIndices)
 }
 
 ///|
@@ -25912,6 +25972,18 @@ pub fn gl_shader_op3_ext(op : UInt, res : UInt, arg1 : UInt, arg2 : UInt, arg3 :
 }
 
 ///|
+let d_glShaderSource : Dispatch = Dispatch::with_aliases("glShaderSource", ["glShaderSourceARB"])
+
+///|
+#borrow(string, length)
+extern "c" fn epoxy_glShaderSource(fp : CPtr, shader : UInt, count : Int, string : FixedArray[Bytes], length : FixedArray[Int]) -> Unit = "epoxy_glShaderSource"
+
+///|
+pub fn gl_shader_source(shader : UInt, count : Int, string : FixedArray[Bytes], length : FixedArray[Int]) -> Unit raise ResolveError {
+  epoxy_glShaderSource(d_glShaderSource.get(), shader, count, string, length)
+}
+
+///|
 let d_glShaderStorageBlockBinding : Dispatch = Dispatch::new("glShaderStorageBlockBinding")
 
 ///|
@@ -29155,6 +29227,30 @@ extern "c" fn epoxy_glTransformFeedbackStreamAttribsNV(fp : CPtr, count : Int, a
 ///|
 pub fn gl_transform_feedback_stream_attribs_nv(count : Int, attribs : FixedArray[Int], nbuffers : Int, bufstreams : FixedArray[Int], bufferMode : UInt) -> Unit raise ResolveError {
   epoxy_glTransformFeedbackStreamAttribsNV(d_glTransformFeedbackStreamAttribsNV.get(), count, attribs, nbuffers, bufstreams, bufferMode)
+}
+
+///|
+let d_glTransformFeedbackVaryings : Dispatch = Dispatch::with_aliases("glTransformFeedbackVaryings", ["glTransformFeedbackVaryingsEXT"])
+
+///|
+#borrow(varyings)
+extern "c" fn epoxy_glTransformFeedbackVaryings(fp : CPtr, program : UInt, count : Int, varyings : FixedArray[Bytes], bufferMode : UInt) -> Unit = "epoxy_glTransformFeedbackVaryings"
+
+///|
+pub fn gl_transform_feedback_varyings(program : UInt, count : Int, varyings : FixedArray[Bytes], bufferMode : UInt) -> Unit raise ResolveError {
+  epoxy_glTransformFeedbackVaryings(d_glTransformFeedbackVaryings.get(), program, count, varyings, bufferMode)
+}
+
+///|
+let d_glTransformFeedbackVaryingsEXT : Dispatch = Dispatch::with_aliases("glTransformFeedbackVaryingsEXT", ["glTransformFeedbackVaryings"])
+
+///|
+#borrow(varyings)
+extern "c" fn epoxy_glTransformFeedbackVaryingsEXT(fp : CPtr, program : UInt, count : Int, varyings : FixedArray[Bytes], bufferMode : UInt) -> Unit = "epoxy_glTransformFeedbackVaryingsEXT"
+
+///|
+pub fn gl_transform_feedback_varyings_ext(program : UInt, count : Int, varyings : FixedArray[Bytes], bufferMode : UInt) -> Unit raise ResolveError {
+  epoxy_glTransformFeedbackVaryingsEXT(d_glTransformFeedbackVaryingsEXT.get(), program, count, varyings, bufferMode)
 }
 
 ///|

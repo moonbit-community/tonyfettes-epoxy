@@ -97,9 +97,12 @@ fn resolve_ctype(ty : @cdecl.Declarator) -> @gen.CType? {
 
 ///|
 /// The MoonBit type for a single pointer to an element of the given C type:
-/// byte-sized elements become raw `Bytes`, wider scalars a `FixedArray`, and
-/// anything without a native fixed-width array (16-bit, pointer-sized) is
-/// unsupported.
+/// byte-sized elements become raw `Bytes`, wider scalars a `FixedArray`, and a
+/// pointer-to-char-pointer (the `const GLchar *const *` of `glShaderSource` &c.)
+/// becomes a `FixedArray[Bytes]` — whose in-memory layout (a run of pointers to
+/// each byte buffer) already *is* the `char **` GL expects, so no marshalling is
+/// needed. Anything without a native fixed-width array (16-bit, pointer-sized)
+/// is unsupported.
 fn pointer_mtype(elem : @gen.CType) -> @gen.MType? {
   match elem {
     Void | Char | Byte | SByte => Some(Bytes)
@@ -109,6 +112,10 @@ fn pointer_mtype(elem : @gen.CType) -> @gen.MType? {
     Double => Some(Array(Double))
     Int64 => Some(Array(Int64))
     UInt64 => Some(Array(UInt64))
+    // an array of C strings: pointer-to-(pointer-to-char). Restricted to
+    // char-like pointees — `void **`/`T **` of other element types denote
+    // out-pointers we can't faithfully represent and stay skipped.
+    Pointer(Char | Byte | SByte, ..) => Some(Array(Bytes))
     _ => None
   }
 }

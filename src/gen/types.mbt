@@ -46,8 +46,17 @@ pub fn CType::c(self : CType) -> String {
     UShort => "unsigned short"
     IntPtr => "intptr_t"
     SizePtr => "ssize_t"
+    // A `const` qualifier reads differently depending on what it qualifies: when
+    // the pointee is a scalar leaf, west-const (`const char *`) is idiomatic;
+    // when the pointee is itself a pointer, the `const` must follow that
+    // pointer's stars (`const char *const *`) rather than pile up in front.
+    // Splitting on the pointee's shape keeps single-level casts byte-identical
+    // and renders nested const pointers correctly.
     Pointer(inner, is_const~) =>
-      (if is_const { "const " } else { "" }) + inner.c() + " *"
+      match inner {
+        Pointer(_, ..) => inner.c() + (if is_const { " const *" } else { " *" })
+        _ => (if is_const { "const " } else { "" }) + inner.c() + " *"
+      }
   }
 }
 

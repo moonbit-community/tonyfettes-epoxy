@@ -1223,6 +1223,10 @@ void epoxy_glCompileShader(void *fp, uint32_t shader) {
   ((void(*)(unsigned int))fp)((unsigned int)shader);
 }
 
+void epoxy_glCompileShaderIncludeARB(void *fp, uint32_t shader, int32_t count, moonbit_bytes_t * path, int32_t * length) {
+  ((void(*)(unsigned int, int, const char * const *, const int *))fp)((unsigned int)shader, (int)count, (const char * const *)path, (const int *)length);
+}
+
 void epoxy_glCompressedMultiTexImage1DEXT(void *fp, uint32_t texunit, uint32_t target, int32_t level, uint32_t internalformat, int32_t width, int32_t border, int32_t imageSize, moonbit_bytes_t bits) {
   ((void(*)(unsigned int, unsigned int, int, unsigned int, int, int, int, const void *))fp)((unsigned int)texunit, (unsigned int)target, (int)level, (unsigned int)internalformat, (int)width, (int)border, (int)imageSize, (const void *)bits);
 }
@@ -1657,6 +1661,14 @@ uint32_t epoxy_glCreateShader(void *fp, uint32_t type_) {
 
 uint32_t epoxy_glCreateShaderProgramEXT(void *fp, uint32_t type_, moonbit_bytes_t string) {
   return (uint32_t)((unsigned int(*)(unsigned int, const char *))fp)((unsigned int)type_, (const char *)string);
+}
+
+uint32_t epoxy_glCreateShaderProgramv(void *fp, uint32_t type_, int32_t count, moonbit_bytes_t * strings) {
+  return (uint32_t)((unsigned int(*)(unsigned int, int, const char * const *))fp)((unsigned int)type_, (int)count, (const char * const *)strings);
+}
+
+uint32_t epoxy_glCreateShaderProgramvEXT(void *fp, uint32_t type_, int32_t count, moonbit_bytes_t * strings) {
+  return (uint32_t)((unsigned int(*)(unsigned int, int, const char * const *))fp)((unsigned int)type_, (int)count, (const char * const *)strings);
 }
 
 void epoxy_glCreateStatesNV(void *fp, int32_t n, uint32_t * states) {
@@ -2349,6 +2361,10 @@ void epoxy_glEdgeFlagPointer(void *fp, int32_t stride, moonbit_bytes_t pointer) 
 
 void epoxy_glEdgeFlagPointerEXT(void *fp, int32_t stride, int32_t count, moonbit_bytes_t pointer) {
   ((void(*)(int, int, const unsigned char *))fp)((int)stride, (int)count, (const unsigned char *)pointer);
+}
+
+void epoxy_glEdgeFlagPointerListIBM(void *fp, int32_t stride, moonbit_bytes_t * pointer, int32_t ptrstride) {
+  ((void(*)(int, const unsigned char * *, int))fp)((int)stride, (const unsigned char * *)pointer, (int)ptrstride);
 }
 
 void epoxy_glEdgeFlagv(void *fp, moonbit_bytes_t flag) {
@@ -4729,6 +4745,10 @@ uint32_t epoxy_glGetUniformBlockIndex(void *fp, uint32_t program, moonbit_bytes_
 
 int32_t epoxy_glGetUniformBufferSizeEXT(void *fp, uint32_t program, int32_t location) {
   return (int32_t)((int(*)(unsigned int, int))fp)((unsigned int)program, (int)location);
+}
+
+void epoxy_glGetUniformIndices(void *fp, uint32_t program, int32_t uniformCount, moonbit_bytes_t * uniformNames, uint32_t * uniformIndices) {
+  ((void(*)(unsigned int, int, const char * const *, unsigned int *))fp)((unsigned int)program, (int)uniformCount, (const char * const *)uniformNames, (unsigned int *)uniformIndices);
 }
 
 int32_t epoxy_glGetUniformLocation(void *fp, uint32_t program, moonbit_bytes_t name) {
@@ -9003,6 +9023,10 @@ void epoxy_glShaderOp3EXT(void *fp, uint32_t op, uint32_t res, uint32_t arg1, ui
   ((void(*)(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int))fp)((unsigned int)op, (unsigned int)res, (unsigned int)arg1, (unsigned int)arg2, (unsigned int)arg3);
 }
 
+void epoxy_glShaderSource(void *fp, uint32_t shader, int32_t count, moonbit_bytes_t * string, int32_t * length) {
+  ((void(*)(unsigned int, int, const char * const *, const int *))fp)((unsigned int)shader, (int)count, (const char * const *)string, (const int *)length);
+}
+
 void epoxy_glShaderStorageBlockBinding(void *fp, uint32_t program, uint32_t storageBlockIndex, uint32_t storageBlockBinding) {
   ((void(*)(unsigned int, unsigned int, unsigned int))fp)((unsigned int)program, (unsigned int)storageBlockIndex, (unsigned int)storageBlockBinding);
 }
@@ -10141,6 +10165,14 @@ void epoxy_glTransformFeedbackBufferRange(void *fp, uint32_t xfb, uint32_t index
 
 void epoxy_glTransformFeedbackStreamAttribsNV(void *fp, int32_t count, int32_t * attribs, int32_t nbuffers, int32_t * bufstreams, uint32_t bufferMode) {
   ((void(*)(int, const int *, int, const int *, unsigned int))fp)((int)count, (const int *)attribs, (int)nbuffers, (const int *)bufstreams, (unsigned int)bufferMode);
+}
+
+void epoxy_glTransformFeedbackVaryings(void *fp, uint32_t program, int32_t count, moonbit_bytes_t * varyings, uint32_t bufferMode) {
+  ((void(*)(unsigned int, int, const char * const *, unsigned int))fp)((unsigned int)program, (int)count, (const char * const *)varyings, (unsigned int)bufferMode);
+}
+
+void epoxy_glTransformFeedbackVaryingsEXT(void *fp, uint32_t program, int32_t count, moonbit_bytes_t * varyings, uint32_t bufferMode) {
+  ((void(*)(unsigned int, int, const char * const *, unsigned int))fp)((unsigned int)program, (int)count, (const char * const *)varyings, (unsigned int)bufferMode);
 }
 
 void epoxy_glTransformFeedbackVaryingsNV(void *fp, uint32_t program, int32_t count, int32_t * locations, uint32_t bufferMode) {

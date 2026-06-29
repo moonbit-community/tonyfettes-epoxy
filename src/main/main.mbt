@@ -35,6 +35,20 @@ fn main {
     let bufs : FixedArray[UInt] = FixedArray::make(3, 0)
     @epoxy.gl_gen_buffers(3, bufs)
     println("glGenBuffers -> [\{bufs[0]}, \{bufs[1]}, \{bufs[2]}]")
+
+    // glShaderSource is the `const GLchar *const *` shape: a FixedArray[Bytes]
+    // crosses as the `char **` GL wants, with an explicit length array so the
+    // (non-NUL-terminated) MoonBit bytes are read exactly. Compile a trivial
+    // GLSL 1.20 vertex shader to prove the whole path end-to-end.
+    let source : Bytes = b"#version 120\nvoid main() { gl_Position = vec4(0.0); }\n"
+    let sources : FixedArray[Bytes] = [source]
+    let lengths : FixedArray[Int] = [source.length()]
+    let shader = @epoxy.gl_create_shader(@epoxy.GL_VERTEX_SHADER)
+    @epoxy.gl_shader_source(shader, 1, sources, lengths)
+    @epoxy.gl_compile_shader(shader)
+    let status : FixedArray[Int] = FixedArray::make(1, 0)
+    @epoxy.gl_get_shaderiv(shader, @epoxy.GL_COMPILE_STATUS, status)
+    println("glShaderSource+compile ok = \{status[0] == 1}")
   } catch {
     e => println("dispatch failed: \{e}")
   }
