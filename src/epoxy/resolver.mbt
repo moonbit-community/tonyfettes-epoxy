@@ -25,13 +25,19 @@ let gl_handle : Ref[CPtr] = { val: CPtr::null() }
 
 ///|
 pub suberror ResolveError {
-  ResolveError(String)
+  /// The platform GL library could not be dlopen'd at all.
+  UnableToLoadGl
+  /// The named entry point was not found in the GL library.
+  EntryPointNotFound(String)
 }
 
 ///|
 pub impl Show for ResolveError with output(self, logger) {
-  let ResolveError(msg) = self
-  logger.write_string("ResolveError(" + msg + ")")
+  match self {
+    UnableToLoadGl => logger.write_string("UnableToLoadGl")
+    EntryPointNotFound(name) =>
+      logger.write_string("EntryPointNotFound(\{name})")
+  }
 }
 
 ///|
@@ -40,7 +46,7 @@ fn gl_lib() -> CPtr raise ResolveError {
   if gl_handle.val.is_null() {
     let h = epoxy_gl_dlopen()
     if h.is_null() {
-      raise ResolveError("failed to dlopen the GL library")
+      raise UnableToLoadGl
     }
     gl_handle.val = h
   }
@@ -54,7 +60,7 @@ fn gl_lib() -> CPtr raise ResolveError {
 fn resolve(name : String) -> CPtr raise ResolveError {
   let p = epoxy_dlsym(gl_lib(), @utf8.encode(name))
   if p.is_null() {
-    raise ResolveError("entry point not found: " + name)
+    raise EntryPointNotFound(name)
   }
   p
 }

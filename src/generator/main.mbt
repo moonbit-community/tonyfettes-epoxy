@@ -46,9 +46,9 @@ fn main {
     }
     seen[c.name] = true
     total += 1
-    match plan(c) {
-      Some(p) => {
-        let r = render(c, p)
+    match c.signature() {
+      Some(sig) => {
+        let r = render(c, sig)
         mbt.write_string(r.moonbit)
         cc.write_string(r.c)
         emitted += 1

@@ -1,15 +1,14 @@
 ///|
 /// Two phases, deliberately separated:
-///   - `analyze` does ALL type resolution. Every lookup returns `Option`; an
-///     unmapped/unsupported type propagates to a `Defer(reason)` — never a
-///     fabricated default. This is the single gate that decides emit-vs-skip.
-///   - `render` only builds strings from an already-validated `Plan`, so it
-///     does no fallible lookups and cannot silently produce wrong code.
+///   - `Command::signature` does ALL type resolution. Every lookup returns
+///     `Option`; an unmapped/unsupported type makes the whole signature `None`
+///     (the command is skipped) — never a fabricated default.
+///   - `render` builds strings from an already-resolved `Signature`. Every type
+///     is concrete by then, so rendering is total and cannot miscompile.
 
 ///|
 /// A MoonBit type appearing in a generated binding. It knows how to print
-/// itself and how it is represented across the C FFI boundary — so we never
-/// pass these facts around as bare strings.
+/// itself and how it is represented across the C FFI boundary.
 priv enum MType {
   U32
   I32
@@ -39,18 +38,18 @@ fn MType::moonbit(self : MType) -> String {
 }
 
 ///|
-/// The C type this arrives as on the shim side (MoonBit ABI).
-fn MType::c_abi(self : MType) -> String {
+/// The C type this value arrives as on the shim side (the MoonBit ABI).
+fn MType::c_abi(self : MType) -> CType {
   match self {
-    U32 => "uint32_t"
-    I32 => "int32_t"
-    F32 => "float"
-    F64 => "double"
-    I64 => "int64_t"
-    U64 => "uint64_t"
-    Bool => "int32_t"
-    Bytes => "moonbit_bytes_t"
-    Array(e) => "\{e.c_abi()}*"
+    U32 => Prim("uint32_t")
+    I32 => Prim("int32_t")
+    F32 => Prim("float")
+    F64 => Prim("double")
+    I64 => Prim("int64_t")
+    U64 => Prim("uint64_t")
+    Bool => Prim("int32_t")
+    Bytes => Prim("moonbit_bytes_t")
+    Array(e) => Pointer(e.c_abi(), is_const=false)
   }
 }
 
@@ -64,20 +63,46 @@ fn MType::is_pointer(self : MType) -> Bool {
 }
 
 ///|
-/// Everything `render` needs, fully resolved — no further fallible lookups.
-priv struct Plan {
-  params : Array[Binding]
-  ret : Ret
+/// A concrete C type, with literal leaves (`unsigned int`, `moonbit_bytes_t`,
+/// ...). Unlike the registry-level `GlType`, every leaf is already resolved, so
+/// `render` is a total, lookup-free function.
+priv enum CType {
+  Void
+  Prim(String)
+  Pointer(CType, is_const~ : Bool)
 }
 
 ///|
-/// How one parameter crosses the FFI boundary: its MoonBit representation
-/// (`mty`, which yields both the source type and the ABI type) plus the
-/// faithful GL type to cast to in the call (`gl`).
+fn CType::render(self : CType) -> String {
+  match self {
+    Void => "void"
+    Prim(s) => s
+    Pointer(inner, is_const~) =>
+      (if is_const { "const " } else { "" }) + inner.render() + " *"
+  }
+}
+
+///|
+/// One parameter, fully resolved: its MoonBit representation (`mty`, yielding
+/// both the source type and the ABI type) and the faithful GL type to cast to
+/// in the call (`cast`).
 priv struct Binding {
   name : String
   mty : MType
-  gl : CType
+  cast : CType
+}
+
+///|
+/// Resolve a parameter into its binding, or None if its type is unsupported.
+fn Binding::new(name : String, ty : GlType) -> Binding? {
+  let mty = match ty {
+    Base(_) => scalar_mtype(ty.base_name())
+    Ptr(Base(_), ..) => ptr_mtype(ty.base_name())
+    _ => None // pointer-to-pointer and deeper: unsupported
+  }
+  guard mty is Some(mty) else { return None }
+  guard ty.to_ctype() is Some(cast) else { return None }
+  Some({ name, mty, cast })
 }
 
 ///|
@@ -86,6 +111,42 @@ priv enum Ret {
   Void
   Str
   Scalar(MType, CType)
+}
+
+///|
+/// A command's resolved cross-FFI signature: its parameter bindings and return
+/// shape. This is exactly the information `render` maps onto both the MoonBit
+/// wrapper and the C shim.
+priv struct Signature {
+  params : Array[Binding]
+  ret : Ret
+}
+
+///|
+/// Resolve a command into the signature to emit, or None if it can't be
+/// expressed (unsupported pointer/callback/unmapped type) — then it is skipped,
+/// never miscompiled.
+fn Command::signature(self : Command) -> Signature? {
+  let ret = match self.ret {
+    Base("void") => Ret::Void
+    Ptr(Base("GLubyte" | "GLchar" | "GLbyte"), ..) => Str
+    Ptr(_, ..) => return None // non-string pointer return: unsupported
+    Base(name) => {
+      guard scalar_mtype(name) is Some(mty) else { return None }
+      guard self.ret.to_ctype() is Some(cast) else { return None }
+      Scalar(mty, cast)
+    }
+  }
+  let params = []
+  for p in self.params {
+    if p.ty.base_name().has_prefix("GLDEBUGPROC") ||
+      p.ty.base_name().has_prefix("GLVULKAN") {
+      return None // callback param: unsupported
+    }
+    guard Binding::new(moonbit_safe_ident(p.name), p.ty) is Some(b) else { return None }
+    params.push(b)
+  }
+  Some({ params, ret })
 }
 
 // --- type resolution: all Option, no fabricated defaults -----------------
@@ -128,78 +189,20 @@ fn ptr_mtype(base : String) -> MType? {
 }
 
 ///|
-/// The underlying C type of a GL typedef, or None if it isn't in the table.
-fn c_gl_type(gltype : String) -> String? {
-  guard @gen.lookup(gltype) is Some(m) else { return None }
-  Some(m.c_type)
-}
-
-///|
-/// Reconstruct the faithful C type for a function-pointer cast, recursing
-/// through pointer levels (e.g. `const float *`, `void *`). None if any leaf
-/// typedef is unmapped.
-fn CType::to_c(self : CType) -> String? {
+/// Resolve a GL typedef leaf to its concrete C type, or None if not in the
+/// mapping table.
+fn GlType::to_ctype(self : GlType) -> CType? {
   match self {
-    Base("void") => Some("void")
-    Base(name) => c_gl_type(name)
+    Base("void") => Some(Void)
+    Base(name) => {
+      guard @gen.lookup(name) is Some(m) else { return None }
+      Some(Prim(m.c_type))
+    }
     Ptr(inner, is_const~) => {
-      guard inner.to_c() is Some(inner_c) else { return None }
-      Some((if is_const { "const " } else { "" }) + inner_c + " *")
+      guard inner.to_ctype() is Some(ic) else { return None }
+      Some(Pointer(ic, is_const~))
     }
   }
-}
-
-///|
-/// Is this a string-ish pointer return (const GLubyte* / GLchar*)?
-fn is_string_ret(c : Command) -> Bool {
-  c.ret.is_pointer() &&
-  (c.ret.base_name() == "GLubyte" ||
-    c.ret.base_name() == "GLchar" ||
-    c.ret.base_name() == "GLbyte")
-}
-
-///|
-/// Resolve a parameter into its FFI binding, or None if its type is unsupported.
-fn param_binding(name : String, ty : CType) -> Binding? {
-  let mty = match ty {
-    Base(_) => scalar_mtype(ty.base_name())
-    Ptr(Base(_), ..) => ptr_mtype(ty.base_name())
-    _ => None // pointer-to-pointer and deeper: unsupported
-  }
-  guard mty is Some(mty) else { return None }
-  // ensure the cast is renderable too (part of the gate)
-  guard ty.to_c() is Some(_) else { return None }
-  Some({ name, mty, gl: ty })
-}
-
-///|
-/// Build the emit plan for a command, resolving every type. None if the
-/// command can't be emitted (unsupported pointer/callback/unmapped type) — it
-/// is simply skipped; no wrong code is ever produced.
-fn plan(c : Command) -> Plan? {
-  let ret = if c.ret.is_void() {
-    Void
-  } else if is_string_ret(c) {
-    Str
-  } else if c.ret.is_pointer() {
-    return None // non-string pointer return: unsupported
-  } else {
-    guard scalar_mtype(c.ret.base_name()) is Some(mty) else { return None }
-    guard c.ret.to_c() is Some(_) else { return None }
-    Scalar(mty, c.ret)
-  }
-  let params = []
-  for p in c.params {
-    if p.ty.base_name().has_prefix("GLDEBUGPROC") ||
-      p.ty.base_name().has_prefix("GLVULKAN") {
-      return None // callback param: unsupported
-    }
-    guard param_binding(safe_ident(p.name), p.ty) is Some(b) else {
-      return None
-    }
-    params.push(b)
-  }
-  Some({ params, ret })
 }
 
 // --- name mangling -------------------------------------------------------
@@ -238,7 +241,7 @@ fn snake(name : String) -> String {
 ///|
 /// MoonBit reserved words that can appear as GL parameter names; suffix with
 /// '_' so the generated code parses.
-fn safe_ident(name : String) -> String {
+fn moonbit_safe_ident(name : String) -> String {
   match name {
     "type" | "in" | "fn" | "let" | "mut" | "if" | "else" | "match" | "while"
     | "for" | "return" | "break" | "continue" | "loop" | "guard" | "ref" | "as"
@@ -248,7 +251,7 @@ fn safe_ident(name : String) -> String {
   }
 }
 
-// --- rendering: pure string building from a validated Plan ---------------
+// --- rendering: pure string building from a resolved Signature -----------
 
 ///|
 /// The two generated artifacts for one command.
@@ -258,31 +261,23 @@ priv struct Rendered {
 }
 
 ///|
-/// The GL cast type for a binding. analyze already proved this is `Some`, so a
-/// `None` here would be a generator bug — we surface it loudly, not silently.
-fn Binding::cast(self : Binding) -> String {
-  match self.gl.to_c() {
-    Some(s) => s
-    None => abort("generator bug: unmapped type reached render: \{self.name}")
-  }
-}
-
-///|
 /// Generate the MoonBit binding + C call shim for a command.
-fn render(c : Command, plan : Plan) -> Rendered {
+fn render(c : Command, sig : Signature) -> Rendered {
   let mbt = StringBuilder::new()
   let cc = StringBuilder::new()
   let fn_name = snake(c.name)
   let sym = "epoxy_" + c.name
   let slot = "d_" + c.name
-  let names = plan.params.map(fn(b) { b.name })
-  let mbt_params = plan.params.map(fn(b) { b.name + " : " + b.mty.moonbit() })
-  let c_shim_params = plan.params.map(fn(b) { b.mty.c_abi() + " " + b.name })
-  let gl_sig = plan.params.map(fn(b) { b.cast() })
-  let gl_cast_args = plan.params.map(fn(b) { "(" + b.cast() + ")" + b.name })
+  let names = sig.params.map(fn(b) { b.name })
+  let mbt_params = sig.params.map(fn(b) { b.name + " : " + b.mty.moonbit() })
+  let c_shim_params = sig.params.map(fn(b) {
+    b.mty.c_abi().render() + " " + b.name
+  })
+  let gl_sig = sig.params.map(fn(b) { b.cast.render() })
+  let gl_cast_args = sig.params.map(fn(b) { "(" + b.cast.render() + ")" + b.name })
   let sig_str = if gl_sig.is_empty() { "void" } else { gl_sig.join(", ") }
   let borrowed = []
-  for b in plan.params {
+  for b in sig.params {
     if b.mty.is_pointer() {
       borrowed.push(b.name)
     }
@@ -294,8 +289,8 @@ fn render(c : Command, plan : Plan) -> Rendered {
   }
 
   // result types for the MoonBit signature / extern
-  let (ret_mbt, ext_ret) = match plan.ret {
-    Void => ("Unit", "Unit")
+  let (ret_mbt, ext_ret) = match sig.ret {
+    Ret::Void => ("Unit", "Unit")
     Str => ("String", "Bytes")
     Scalar(mty, _) => (mty.moonbit(), mty.moonbit())
   }
@@ -314,7 +309,7 @@ fn render(c : Command, plan : Plan) -> Rendered {
   )
   let args = [slot + ".get()", ..names]
   let call = "\{sym}(\{args.join(", ")})"
-  match plan.ret {
+  match sig.ret {
     Str => mbt.write_string("  decode_utf8(\{call})\n")
     _ => mbt.write_string("  \{call}\n")
   }
@@ -323,7 +318,7 @@ fn render(c : Command, plan : Plan) -> Rendered {
   // --- C shim -----------------------------------------------------------
   let c_params = ["void *fp", ..c_shim_params]
   let cargs = gl_cast_args.join(", ")
-  match plan.ret {
+  match sig.ret {
     Str => {
       cc.write_string("moonbit_bytes_t \{sym}(\{c_params.join(", ")}) {\n")
       cc.write_string("  const unsigned char *(*f)(\{sig_str}) = (const unsigned char *(*)(\{sig_str}))fp;\n")
@@ -334,16 +329,13 @@ fn render(c : Command, plan : Plan) -> Rendered {
       cc.write_string("  memcpy(out, s, len);\n")
       cc.write_string("  return out;\n}\n\n")
     }
-    Void => {
+    Ret::Void => {
       cc.write_string("void \{sym}(\{c_params.join(", ")}) {\n")
       cc.write_string("  ((void(*)(\{sig_str}))fp)(\{cargs});\n}\n\n")
     }
-    Scalar(mty, gl) => {
-      let abi = mty.c_abi()
-      let ret_gl = match gl.to_c() {
-        Some(s) => s
-        None => abort("generator bug: unmapped return type: \{c.name}")
-      }
+    Scalar(mty, cast) => {
+      let abi = mty.c_abi().render()
+      let ret_gl = cast.render()
       cc.write_string("\{abi} \{sym}(\{c_params.join(", ")}) {\n")
       if mty is Bool {
         cc.write_string("  return (\{abi})(((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs}) != 0);\n}\n\n")

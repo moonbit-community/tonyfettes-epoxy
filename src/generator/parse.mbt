@@ -5,7 +5,7 @@
 
 ///|
 /// A C type as it appears in a command signature, modelled faithfully and
-/// recursively: a base typedef leaf, or a pointer to another `CType`.
+/// recursively: a base typedef leaf, or a pointer to another `GlType`.
 ///
 /// `Base` keeps the registry typedef name (e.g. "GLfloat", "void") and resolves
 /// to its underlying C / MoonBit type via the type-mapping table — the single
@@ -13,25 +13,15 @@
 ///
 /// (`is_const` records whether the pointee is `const`, i.e. an input vs. output
 /// buffer; `const` itself is a reserved word so the label can't be named that.)
-priv enum CType {
+priv enum GlType {
   Base(String)
-  Ptr(CType, is_const~ : Bool)
-}
-
-///|
-fn CType::is_pointer(self : CType) -> Bool {
-  self is Ptr(_, ..)
-}
-
-///|
-fn CType::is_void(self : CType) -> Bool {
-  self is Base("void")
+  Ptr(GlType, is_const~ : Bool)
 }
 
 ///|
 /// The innermost base typedef name (sees through pointers), e.g. the `GLubyte`
 /// in `const GLubyte *`. Used for scalar/string classification.
-fn CType::base_name(self : CType) -> String {
+fn GlType::base_name(self : GlType) -> String {
   match self {
     Base(name) => name
     Ptr(inner, ..) => inner.base_name()
@@ -41,13 +31,13 @@ fn CType::base_name(self : CType) -> String {
 ///|
 priv struct Param {
   name : String
-  ty : CType
+  ty : GlType
 }
 
 ///|
 priv struct Command {
   name : String
-  ret : CType
+  ret : GlType
   params : Array[Param]
 }
 
@@ -83,7 +73,7 @@ fn parse_commands(path : String) -> Array[Command] raise {
   let mut p_name = ""
   let mut p_text = ""
   let mut params : Array[Param] = []
-  fn finalize_type(ptype : String, text : String) -> CType {
+  fn finalize_type(ptype : String, text : String) -> GlType {
     let mut stars = 0
     for c in text {
       if c == '*' {
@@ -100,7 +90,7 @@ fn parse_commands(path : String) -> Array[Command] raise {
       .to_owned()
     // wrap the leaf in `stars` pointer levels; the innermost level carries the
     // pointee's const-ness (the input/output signal).
-    let mut ty : CType = Base(cleaned)
+    let mut ty : GlType = Base(cleaned)
     for i in 0..<stars {
       ty = Ptr(ty, is_const=i == 0 && pointee_const)
     }
