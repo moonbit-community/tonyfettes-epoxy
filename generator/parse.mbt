@@ -50,7 +50,11 @@ priv struct Decl {
 
 ///|
 fn Decl::new() -> Decl {
-  { ptype: StringBuilder::new(), name: StringBuilder::new(), text: StringBuilder::new() }
+  {
+    ptype: StringBuilder::new(),
+    name: StringBuilder::new(),
+    text: StringBuilder::new(),
+  }
 }
 
 ///|
@@ -77,9 +81,11 @@ fn Decl::to_ctype(self : Decl) -> @cdecl.Declarator {
 }
 
 ///|
-/// Parse every `<command>` in the registry at `path`.
-fn parse_commands(path : String) -> Array[Command] raise {
-  let reader = @xml.Reader::from_file(path)
+/// Parse every `<command>` in the already-loaded registry XML `content`. The
+/// file read is the caller's job (done with async IO), so this stays pure over
+/// an in-memory string — no filesystem dependency of its own.
+fn parse_commands(content : String) -> Array[Command] raise {
+  let reader = @xml.Reader::from_string(content)
   let commands : Array[Command] = []
   let mut section = Section::Elsewhere
   let mut field = Field::Surrounding

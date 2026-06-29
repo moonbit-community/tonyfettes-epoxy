@@ -1,0 +1,23 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "feihaoxiang/epoxy/aliasgroup"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub(all) struct Edge {
+  name : String
+  target : String
+}
+
+pub struct Groups {
+  parent : Map[String, String]
+}
+pub fn Groups::aliases_of(Self, String) -> Array[String]
+pub fn Groups::from_edges(Array[Edge]) -> Self
+
+// Type aliases
+
+// Traits
+

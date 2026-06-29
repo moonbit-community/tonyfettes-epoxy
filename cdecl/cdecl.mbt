@@ -20,7 +20,7 @@ pub(all) enum Declarator {
 ///|
 /// Render a GL type the way it reads in C, used for diagnostics and tests:
 /// `Ptr(Base("GLfloat"), is_const=true)` -> `const GLfloat*`.
-pub impl Show for Declarator with output(self, logger) {
+pub impl Show for Declarator with fn output(self, logger) {
   match self {
     Base(name) => logger.write_string(name)
     Ptr(inner, is_const~) => {

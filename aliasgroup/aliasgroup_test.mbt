@@ -9,12 +9,18 @@ test "a single edge links both directions" {
   let g = @aliasgroup.Groups::from_edges([
     { name: "glActiveTextureARB", target: "glActiveTexture" },
   ])
-  debug_inspect(g.aliases_of("glActiveTextureARB"), content=(
-    #|["glActiveTexture"]
-  ))
-  debug_inspect(g.aliases_of("glActiveTexture"), content=(
-    #|["glActiveTextureARB"]
-  ))
+  debug_inspect(
+    g.aliases_of("glActiveTextureARB"),
+    content=(
+      #|["glActiveTexture"]
+    ),
+  )
+  debug_inspect(
+    g.aliases_of("glActiveTexture"),
+    content=(
+      #|["glActiveTextureARB"]
+    ),
+  )
 }
 
 ///|
@@ -25,12 +31,18 @@ test "edges sharing a target form one transitive group" {
     { name: "glGenVertexArraysAPPLE", target: "glGenVertexArrays" },
   ])
   // each member sees the others, lexicographically, itself excluded
-  debug_inspect(g.aliases_of("glGenVertexArrays"), content=(
-    #|["glGenVertexArraysAPPLE", "glGenVertexArraysOES"]
-  ))
-  debug_inspect(g.aliases_of("glGenVertexArraysOES"), content=(
-    #|["glGenVertexArrays", "glGenVertexArraysAPPLE"]
-  ))
+  debug_inspect(
+    g.aliases_of("glGenVertexArrays"),
+    content=(
+      #|["glGenVertexArraysAPPLE", "glGenVertexArraysOES"]
+    ),
+  )
+  debug_inspect(
+    g.aliases_of("glGenVertexArraysOES"),
+    content=(
+      #|["glGenVertexArrays", "glGenVertexArraysAPPLE"]
+    ),
+  )
 }
 
 ///|

@@ -1,0 +1,18 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "feihaoxiang/epoxy/glinfo"
+
+// Values
+pub fn extension_in_string(String, String) -> Bool
+
+pub fn is_desktop(String) -> Bool
+
+pub fn parse_version(String) -> Int?
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

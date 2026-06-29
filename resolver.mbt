@@ -32,7 +32,7 @@ pub suberror ResolveError {
 }
 
 ///|
-pub impl Show for ResolveError with output(self, logger) {
+pub impl Show for ResolveError with fn output(self, logger) {
   match self {
     UnableToLoadGl => logger.write_string("UnableToLoadGl")
     EntryPointNotFound(name) =>

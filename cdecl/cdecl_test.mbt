@@ -36,5 +36,8 @@ test "double pointer nests" {
 
 ///|
 test "base_name sees through pointers" {
-  inspect(parse_declarator("GLubyte", "const  *").base_name(), content="GLubyte")
+  inspect(
+    parse_declarator("GLubyte", "const  *").base_name(),
+    content="GLubyte",
+  )
 }

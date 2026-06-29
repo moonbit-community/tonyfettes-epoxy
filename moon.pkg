@@ -1,0 +1,8 @@
+import {
+  "moonbitlang/core/encoding/utf8",
+  "feihaoxiang/epoxy/glinfo",
+}
+
+options(
+  "native-stub": [ "epoxy_stub.c", "gl_generated_stub.c" ],
+)

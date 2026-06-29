@@ -1,0 +1,56 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "feihaoxiang/epoxy/gen"
+
+// Values
+pub fn lookup(String) -> TypeInfo?
+
+pub let table : Map[String, TypeInfo]
+
+// Errors
+
+// Types and methods
+pub(all) enum CType {
+  Void
+  UInt
+  Int
+  Float
+  Double
+  Int64
+  UInt64
+  Byte
+  SByte
+  Char
+  Short
+  UShort
+  IntPtr
+  SizePtr
+  Pointer(CType, is_const~ : Bool)
+}
+pub fn CType::c(Self) -> String
+
+pub(all) enum MType {
+  UInt
+  Int
+  Float
+  Double
+  Int64
+  UInt64
+  Int16
+  UInt16
+  Bool
+  Bytes
+  Array(MType)
+}
+pub fn MType::c_abi(Self) -> String
+pub fn MType::is_pointer(Self) -> Bool
+pub fn MType::moonbit(Self) -> String
+
+pub struct TypeInfo {
+  c_type : CType
+  m_type : MType
+}
+
+// Type aliases
+
+// Traits
+

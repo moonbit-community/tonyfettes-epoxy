@@ -146,7 +146,8 @@ fn snake(name : String) -> String {
     if is_upper(c) {
       let prev_lower = i > 0 && is_lower_or_digit(name[i - 1].to_int())
       let next_lower = i + 1 < n &&
-        (name[i + 1].to_int() >= 'a' && name[i + 1].to_int() <= 'z')
+        name[i + 1].to_int() >= 'a' &&
+        name[i + 1].to_int() <= 'z'
       if i > 0 && (prev_lower || next_lower) {
         sb.write_char('_')
       }
@@ -163,10 +164,34 @@ fn snake(name : String) -> String {
 /// '_' so the generated code parses.
 fn moonbit_safe_ident(name : String) -> String {
   match name {
-    "type" | "in" | "fn" | "let" | "mut" | "if" | "else" | "match" | "while"
-    | "for" | "return" | "break" | "continue" | "loop" | "guard" | "ref" | "as"
-    | "is" | "and" | "or" | "not" | "test" | "trait" | "impl" | "enum"
-    | "struct" | "pub" | "priv" => name + "_"
+    "type"
+    | "in"
+    | "fn"
+    | "let"
+    | "mut"
+    | "if"
+    | "else"
+    | "match"
+    | "while"
+    | "for"
+    | "return"
+    | "break"
+    | "continue"
+    | "loop"
+    | "guard"
+    | "ref"
+    | "as"
+    | "is"
+    | "and"
+    | "or"
+    | "not"
+    | "test"
+    | "trait"
+    | "impl"
+    | "enum"
+    | "struct"
+    | "pub"
+    | "priv" => name + "_"
     _ => name
   }
 }
@@ -247,11 +272,15 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   match sig.ret {
     Str => {
       cc.write_string("moonbit_bytes_t \{sym}(\{c_params.join(", ")}) {\n")
-      cc.write_string("  const unsigned char *(*f)(\{sig_str}) = (const unsigned char *(*)(\{sig_str}))fp;\n")
+      cc.write_string(
+        "  const unsigned char *(*f)(\{sig_str}) = (const unsigned char *(*)(\{sig_str}))fp;\n",
+      )
       cc.write_string("  const unsigned char *s = f(\{cargs});\n")
       cc.write_string("  if (!s) return moonbit_make_bytes(0, 0);\n")
       cc.write_string("  size_t len = strlen((const char *)s);\n")
-      cc.write_string("  moonbit_bytes_t out = moonbit_make_bytes((int32_t)len, 0);\n")
+      cc.write_string(
+        "  moonbit_bytes_t out = moonbit_make_bytes((int32_t)len, 0);\n",
+      )
       cc.write_string("  memcpy(out, s, len);\n")
       cc.write_string("  return out;\n}\n\n")
     }
@@ -264,9 +293,13 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
       let ret_gl = cast.c()
       cc.write_string("\{abi} \{sym}(\{c_params.join(", ")}) {\n")
       if mty is Bool {
-        cc.write_string("  return (\{abi})(((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs}) != 0);\n}\n\n")
+        cc.write_string(
+          "  return (\{abi})(((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs}) != 0);\n}\n\n",
+        )
       } else {
-        cc.write_string("  return (\{abi})((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs});\n}\n\n")
+        cc.write_string(
+          "  return (\{abi})((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs});\n}\n\n",
+        )
       }
     }
   }

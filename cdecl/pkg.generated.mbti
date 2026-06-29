@@ -1,0 +1,20 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "feihaoxiang/epoxy/cdecl"
+
+// Values
+pub fn parse_declarator(String, String) -> Declarator
+
+// Errors
+
+// Types and methods
+pub(all) enum Declarator {
+  Base(String)
+  Ptr(Declarator, is_const~ : Bool)
+}
+pub fn Declarator::base_name(Self) -> String
+pub impl Show for Declarator
+
+// Type aliases
+
+// Traits
+

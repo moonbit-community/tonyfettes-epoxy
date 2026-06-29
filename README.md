@@ -5,109 +5,112 @@ OpenGL function-pointer dispatch that resolves entry points lazily via
 `dlopen`/`dlsym` and caches them — so callers just use undecorated names like
 `glGetString` without worrying about loaders, versions, or extensions.
 
-**Milestone 1 — vertical slice:** an end-to-end proof that the dispatch
-mechanism works on MoonBit's native (C) backend.
-
-**Milestone 2 — binding generator:** `src/generator` parses the Khronos
-registry (`registry/gl.xml`, 3299 commands) with the [xml-mbt](upstream/xml-mbt)
-pull-parser and emits MoonBit dispatch wrappers + C call shims for the 1511
-commands with scalar/void/string signatures. The demo now runs entirely on
-generated bindings.
+The library package is the module root: import it as `feihaoxiang/epoxy`. A
+binding generator parses the Khronos registry (`registry/gl.xml`, 3299 commands)
+with the [xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and
+emits MoonBit dispatch wrappers + C call shims for the **3197** commands it can
+express. The rest (callbacks, opaque handles, a few exotic pointer shapes) are
+skipped, never miscompiled.
 
 ## Status
 
-Proven working on macOS (arm64, Apple OpenGL 2.1 / Metal):
+Proven working on macOS (arm64, Apple OpenGL 2.1 / Metal). The `hello_gl`
+example drives a cross-section of generated bindings against a live driver:
 
 ```
-$ moon run src/main --target native
+$ moon -C examples run hello_gl/main --release
 GL_VERSION  = 2.1 Metal - 90.5
-GL_VENDOR   = Apple
-GL_RENDERER = Apple M3 Max
-glGetError  = 0 (GL_NO_ERROR=0)
+gl_version  = 21 (2.1)
+is_desktop  = true
+has GL_APPLE_vertex_array_object = true
+GL_MAX_TEXTURE_SIZE = 16384
+glGenBuffers -> [1, 2, 3]
+glShaderSource+compile ok = true
+glColor3sv round-trip = [1, 0, 0]
 ```
 
-`glGetString` exercises the pointer-return path (`const GLubyte*` → `String`);
-`glGetError` exercises the pure-scalar path (`GLenum`, no args). Both are
-resolved on first call via `dlopen`/`dlsym`, cached in a self-patching dispatch
-slot, then invoked through a per-signature C shim.
+See [`examples/hello_gl`](examples/hello_gl/) for what each line proves.
 
 ## Layout
 
+The module is a root package plus a handful of internal support packages. The
+generator runs as a normal `moon run`, writing its output into the root package.
+
 | Path | Role |
 |------|------|
-| `src/gen/types.mbt` | **The type-mapping table** — single source of truth mapping every `GLxxx` typedef in `registry/gl.xml` to its MoonBit type, C type, and FFI marshalling category. Drives the generator. |
-| `src/gen/types_test.mbt` | Tests, incl. a coverage test asserting every `<ptype>` used in gl.xml command signatures is mapped. |
-| `src/generator/` | **The binding generator**: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (driver). |
-| `src/epoxy/epoxy_stub.c` | Hand-written C: the `dlopen`/`dlsym` resolver + demo offscreen-context helper. |
-| `src/epoxy/gl_generated_stub.c` | **Generated** per-signature C call shims (1511). |
-| `src/epoxy/resolver.mbt` | FFI declarations + the lazy GL-lib handle and self-patching `Dispatch` slots. |
-| `src/epoxy/gl_generated.mbt` | **Generated** MoonBit dispatch wrappers (1511). |
-| `src/epoxy/gl.mbt` | Hand-written support: GL enum constants, the UTF-8 decoder, demo context helper. |
-| `src/main/main.mbt` | Demo. |
+| `gl.mbt`, `resolver.mbt`, `version.mbt` | **The epoxy library** (module root, `feihaoxiang/epoxy`): GL enum constants, the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, and the version/extension introspection API. |
+| `epoxy_stub.c` | Hand-written C: the `dlopen`/`dlsym` resolver. |
+| `gl_generated.mbt` / `gl_generated_stub.c` | **Generated** dispatch wrappers + per-signature C call shims (3197). |
+| `gen/` | **The type-mapping table** — single source of truth mapping every `GLxxx` typedef to its MoonBit type, C type, and FFI marshalling category. Drives the generator. |
+| `cdecl/` | C-declarator parser for the registry's `<param>`/`<proto>` fragments. |
+| `aliasgroup/` | Union-find over `<alias>` edges, so a binding can fall back to its equivalent entry-point names. |
+| `glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). |
+| `generator/` | **The binding generator**: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (driver). |
+| `examples/` | A separate module (`feihaoxiang/epoxy-examples`); see `hello_gl`. |
 | `upstream/libepoxy` | The reference C implementation (submodule), incl. `registry/*.xml`. |
 
 ## How dispatch works
 
-1. `Dispatch::new("glGetString")` creates a slot with an empty cached pointer.
-2. First call to `gl_get_string` → `Dispatch::get` → `resolve("glGetString")`:
-   `dlopen` the GL library once (cached), then `dlsym` the entry point.
-3. The resolved `void*` is cached in the slot and passed to the C shim
-   `epoxy_call_GetString`, which casts it to the right function-pointer type,
-   calls it, and marshals the result back across the FFI boundary.
+1. `Dispatch::with_aliases("glGenVertexArrays", [...])` creates a slot with an
+   empty cached pointer and its alias group's fallback names.
+2. First call → `Dispatch::get` → `dlopen` the GL library once (cached), then
+   `dlsym` the primary name, falling back through the alias names.
+3. The resolved `void*` is cached in the slot and passed to the generated C
+   shim, which casts it to the right function-pointer type, calls it, and
+   marshals the result back across the FFI boundary.
 4. Subsequent calls skip resolution — just cache read + shim call.
 
-Context creation (CGL here) is deliberately *not* part of dispatch — it stands
-in for the window-system layer (CGL/EGL/GLX/WGL) an app/toolkit provides.
+Context creation (CGL in the example) is deliberately *not* part of dispatch —
+it stands in for the window-system layer (CGL/EGL/GLX/WGL) an app/toolkit
+provides. epoxy itself only `dlopen`s.
 
-## Type categories (FFI marshalling)
+## FFI marshalling categories
 
-The ~40 `GLxxx` typedefs collapse onto a handful of representations:
+The ~40 `GLxxx` typedefs collapse onto a handful of representations, all decided
+in `gen/types.mbt`:
 
-- **Scalar** (~95% of params): `GLenum/GLuint/GLbitfield`→`UInt`, `GLint/GLsizei`→`Int`, `GLfloat`→`Float`, `GLdouble`→`Double`, `GL(u)int64`→`(U)Int64`, etc. Direct, no marshalling.
-- **PtrSized**: `GLintptr/GLsizeiptr`→`Int64`→C `intptr_t/ssize_t`. Must not be narrowed.
-- **Pointer**: arrays/buffers/strings/in-out params → `Bytes`/`FixedArray` (via `#borrow`).
-- **Opaque**: `GLsync`, `GLhandleARB`, egl image/buffer → `#external type`.
-- **Callback** (deferred): `GLDEBUGPROC` family — needs a MoonBit→C trampoline.
+- **Scalar** (most params): `GLenum/GLuint`→`UInt`, `GLint/GLsizei`→`Int`,
+  `GLfloat`→`Float`, `GLdouble`→`Double`, `GL(u)int64`→`(U)Int64`. Direct.
+- **Pointer-width**: `GLintptr/GLsizeiptr`→`Int64`→C `intptr_t/ssize_t`.
+- **Scalar arrays**: `const T*`/`T*` → `FixedArray[T]` (32/64-bit), `#borrow`'d.
+- **Byte data / strings**: `void*`/`GLchar*`/byte buffers → `Bytes`; string
+  returns decode to `String`.
+- **String arrays**: `const GLchar *const *` → `FixedArray[Bytes]` (the layout
+  already *is* the `char**` GL wants — `glShaderSource` &c.).
+- **16-bit arrays**: `const GLshort*`/`GLhalf*` → `FixedArray[Int16]`/`[UInt16]`.
+- **Deferred**: callbacks (`GLDEBUGPROC`), opaque handles (`GLsync`), non-string
+  pointer returns, `void**`/non-char double pointers.
 
 ## Build & run
 
+This is a multi-module workspace (`moon.work`). The module sets
+`preferred_target = "native"`, so no `--target` flag is needed; link flags are
+computed per-platform by a `build.js` prebuild script.
+
 ```sh
-moon run src/generator --target native   # regenerate bindings from gl.xml
-moon run src/main --target native         # demo (runs on generated bindings)
-moon test src/gen                         # type-table tests
+moon run generator                         # regenerate bindings from gl.xml
+moon test                                  # all unit tests
+moon -C examples run hello_gl/main --release   # the demo (release: see examples/hello_gl)
 ```
 
-Note: `moon build` (whole project) tries to link the `epoxy` *library* package
-as an executable and fails with an `_main` undefined error — a native-backend
-quirk. Build/run a specific package (`moon build src/main --target native`).
+## Generator coverage
+
+| Category | Count | Status |
+|----------|------:|--------|
+| scalar / void / string + scalar-array + string-array + 16-bit-array | 3197 | ✅ generated |
+| remaining pointer shape (`void**`, pointer-width, non-char `**`) | 43 | deferred |
+| unknown / opaque scalar type (`GLsync`, `GLhandleARB`, …) | 44 | deferred |
+| non-string pointer return (`void* glMapBuffer`) | 11 | deferred |
+| callback argument (`GLDEBUGPROC`) | 4 | deferred |
 
 ## Roadmap
 
 1. ✅ Vertical slice: resolver + self-patching dispatch + scalar/pointer shims.
-2. ✅ Generator: parse `registry/gl.xml`, emit bindings + C shims for the 1511
-   scalar/void/string commands.
-3. ✅ Pointer/array params — faithful `Bytes`/`FixedArray` passthrough
-   (`#borrow`'d). 3084 commands now generated.
-4. Remaining shapes: `const GLchar* const*` string arrays, 16-bit arrays,
-   non-string pointer returns, callbacks (`GLDEBUGPROC`).
-5. Alias groups + provider priority + `epoxy_gl_version` / `has_extension`.
-6. GLES / EGL / GLX / WGL window-system layers.
-7. Linux (`libGL.so.1` path is already wired) + Windows (`wglGetProcAddress`).
-
-### Generator coverage (current)
-
-| Category | Count | Status |
-|----------|------:|--------|
-| scalar / void / string + pointer-array | 3084 | ✅ generated |
-| deferred pointer shape (`**`, 16-bit, opaque) | 156 | deferred |
-| unknown / opaque scalar type | 44 | deferred |
-| non-string pointer return | 11 | deferred |
-| callback argument | 4 | deferred |
-
-Pointer params pass through faithfully: `const T*`/`T*` → `FixedArray[T]`
-(float/double/int32/uint32/int64/uint64), `void*`/`GLchar*`/byte data → `Bytes`,
-all `#borrow`'d. The demo exercises this end-to-end — `glGetIntegerv` reads
-`GL_MAX_TEXTURE_SIZE` into a `FixedArray[Int]`, `glGenBuffers` fills a
-`FixedArray[UInt]`. 16-bit arrays (no native fixed-width array), `**`, and
-opaque-pointer params remain deferred.
-```
+2. ✅ Generator: parse `registry/gl.xml`, emit bindings + C shims.
+3. ✅ Pointer/array params — `Bytes`/`FixedArray` passthrough, `#borrow`'d.
+4. ✅ Alias groups (`<alias>` fallback) + `epoxy_gl_version` / `is_desktop_gl` /
+   `has_gl_extension`.
+5. ✅ String arrays (`const GLchar *const *`) + 16-bit arrays.
+6. Remaining shapes: non-string pointer returns (→ opaque `CPtr`), `void**`
+   out-pointers, callbacks (`GLDEBUGPROC` trampoline).
+7. GLES / EGL / GLX / WGL window-system layers; Linux + Windows loaders.

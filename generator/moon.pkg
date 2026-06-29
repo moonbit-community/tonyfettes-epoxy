@@ -1,0 +1,13 @@
+import {
+  "Milky2018/xml",
+  "moonbitlang/async",
+  "moonbitlang/async/fs",
+  "moonbitlang/async/io",
+  "feihaoxiang/epoxy/gen",
+  "feihaoxiang/epoxy/cdecl",
+  "feihaoxiang/epoxy/aliasgroup",
+}
+
+options(
+  "is-main": true,
+)

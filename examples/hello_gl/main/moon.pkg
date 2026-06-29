@@ -1,0 +1,8 @@
+import {
+  "feihaoxiang/epoxy",
+}
+
+options(
+  "is-main": true,
+  "native-stub": [ "demo_context.c" ],
+)
