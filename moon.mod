@@ -4,10 +4,21 @@ version = "0.1.0"
 
 description = "A MoonBit reimplementation of libepoxy: OpenGL function pointer dispatch."
 
+license = "MIT"
+
+repository = "https://github.com/moonbit-community/tonyfettes-epoxy"
+
+readme = "README.md"
+
+keywords = [ "opengl", "gl", "epoxy", "ffi", "bindings" ]
+
 preferred_target = "native"
 
 options(
   source: ".",
-  exclude: [ "upstream" ],
+  // Keep the published package to just the library: the generator and examples
+  // are separate workspace modules (own moon.mod), and upstream is the vendored
+  // reference C impl — none belong in a consumer's download.
+  exclude: [ "upstream", "generator", "examples", "moon.work" ],
   "--moonbit-unstable-prebuild": "build.js",
 )
