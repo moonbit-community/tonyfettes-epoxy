@@ -63,6 +63,14 @@ generator, and the examples.
    marshals the result back across the FFI boundary.
 4. Subsequent calls skip resolution — just cache read + shim call.
 
+Like libepoxy, the generated wrappers have the **same signature as the GL
+function** — no error channel. If an entry point can't be resolved (you called
+something the current context doesn't provide) the dispatch `abort()`s with
+`epoxy: glXxx() not found`, exactly as upstream does. That's a programming
+error: gate version/extension-specific calls on `gl_version` / `has_gl_extension`
+first, rather than wrapping every call. So a render loop reads as plain GL, with
+no `raise`/`try` plumbing.
+
 Context creation (CGL in the example) is deliberately *not* part of dispatch —
 it stands in for the window-system layer (CGL/EGL/GLX/WGL) an app/toolkit
 provides. epoxy itself only `dlopen`s.

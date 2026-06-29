@@ -256,7 +256,7 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   )
   mbt.write_string("///|\n")
   mbt.write_string(
-    "pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} raise ResolveError {\n",
+    "pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} {\n",
   )
   let args = [slot + ".get()", ..names]
   let call = "\{sym}(\{args.join(", ")})"
