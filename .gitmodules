@@ -1,0 +1,3 @@
+[submodule "upstream/libepoxy"]
+	path = upstream/libepoxy
+	url = https://github.com/anholt/libepoxy.git
