@@ -23,13 +23,3 @@ pub const GL_VERSION : UInt = 0x1F02
 fn decode_utf8(bytes : Bytes) -> String {
   @utf8.decode_lossy(bytes[:])
 }
-
-///|
-/// Demo helper: create+make-current an offscreen GL context so the entry
-/// points have something to talk to. Real apps supply their own context.
-extern "c" fn ffi_demo_make_context() -> Int = "epoxy_demo_make_context"
-
-///|
-pub fn demo_make_context() -> Bool {
-  ffi_demo_make_context() == 1
-}

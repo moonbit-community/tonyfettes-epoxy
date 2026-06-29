@@ -1,7 +1,11 @@
 ///|
+/// Window-system layer (the app's job, not epoxy's): make a current GL context.
+/// Implemented in demo_context.c; the only reason this demo links OpenGL.
+extern "c" fn ffi_make_context() -> Int = "demo_make_context"
+
+///|
 fn main {
-  // The application/toolkit creates a GL context (window-system layer).
-  guard @epoxy.demo_make_context() else {
+  guard ffi_make_context() == 1 else {
     println("could not create an offscreen GL context")
     return
   }

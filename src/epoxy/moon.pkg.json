@@ -3,7 +3,7 @@
   "native-stub": ["epoxy_stub.c", "gl_generated_stub.c"],
   "link": {
     "native": {
-      "cc-link-flags": "-ldl -framework OpenGL"
+      "cc-link-flags": "-ldl"
     }
   }
 }
