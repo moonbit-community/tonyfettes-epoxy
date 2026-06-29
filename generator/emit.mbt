@@ -125,6 +125,19 @@ fn pointer_mtype(elem : @gen.CType) -> @gen.MType? {
   }
 }
 
+///|
+/// Render one GL enum as a MoonBit constant, typed by its `EnumKind`. The value
+/// is emitted verbatim from the registry (hex/decimal/negative); the explicit
+/// type annotation makes a `0xFFFFFFFF` carry as `UInt` rather than overflow.
+fn render_enum(e : EnumDef) -> String {
+  let ty = match e.kind {
+    Unsigned => "UInt"
+    Unsigned64 => "UInt64"
+    Signed => "Int"
+  }
+  "///|\npub const \{e.name} : \{ty} = \{e.value}\n\n"
+}
+
 // --- name mangling -------------------------------------------------------
 
 ///|

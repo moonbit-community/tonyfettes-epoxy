@@ -29,7 +29,7 @@ fn main {
   // Exercise generated pointer bindings end-to-end.
   // glGetIntegerv writes into a FixedArray[Int] output buffer.
   let max_tex : FixedArray[Int] = FixedArray::make(1, 0)
-  @epoxy.gl_get_integerv(0x0D33, max_tex) // GL_MAX_TEXTURE_SIZE
+  @epoxy.gl_get_integerv(@epoxy.GL_MAX_TEXTURE_SIZE, max_tex)
   println("GL_MAX_TEXTURE_SIZE = \{max_tex[0]}")
   // glGenBuffers fills a FixedArray[UInt] with fresh object names.
   let bufs : FixedArray[UInt] = FixedArray::make(3, 0)

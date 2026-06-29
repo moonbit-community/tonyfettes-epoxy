@@ -81,6 +81,60 @@ fn Decl::to_ctype(self : Decl) -> @cdecl.Declarator {
 }
 
 ///|
+/// How an enum's literal value is typed in MoonBit. Almost every GL enum is a
+/// `GLenum`/`GLbitfield` (unsigned 32-bit); a couple of 64-bit sentinels and a
+/// handful of negative `*_NV` markers are the only exceptions.
+priv enum EnumKind {
+  Unsigned // UInt — GLenum / GLbitfield, the overwhelming default
+  Unsigned64 // UInt64 — `type="ull"` (GL_TIMEOUT_IGNORED &c.)
+  Signed // Int — negative sentinels (GL_SKIP_COMPONENTS*_NV, GL_NEXT_BUFFER_NV)
+}
+
+///|
+/// A resolved GL enum definition: its `GL_*` name, the literal exactly as the
+/// registry spells it (hex/decimal/negative), and how to type it.
+priv struct EnumDef {
+  name : String
+  value : String
+  kind : EnumKind
+}
+
+///|
+/// Parse every GL enum *definition* in the registry `content`. Definitions live
+/// in `<enums>` blocks and carry both `value` and `name`; the bare
+/// `<enum name="..."/>` references inside `<feature>`/`<extension>` requires
+/// have no `value`, so filtering on `value` excludes them. Deduplicated by name
+/// (a name is defined once, but may be referenced many times) — and no name in
+/// the registry maps to two different values, so first-wins is unambiguous.
+fn parse_enums(content : String) -> Array[EnumDef] raise {
+  let reader = @xml.Reader::from_string(content)
+  let out : Array[EnumDef] = []
+  let seen : Map[String, Bool] = {}
+  while true {
+    match reader.read_event() {
+      @xml.Eof => break
+      @xml.Empty(el) =>
+        if el.name == "enum" &&
+          el.get("value") is Some(value) &&
+          el.get("name") is Some(name) &&
+          !seen.contains(name) {
+          seen[name] = true
+          let kind = if value.has_prefix("-") {
+            EnumKind::Signed
+          } else if el.get("type") is Some("ull") {
+            EnumKind::Unsigned64
+          } else {
+            EnumKind::Unsigned
+          }
+          out.push({ name, value, kind })
+        }
+      _ => ()
+    }
+  }
+  out
+}
+
+///|
 /// Parse every `<command>` in the already-loaded registry XML `content`. The
 /// file read is the caller's job (done with async IO), so this stays pure over
 /// an in-memory string — no filesystem dependency of its own.

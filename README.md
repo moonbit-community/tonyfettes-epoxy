@@ -10,8 +10,9 @@ separate module — `tonyfettes/epoxy-generator` under `generator/` — parses t
 Khronos registry (`registry/gl.xml`, 3299 commands) with the
 [xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and emits
 MoonBit dispatch wrappers + C call shims for the **3217** commands it can
-express. The rest (callbacks, a few exotic pointer shapes, the platform-variant
-`GLhandleARB`) are skipped, never miscompiled.
+express, plus all **6061** GL enum constants. The rest (callbacks, a few exotic
+pointer shapes, the platform-variant `GLhandleARB`) are skipped, never
+miscompiled.
 
 Keeping the generator in its own module means the library's dependency closure
 stays minimal: consumers of `tonyfettes/epoxy` never inherit the build-time
@@ -44,9 +45,10 @@ generator, and the examples.
 
 | Path | Role |
 |------|------|
-| `gl.mbt`, `resolver.mbt`, `version.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): GL enum constants, the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, and the version/extension introspection API. |
+| `resolver.mbt`, `version.mbt`, `handles.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, the version/extension introspection API, and the opaque-handle types. |
 | `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver. |
-| `gl_generated.mbt` / `gl_generated.c` | **Generated** dispatch wrappers + per-signature C call shims (3197). |
+| `gl_generated.mbt` / `gl_generated.c` | **Generated** dispatch wrappers + per-signature C call shims (3217). |
+| `gl_generated_enums.mbt` | **Generated** GL enum constants (`pub const GL_* : UInt/UInt64/Int`, 6061). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
 | `generator/` | **The binding generator** — its own module, `tonyfettes/epoxy-generator`: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (CLI driver), plus its private support packages `gen/` (the `GLxxx`→type table), `cdecl/` (C-declarator parser), `aliasgroup/` (union-find over `<alias>` edges). |
 | `examples/` | A separate module (`tonyfettes/epoxy-examples`); see `hello_gl`. |
@@ -115,9 +117,10 @@ the library package, so the bare command above regenerates in place:
 
 ```sh
 moon -C generator run . -- \
-  --registry ../upstream/libepoxy/registry/gl.xml \
-  --out-mbt  ../gl_generated.mbt \
-  --out-c    ../gl_generated.c
+  --registry  ../upstream/libepoxy/registry/gl.xml \
+  --out-mbt   ../gl_generated.mbt \
+  --out-c     ../gl_generated.c \
+  --out-enums ../gl_generated_enums.mbt
 ```
 
 ## Generator coverage
@@ -143,7 +146,8 @@ moon -C generator run . -- \
 5. ✅ String arrays (`const GLchar *const *`) + 16-bit arrays.
 6. ✅ Opaque object handles (`GLsync`, `GLeglImageOES`, `GLeglClientBufferEXT`,
    `GLVULKANPROCNV`) → distinct `#external` types.
-7. Remaining shapes: non-string pointer returns (→ opaque `CPtr`), `void**`
+7. ✅ GL enum constants — all 6061 `<enum>`s → `pub const` (`UInt`/`UInt64`/`Int`).
+8. Remaining shapes: non-string pointer returns (→ opaque `CPtr`), `void**`
    out-pointers, callbacks (`GLDEBUGPROC` trampoline). `GLhandleARB` needs a
    platform `#ifdef` typedef (split ABI) to bind without miscompiling.
-8. GLES / EGL / GLX / WGL window-system layers; Linux + Windows loaders.
+9. GLES / EGL / GLX / WGL window-system layers; Linux + Windows loaders.
