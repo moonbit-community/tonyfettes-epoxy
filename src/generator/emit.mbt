@@ -310,7 +310,7 @@ fn render(c : Command, sig : Signature) -> Rendered {
   let args = [slot + ".get()", ..names]
   let call = "\{sym}(\{args.join(", ")})"
   match sig.ret {
-    Str => mbt.write_string("  decode_utf8(\{call})\n")
+    Str => mbt.write_string("  @utf8.decode_lossy(\{call}[:])\n")
     _ => mbt.write_string("  \{call}\n")
   }
   mbt.write_string("}\n\n")

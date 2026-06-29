@@ -12902,7 +12902,7 @@ extern "c" fn epoxy_glGetString(fp : CPtr, name : UInt) -> Bytes = "epoxy_glGetS
 
 ///|
 pub fn gl_get_string(name : UInt) -> String raise ResolveError {
-  decode_utf8(epoxy_glGetString(d_glGetString.get(), name))
+  @utf8.decode_lossy(epoxy_glGetString(d_glGetString.get(), name)[:])
 }
 
 ///|
@@ -12913,7 +12913,7 @@ extern "c" fn epoxy_glGetStringi(fp : CPtr, name : UInt, index : UInt) -> Bytes 
 
 ///|
 pub fn gl_get_stringi(name : UInt, index : UInt) -> String raise ResolveError {
-  decode_utf8(epoxy_glGetStringi(d_glGetStringi.get(), name, index))
+  @utf8.decode_lossy(epoxy_glGetStringi(d_glGetStringi.get(), name, index)[:])
 }
 
 ///|
