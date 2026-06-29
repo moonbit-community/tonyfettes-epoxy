@@ -10,12 +10,12 @@
 /// A MoonBit type appearing in a generated binding. It knows how to print
 /// itself and how it is represented across the C FFI boundary.
 priv enum MType {
-  U32
-  I32
-  F32
-  F64
-  I64
-  U64
+  UInt
+  Int
+  Float
+  Double
+  Int64
+  UInt64
   Bool
   Bytes
   Array(MType) // FixedArray[elem]
@@ -25,12 +25,12 @@ priv enum MType {
 /// The MoonBit-source spelling, e.g. `UInt`, `FixedArray[Float]`.
 fn MType::moonbit(self : MType) -> String {
   match self {
-    U32 => "UInt"
-    I32 => "Int"
-    F32 => "Float"
-    F64 => "Double"
-    I64 => "Int64"
-    U64 => "UInt64"
+    UInt => "UInt"
+    Int => "Int"
+    Float => "Float"
+    Double => "Double"
+    Int64 => "Int64"
+    UInt64 => "UInt64"
     Bool => "Bool"
     Bytes => "Bytes"
     Array(e) => "FixedArray[\{e.moonbit()}]"
@@ -39,14 +39,14 @@ fn MType::moonbit(self : MType) -> String {
 
 ///|
 /// The C type this value arrives as on the shim side (the MoonBit ABI).
-fn MType::c_abi(self : MType) -> CType {
+fn MType::c_abi(self : MType) -> ResolvedCType {
   match self {
-    U32 => Prim("uint32_t")
-    I32 => Prim("int32_t")
-    F32 => Prim("float")
-    F64 => Prim("double")
-    I64 => Prim("int64_t")
-    U64 => Prim("uint64_t")
+    UInt => Prim("uint32_t")
+    Int => Prim("int32_t")
+    Float => Prim("float")
+    Double => Prim("double")
+    Int64 => Prim("int64_t")
+    UInt64 => Prim("uint64_t")
     Bool => Prim("int32_t")
     Bytes => Prim("moonbit_bytes_t")
     Array(e) => Pointer(e.c_abi(), is_const=false)
@@ -64,16 +64,16 @@ fn MType::is_pointer(self : MType) -> Bool {
 
 ///|
 /// A concrete C type, with literal leaves (`unsigned int`, `moonbit_bytes_t`,
-/// ...). Unlike the registry-level `GlType`, every leaf is already resolved, so
+/// ...). Unlike the registry-level `CType`, every leaf is already resolved, so
 /// `render` is a total, lookup-free function.
-priv enum CType {
+priv enum ResolvedCType {
   Void
   Prim(String)
-  Pointer(CType, is_const~ : Bool)
+  Pointer(ResolvedCType, is_const~ : Bool)
 }
 
 ///|
-fn CType::render(self : CType) -> String {
+fn ResolvedCType::render(self : ResolvedCType) -> String {
   match self {
     Void => "void"
     Prim(s) => s
@@ -89,12 +89,12 @@ fn CType::render(self : CType) -> String {
 priv struct Binding {
   name : String
   mty : MType
-  cast : CType
+  cast : ResolvedCType
 }
 
 ///|
 /// Resolve a parameter into its binding, or None if its type is unsupported.
-fn Binding::new(name : String, ty : @cdecl.GlType) -> Binding? {
+fn Binding::new(name : String, ty : @cdecl.CType) -> Binding? {
   let mty = match ty {
     Base(_) => scalar_mtype(ty.base_name())
     Ptr(Base(_), ..) => ptr_mtype(ty.base_name())
@@ -110,7 +110,7 @@ fn Binding::new(name : String, ty : @cdecl.GlType) -> Binding? {
 priv enum Ret {
   Void
   Str
-  Scalar(MType, CType)
+  Scalar(MType, ResolvedCType)
 }
 
 ///|
@@ -158,12 +158,12 @@ fn scalar_mtype(gltype : String) -> MType? {
   match m.category {
     @gen.Scalar | @gen.PtrSized =>
       match m.moonbit_type {
-        "UInt" => Some(U32)
-        "Int" => Some(I32)
-        "Float" => Some(F32)
-        "Double" => Some(F64)
-        "Int64" => Some(I64)
-        "UInt64" => Some(U64)
+        "UInt" => Some(UInt)
+        "Int" => Some(Int)
+        "Float" => Some(Float)
+        "Double" => Some(Double)
+        "Int64" => Some(Int64)
+        "UInt64" => Some(UInt64)
         "Bool" => Some(Bool)
         _ => None
       }
@@ -178,22 +178,22 @@ fn ptr_mtype(base : String) -> MType? {
   match base {
     "void" | "GLvoid" | "GLchar" | "GLcharARB" | "GLubyte" | "GLbyte"
     | "GLboolean" => Some(Bytes)
-    "GLfloat" | "GLclampf" => Some(Array(F32))
-    "GLdouble" | "GLclampd" => Some(Array(F64))
-    "GLint" | "GLsizei" | "GLfixed" | "GLclampx" => Some(Array(I32))
-    "GLuint" | "GLbitfield" | "GLenum" => Some(Array(U32))
-    "GLint64" | "GLint64EXT" => Some(Array(I64))
-    "GLuint64" | "GLuint64EXT" => Some(Array(U64))
+    "GLfloat" | "GLclampf" => Some(Array(Float))
+    "GLdouble" | "GLclampd" => Some(Array(Double))
+    "GLint" | "GLsizei" | "GLfixed" | "GLclampx" => Some(Array(Int))
+    "GLuint" | "GLbitfield" | "GLenum" => Some(Array(UInt))
+    "GLint64" | "GLint64EXT" => Some(Array(Int64))
+    "GLuint64" | "GLuint64EXT" => Some(Array(UInt64))
     _ => None
   }
 }
 
 ///|
 /// Resolve a registry GL type into a concrete C type, or None if a leaf typedef
-/// isn't in the mapping table. (A free function, not a method: `GlType` belongs
+/// isn't in the mapping table. (A free function, not a method: `CType` belongs
 /// to the `cdecl` package; this resolution is the generator's concern, since it
 /// consults the type-mapping table.)
-fn resolve_ctype(ty : @cdecl.GlType) -> CType? {
+fn resolve_ctype(ty : @cdecl.CType) -> ResolvedCType? {
   match ty {
     Base("void") => Some(Void)
     Base(name) => {
