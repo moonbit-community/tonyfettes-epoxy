@@ -17,10 +17,20 @@ extern "c" fn epoxy_dlsym(
 ) -> @c.Pointer[Unit] = "epoxy_dlsym"
 
 ///|
-/// Marshal a NUL-terminated C string into MoonBit `Bytes` (NULL → empty). One
-/// generic helper shared by every string-returning command's wrapper.
-#borrow(s)
-extern "c" fn epoxy_cstr(s : @c.Pointer[Byte]) -> Bytes = "epoxy_cstr"
+/// Marshal a NUL-terminated C string (e.g. `glGetString`'s return) into MoonBit
+/// `Bytes`; a NULL pointer yields empty. One generic helper shared by every
+/// string-returning command's wrapper — the resolved address is held alive by
+/// the caller across this walk, so the raw reads are valid.
+fn epoxy_cstr(s : @c.Pointer[Byte]) -> Bytes {
+  if s.is_null() {
+    return b""
+  }
+  let mut len = 0
+  while s[len].to_int() != 0 {
+    len = len + 1
+  }
+  Bytes::makei(len, fn(i) { s[i] })
+}
 
 ///|
 /// Lazily-opened handle to the platform GL library, opened once (epoxy opens

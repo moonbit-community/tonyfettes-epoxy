@@ -1,14 +1,13 @@
 // C stubs for the MoonBit epoxy library: purely GL *function dispatch*.
 // Entry points are resolved dynamically with dlopen()/dlsym() (exactly like
 // libepoxy), so the library never link-depends on GL — no -lGL / -framework
-// OpenGL here, only -ldl. There are no per-command call shims: the generated
-// wrappers call each resolved address directly through a MoonBit FuncRef. The
-// only marshalling helper left here is epoxy_cstr(), shared by every
-// string-returning command.
+// OpenGL here, only -ldl. There are no call shims at all: the generated
+// wrappers call each resolved address directly through a MoonBit FuncRef, and
+// C-string returns are walked MoonBit-side (epoxy_cstr in resolver.mbt). This
+// file is now just the dlopen/dlsym resolver.
 
 #include <dlfcn.h>
-#include <stdint.h>
-#include <string.h>
+#include <stddef.h>
 #include "moonbit.h"
 
 #ifdef __APPLE__
@@ -29,15 +28,4 @@ void *epoxy_gl_dlopen(void) {
 void *epoxy_dlsym(void *handle, moonbit_bytes_t name) {
   if (!handle) return NULL;
   return dlsym(handle, (const char *)name);
-}
-
-// Marshal a NUL-terminated C string (e.g. glGetString's return) into MoonBit
-// bytes; a NULL pointer yields empty. One generic helper for every
-// string-returning command, not a per-command shim.
-moonbit_bytes_t epoxy_cstr(const unsigned char *s) {
-  if (!s) return moonbit_make_bytes(0, 0);
-  size_t len = strlen((const char *)s);
-  moonbit_bytes_t out = moonbit_make_bytes((int32_t)len, 0);
-  memcpy(out, s, len);
-  return out;
 }

@@ -14,9 +14,9 @@ MoonBit dispatch wrappers for the **3217** commands it can express, plus all
 the platform-variant `GLhandleARB`) are skipped, never miscompiled.
 
 Each wrapper calls its resolved entry point **directly through a `FuncRef`**
-typed to the GL function's exact ABI — there is no per-command C shim. The one
-hand-written C file (`epoxy.c`) holds only the `dlopen`/`dlsym` resolver and a
-single generic C-string marshaller.
+typed to the GL function's exact ABI — there is no per-command C shim, and no
+call shim at all. The one hand-written C file (`epoxy.c`) is now just the
+`dlopen`/`dlsym` resolver; even C-string returns are walked MoonBit-side.
 
 Keeping the generator in its own module means the library's dependency closure
 stays minimal: consumers of `tonyfettes/epoxy` never inherit the build-time
@@ -51,7 +51,7 @@ generator, and the examples.
 | Path | Role |
 |------|------|
 | `resolver.mbt`, `version.mbt`, `handles.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, the version/extension introspection API, and the opaque-handle types. |
-| `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver + one generic C-string marshaller (`epoxy_cstr`). |
+| `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver (nothing else). |
 | `gl_generated.mbt` | **Generated** MoonBit `FuncRef` dispatch wrappers (3217) — no C shim. |
 | `gl_generated_enums.mbt` | **Generated** GL enum constants (`pub const GL_* : UInt/UInt64/Int`, 6061). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
