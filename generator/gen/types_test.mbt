@@ -1,46 +1,64 @@
 ///|
-test "scalar lookup gives the right C and MoonBit types" {
-  let m = lookup("GLenum").unwrap()
-  inspect(m.c_type.c(), content="unsigned int")
+test "scalar lookup gives the right MoonBit type" {
+  guard lookup("GLenum") is Some(m) else { fail("GLenum should be mapped") }
   inspect(m.m_type.moonbit(), content="UInt")
 }
 
 ///|
-test "pointer-width type resolves to intptr-sized C / Int64 MoonBit" {
-  let m = lookup("GLsizeiptr").unwrap()
-  inspect(m.c_type.c(), content="ssize_t")
+test "pointer-width type resolves to Int64 MoonBit" {
+  guard lookup("GLsizeiptr") is Some(m) else {
+    fail("GLsizeiptr should be mapped")
+  }
   inspect(m.m_type.moonbit(), content="Int64")
 }
 
 ///|
 test "GLboolean and GLubyte share a C type but differ in MoonBit" {
-  inspect(lookup("GLboolean").unwrap().c_type.c(), content="unsigned char")
-  inspect(lookup("GLubyte").unwrap().c_type.c(), content="unsigned char")
-  inspect(lookup("GLboolean").unwrap().m_type.moonbit(), content="Bool")
-  inspect(lookup("GLubyte").unwrap().m_type.moonbit(), content="Int")
+  guard lookup("GLboolean") is Some(b) else {
+    fail("GLboolean should be mapped")
+  }
+  guard lookup("GLubyte") is Some(ub) else { fail("GLubyte should be mapped") }
+  inspect(b.m_type.moonbit(), content="Bool")
+  inspect(ub.m_type.moonbit(), content="Int")
 }
 
 ///|
-test "MoonBit ABI spelling" {
-  inspect(lookup("GLuint64").unwrap().m_type.c_abi(), content="uint64_t")
-  inspect(lookup("GLfloat").unwrap().m_type.c_abi(), content="float")
+test "FuncRef param spelling: scalars keep their type, arrays/bytes are @c.Pointer" {
+  inspect((UInt : MType).funcref_type(), content="UInt")
+  inspect((Handle("GLsync") : MType).funcref_type(), content="GLsync")
+  inspect((Bytes : MType).funcref_type(), content="@c.Pointer[Byte]")
+  inspect((Array(Int) : MType).funcref_type(), content="@c.Pointer[Int]")
+  inspect((Array(Int16) : MType).funcref_type(), content="@c.Pointer[Int16]")
+  // the const GLchar *const * of glShaderSource: a pointer to the char* run
+  inspect((Array(Bytes) : MType).funcref_type(), content="@c.Pointer[Bytes]")
 }
 
 ///|
-test "16-bit array element types are packed int16_t/uint16_t" {
-  inspect((Array(Int16) : MType).moonbit(), content="FixedArray[Int16]")
-  inspect((Array(Int16) : MType).c_abi(), content="int16_t *")
-  inspect((Array(UInt16) : MType).moonbit(), content="FixedArray[UInt16]")
-  inspect((Array(UInt16) : MType).c_abi(), content="uint16_t *")
+test "sub-word returns are narrowed; full-width returns pass through" {
+  // GLboolean (unsigned char) exposed as Bool -> mask then compare
+  inspect(narrow_of(Byte, Bool) is BoolU8, content="true")
+  // GLubyte (unsigned char) exposed as Int -> zero-extend the low byte
+  inspect(narrow_of(Byte, Int) is MaskU8, content="true")
+  inspect(narrow_of(Short, Int) is SignU16, content="true")
+  inspect(narrow_of(UShort, Int) is MaskU16, content="true")
+  // full-width scalars and handles need no fixup
+  inspect(narrow_of(UInt, UInt) is None, content="true")
+  inspect(narrow_of(OpaquePtr, Handle("GLsync")) is None, content="true")
+}
+
+///|
+test "FuncRef return type: sub-word comes back as Int, others natural" {
+  inspect(funcref_ret_type(Byte, Bool), content="Int")
+  inspect(funcref_ret_type(Short, Int), content="Int")
+  inspect(funcref_ret_type(UInt, UInt), content="UInt")
+  inspect(funcref_ret_type(OpaquePtr, Handle("GLsync")), content="GLsync")
 }
 
 ///|
 test "opaque object handles map to a named external pointer" {
   // GLsync &c. cross the FFI as a bare pointer but keep a distinct MoonBit type.
   guard lookup("GLsync") is Some(s) else { fail("GLsync should be mapped") }
-  inspect(s.c_type.c(), content="void *")
   inspect(s.m_type.moonbit(), content="GLsync")
-  inspect(s.m_type.c_abi(), content="void *")
   guard lookup("GLeglImageOES") is Some(egl) else {
     fail("GLeglImageOES should be mapped")
   }
@@ -52,18 +70,4 @@ test "callbacks and platform-variant handles stay unsupported (absent)" {
   // GLhandleARB is unsigned int / Apple void * — a split ABI we won't miscompile.
   inspect(lookup("GLDEBUGPROC") is None, content="true")
   inspect(lookup("GLhandleARB") is None, content="true")
-}
-
-///|
-test "const placement: west-const for scalar pointees, east-const past inner stars" {
-  // a single-level const pointer keeps the idiomatic west-const spelling
-  inspect((Pointer(Char, is_const=true) : CType).c(), content="const char *")
-  // a plain out-pointer carries no const
-  inspect((Pointer(Int, is_const=false) : CType).c(), content="int *")
-  // const char *const * — the `char **` of glShaderSource's string param:
-  // each const lands where it reads correctly, never `const const ... * *`
-  inspect(
-    (Pointer(Pointer(Char, is_const=true), is_const=true) : CType).c(),
-    content="const char * const *",
-  )
 }

@@ -2,7 +2,11 @@
 package "tonyfettes/epoxy-generator/gen"
 
 // Values
+pub fn funcref_ret_type(CType, MType) -> String
+
 pub fn lookup(String) -> TypeInfo?
+
+pub fn narrow_of(CType, MType) -> Narrow
 
 pub let table : Map[String, TypeInfo]
 
@@ -27,7 +31,6 @@ pub(all) enum CType {
   OpaquePtr
   Pointer(CType, is_const~ : Bool)
 }
-pub fn CType::c(Self) -> String
 
 pub(all) enum MType {
   UInt
@@ -43,9 +46,18 @@ pub(all) enum MType {
   Handle(String)
   Array(MType)
 }
-pub fn MType::c_abi(Self) -> String
+pub fn MType::funcref_type(Self) -> String
 pub fn MType::is_pointer(Self) -> Bool
 pub fn MType::moonbit(Self) -> String
+
+pub enum Narrow {
+  None
+  MaskU8
+  SignU8
+  MaskU16
+  SignU16
+  BoolU8
+}
 
 pub struct TypeInfo {
   c_type : CType
