@@ -10,7 +10,8 @@ import {
   "tonyfettes/epoxy@0.1.0",
 }
 
+source = "."
+
 options(
-  source: ".",
   "--moonbit-unstable-prebuild": "build.js",
 )

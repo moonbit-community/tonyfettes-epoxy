@@ -41,7 +41,13 @@ glShaderSource+compile ok = true
 glColor3sv round-trip = [1, 0, 0]
 ```
 
-See [`examples/hello_gl`](examples/hello_gl/) for what each line proves.
+See [`examples/hello_gl`](examples/hello_gl/) for what each line proves. For an
+actual render, [`examples/triangle`](examples/triangle/) draws the classic RGB
+gradient triangle in a window (Cocoa, macOS only), spinning until you close it:
+
+```
+$ moon run ./examples/triangle/main --release
+```
 
 ## Layout
 
@@ -56,7 +62,7 @@ generator, and the examples.
 | `gl_generated_enums.mbt` | **Generated** GL enum constants (`pub const GL_* : UInt/UInt64/Int`, 6061). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
 | `generator/` | **The binding generator** — its own module, `tonyfettes/epoxy-generator`: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (CLI driver), plus its private support packages `gen/` (the `GLxxx`→type table), `cdecl/` (C-declarator parser), `aliasgroup/` (union-find over `<alias>` edges). |
-| `examples/` | A separate module (`tonyfettes/epoxy-examples`); see `hello_gl`. |
+| `examples/` | A separate module (`tonyfettes/epoxy-examples`); see `hello_gl` and `triangle`. |
 | `upstream/libepoxy` | The reference C implementation (submodule), incl. `registry/*.xml`. |
 
 ## How dispatch works

@@ -1,0 +1,10 @@
+import {
+  "tonyfettes/epoxy",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/math",
+}
+
+options(
+  "is-main": true,
+  "native-stub": [ "demo_window.m" ],
+)
