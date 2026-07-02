@@ -9,15 +9,20 @@ The library package is the module root: import it as `tonyfettes/epoxy`. A
 separate module — `tonyfettes/epoxy-generator` under `generator/` — parses the
 Khronos registry (`registry/gl.xml`, 3299 commands) with the
 [xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and emits
-MoonBit dispatch wrappers + C call shims for the **3217** commands it can
-express, plus all **6061** GL enum constants. The rest (callbacks, a few exotic
-pointer shapes, the platform-variant `GLhandleARB`) are skipped, never
-miscompiled.
+MoonBit dispatch wrappers for the **3217** commands it can express, plus all
+**6061** GL enum constants. The rest (callbacks, a few exotic pointer shapes,
+the platform-variant `GLhandleARB`) are skipped, never miscompiled.
+
+Each wrapper calls its resolved entry point **directly through a `FuncRef`**
+typed to the GL function's exact ABI — there is no per-command C shim, and no
+call shim at all. The one hand-written C file (`epoxy.c`) is now just the
+`dlopen`/`dlsym` resolver; even C-string returns are walked MoonBit-side.
 
 Keeping the generator in its own module means the library's dependency closure
 stays minimal: consumers of `tonyfettes/epoxy` never inherit the build-time
 toolchain (xml parser, async IO). The library depends only on
-`moonbitlang/core`.
+`moonbitlang/core` and [`tonyfettes/c`](https://github.com/moonbit-community/tonyfettes-c)
+(for the `@c.Pointer` reinterpret-to-`FuncRef` and the array/bytes borrows).
 
 ## Status
 
@@ -46,8 +51,8 @@ generator, and the examples.
 | Path | Role |
 |------|------|
 | `resolver.mbt`, `version.mbt`, `handles.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, the version/extension introspection API, and the opaque-handle types. |
-| `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver. |
-| `gl_generated.mbt` / `gl_generated.c` | **Generated** dispatch wrappers + per-signature C call shims (3217). |
+| `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver (nothing else). |
+| `gl_generated.mbt` | **Generated** MoonBit `FuncRef` dispatch wrappers (3217) — no C shim. |
 | `gl_generated_enums.mbt` | **Generated** GL enum constants (`pub const GL_* : UInt/UInt64/Int`, 6061). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
 | `generator/` | **The binding generator** — its own module, `tonyfettes/epoxy-generator`: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (CLI driver), plus its private support packages `gen/` (the `GLxxx`→type table), `cdecl/` (C-declarator parser), `aliasgroup/` (union-find over `<alias>` edges). |
@@ -60,10 +65,18 @@ generator, and the examples.
    empty cached pointer and its alias group's fallback names.
 2. First call → `Dispatch::get` → `dlopen` the GL library once (cached), then
    `dlsym` the primary name, falling back through the alias names.
-3. The resolved `void*` is cached in the slot and passed to the generated C
-   shim, which casts it to the right function-pointer type, calls it, and
-   marshals the result back across the FFI boundary.
-4. Subsequent calls skip resolution — just cache read + shim call.
+3. The resolved `@c.Pointer[Unit]` is cached in the slot and reinterpreted
+   (`unsafe_into`) into a `FuncRef` whose type lowers to the GL function's exact
+   ABI. The wrapper borrows any `FixedArray`/`Bytes` param into a raw pointer
+   (`@c.borrow_array`/`borrow_bytes`), calls the `FuncRef` directly, and narrows
+   any sub-word return (e.g. `GLboolean`'s `unsigned char`) back to its width.
+4. Subsequent calls skip resolution — just cache read + direct `FuncRef` call.
+
+> **Why the sub-word narrow?** MoonBit lowers every `FuncRef` return (`Bool`,
+> `Byte`, …) to `int32_t` and reads the whole return register, so a GL function
+> that returns `unsigned char`/`short` would leave the high bits unspecified per
+> the psABI. The generated wrapper always masks/sign-extends the low byte/halfword
+> — the same fixup the old C shim's `(T)` cast did, now done MoonBit-side.
 
 Like libepoxy, the generated wrappers have the **same signature as the GL
 function** — no error channel. If an entry point can't be resolved (you called
@@ -84,16 +97,18 @@ in `generator/gen/types.mbt`:
 
 - **Scalar** (most params): `GLenum/GLuint`→`UInt`, `GLint/GLsizei`→`Int`,
   `GLfloat`→`Float`, `GLdouble`→`Double`, `GL(u)int64`→`(U)Int64`. Direct.
-- **Pointer-width**: `GLintptr/GLsizeiptr`→`Int64`→C `intptr_t/ssize_t`.
-- **Scalar arrays**: `const T*`/`T*` → `FixedArray[T]` (32/64-bit), `#borrow`'d.
-- **Byte data / strings**: `void*`/`GLchar*`/byte buffers → `Bytes`; string
-  returns decode to `String`.
+- **Pointer-width**: `GLintptr/GLsizeiptr`→`Int64` (== `intptr_t/ssize_t` on the
+  64-bit native targets).
+- **Scalar arrays**: `const T*`/`T*` → `FixedArray[T]`, borrowed to a
+  `@c.Pointer[T]` (`@c.borrow_array`) for the call.
+- **Byte data / strings**: `void*`/`GLchar*`/byte buffers → `Bytes` (borrowed to
+  `@c.Pointer[Byte]`); string returns decode to `String` via `epoxy_cstr`.
 - **String arrays**: `const GLchar *const *` → `FixedArray[Bytes]` (the layout
   already *is* the `char**` GL wants — `glShaderSource` &c.).
 - **16-bit arrays**: `const GLshort*`/`GLhalf*` → `FixedArray[Int16]`/`[UInt16]`.
 - **Opaque handles**: `GLsync`/`GLeglImageOES`/`GLeglClientBufferEXT`/
   `GLVULKANPROCNV` → distinct `#external` types (`pub type GLsync` &c.). All
-  share the `void *` ABI, so the C cast needs no GL headers; the names keep the
+  share the `void *` ABI, so they cross a `FuncRef` as-is; the names keep the
   handles from being interchangeable.
 - **Deferred**: callbacks (`GLDEBUGPROC`), `GLhandleARB` (a split ABI — `unsigned
   int` elsewhere, `void *` on Apple — we won't miscompile either), non-string
@@ -119,7 +134,6 @@ the library package, so the bare command above regenerates in place:
 moon -C generator run . -- \
   --registry  ../upstream/libepoxy/registry/gl.xml \
   --out-mbt   ../gl_generated.mbt \
-  --out-c     ../gl_generated.c \
   --out-enums ../gl_generated_enums.mbt
 ```
 
@@ -138,16 +152,16 @@ moon -C generator run . -- \
 
 ## Roadmap
 
-1. ✅ Vertical slice: resolver + self-patching dispatch + scalar/pointer shims.
-2. ✅ Generator: parse `registry/gl.xml`, emit bindings + C shims.
-3. ✅ Pointer/array params — `Bytes`/`FixedArray` passthrough, `#borrow`'d.
+1. ✅ Vertical slice: resolver + self-patching dispatch + scalar/pointer calls.
+2. ✅ Generator: parse `registry/gl.xml`, emit `FuncRef` bindings (no C shims).
+3. ✅ Pointer/array params — `Bytes`/`FixedArray` borrowed to `@c.Pointer`.
 4. ✅ Alias groups (`<alias>` fallback) + `epoxy_gl_version` / `is_desktop_gl` /
    `has_gl_extension`.
 5. ✅ String arrays (`const GLchar *const *`) + 16-bit arrays.
 6. ✅ Opaque object handles (`GLsync`, `GLeglImageOES`, `GLeglClientBufferEXT`,
    `GLVULKANPROCNV`) → distinct `#external` types.
 7. ✅ GL enum constants — all 6061 `<enum>`s → `pub const` (`UInt`/`UInt64`/`Int`).
-8. Remaining shapes: non-string pointer returns (→ opaque `CPtr`), `void**`
+8. Remaining shapes: non-string pointer returns (→ opaque `@c.Pointer`), `void**`
    out-pointers, callbacks (`GLDEBUGPROC` trampoline). `GLhandleARB` needs a
    platform `#ifdef` typedef (split ABI) to bind without miscompiling.
 9. GLES / EGL / GLX / WGL window-system layers; Linux + Windows loaders.

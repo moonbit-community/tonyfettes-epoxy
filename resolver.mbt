@@ -1,34 +1,48 @@
 ///|
-/// An opaque C pointer: a dlopen handle or a resolved entry-point address.
-/// It is nullable by nature, so `is_null` is the unresolved/failed sentinel —
-/// no extra `Option` wrapper is needed.
-#external
-priv type CPtr
+/// The lazy dlopen/dlsym resolver and the self-patching dispatch slot.
+///
+/// A resolved address crosses the FFI as `@c.Pointer[Unit]` — an opaque
+/// `void *`. The generated wrappers reinterpret a slot's address into a
+/// `FuncRef` typed to the GL function's exact ABI and call it directly, so this
+/// file knows nothing about individual signatures.
 
 ///|
-extern "c" fn CPtr::null() -> CPtr = "epoxy_null"
-
-///|
-extern "c" fn CPtr::is_null(self : CPtr) -> Bool = "epoxy_ptr_is_null"
-
-///|
-extern "c" fn epoxy_gl_dlopen() -> CPtr = "epoxy_gl_dlopen"
+extern "c" fn epoxy_gl_dlopen() -> @c.Pointer[Unit] = "epoxy_gl_dlopen"
 
 ///|
 #borrow(name)
-extern "c" fn epoxy_dlsym(handle : CPtr, name : Bytes) -> CPtr = "epoxy_dlsym"
+extern "c" fn epoxy_dlsym(
+  handle : @c.Pointer[Unit],
+  name : Bytes,
+) -> @c.Pointer[Unit] = "epoxy_dlsym"
+
+///|
+/// Marshal a NUL-terminated C string (e.g. `glGetString`'s return) into MoonBit
+/// `Bytes`; a NULL pointer yields empty. One generic helper shared by every
+/// string-returning command's wrapper — the resolved address is held alive by
+/// the caller across this walk, so the raw reads are valid.
+fn epoxy_cstr(s : @c.Pointer[Byte]) -> Bytes {
+  if s.is_null() {
+    return b""
+  }
+  let mut len = 0
+  while s[len].to_int() != 0 {
+    len = len + 1
+  }
+  Bytes::makei(len, fn(i) { s[i] })
+}
 
 ///|
 /// Lazily-opened handle to the platform GL library, opened once (epoxy opens
 /// libGL / OpenGL.framework on first use and keeps it for the process).
-let gl_handle : Ref[CPtr] = { val: CPtr::null() }
+let gl_handle : Ref[@c.Pointer[Unit]] = { val: @c.Pointer::null() }
 
 ///|
 /// Get the GL library handle, dlopen-ing it on first call. Aborts if the
 /// platform GL library cannot be opened at all — mirroring libepoxy, whose
 /// dispatch likewise `abort()`s rather than threading an error through every
 /// call (`dispatch_common.c`: `Couldn't open ...` / `abort()`).
-fn gl_lib() -> CPtr {
+fn gl_lib() -> @c.Pointer[Unit] {
   if gl_handle.val.is_null() {
     let h = epoxy_gl_dlopen()
     if h.is_null() {
@@ -40,10 +54,10 @@ fn gl_lib() -> CPtr {
 }
 
 ///|
-/// Look up a single symbol, returning a null `CPtr` if it is simply absent.
+/// Look up a single symbol, returning a null pointer if it is simply absent.
 /// (MoonBit-allocated `Bytes` always carry a trailing NUL, so the UTF-8
 /// encoding is already a valid C string for `dlsym` — no terminator to add.)
-fn lookup_symbol(name : String) -> CPtr {
+fn lookup_symbol(name : String) -> @c.Pointer[Unit] {
   epoxy_dlsym(gl_lib(), @utf8.encode(name))
 }
 
@@ -62,24 +76,23 @@ fn lookup_symbol(name : String) -> CPtr {
 priv struct Dispatch {
   name : String // primary entry point, also used in the not-found error
   aliases : Array[String] // fallback names, tried in order after `name`
-  mut ptr : CPtr
+  mut ptr : @c.Pointer[Unit]
 }
 
 ///|
 fn Dispatch::new(name : String) -> Dispatch {
-  { name, aliases: [], ptr: CPtr::null() }
+  { name, aliases: [], ptr: @c.Pointer::null() }
 }
 
 ///|
 fn Dispatch::with_aliases(name : String, aliases : Array[String]) -> Dispatch {
-  { name, aliases, ptr: CPtr::null() }
+  { name, aliases, ptr: @c.Pointer::null() }
 }
 
 ///|
 /// Return the resolved address, resolving (and caching) on first call. Tries
-/// the primary name then each alias; raises `EntryPointNotFound` only if none
-/// of them resolve.
-fn Dispatch::get(self : Dispatch) -> CPtr {
+/// the primary name then each alias; aborts only if none of them resolve.
+fn Dispatch::get(self : Dispatch) -> @c.Pointer[Unit] {
   if self.ptr.is_null() {
     let mut found = lookup_symbol(self.name)
     for candidate in self.aliases {

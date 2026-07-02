@@ -1,12 +1,13 @@
 // C stubs for the MoonBit epoxy library: purely GL *function dispatch*.
 // Entry points are resolved dynamically with dlopen()/dlsym() (exactly like
 // libepoxy), so the library never link-depends on GL — no -lGL / -framework
-// OpenGL here, only -ldl. Per-signature call shims live in the generated
-// gl_generated_stub.c.
+// OpenGL here, only -ldl. There are no call shims at all: the generated
+// wrappers call each resolved address directly through a MoonBit FuncRef, and
+// C-string returns are walked MoonBit-side (epoxy_cstr in resolver.mbt). This
+// file is now just the dlopen/dlsym resolver.
 
 #include <dlfcn.h>
-#include <stdint.h>
-#include <string.h>
+#include <stddef.h>
 #include "moonbit.h"
 
 #ifdef __APPLE__
@@ -28,10 +29,3 @@ void *epoxy_dlsym(void *handle, moonbit_bytes_t name) {
   if (!handle) return NULL;
   return dlsym(handle, (const char *)name);
 }
-
-// A null CPtr, used as the unresolved sentinel on the MoonBit side.
-void *epoxy_null(void) { return NULL; }
-
-// NULL check, so MoonBit can detect failed dlopen/dlsym across the #external
-// boundary (it can't compare an opaque pointer to null directly).
-int epoxy_ptr_is_null(void *p) { return p == NULL; }

@@ -14,6 +14,10 @@ keywords = [ "opengl", "gl", "epoxy", "ffi", "bindings" ]
 
 preferred_target = "native"
 
+import {
+  "tonyfettes/c@0.7.7",
+}
+
 options(
   source: ".",
   // Keep the published package to just the library: the generator and examples

@@ -7,9 +7,10 @@
 /// "GLenum is unsigned int / UInt" knowledge lives in exactly one place.
 
 ///|
-/// A concrete C type. Leaves are real machine types (`c` gives the C
-/// spelling); `Pointer` nests. Unlike a parsed declarator, every leaf is known,
-/// so `c` is total.
+/// A concrete C type — the resolved ABI of a GL typedef. It tags how a value is
+/// narrowed on return (`narrow_of`) and how a pointee classifies into a MoonBit
+/// array/bytes type (`pointer_mtype`); unlike a parsed declarator, every leaf is
+/// known.
 pub(all) enum CType {
   Void
   UInt // unsigned int
@@ -30,39 +31,6 @@ pub(all) enum CType {
   // per-handle spelling — the distinction lives on the MoonBit side instead.
   OpaquePtr
   Pointer(CType, is_const~ : Bool)
-}
-
-///|
-/// The C spelling, for the generated function-pointer cast.
-pub fn CType::c(self : CType) -> String {
-  match self {
-    Void => "void"
-    UInt => "unsigned int"
-    Int => "int"
-    Float => "float"
-    Double => "double"
-    Int64 => "int64_t"
-    UInt64 => "uint64_t"
-    Byte => "unsigned char"
-    SByte => "signed char"
-    Char => "char"
-    Short => "short"
-    UShort => "unsigned short"
-    IntPtr => "intptr_t"
-    SizePtr => "ssize_t"
-    OpaquePtr => "void *"
-    // A `const` qualifier reads differently depending on what it qualifies: when
-    // the pointee is a scalar leaf, west-const (`const char *`) is idiomatic;
-    // when the pointee is itself a pointer, the `const` must follow that
-    // pointer's stars (`const char *const *`) rather than pile up in front.
-    // Splitting on the pointee's shape keeps single-level casts byte-identical
-    // and renders nested const pointers correctly.
-    Pointer(inner, is_const~) =>
-      match inner {
-        Pointer(_, ..) => inner.c() + (if is_const { " const *" } else { " *" })
-        _ => (if is_const { "const " } else { "" }) + inner.c() + " *"
-      }
-  }
 }
 
 ///|
@@ -106,30 +74,69 @@ pub fn MType::moonbit(self : MType) -> String {
 }
 
 ///|
-/// The C type a value arrives as on the shim side (the MoonBit ABI spelling).
-pub fn MType::c_abi(self : MType) -> String {
-  match self {
-    UInt => "uint32_t"
-    Int => "int32_t"
-    Float => "float"
-    Double => "double"
-    Int64 => "int64_t"
-    UInt64 => "uint64_t"
-    Int16 => "int16_t"
-    UInt16 => "uint16_t"
-    Bool => "int32_t"
-    Bytes => "moonbit_bytes_t"
-    Handle(_) => "void *"
-    Array(e) => e.c_abi() + " *"
-  }
-}
-
-///|
-/// Pointer-like types must be `#borrow`'d into the extern.
+/// Pointer-like types must be borrowed into a raw pointer before the FuncRef
+/// call (a `FixedArray`/`Bytes` is a MoonBit object, not a bare `T *`).
 pub fn MType::is_pointer(self : MType) -> Bool {
   match self {
     Bytes | Array(_) => true
     _ => false
+  }
+}
+
+///|
+/// The type this value takes in a `FuncRef` signature — the spelling that lowers
+/// to the exact C ABI of the resolved GL function pointer. Scalars and opaque
+/// handles keep their MoonBit type (it already lowers 1:1); array/bytes params
+/// instead cross as a raw `@c.Pointer[elem]`, the borrowed data pointer that
+/// matches `T *`.
+pub fn MType::funcref_type(self : MType) -> String {
+  match self {
+    Bytes => "@c.Pointer[Byte]"
+    Array(e) => "@c.Pointer[\{e.moonbit()}]"
+    _ => self.moonbit()
+  }
+}
+
+///|
+/// How a scalar return is recovered from the `int32_t`-wide value MoonBit reads
+/// out of a `FuncRef` call. MoonBit lowers every sub-word return (`Byte`,
+/// `Int16`, `Bool`, …) to `int32_t` and reads the whole return register with no
+/// narrowing, so a GL function that returns `unsigned char`/`short` leaves the
+/// high bits unspecified (the psABI only fixes the low N). We always mask/sign-
+/// extend back to the real width — equivalent to the `(T)` cast the old C shim
+/// performed, but done MoonBit-side.
+pub enum Narrow {
+  None // already full-width (Int/UInt/Float/.../handle): pass through
+  MaskU8 // unsigned char  -> & 0xFF
+  SignU8 // signed char    -> (x << 24) >> 24
+  MaskU16 // unsigned short -> & 0xFFFF
+  SignU16 // short          -> (x << 16) >> 16
+  BoolU8 // GLboolean      -> (x & 0xFF) != 0
+}
+
+///|
+/// The narrowing a scalar return needs, from its real C type (`cast`) and the
+/// MoonBit type it is exposed as (`mty` distinguishes `GLboolean` from `GLubyte`,
+/// which share `unsigned char`).
+pub fn narrow_of(cast : CType, mty : MType) -> Narrow {
+  match (cast, mty) {
+    (Byte, Bool) => BoolU8
+    (Byte, _) => MaskU8
+    (SByte, _) | (Char, _) => SignU8
+    (UShort, _) => MaskU16
+    (Short, _) => SignU16
+    _ => None
+  }
+}
+
+///|
+/// The FuncRef return type for a scalar return: sub-word returns come back as
+/// `Int` (MoonBit cannot express a narrower return) and are narrowed afterwards;
+/// everything else returns its natural MoonBit type.
+pub fn funcref_ret_type(cast : CType, mty : MType) -> String {
+  match narrow_of(cast, mty) {
+    None => mty.moonbit()
+    _ => "Int"
   }
 }
 

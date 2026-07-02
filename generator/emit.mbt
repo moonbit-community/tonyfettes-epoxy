@@ -7,19 +7,16 @@
 ///     is a concrete `@gen.CType`/`@gen.MType`, so rendering is total.
 
 ///|
-/// One parameter, fully resolved: its MoonBit representation (`mty`, which
-/// yields both the source type and the ABI type) and the faithful C type to
-/// cast to in the call (`cast`).
+/// One parameter, fully resolved: its MoonBit representation (`mty`), which
+/// yields both the public source type and the `FuncRef` ABI spelling.
 priv struct Binding {
   name : String
   mty : @gen.MType
-  cast : @gen.CType
 }
 
 ///|
 /// Resolve a parameter into its binding, or None if its type is unsupported.
 fn Binding::new(name : String, ty : @cdecl.Declarator) -> Binding? {
-  guard resolve_ctype(ty) is Some(cast) else { return None }
   let mty = match ty {
     Base(typedef) => @gen.lookup(typedef).map(fn(info) { info.m_type })
     Ptr(inner, ..) =>
@@ -29,7 +26,7 @@ fn Binding::new(name : String, ty : @cdecl.Declarator) -> Binding? {
       }
   }
   guard mty is Some(mty) else { return None }
-  Some({ name, mty, cast })
+  Some({ name, mty })
 }
 
 ///|
@@ -42,8 +39,8 @@ priv enum Ret {
 
 ///|
 /// A command's resolved cross-FFI signature: its parameter bindings and return
-/// shape. This is exactly the information `render` maps onto both the MoonBit
-/// wrapper and the C shim.
+/// shape. This is exactly the information `render` maps onto the MoonBit
+/// `FuncRef` wrapper.
 priv struct Signature {
   params : Array[Binding]
   ret : Ret
@@ -81,8 +78,9 @@ fn Command::signature(self : Command) -> Signature? {
 // --- type resolution: declarator -> concrete types via the @gen table ----
 
 ///|
-/// Resolve a parsed declarator into its concrete C type (for the cast), or None
-/// if a leaf typedef isn't in the table.
+/// Resolve a parsed declarator into its concrete C type (the ABI tag used to
+/// narrow returns and classify pointees), or None if a leaf typedef isn't in
+/// the table.
 fn resolve_ctype(ty : @cdecl.Declarator) -> @gen.CType? {
   match ty {
     Base("void" | "GLvoid") => Some(Void)
@@ -212,48 +210,83 @@ fn moonbit_safe_ident(name : String) -> String {
 // --- rendering: pure string building from a resolved Signature -----------
 
 ///|
-/// The two generated artifacts for one command.
+/// The generated artifact for one command: its MoonBit dispatch wrapper. There
+/// is no longer a per-command C shim — the resolved entry point is called
+/// directly through a `FuncRef` whose type lowers to the exact GL ABI.
 priv struct Rendered {
   moonbit : String
-  c : String
 }
 
 ///|
-/// Generate the MoonBit binding + C call shim for a command. `aliases` are the
+/// Generate the MoonBit dispatch wrapper for a command. `aliases` are the
 /// command's fallback entry-point names (its alias group, minus itself); when
 /// non-empty the dispatch slot is built to try them in turn after the primary.
+///
+/// The body resolves the slot once, reinterprets the address as a `FuncRef`
+/// typed to the GL function's exact ABI, marshals pointer/array params through
+/// `@c.borrow_*` (a `FixedArray`/`Bytes` is a MoonBit object, so only its
+/// borrowed data pointer is `T *`), calls it, and narrows any sub-word return.
 fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   let mbt = StringBuilder::new()
-  let cc = StringBuilder::new()
   let fn_name = snake(c.name)
-  let sym = "epoxy_" + c.name
   let slot = "d_" + c.name
-  let names = sig.params.map(fn(b) { b.name })
   let mbt_params = sig.params.map(fn(b) { b.name + " : " + b.mty.moonbit() })
-  let c_shim_params = sig.params.map(fn(b) { b.mty.c_abi() + " " + b.name })
-  let gl_sig = sig.params.map(fn(b) { b.cast.c() })
-  let gl_cast_args = sig.params.map(fn(b) { "(" + b.cast.c() + ")" + b.name })
-  let sig_str = if gl_sig.is_empty() { "void" } else { gl_sig.join(", ") }
-  let borrowed = []
-  for b in sig.params {
-    if b.mty.is_pointer() {
-      borrowed.push(b.name)
-    }
-  }
-  let borrow_line = if borrowed.is_empty() {
-    ""
+
+  // FuncRef signature: each param and the return lowered to its exact-ABI
+  // spelling. Empty param lists render as `()`.
+  let fr_params = sig.params.map(fn(b) { b.mty.funcref_type() })
+  let fr_param_list = if fr_params.is_empty() {
+    "()"
   } else {
-    "#borrow(\{borrowed.join(", ")})\n"
+    "(" + fr_params.join(", ") + ")"
   }
-
-  // result types for the MoonBit signature / extern
-  let (ret_mbt, ext_ret) = match sig.ret {
+  let (ret_mbt, fr_ret) = match sig.ret {
     Ret::Void => ("Unit", "Unit")
-    Str => ("String", "Bytes")
-    Scalar(mty, _) => (mty.moonbit(), mty.moonbit())
+    Str => ("String", "@c.Pointer[Byte]")
+    Scalar(mty, cast) => (mty.moonbit(), @gen.funcref_ret_type(cast, mty))
   }
 
-  // --- MoonBit side -----------------------------------------------------
+  // Call arguments: a pointer param passes its borrowed pointer var (`<name>_p`),
+  // every other param passes its value directly.
+  let call_args = sig.params.map(fn(b) {
+    if b.mty.is_pointer() {
+      b.name + "_p"
+    } else {
+      b.name
+    }
+  })
+  let raw_call = "fp(\{call_args.join(", ")})"
+
+  // Recover the public return value from the raw FuncRef result.
+  let result_expr = match sig.ret {
+    Ret::Void => raw_call
+    Str => "@utf8.decode_lossy(epoxy_cstr(\{raw_call})[:])"
+    Scalar(mty, cast) =>
+      match @gen.narrow_of(cast, mty) {
+        None => raw_call
+        MaskU8 => "(\{raw_call}) & 0xFF"
+        SignU8 => "((\{raw_call}) << 24) >> 24"
+        MaskU16 => "(\{raw_call}) & 0xFFFF"
+        SignU16 => "((\{raw_call}) << 16) >> 16"
+        BoolU8 => "((\{raw_call}) & 0xFF) != 0"
+      }
+  }
+
+  // Nest a borrow closure per pointer param, innermost being the call result, so
+  // every backing buffer stays live across the call.
+  let pointer_params = sig.params.filter(fn(b) { b.mty.is_pointer() })
+  let mut body = result_expr
+  for i = pointer_params.length() - 1; i >= 0; i = i - 1 {
+    let b = pointer_params[i]
+    let borrow = if b.mty is Bytes {
+      "@c.borrow_bytes"
+    } else {
+      "@c.borrow_array"
+    }
+    body = "\{borrow}(\{b.name}, fn(\{b.name}_p) { \{body} })"
+  }
+
+  // --- emit -------------------------------------------------------------
   let slot_decl = if aliases.is_empty() {
     "let \{slot} : Dispatch = Dispatch::new(\"\{c.name}\")\n\n"
   } else {
@@ -263,58 +296,13 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   mbt.write_string("///|\n")
   mbt.write_string(slot_decl)
   mbt.write_string("///|\n")
-  let ffi_params = ["fp : CPtr", ..mbt_params]
-  mbt.write_string(
-    "\{borrow_line}extern \"c\" fn \{sym}(\{ffi_params.join(", ")}) -> \{ext_ret} = \"\{sym}\"\n\n",
-  )
-  mbt.write_string("///|\n")
   mbt.write_string(
     "pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} {\n",
   )
-  let args = [slot + ".get()", ..names]
-  let call = "\{sym}(\{args.join(", ")})"
-  match sig.ret {
-    Str => mbt.write_string("  @utf8.decode_lossy(\{call}[:])\n")
-    _ => mbt.write_string("  \{call}\n")
-  }
+  mbt.write_string(
+    "  let fp : FuncRef[\{fr_param_list} -> \{fr_ret}] = \{slot}.get().unsafe_into()\n",
+  )
+  mbt.write_string("  \{body}\n")
   mbt.write_string("}\n\n")
-
-  // --- C shim -----------------------------------------------------------
-  let c_params = ["void *fp", ..c_shim_params]
-  let cargs = gl_cast_args.join(", ")
-  match sig.ret {
-    Str => {
-      cc.write_string("moonbit_bytes_t \{sym}(\{c_params.join(", ")}) {\n")
-      cc.write_string(
-        "  const unsigned char *(*f)(\{sig_str}) = (const unsigned char *(*)(\{sig_str}))fp;\n",
-      )
-      cc.write_string("  const unsigned char *s = f(\{cargs});\n")
-      cc.write_string("  if (!s) return moonbit_make_bytes(0, 0);\n")
-      cc.write_string("  size_t len = strlen((const char *)s);\n")
-      cc.write_string(
-        "  moonbit_bytes_t out = moonbit_make_bytes((int32_t)len, 0);\n",
-      )
-      cc.write_string("  memcpy(out, s, len);\n")
-      cc.write_string("  return out;\n}\n\n")
-    }
-    Ret::Void => {
-      cc.write_string("void \{sym}(\{c_params.join(", ")}) {\n")
-      cc.write_string("  ((void(*)(\{sig_str}))fp)(\{cargs});\n}\n\n")
-    }
-    Scalar(mty, cast) => {
-      let abi = mty.c_abi()
-      let ret_gl = cast.c()
-      cc.write_string("\{abi} \{sym}(\{c_params.join(", ")}) {\n")
-      if mty is Bool {
-        cc.write_string(
-          "  return (\{abi})(((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs}) != 0);\n}\n\n",
-        )
-      } else {
-        cc.write_string(
-          "  return (\{abi})((\{ret_gl}(*)(\{sig_str}))fp)(\{cargs});\n}\n\n",
-        )
-      }
-    }
-  }
-  { moonbit: mbt.to_string(), c: cc.to_string() }
+  { moonbit: mbt.to_string() }
 }
