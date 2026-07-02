@@ -1,6 +1,6 @@
 name = "tonyfettes/epoxy"
 
-version = "0.1.0"
+version = "0.1.1"
 
 description = "A MoonBit reimplementation of libepoxy: OpenGL function pointer dispatch."
 
