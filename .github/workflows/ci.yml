@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: moonbit-community/setup-moonbit@v1
+      - uses: moonbit-community/setup-moonbit@main
       - run: moon check --diagnostic-limit 10
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: moonbit-community/setup-moonbit@v1
+      - uses: moonbit-community/setup-moonbit@main
       - run: moon test --diagnostic-limit 10
