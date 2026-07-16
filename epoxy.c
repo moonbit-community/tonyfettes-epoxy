@@ -30,10 +30,10 @@
 #elif defined(_WIN32)
   #define GL_LIB_PATH "opengl32.dll"
 #else
-  // glvnd (modern Linux): libOpenGL.so.0 + libGLX.so.1
+  // glvnd (modern Linux): libOpenGL.so.0 + libGLX.so.0
   // classic:              libGL.so.1 (provides both GL and GLX symbols)
   #define GLVND_GL_LIB   "libOpenGL.so.0"
-  #define GLVND_GLX_LIB  "libGLX.so.1"
+  #define GLVND_GLX_LIB  "libGLX.so.0"
   #define CLASSIC_GL_LIB "libGL.so.1"
 #endif
 
@@ -47,13 +47,26 @@
   typedef GLfunction (WINAPI *wglGetProcAddress_t)(LPCSTR);
   static wglGetProcAddress_t wglGPA = NULL;
 
+  // Init-once for the critical section so two threads that race into their
+  // first GL call cannot double-initialize (InitializeCriticalSection is
+  // not itself re-entrant).  INIT_ONCE guarantees exactly-one execution
+  // without manual double-checked locking on the "inited" flag.
+  static INIT_ONCE       epoxy_init_once_flag = INIT_ONCE_STATIC_INIT;
+  static CRITICAL_SECTION epoxy_lock;
+
   // Double-checked locking with a dedicated "ready" flag that is only set
   // after *every* field is initialized — gl_module and wglGPA.  On x86/x64
   // (the only Windows architectures) stores are already total-store-ordered,
   // but InterlockedExchange adds an explicit full barrier for paranoia.
-  static CRITICAL_SECTION epoxy_lock;
-  static BOOL            epoxy_lock_inited = FALSE;
   static volatile LONG   epoxy_ready = 0;
+
+  // wglGetProcAddress signals "not found" with non‑NULL sentinel values
+  // (1, 2, 3, or -1); a raw pointer test treats every sentinel as a
+  // resolved function and Dispatch caches it, crashing on invocation.
+  static int is_wgl_sentinel(void *p) {
+    uintptr_t v = (uintptr_t)p;
+    return v == 1 || v == 2 || v == 3 || v == (uintptr_t)-1;
+  }
 
 #else
 
@@ -77,11 +90,13 @@
 
 #if defined(_WIN32)
 
+static BOOL CALLBACK init_cs_cb(PINIT_ONCE once, PVOID param, PVOID *ctx) {
+  InitializeCriticalSection(&epoxy_lock);
+  return TRUE;
+}
+
 static void epoxy_lock_acquire(void) {
-  if (!epoxy_lock_inited) {
-    InitializeCriticalSection(&epoxy_lock);
-    epoxy_lock_inited = TRUE;
-  }
+  InitOnceExecuteOnce(&epoxy_init_once_flag, init_cs_cb, NULL, NULL);
   EnterCriticalSection(&epoxy_lock);
 }
 
@@ -173,6 +188,9 @@ void *epoxy_get_proc_address(moonbit_bytes_t name) {
   result = GetProcAddress(gl_module, cname);
   if (!result && wglGPA) {
     result = (void *)wglGPA(cname);
+    if (is_wgl_sentinel(result)) {
+      result = NULL;
+    }
   }
 
 #else  // Linux
