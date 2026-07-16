@@ -47,10 +47,20 @@
   typedef GLfunction (WINAPI *wglGetProcAddress_t)(LPCSTR);
   static wglGetProcAddress_t wglGPA = NULL;
 
+  // Double-checked locking with a dedicated "ready" flag that is only set
+  // after *every* field is initialized — gl_module and wglGPA.  On x86/x64
+  // (the only Windows architectures) stores are already total-store-ordered,
+  // but InterlockedExchange adds an explicit full barrier for paranoia.
   static CRITICAL_SECTION epoxy_lock;
   static BOOL            epoxy_lock_inited = FALSE;
+  static volatile LONG   epoxy_ready = 0;
 
 #else
+
+  // pthread_once guarantees the init routine runs exactly once and that its
+  // side effects are visible to every thread after pthread_once returns — no
+  // manual double-checked locking, no memory-ordering footguns.
+  static pthread_once_t  epoxy_init_once = PTHREAD_ONCE_INIT;
 
   static void *gl_handle = NULL;
 
@@ -61,11 +71,9 @@
     static glXGetProcAddress_t glXGPA = NULL;
   #endif
 
-  static pthread_mutex_t epoxy_mutex = PTHREAD_MUTEX_INITIALIZER;
-
 #endif
 
-// ── Locking helpers ───────────────────────────────────────────────────────
+// ── One-time library loading ──────────────────────────────────────────────
 
 #if defined(_WIN32)
 
@@ -81,44 +89,11 @@ static void epoxy_lock_release(void) {
   LeaveCriticalSection(&epoxy_lock);
 }
 
-#else
-
-static void epoxy_lock_acquire(void) {
-  pthread_mutex_lock(&epoxy_mutex);
-}
-
-static void epoxy_lock_release(void) {
-  pthread_mutex_unlock(&epoxy_mutex);
-}
-
-#endif
-
-// ── One-time library loading ──────────────────────────────────────────────
-
-#if defined(__APPLE__)
-
 static void open_and_init(void) {
-  if (gl_handle) return;
+  if (epoxy_ready) return;
 
   epoxy_lock_acquire();
-  if (gl_handle) { epoxy_lock_release(); return; }
-
-  gl_handle = dlopen(GL_LIB_PATH, RTLD_LAZY | RTLD_GLOBAL);
-  if (!gl_handle) {
-    fprintf(stderr, "epoxy: could not open %s\n", GL_LIB_PATH);
-    abort();
-  }
-
-  epoxy_lock_release();
-}
-
-#elif defined(_WIN32)
-
-static void open_and_init(void) {
-  if (gl_module) return;
-
-  epoxy_lock_acquire();
-  if (gl_module) { epoxy_lock_release(); return; }
+  if (epoxy_ready) { epoxy_lock_release(); return; }
 
   gl_module = LoadLibraryA(GL_LIB_PATH);
   if (!gl_module) {
@@ -129,18 +104,23 @@ static void open_and_init(void) {
   // Pre-resolve wglGetProcAddress for the extension-fallback path.
   wglGPA = (wglGetProcAddress_t)GetProcAddress(gl_module, "wglGetProcAddress");
 
+  // Publish: all fields above are visible to any thread that sees this store.
+  InterlockedExchange(&epoxy_ready, 1);
+
   epoxy_lock_release();
 }
 
-#else  // Linux
+#else  // macOS + Linux
 
-static void open_and_init(void) {
-  if (gl_handle) return;
-
-  epoxy_lock_acquire();
-  if (gl_handle) { epoxy_lock_release(); return; }
-
-  // Prefer glvnd libOpenGL, fall back to classic libGL.
+static void do_init(void) {
+#if defined(__APPLE__)
+  gl_handle = dlopen(GL_LIB_PATH, RTLD_LAZY | RTLD_GLOBAL);
+  if (!gl_handle) {
+    fprintf(stderr, "epoxy: could not open %s\n", GL_LIB_PATH);
+    abort();
+  }
+#else
+  // Linux: prefer glvnd libOpenGL, fall back to classic libGL.
   gl_handle = dlopen(GLVND_GL_LIB, RTLD_LAZY | RTLD_LOCAL);
   if (!gl_handle) {
     gl_handle = dlopen(CLASSIC_GL_LIB, RTLD_LAZY | RTLD_LOCAL);
@@ -165,8 +145,11 @@ static void open_and_init(void) {
   if (!glXGPA) {
     glXGPA = (glXGetProcAddress_t)dlsym(glx_handle, "glXGetProcAddress");
   }
+#endif
+}
 
-  epoxy_lock_release();
+static void open_and_init(void) {
+  pthread_once(&epoxy_init_once, do_init);
 }
 
 #endif
