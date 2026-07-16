@@ -21,4 +21,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: moonbit-community/setup-moonbit@main
       - run: moon update
-      - run: moon -C generator test --diagnostic-limit 10
+      - run: >
+          moon test
+          --package tonyfettes/epoxy/internal/glinfo
+          --package tonyfettes/epoxy-generator/gen
+          --package tonyfettes/epoxy-generator/cdecl
+          --package tonyfettes/epoxy-generator/aliasgroup
+          --diagnostic-limit 10
