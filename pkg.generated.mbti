@@ -18244,11 +18244,7 @@ pub fn gl_vertex_attrib_pointer(UInt, Int, Bool, Int, VertexAttribPointerData) -
 
 pub fn gl_vertex_attrib_pointer_arb(UInt, Int, Bool, Int, VertexAttribPointerData) -> Unit
 
-pub fn gl_vertex_attrib_pointer_arb_raw(UInt, Int, UInt, Bool, Int, Bytes) -> Unit
-
 pub fn gl_vertex_attrib_pointer_nv(UInt, Int, UInt, Int, Bytes) -> Unit
-
-pub fn gl_vertex_attrib_pointer_raw(UInt, Int, UInt, Bool, Int, Bytes) -> Unit
 
 pub fn gl_vertex_attribs1dv_nv(UInt, Int, FixedArray[Double]) -> Unit
 

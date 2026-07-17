@@ -85,17 +85,18 @@ generator, and the examples.
 > the psABI. The generated wrapper always masks/sign-extends the low byte/halfword
 > — the same fixup the old C shim's `(T)` cast did, now done MoonBit-side.
 
-Like libepoxy, the generated raw wrappers preserve the GL function's argument
-shape and have no error channel. A small hand-written layer can expose a safer
+Like libepoxy, generated public wrappers preserve the GL function's argument
+shape and have no error channel. A small hand-written layer exposes a safer
 public shape where two raw arguments form one logical value. For example,
 `gl_vertex_attrib_pointer` accepts `VertexAttribPointerData`, which couples the
-GL type token to its backing array; `gl_vertex_attrib_pointer_raw` retains the
-generated `type_ : UInt` + `pointer : Bytes` escape hatch. If an entry point
-can't be resolved (you called something the current context doesn't provide)
-the dispatch `abort()`s with `epoxy: glXxx() not found`, exactly as upstream
-does. That's a programming error: gate version/extension-specific calls on
-`gl_version` / `has_gl_extension` first, rather than wrapping every call. So a
-render loop reads as plain GL, with no `raise`/`try` plumbing.
+GL type token to its backing array. Its generated `type_ + void*` helper stays
+package-private and receives only a pointer already borrowed by the hand-written
+wrapper. If an entry point can't be resolved (you called something the current
+context doesn't provide) the dispatch `abort()`s with `epoxy: glXxx() not
+found`, exactly as upstream does. That's a programming error: gate
+version/extension-specific calls on `gl_version` / `has_gl_extension` first,
+rather than wrapping every call. So a render loop reads as plain GL, with no
+`raise`/`try` plumbing.
 
 Context creation (CGL in the example) is deliberately *not* part of dispatch —
 it stands in for the window-system layer (CGL/EGL/GLX/WGL) an app/toolkit
@@ -119,8 +120,8 @@ in `generator/gen/types.mbt`:
 - **16-bit arrays**: `const GLshort*`/`GLhalf*` → `FixedArray[Int16]`/`[UInt16]`.
 - **Type-coupled client data**: the public `gl_vertex_attrib_pointer` wrapper
   takes `VertexAttribPointerData`, whose constructor selects both the GL type
-  token and the matching `FixedArray` element representation. The generated
-  `_raw` entry point remains available for low-level use.
+  token and the matching `FixedArray` element representation. Its generated
+  raw-pointer helper is an internal implementation detail.
 - **Opaque handles**: `GLsync`/`GLeglImageOES`/`GLeglClientBufferEXT`/
   `GLVULKANPROCNV` → distinct `#external` types (`pub type GLsync` &c.). All
   share the `void *` ABI, so they cross a `FuncRef` as-is; the names keep the

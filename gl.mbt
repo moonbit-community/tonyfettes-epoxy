@@ -26,122 +26,170 @@ pub(all) enum VertexAttribPointerData {
 ///|
 /// Invoke one `glVertexAttribPointer` entry point after deriving its raw GL
 /// type and pointer ABI from the data constructor. Core and ARB wrappers share
-/// this complete transition; only their dispatch slot differs.
+/// this complete transition; only their private generated helper differs.
 fn call_vertex_attrib_pointer(
-  dispatch : Dispatch,
+  call_raw : (UInt, Int, UInt, Bool, Int, @c.Pointer[Unit]) -> Unit,
   index : UInt,
   size : Int,
   normalized : Bool,
   stride : Int,
   pointer : VertexAttribPointerData,
 ) -> Unit {
-  let address = dispatch.get()
   match pointer {
-    BYTE(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Byte]) -> Unit] = address.unsafe_into()
+    BYTE(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_BYTE, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_BYTE,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    UNSIGNED_BYTE(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Byte]) -> Unit] = address.unsafe_into()
+    UNSIGNED_BYTE(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_UNSIGNED_BYTE, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_UNSIGNED_BYTE,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    SHORT(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Int16]) -> Unit] = address.unsafe_into()
+    SHORT(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_SHORT, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_SHORT,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    UNSIGNED_SHORT(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt16]) -> Unit] = address.unsafe_into()
+    UNSIGNED_SHORT(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_UNSIGNED_SHORT, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_UNSIGNED_SHORT,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    INT(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Int]) -> Unit] = address.unsafe_into()
+    INT(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_INT, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_INT,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    UNSIGNED_INT(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt]) -> Unit] = address.unsafe_into()
+    UNSIGNED_INT(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_UNSIGNED_INT, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_UNSIGNED_INT,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    FLOAT(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Float]) -> Unit] = address.unsafe_into()
+    FLOAT(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_FLOAT, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_FLOAT,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    DOUBLE(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Double]) -> Unit] = address.unsafe_into()
+    DOUBLE(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_DOUBLE, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_DOUBLE,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    HALF_FLOAT(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt16]) -> Unit] = address.unsafe_into()
+    HALF_FLOAT(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_HALF_FLOAT, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_HALF_FLOAT,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    FIXED(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Int]) -> Unit] = address.unsafe_into()
+    FIXED(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_FIXED, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_FIXED,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
-    UNSIGNED_INT_2_10_10_10_REV(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt]) -> Unit] = address.unsafe_into()
+    UNSIGNED_INT_2_10_10_10_REV(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(
+        call_raw(
           index,
           size,
           GL_UNSIGNED_INT_2_10_10_10_REV,
           normalized,
           stride,
-          data_pointer,
+          data_pointer.cast_to_unit(),
         )
       })
-    }
-    UNSIGNED_INT_2_10_10_10_REV_EXT(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt]) -> Unit] = address.unsafe_into()
+    UNSIGNED_INT_2_10_10_10_REV_EXT(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(
+        call_raw(
           index,
           size,
           GL_UNSIGNED_INT_2_10_10_10_REV_EXT,
           normalized,
           stride,
-          data_pointer,
+          data_pointer.cast_to_unit(),
         )
       })
-    }
-    UNSIGNED_INT_10F_11F_11F_REV(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt]) -> Unit] = address.unsafe_into()
+    UNSIGNED_INT_10F_11F_11F_REV(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(
+        call_raw(
           index,
           size,
           GL_UNSIGNED_INT_10F_11F_11F_REV,
           normalized,
           stride,
-          data_pointer,
+          data_pointer.cast_to_unit(),
         )
       })
-    }
-    INT_2_10_10_10_REV(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Int]) -> Unit] = address.unsafe_into()
+    INT_2_10_10_10_REV(data) =>
       @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_INT_2_10_10_10_REV, normalized, stride, data_pointer)
+        call_raw(
+          index,
+          size,
+          GL_INT_2_10_10_10_REV,
+          normalized,
+          stride,
+          data_pointer.cast_to_unit(),
+        )
       })
-    }
   }
 }
 
@@ -156,7 +204,7 @@ pub fn gl_vertex_attrib_pointer(
   pointer : VertexAttribPointerData,
 ) -> Unit {
   call_vertex_attrib_pointer(
-    d_glVertexAttribPointer, index, size, normalized, stride, pointer,
+    gl_vertex_attrib_pointer_raw, index, size, normalized, stride, pointer,
   )
 }
 
@@ -171,6 +219,6 @@ pub fn gl_vertex_attrib_pointer_arb(
   pointer : VertexAttribPointerData,
 ) -> Unit {
   call_vertex_attrib_pointer(
-    d_glVertexAttribPointerARB, index, size, normalized, stride, pointer,
+    gl_vertex_attrib_pointer_arb_raw, index, size, normalized, stride, pointer,
   )
 }
