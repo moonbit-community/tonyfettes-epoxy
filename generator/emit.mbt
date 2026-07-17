@@ -207,6 +207,19 @@ fn moonbit_safe_ident(name : String) -> String {
   }
 }
 
+///|
+/// Generated entry points normally keep the snake-cased GL name. A small
+/// hand-written public layer wraps APIs whose raw `type + void*` pair can be
+/// represented more safely in MoonBit; keep the faithful generated binding as
+/// an explicit `_raw` escape hatch for those commands.
+fn generated_fn_name(name : String) -> String {
+  let base = snake(name)
+  match name {
+    "glVertexAttribPointer" | "glVertexAttribPointerARB" => base + "_raw"
+    _ => base
+  }
+}
+
 // --- rendering: pure string building from a resolved Signature -----------
 
 ///|
@@ -228,7 +241,7 @@ priv struct Rendered {
 /// borrowed data pointer is `T *`), calls it, and narrows any sub-word return.
 fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   let mbt = StringBuilder::new()
-  let fn_name = snake(c.name)
+  let fn_name = generated_fn_name(c.name)
   let slot = "d_" + c.name
   let mbt_params = sig.params.map(fn(b) { b.name + " : " + b.mty.moonbit() })
 

@@ -15,17 +15,6 @@ const WIDTH : Int = 640
 const HEIGHT : Int = 480
 
 ///|
-/// Pack floats as raw IEEE-754 bytes in native (little-endian) order — the
-/// memory layout GL client-side vertex arrays read.
-fn float_bytes(values : Array[Float]) -> Bytes {
-  let buf = Buffer(size_hint=values.length() * 4)
-  for v in values {
-    buf.write_float_le(v)
-  }
-  buf.to_bytes()
-}
-
-///|
 /// Compile one shader, printing the driver's info log on failure.
 fn compile_shader(kind : UInt, source : Bytes) -> UInt? {
   let shader = @epoxy.gl_create_shader(kind)
@@ -49,7 +38,7 @@ fn compile_shader(kind : UInt, source : Bytes) -> UInt? {
 ///|
 /// The RGB triangle's base shape, rotated by `angle` around the origin.
 /// Aspect-corrected so it stays equilateral in a non-square window.
-fn triangle_positions(angle : Float) -> Bytes {
+fn triangle_positions(angle : Float) -> FixedArray[Float] {
   let base : Array[(Float, Float)] = [(-0.6, -0.5), (0.6, -0.5), (0.0, 0.7)]
   let aspect = Float::from_int(WIDTH) / Float::from_int(HEIGHT)
   let (s, c) = (@math.sinf(angle), @math.cosf(angle))
@@ -59,7 +48,7 @@ fn triangle_positions(angle : Float) -> Bytes {
     out.push((x * c - y * s) / aspect)
     out.push(x * s + y * c)
   }
-  float_bytes(out)
+  FixedArray::from_array(out)
 }
 
 ///|
@@ -103,20 +92,13 @@ fn main {
 
   // Fixed per-vertex colors; positions are regenerated each frame. Client-side
   // vertex arrays: glVertexAttribPointer keeps the raw pointer and glDrawArrays
-  // reads it, so each Bytes must stay live until the draw that consumes it.
-  let colors = float_bytes([
+  // reads it, so each FixedArray must stay live until the draw that consumes it.
+  let colors : FixedArray[Float] = [
     1.0, 0.0, 0.0, // red
      0.0, 1.0, 0.0, // green
      0.0, 0.0, 1.0, // blue
-  ])
-  @epoxy.gl_vertex_attrib_pointer(
-    color_loc,
-    3,
-    @epoxy.GL_FLOAT,
-    false,
-    0,
-    colors,
-  )
+  ]
+  @epoxy.gl_vertex_attrib_pointer(color_loc, 3, false, 0, @epoxy.FLOAT(colors))
   @epoxy.gl_viewport(0, 0, WIDTH, HEIGHT)
   @epoxy.gl_clear_color(0.1, 0.1, 0.1, 1.0)
 
@@ -127,10 +109,9 @@ fn main {
     @epoxy.gl_vertex_attrib_pointer(
       pos_loc,
       2,
-      @epoxy.GL_FLOAT,
       false,
       0,
-      positions,
+      @epoxy.FLOAT(positions),
     )
     @epoxy.gl_clear(@epoxy.GL_COLOR_BUFFER_BIT)
     @epoxy.gl_draw_arrays(@epoxy.GL_TRIANGLES, 0, 3)
