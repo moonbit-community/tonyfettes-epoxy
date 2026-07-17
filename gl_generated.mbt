@@ -4358,18 +4358,18 @@ pub fn gl_color_p4uiv(type_ : UInt, color : FixedArray[UInt]) -> Unit {
 let d_glColorPointer : Dispatch = Dispatch::new("glColorPointer")
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_color_pointer(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glColorPointer
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glColorPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -10071,11 +10071,13 @@ pub fn gl_edge_flag_format_nv(stride : Int) -> Unit {
 let d_glEdgeFlagPointer : Dispatch = Dispatch::new("glEdgeFlagPointer")
 
 ///|
-pub fn gl_edge_flag_pointer(stride : Int, pointer : Bytes) -> Unit {
-  let fp : FuncRef[(Int, @pointer.Pointer[Byte]) -> Unit] = d_glEdgeFlagPointer
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
+pub fn gl_edge_flag_pointer(stride : Int, offset : Int64) -> Unit {
+  let fp : FuncRef[(Int, @pointer.Pointer[Unit]) -> Unit] = d_glEdgeFlagPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) { fp(stride, pointer_p) })
+  fp(stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -11295,15 +11297,13 @@ let d_glFogCoordPointer : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
-pub fn gl_fog_coord_pointer(
-  type_ : UInt,
-  stride : Int,
-  pointer : Bytes,
-) -> Unit {
-  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glFogCoordPointer
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
+pub fn gl_fog_coord_pointer(type_ : UInt, stride : Int, offset : Int64) -> Unit {
+  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glFogCoordPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) { fp(type_, stride, pointer_p) })
+  fp(type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -11313,15 +11313,17 @@ let d_glFogCoordPointerEXT : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_fog_coord_pointer_ext(
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glFogCoordPointerEXT
+  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glFogCoordPointerEXT
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) { fp(type_, stride, pointer_p) })
+  fp(type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -22346,11 +22348,13 @@ pub fn gl_index_material_ext(face : UInt, mode : UInt) -> Unit {
 let d_glIndexPointer : Dispatch = Dispatch::new("glIndexPointer")
 
 ///|
-pub fn gl_index_pointer(type_ : UInt, stride : Int, pointer : Bytes) -> Unit {
-  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glIndexPointer
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
+pub fn gl_index_pointer(type_ : UInt, stride : Int, offset : Int64) -> Unit {
+  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glIndexPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) { fp(type_, stride, pointer_p) })
+  fp(type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -22541,15 +22545,17 @@ pub fn gl_instruments_buffer_sgix(size : Int, buffer : FixedArray[Int]) -> Unit 
 let d_glInterleavedArrays : Dispatch = Dispatch::new("glInterleavedArrays")
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_interleaved_arrays(
   format : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glInterleavedArrays
+  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glInterleavedArrays
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) { fp(format, stride, pointer_p) })
+  fp(format, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -24618,18 +24624,18 @@ let d_glMatrixIndexPointerOES : Dispatch = Dispatch::new(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_matrix_index_pointer_oes(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glMatrixIndexPointerOES
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glMatrixIndexPointerOES
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -29225,11 +29231,13 @@ pub fn gl_normal_p3uiv(type_ : UInt, coords : FixedArray[UInt]) -> Unit {
 let d_glNormalPointer : Dispatch = Dispatch::new("glNormalPointer")
 
 ///|
-pub fn gl_normal_pointer(type_ : UInt, stride : Int, pointer : Bytes) -> Unit {
-  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glNormalPointer
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
+pub fn gl_normal_pointer(type_ : UInt, stride : Int, offset : Int64) -> Unit {
+  let fp : FuncRef[(UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glNormalPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) { fp(type_, stride, pointer_p) })
+  fp(type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -37592,18 +37600,18 @@ let d_glSecondaryColorPointer : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_secondary_color_pointer(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glSecondaryColorPointer
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glSecondaryColorPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -37613,18 +37621,18 @@ let d_glSecondaryColorPointerEXT : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_secondary_color_pointer_ext(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glSecondaryColorPointerEXT
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glSecondaryColorPointerEXT
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -40103,18 +40111,18 @@ pub fn gl_tex_coord_p4uiv(type_ : UInt, coords : FixedArray[UInt]) -> Unit {
 let d_glTexCoordPointer : Dispatch = Dispatch::new("glTexCoordPointer")
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_tex_coord_pointer(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glTexCoordPointer
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glTexCoordPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -45501,16 +45509,18 @@ pub fn gl_variant_array_object_ati(
 let d_glVariantPointerEXT : Dispatch = Dispatch::new("glVariantPointerEXT")
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_variant_pointer_ext(
   id : UInt,
   type_ : UInt,
   stride : UInt,
-  addr : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, UInt, UInt, @pointer.Pointer[Byte]) -> Unit] = d_glVariantPointerEXT
+  let fp : FuncRef[(UInt, UInt, UInt, @pointer.Pointer[Unit]) -> Unit] = d_glVariantPointerEXT
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(addr, fn(addr_p) { fp(id, type_, stride, addr_p) })
+  fp(id, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -48920,19 +48930,19 @@ let d_glVertexAttribIPointer : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_vertex_attrib_i_pointer(
   index : UInt,
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glVertexAttribIPointer
+  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribIPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(index, size, type_, stride, pointer_p)
-  })
+  fp(index, size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -48942,19 +48952,19 @@ let d_glVertexAttribIPointerEXT : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_vertex_attrib_i_pointer_ext(
   index : UInt,
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glVertexAttribIPointerEXT
+  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribIPointerEXT
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(index, size, type_, stride, pointer_p)
-  })
+  fp(index, size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -49507,19 +49517,19 @@ let d_glVertexAttribLPointer : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_vertex_attrib_l_pointer(
   index : UInt,
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glVertexAttribLPointer
+  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribLPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(index, size, type_, stride, pointer_p)
-  })
+  fp(index, size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -49529,19 +49539,19 @@ let d_glVertexAttribLPointerEXT : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_vertex_attrib_l_pointer_ext(
   index : UInt,
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glVertexAttribLPointerEXT
+  let fp : FuncRef[(UInt, Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribLPointerEXT
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(index, size, type_, stride, pointer_p)
-  })
+  fp(index, size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -49695,6 +49705,66 @@ pub fn gl_vertex_attrib_parameteri_amd(
     .get()
     .unsafe_into()
   fp(index, pname, param)
+}
+
+///|
+let d_glVertexAttribPointer : Dispatch = Dispatch::with_aliases(
+  "glVertexAttribPointer",
+  ["glVertexAttribPointerARB"],
+)
+
+///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
+pub fn gl_vertex_attrib_pointer(
+  index : UInt,
+  size : Int,
+  type_ : UInt,
+  normalized : Bool,
+  stride : Int,
+  offset : Int64,
+) -> Unit {
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribPointer
+    .get()
+    .unsafe_into()
+  fp(
+    index,
+    size,
+    type_,
+    normalized,
+    stride,
+    @pointer.Pointer::unsafe_from_int64(offset),
+  )
+}
+
+///|
+let d_glVertexAttribPointerARB : Dispatch = Dispatch::with_aliases(
+  "glVertexAttribPointerARB",
+  ["glVertexAttribPointer"],
+)
+
+///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
+pub fn gl_vertex_attrib_pointer_arb(
+  index : UInt,
+  size : Int,
+  type_ : UInt,
+  normalized : Bool,
+  stride : Int,
+  offset : Int64,
+) -> Unit {
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribPointerARB
+    .get()
+    .unsafe_into()
+  fp(
+    index,
+    size,
+    type_,
+    normalized,
+    stride,
+    @pointer.Pointer::unsafe_from_int64(offset),
+  )
 }
 
 ///|
@@ -50088,18 +50158,18 @@ pub fn gl_vertex_p4uiv(type_ : UInt, value : FixedArray[UInt]) -> Unit {
 let d_glVertexPointer : Dispatch = Dispatch::new("glVertexPointer")
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_vertex_pointer(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glVertexPointer
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexPointer
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
@@ -50992,36 +51062,36 @@ pub fn gl_weight_paths_nv(
 let d_glWeightPointerARB : Dispatch = Dispatch::new("glWeightPointerARB")
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_weight_pointer_arb(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glWeightPointerARB
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glWeightPointerARB
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|
 let d_glWeightPointerOES : Dispatch = Dispatch::new("glWeightPointerOES")
 
 ///|
+/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.
+/// `offset` is a byte offset; client-side arrays are not accepted.
 pub fn gl_weight_pointer_oes(
   size : Int,
   type_ : UInt,
   stride : Int,
-  pointer : Bytes,
+  offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Byte]) -> Unit] = d_glWeightPointerOES
+  let fp : FuncRef[(Int, UInt, Int, @pointer.Pointer[Unit]) -> Unit] = d_glWeightPointerOES
     .get()
     .unsafe_into()
-  @pointer.borrow_bytes(pointer, fn(pointer_p) {
-    fp(size, type_, stride, pointer_p)
-  })
+  fp(size, type_, stride, @pointer.Pointer::unsafe_from_int64(offset))
 }
 
 ///|

@@ -12716,7 +12716,7 @@ pub fn gl_color_p4ui(UInt, UInt) -> Unit
 
 pub fn gl_color_p4uiv(UInt, FixedArray[UInt]) -> Unit
 
-pub fn gl_color_pointer(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_color_pointer(Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_color_pointer_ext(Int, UInt, Int, Int, Bytes) -> Unit
 
@@ -13332,7 +13332,7 @@ pub fn gl_edge_flag(Bool) -> Unit
 
 pub fn gl_edge_flag_format_nv(Int) -> Unit
 
-pub fn gl_edge_flag_pointer(Int, Bytes) -> Unit
+pub fn gl_edge_flag_pointer(Int, Int64) -> Unit
 
 pub fn gl_edge_flag_pointer_ext(Int, Int, Bytes) -> Unit
 
@@ -13534,9 +13534,9 @@ pub fn gl_flush_vertex_array_range_nv() -> Unit
 
 pub fn gl_fog_coord_format_nv(UInt, Int) -> Unit
 
-pub fn gl_fog_coord_pointer(UInt, Int, Bytes) -> Unit
+pub fn gl_fog_coord_pointer(UInt, Int, Int64) -> Unit
 
-pub fn gl_fog_coord_pointer_ext(UInt, Int, Bytes) -> Unit
+pub fn gl_fog_coord_pointer_ext(UInt, Int, Int64) -> Unit
 
 pub fn gl_fog_coordd(Double) -> Unit
 
@@ -14800,7 +14800,7 @@ pub fn gl_index_mask(UInt) -> Unit
 
 pub fn gl_index_material_ext(UInt, UInt) -> Unit
 
-pub fn gl_index_pointer(UInt, Int, Bytes) -> Unit
+pub fn gl_index_pointer(UInt, Int, Int64) -> Unit
 
 pub fn gl_index_pointer_ext(UInt, Int, Int, Bytes) -> Unit
 
@@ -14836,7 +14836,7 @@ pub fn gl_insert_event_marker_ext(Int, Bytes) -> Unit
 
 pub fn gl_instruments_buffer_sgix(Int, FixedArray[Int]) -> Unit
 
-pub fn gl_interleaved_arrays(UInt, Int, Bytes) -> Unit
+pub fn gl_interleaved_arrays(UInt, Int, Int64) -> Unit
 
 pub fn gl_interpolate_paths_nv(UInt, UInt, UInt, Float) -> Unit
 
@@ -15144,7 +15144,7 @@ pub fn gl_matrix_frustum_ext(UInt, Double, Double, Double, Double, Double, Doubl
 
 pub fn gl_matrix_index_pointer_arb(Int, UInt, Int, Bytes) -> Unit
 
-pub fn gl_matrix_index_pointer_oes(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_matrix_index_pointer_oes(Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_matrix_indexubv_arb(Int, Bytes) -> Unit
 
@@ -15708,7 +15708,7 @@ pub fn gl_normal_p3ui(UInt, UInt) -> Unit
 
 pub fn gl_normal_p3uiv(UInt, FixedArray[UInt]) -> Unit
 
-pub fn gl_normal_pointer(UInt, Int, Bytes) -> Unit
+pub fn gl_normal_pointer(UInt, Int, Int64) -> Unit
 
 pub fn gl_normal_pointer_ext(UInt, Int, Int, Bytes) -> Unit
 
@@ -16718,9 +16718,9 @@ pub fn gl_secondary_color_p3ui(UInt, UInt) -> Unit
 
 pub fn gl_secondary_color_p3uiv(UInt, FixedArray[UInt]) -> Unit
 
-pub fn gl_secondary_color_pointer(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_secondary_color_pointer(Int, UInt, Int, Int64) -> Unit
 
-pub fn gl_secondary_color_pointer_ext(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_secondary_color_pointer_ext(Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_select_buffer(Int, FixedArray[UInt]) -> Unit
 
@@ -17062,7 +17062,7 @@ pub fn gl_tex_coord_p4ui(UInt, UInt) -> Unit
 
 pub fn gl_tex_coord_p4uiv(UInt, FixedArray[UInt]) -> Unit
 
-pub fn gl_tex_coord_pointer(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_tex_coord_pointer(Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_tex_coord_pointer_ext(Int, UInt, Int, Int, Bytes) -> Unit
 
@@ -17652,7 +17652,7 @@ pub fn gl_validate_program_pipeline_ext(UInt) -> Unit
 
 pub fn gl_variant_array_object_ati(UInt, UInt, Int, UInt, UInt) -> Unit
 
-pub fn gl_variant_pointer_ext(UInt, UInt, UInt, Bytes) -> Unit
+pub fn gl_variant_pointer_ext(UInt, UInt, UInt, Int64) -> Unit
 
 pub fn gl_variantbv_ext(UInt, Bytes) -> Unit
 
@@ -18146,9 +18146,9 @@ pub fn gl_vertex_attrib_i_format(UInt, Int, UInt, UInt) -> Unit
 
 pub fn gl_vertex_attrib_i_format_nv(UInt, Int, UInt, Int) -> Unit
 
-pub fn gl_vertex_attrib_i_pointer(UInt, Int, UInt, Int, Bytes) -> Unit
+pub fn gl_vertex_attrib_i_pointer(UInt, Int, UInt, Int, Int64) -> Unit
 
-pub fn gl_vertex_attrib_i_pointer_ext(UInt, Int, UInt, Int, Bytes) -> Unit
+pub fn gl_vertex_attrib_i_pointer_ext(UInt, Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_vertex_attrib_l1d(UInt, Double) -> Unit
 
@@ -18222,9 +18222,9 @@ pub fn gl_vertex_attrib_l_format(UInt, Int, UInt, UInt) -> Unit
 
 pub fn gl_vertex_attrib_l_format_nv(UInt, Int, UInt, Int) -> Unit
 
-pub fn gl_vertex_attrib_l_pointer(UInt, Int, UInt, Int, Bytes) -> Unit
+pub fn gl_vertex_attrib_l_pointer(UInt, Int, UInt, Int, Int64) -> Unit
 
-pub fn gl_vertex_attrib_l_pointer_ext(UInt, Int, UInt, Int, Bytes) -> Unit
+pub fn gl_vertex_attrib_l_pointer_ext(UInt, Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_vertex_attrib_p1ui(UInt, UInt, Bool, UInt) -> Unit
 
@@ -18306,7 +18306,7 @@ pub fn gl_vertex_p4ui(UInt, UInt) -> Unit
 
 pub fn gl_vertex_p4uiv(UInt, FixedArray[UInt]) -> Unit
 
-pub fn gl_vertex_pointer(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_vertex_pointer(Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_vertex_pointer_ext(Int, UInt, Int, Int, Bytes) -> Unit
 
@@ -18428,9 +18428,9 @@ pub fn gl_wait_vk_semaphore_nv(UInt64) -> Unit
 
 pub fn gl_weight_paths_nv(UInt, Int, FixedArray[UInt], FixedArray[Float]) -> Unit
 
-pub fn gl_weight_pointer_arb(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_weight_pointer_arb(Int, UInt, Int, Int64) -> Unit
 
-pub fn gl_weight_pointer_oes(Int, UInt, Int, Bytes) -> Unit
+pub fn gl_weight_pointer_oes(Int, UInt, Int, Int64) -> Unit
 
 pub fn gl_weightbv_arb(Int, Bytes) -> Unit
 

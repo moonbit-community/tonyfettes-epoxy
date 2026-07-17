@@ -2,7 +2,7 @@ name = "tonyfettes/epoxy-generator"
 
 version = "0.1.0"
 
-description = "Binding generator for epoxy: parses the Khronos GL registry and emits MoonBit dispatch wrappers + C call shims."
+description = "Binding generator for epoxy: parses the Khronos GL registry and emits MoonBit FuncRef dispatch wrappers."
 
 preferred_target = "native"
 

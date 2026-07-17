@@ -9,10 +9,10 @@ The library package is the module root: import it as `tonyfettes/epoxy`. A
 separate module — `tonyfettes/epoxy-generator` under `generator/` — parses the
 Khronos registry (`registry/gl.xml`, 3299 commands) with the
 [xml-mbt](https://github.com/moonbit-community/xml-mbt) pull-parser and emits
-MoonBit dispatch wrappers for **3211** commands, plus all
+MoonBit dispatch wrappers for **3213** commands, plus all
 **6061** GL enum constants. The rest (callbacks, a few exotic pointer shapes,
-the platform-variant `GLhandleARB`) are skipped, never miscompiled; six commands
-with safer public shapes are implemented entirely by hand.
+the platform-variant `GLhandleARB`) are skipped, never miscompiled; four buffer
+transfer commands with safer public shapes are implemented entirely by hand.
 
 Each wrapper calls its resolved entry point **directly through a `FuncRef`**
 typed to the GL function's exact ABI — there is no per-command C shim. The
@@ -60,8 +60,8 @@ generator, and the examples.
 |------|------|
 | `resolver.mbt`, `version.mbt`, `handles.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, the version/extension introspection API, and the opaque-handle types. |
 | `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver and C-string conversion. |
-| `gl.mbt` | Hand-written safe GL wrappers for packed buffer uploads and buffer-backed vertex attributes. |
-| `gl_generated.mbt` | **Generated** MoonBit `FuncRef` dispatch wrappers (3211) — no C shim. |
+| `gl.mbt` | Hand-written safe GL wrappers for packed buffer uploads. |
+| `gl_generated.mbt` | **Generated** MoonBit `FuncRef` dispatch wrappers (3213) — no C shim. |
 | `gl_generated_enums.mbt` | **Generated** GL enum constants (`pub const GL_* : UInt/UInt64/Int`, 6061). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
 | `internal/pointer/` | Minimal native `Pointer[T]` package: pointer methods, array/bytes borrow scopes, and three ABI helpers. Importable only inside this module. |
@@ -79,7 +79,8 @@ generator, and the examples.
    cached in the slot and
    reinterpreted into a `FuncRef` whose type lowers to the GL function's exact
    ABI. The wrapper borrows any call-scoped `FixedArray`/`Bytes` param into a raw
-   pointer, calls the `FuncRef` directly, and
+   pointer, converts allow-listed vertex-array offsets to pointer-shaped values,
+   calls the `FuncRef` directly, and
    narrows any sub-word return (e.g. `GLboolean`'s `unsigned char`) back to its
    width.
 4. Subsequent calls skip resolution — just cache read + direct `FuncRef` call.
@@ -92,13 +93,15 @@ generator, and the examples.
 
 Like libepoxy, generated public wrappers preserve the GL function's argument
 shape and have no error channel. A small hand-written layer exposes safer
-shapes for commands where raw `void*` is ambiguous. `gl_buffer_data` and
+shapes for buffer-transfer commands where raw `void*` is ambiguous.
+`gl_buffer_data` and
 `gl_buffer_sub_data` accept packed numeric `FixedArray[T]` values and derive the
 byte count, while `gl_buffer_allocate` represents the `NULL` allocation form.
-`gl_vertex_attrib_pointer` accepts only a byte offset into the currently bound
-`GL_ARRAY_BUFFER`, so OpenGL never retains a pointer into MoonBit-managed
-memory. These six GL commands are omitted from generated output and implemented
-entirely in `gl.mbt`. If an entry point can't be resolved (you called something
+The generator gives vertex-array setters covered by `GL_ARRAY_BUFFER` an
+`Int64` byte-offset parameter instead of a MoonBit array, so OpenGL never
+retains a pointer into MoonBit-managed memory through those APIs. The four
+buffer-transfer commands are omitted from generated output and implemented in
+`gl.mbt`. If an entry point can't be resolved (you called something
 the current context doesn't provide) the dispatch `abort()`s with `epoxy:
 glXxx() not found`, exactly as upstream does. That's a programming error: gate
 version/extension-specific calls on `gl_version` / `has_gl_extension` first,
@@ -131,10 +134,11 @@ in `generator/gen/types.mbt`:
   the wrappers derive the exact byte count and borrow the array only for the
   copying call. `gl_buffer_allocate` allocates uninitialized storage without a
   host array.
-- **Buffer-backed vertex attributes**: `gl_vertex_attrib_pointer` accepts the
-  GL element type plus an `Int64` byte offset into the bound
+- **Buffer-backed vertex arrays**: allow-listed setters such as
+  `gl_vertex_attrib_pointer`, its integer/double variants, and the legacy core
+  vertex-array setters accept an `Int64` byte offset into the bound
   `GL_ARRAY_BUFFER`. Client-side arrays and public pointers are deliberately not
-  part of this API.
+  part of these APIs.
 - **Opaque handles**: `GLsync`/`GLeglImageOES`/`GLeglClientBufferEXT`/
   `GLVULKANPROCNV` → distinct `#external` types (`pub type GLsync` &c.). All
   share the `void *` ABI, so they cross a `FuncRef` as-is; the names keep the
@@ -170,8 +174,8 @@ moon -C generator run . -- \
 
 | Category | Count | Status |
 |----------|------:|--------|
-| scalar / void / string + scalar/string/16-bit arrays + opaque handles | 3211 | ✅ generated |
-| safe buffer upload/subdata + buffer-backed vertex attributes | 6 | ✅ hand-written |
+| dispatch wrappers, including allow-listed VBO-offset vertex-array setters | 3213 | ✅ generated |
+| safe buffer upload/subdata | 4 | ✅ hand-written |
 | `void**` out-pointers (`glGetPointerv`, `glMultiDrawElements`, …) | 36 | deferred |
 | `GLhandleARB` (platform-variant ABI; modern `GLuint` form is bound) | 23 | deferred |
 | non-string pointer return (`void* glMapBuffer`) | 11 | deferred |
