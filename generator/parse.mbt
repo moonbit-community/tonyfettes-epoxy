@@ -109,7 +109,7 @@ priv struct EnumDef {
 fn parse_enums(content : String) -> Array[EnumDef] raise {
   let reader = @xml.Reader::from_string(content)
   let out : Array[EnumDef] = []
-  let seen : Map[String, Bool] = {}
+  let seen : Map[String, Bool] = Map([])
   while true {
     match reader.read_event() {
       @xml.Eof => break

@@ -103,13 +103,16 @@ async fn main {
   let groups = @aliasgroup.Groups::from_edges(edges)
   let mut total = 0
   let mut emitted = 0
-  let seen : Map[String, Bool] = {}
+  let seen : Map[String, Bool] = Map([])
   for c in commands {
     if c.name == "" || seen.contains(c.name) {
       continue
     }
     seen[c.name] = true
     total += 1
+    if is_hand_written_command(c.name) {
+      continue
+    }
     match c.signature() {
       Some(sig) => {
         let r = render(c, sig, groups.aliases_of(c.name))

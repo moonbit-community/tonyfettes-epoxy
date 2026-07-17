@@ -18183,4 +18183,3 @@ pub const GL_MATERIAL_SIDE_HINT_PGI : UInt = 0x1A22C
 
 ///|
 pub const GL_MAX_VERTEX_HINT_PGI : UInt = 0x1A22D
-

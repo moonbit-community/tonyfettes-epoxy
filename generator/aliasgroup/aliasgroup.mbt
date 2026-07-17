@@ -41,7 +41,7 @@ fn Groups::find(self : Groups, x : String) -> String {
 /// Build groups from the registry's alias edges, unioning each `name` with its
 /// `target`. The result holds every name that appears in any edge.
 pub fn Groups::from_edges(edges : Array[Edge]) -> Groups {
-  let parent : Map[String, String] = {}
+  let parent : Map[String, String] = Map([])
   let groups = Groups::{ parent, }
   fn ensure(x : String) -> Unit {
     if parent.get(x) is None {

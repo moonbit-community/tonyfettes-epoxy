@@ -5,9 +5,9 @@
 //   - Linux:   dlopen(libOpenGL/libGL)   + dlsym → glXGetProcAddress fallback
 //   - Windows: LoadLibrary(opengl32.dll) + GetProcAddress → wglGetProcAddress
 //
-// MoonBit sees exactly one function: epoxy_get_proc_address(name) → void*.
-// The generated wrappers reinterpret the returned pointer into a FuncRef
-// typed to the target GL function's exact ABI and call it directly.
+// The generated wrappers reinterpret addresses returned by
+// epoxy_get_proc_address into FuncRefs typed to the exact GL ABI and call them
+// directly. C-string results are copied into MoonBit-owned bytes here as well.
 
 #include <stddef.h>
 #include <string.h>

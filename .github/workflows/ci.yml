@@ -29,7 +29,10 @@ jobs:
       - run: moon update
       - run: >
           moon test
+          --package tonyfettes/epoxy
           --package tonyfettes/epoxy/internal/glinfo
+          --package tonyfettes/epoxy/internal/pointer
+          --package tonyfettes/epoxy-generator
           --package tonyfettes/epoxy-generator/gen
           --package tonyfettes/epoxy-generator/cdecl
           --package tonyfettes/epoxy-generator/aliasgroup
