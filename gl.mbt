@@ -78,18 +78,6 @@ let d_glBufferSubDataARB : Dispatch = Dispatch::with_aliases(
 )
 
 ///|
-let d_glVertexAttribPointer : Dispatch = Dispatch::with_aliases(
-  "glVertexAttribPointer",
-  ["glVertexAttribPointerARB"],
-)
-
-///|
-let d_glVertexAttribPointerARB : Dispatch = Dispatch::with_aliases(
-  "glVertexAttribPointerARB",
-  ["glVertexAttribPointer"],
-)
-
-///|
 /// Copy a packed scalar array into a new data store for the buffer currently
 /// bound to `target`. The byte size is derived from `data`.
 pub fn[T : GlData] gl_buffer_data(
@@ -180,52 +168,4 @@ pub fn[T : GlData] gl_buffer_sub_data_arb(
     let raw : @pointer.Pointer[Unit] = data_pointer.cast()
     fp(target, offset, size, raw)
   })
-}
-
-///|
-/// Define the format of a vertex attribute stored in the buffer currently
-/// bound to `GL_ARRAY_BUFFER`. `offset` is a byte offset into that buffer;
-/// client-side MoonBit arrays are not accepted.
-pub fn gl_vertex_attrib_pointer(
-  index : UInt,
-  size : Int,
-  type_ : UInt,
-  normalized : Bool,
-  stride : Int,
-  offset : Int64,
-) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribPointer
-    .get()
-    .unsafe_into()
-  fp(
-    index,
-    size,
-    type_,
-    normalized,
-    stride,
-    @pointer.Pointer::unsafe_from_int64(offset),
-  )
-}
-
-///|
-/// ARB spelling of `gl_vertex_attrib_pointer`.
-pub fn gl_vertex_attrib_pointer_arb(
-  index : UInt,
-  size : Int,
-  type_ : UInt,
-  normalized : Bool,
-  stride : Int,
-  offset : Int64,
-) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribPointerARB
-    .get()
-    .unsafe_into()
-  fp(
-    index,
-    size,
-    type_,
-    normalized,
-    stride,
-    @pointer.Pointer::unsafe_from_int64(offset),
-  )
 }

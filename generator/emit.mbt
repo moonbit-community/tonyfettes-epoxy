@@ -7,16 +7,29 @@
 ///     is a concrete `@gen.CType`/`@gen.MType`, so rendering is total.
 
 ///|
-/// One parameter, fully resolved: its MoonBit representation (`mty`), which
-/// yields both the public source type and the `FuncRef` ABI spelling.
+/// How a resolved parameter crosses the binding boundary.
+priv enum ParamPassing {
+  Direct
+  Borrowed
+  ArrayBufferOffset
+}
+
+///|
+/// One parameter, fully resolved: its public MoonBit representation (`mty`)
+/// and how it crosses the `FuncRef` call.
 priv struct Binding {
   name : String
   mty : @gen.MType
+  passing : ParamPassing
 }
 
 ///|
 /// Resolve a parameter into its binding, or None if its type is unsupported.
-fn Binding::new(name : String, ty : @cdecl.Declarator) -> Binding? {
+fn Binding::new(
+  command_name : String,
+  name : String,
+  ty : @cdecl.Declarator,
+) -> Binding? {
   let mty = match ty {
     Base(typedef) => @gen.lookup(typedef).map(fn(info) { info.m_type })
     Ptr(inner, ..) =>
@@ -26,7 +39,22 @@ fn Binding::new(name : String, ty : @cdecl.Declarator) -> Binding? {
       }
   }
   guard mty is Some(mty) else { return None }
-  Some({ name, mty })
+  if mty.is_pointer() && is_array_buffer_offset_param(command_name, name) {
+    Some({ name: "offset", mty: Int64, passing: ArrayBufferOffset })
+  } else {
+    let passing = if mty.is_pointer() { Borrowed } else { Direct }
+    Some({ name: moonbit_safe_ident(name), mty, passing })
+  }
+}
+
+///|
+/// The `FuncRef` parameter spelling. Buffer offsets retain the C pointer ABI,
+/// but their public representation is an integer byte offset.
+fn Binding::funcref_type(self : Binding) -> String {
+  match self.passing {
+    ArrayBufferOffset => "@pointer.Pointer[Unit]"
+    _ => self.mty.funcref_type()
+  }
 }
 
 ///|
@@ -67,9 +95,7 @@ fn Command::signature(self : Command) -> Signature? {
       p.ty.base_name().has_prefix("GLVULKAN") {
       return None // callback param: unsupported
     }
-    guard Binding::new(moonbit_safe_ident(p.name), p.ty) is Some(b) else {
-      return None
-    }
+    guard Binding::new(self.name, p.name, p.ty) is Some(b) else { return None }
     params.push(b)
   }
   Some({ params, ret })
@@ -208,6 +234,43 @@ fn moonbit_safe_ident(name : String) -> String {
 }
 
 ///|
+/// Pointer parameters that OpenGL interprets as byte offsets into the buffer
+/// captured from `GL_ARRAY_BUFFER`. This is deliberately an exact allow-list:
+/// similarly named legacy extension commands may retain real client pointers.
+fn is_array_buffer_offset_param(
+  command_name : String,
+  param_name : String,
+) -> Bool {
+  if param_name != "pointer" && param_name != "addr" {
+    return false
+  }
+  match command_name {
+    "glColorPointer"
+    | "glEdgeFlagPointer"
+    | "glFogCoordPointer"
+    | "glFogCoordPointerEXT"
+    | "glIndexPointer"
+    | "glInterleavedArrays"
+    | "glMatrixIndexPointerOES"
+    | "glNormalPointer"
+    | "glSecondaryColorPointer"
+    | "glSecondaryColorPointerEXT"
+    | "glTexCoordPointer"
+    | "glVariantPointerEXT"
+    | "glVertexAttribIPointer"
+    | "glVertexAttribIPointerEXT"
+    | "glVertexAttribLPointer"
+    | "glVertexAttribLPointerEXT"
+    | "glVertexAttribPointer"
+    | "glVertexAttribPointerARB"
+    | "glVertexPointer"
+    | "glWeightPointerARB"
+    | "glWeightPointerOES" => true
+    _ => false
+  }
+}
+
+///|
 /// Whether a command is implemented entirely by the hand-written binding
 /// layer. These commands are omitted from generated output.
 fn is_hand_written_command(name : String) -> Bool {
@@ -215,9 +278,7 @@ fn is_hand_written_command(name : String) -> Bool {
     "glBufferData"
     | "glBufferDataARB"
     | "glBufferSubData"
-    | "glBufferSubDataARB"
-    | "glVertexAttribPointer"
-    | "glVertexAttribPointerARB" => true
+    | "glBufferSubDataARB" => true
     _ => false
   }
 }
@@ -238,9 +299,9 @@ priv struct Rendered {
 /// non-empty the dispatch slot is built to try them in turn after the primary.
 ///
 /// The body resolves the slot once, reinterprets the address as a `FuncRef`
-/// typed to the GL function's exact ABI, marshals pointer/array params through
-/// `@pointer.borrow_*` (a `FixedArray`/`Bytes` is a MoonBit object, so only its
-/// borrowed data pointer is `T *`), calls it, and narrows any sub-word return.
+/// typed to the GL function's exact ABI, marshals call-scoped pointer/array
+/// params through `@pointer.borrow_*`, converts VBO offsets to pointer-shaped
+/// values, calls it, and narrows any sub-word return.
 fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   let mbt = StringBuilder::new()
   let fn_name = snake(c.name)
@@ -249,7 +310,7 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
 
   // FuncRef signature: each param and the return lowered to its exact-ABI
   // spelling. Empty param lists render as `()`.
-  let fr_params = sig.params.map(fn(b) { b.mty.funcref_type() })
+  let fr_params = sig.params.map(fn(b) { b.funcref_type() })
   let fr_param_list = if fr_params.is_empty() {
     "()"
   } else {
@@ -261,13 +322,13 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
     Scalar(mty, cast) => (mty.moonbit(), @gen.funcref_ret_type(cast, mty))
   }
 
-  // Call arguments: a pointer param passes its borrowed pointer var (`<name>_p`),
-  // and every scalar passes its value directly.
+  // Call arguments: borrowed pointers pass their scoped raw pointer, buffer
+  // offsets become pointer-shaped integer values, and scalars pass directly.
   let call_args = sig.params.map(fn(b) {
-    if b.mty.is_pointer() {
-      b.name + "_p"
-    } else {
-      b.name
+    match b.passing {
+      Borrowed => b.name + "_p"
+      ArrayBufferOffset => "@pointer.Pointer::unsafe_from_int64(\{b.name})"
+      Direct => b.name
     }
   })
   let raw_call = "fp(\{call_args.join(", ")})"
@@ -289,7 +350,10 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
 
   // Nest a borrow closure per pointer param, innermost being the call result, so
   // every backing buffer stays live across the call.
-  let pointer_params = sig.params.filter(fn(b) { b.mty.is_pointer() })
+  let pointer_params = sig.params.filter(fn(b) { b.passing is Borrowed })
+  let has_array_buffer_offset = sig.params.any(fn(b) {
+    b.passing is ArrayBufferOffset
+  })
   let mut body = result_expr
   for i = pointer_params.length() - 1; i >= 0; i = i - 1 {
     let b = pointer_params[i]
@@ -311,6 +375,14 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   mbt.write_string("///|\n")
   mbt.write_string(slot_decl)
   mbt.write_string("///|\n")
+  if has_array_buffer_offset {
+    mbt.write_string(
+      "/// Configure a vertex array from the buffer currently bound to `GL_ARRAY_BUFFER`.\n",
+    )
+    mbt.write_string(
+      "/// `offset` is a byte offset; client-side arrays are not accepted.\n",
+    )
+  }
   mbt.write_string(
     "pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} {\n",
   )
