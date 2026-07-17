@@ -17,10 +17,6 @@ pub(all) enum VertexAttribPointerData {
   DOUBLE(FixedArray[Double])
   HALF_FLOAT(FixedArray[UInt16])
   FIXED(FixedArray[Int])
-  INT64_ARB(FixedArray[Int64])
-  INT64_NV(FixedArray[Int64])
-  UNSIGNED_INT64_ARB(FixedArray[UInt64])
-  UNSIGNED_INT64_NV(FixedArray[UInt64])
   UNSIGNED_INT_2_10_10_10_REV(FixedArray[UInt])
   UNSIGNED_INT_2_10_10_10_REV_EXT(FixedArray[UInt])
   UNSIGNED_INT_10F_11F_11F_REV(FixedArray[UInt])
@@ -99,30 +95,6 @@ fn call_vertex_attrib_pointer(
       let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Int]) -> Unit] = address.unsafe_into()
       @c.borrow_array(data, fn(data_pointer) {
         fp(index, size, GL_FIXED, normalized, stride, data_pointer)
-      })
-    }
-    INT64_ARB(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Int64]) -> Unit] = address.unsafe_into()
-      @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_INT64_ARB, normalized, stride, data_pointer)
-      })
-    }
-    INT64_NV(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Int64]) -> Unit] = address.unsafe_into()
-      @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_INT64_NV, normalized, stride, data_pointer)
-      })
-    }
-    UNSIGNED_INT64_ARB(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt64]) -> Unit] = address.unsafe_into()
-      @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_UNSIGNED_INT64_ARB, normalized, stride, data_pointer)
-      })
-    }
-    UNSIGNED_INT64_NV(data) => {
-      let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[UInt64]) -> Unit] = address.unsafe_into()
-      @c.borrow_array(data, fn(data_pointer) {
-        fp(index, size, GL_UNSIGNED_INT64_NV, normalized, stride, data_pointer)
       })
     }
     UNSIGNED_INT_2_10_10_10_REV(data) => {
