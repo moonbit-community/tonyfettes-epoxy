@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: moonbit-community/setup-moonbit@main
+      - run: moon update
+      - run: moon check --diagnostic-limit 10
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: moonbit-community/setup-moonbit@main
+      - run: moon update
+      - run: >
+          moon test
+          --package tonyfettes/epoxy/internal/glinfo
+          --package tonyfettes/epoxy-generator/gen
+          --package tonyfettes/epoxy-generator/cdecl
+          --package tonyfettes/epoxy-generator/aliasgroup
+          --diagnostic-limit 10
+
+  # macOS is the only platform where the examples can link today
+  # (they use CGL / Cocoa stubs).
+  build-examples:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: moonbit-community/setup-moonbit@main
+      - run: moon update
+      - run: moon build

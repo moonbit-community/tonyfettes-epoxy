@@ -260,7 +260,7 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   // Recover the public return value from the raw FuncRef result.
   let result_expr = match sig.ret {
     Ret::Void => raw_call
-    Str => "@utf8.decode_lossy(epoxy_cstr(\{raw_call})[:])"
+    Str => "@utf8.decode_lossy(epoxy_cstr_to_bytes(\{raw_call})[:])"
     Scalar(mty, cast) =>
       match @gen.narrow_of(cast, mty) {
         None => raw_call

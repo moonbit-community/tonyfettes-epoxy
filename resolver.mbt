@@ -1,5 +1,9 @@
 ///|
-/// The lazy dlopen/dlsym resolver and the self-patching dispatch slot.
+/// The cross-platform GL function resolver and the self-patching dispatch slot.
+///
+/// Platform details (dlopen/dlsym, LoadLibrary/GetProcAddress, GLX/WGL/EGL
+/// fallback chains) are entirely encapsulated in `epoxy.c` behind a single
+/// entry point: `epoxy_get_proc_address(name) → void*`.
 ///
 /// A resolved address crosses the FFI as `@c.Pointer[Unit]` — an opaque
 /// `void *`. The generated wrappers reinterpret a slot's address into a
@@ -7,58 +11,24 @@
 /// file knows nothing about individual signatures.
 
 ///|
-extern "c" fn epoxy_gl_dlopen() -> @c.Pointer[Unit] = "epoxy_gl_dlopen"
-
-///|
+/// Resolve a GL entry point by name.  Returns a null pointer if the symbol is
+/// simply absent (the caller — the dispatch slot — tries aliases in turn and
+/// aborts only if none resolve).  Library loading and threading are handled
+/// inside the C stub.
 #borrow(name)
-extern "c" fn epoxy_dlsym(
-  handle : @c.Pointer[Unit],
+extern "c" fn epoxy_get_proc_address(
   name : Bytes,
-) -> @c.Pointer[Unit] = "epoxy_dlsym"
+) -> @c.Pointer[Unit] = "epoxy_get_proc_address"
 
 ///|
-/// Marshal a NUL-terminated C string (e.g. `glGetString`'s return) into MoonBit
-/// `Bytes`; a NULL pointer yields empty. One generic helper shared by every
-/// string-returning command's wrapper — the resolved address is held alive by
-/// the caller across this walk, so the raw reads are valid.
-fn epoxy_cstr(s : @c.Pointer[Byte]) -> Bytes {
-  if s.is_null() {
-    return b""
-  }
-  let mut len = 0
-  while s[len].to_int() != 0 {
-    len = len + 1
-  }
-  Bytes::makei(len, fn(i) { s[i] })
-}
-
-///|
-/// Lazily-opened handle to the platform GL library, opened once (epoxy opens
-/// libGL / OpenGL.framework on first use and keeps it for the process).
-let gl_handle : Ref[@c.Pointer[Unit]] = { val: @c.Pointer::null() }
-
-///|
-/// Get the GL library handle, dlopen-ing it on first call. Aborts if the
-/// platform GL library cannot be opened at all — mirroring libepoxy, whose
-/// dispatch likewise `abort()`s rather than threading an error through every
-/// call (`dispatch_common.c`: `Couldn't open ...` / `abort()`).
-fn gl_lib() -> @c.Pointer[Unit] {
-  if gl_handle.val.is_null() {
-    let h = epoxy_gl_dlopen()
-    if h.is_null() {
-      abort("epoxy: could not load the platform GL library")
-    }
-    gl_handle.val = h
-  }
-  gl_handle.val
-}
+extern "c" fn epoxy_cstr_to_bytes(s : @c.Pointer[Byte]) -> Bytes = "epoxy_cstr_to_bytes"
 
 ///|
 /// Look up a single symbol, returning a null pointer if it is simply absent.
 /// (MoonBit-allocated `Bytes` always carry a trailing NUL, so the UTF-8
-/// encoding is already a valid C string for `dlsym` — no terminator to add.)
+/// encoding is already a valid C string — no terminator to add.)
 fn lookup_symbol(name : String) -> @c.Pointer[Unit] {
-  epoxy_dlsym(gl_lib(), @utf8.encode(name))
+  epoxy_get_proc_address(@utf8.encode(name))
 }
 
 ///|
