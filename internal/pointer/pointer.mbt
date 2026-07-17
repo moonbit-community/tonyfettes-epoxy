@@ -32,16 +32,16 @@ pub fn Pointer::unsafe_from_int64(value : Int64) -> Pointer[Unit] {
 }
 
 ///|
-pub fn[T] Pointer::unsafe_from_array(array : FixedArray[T]) -> Pointer[T] = "%identity"
+fn[T] Pointer::unsafe_from_array(array : FixedArray[T]) -> Pointer[T] = "%identity"
 
 ///|
-pub fn Pointer::unsafe_from_bytes(bytes : Bytes) -> Pointer[Byte] = "%identity"
+fn Pointer::unsafe_from_bytes(bytes : Bytes) -> Pointer[Byte] = "%identity"
 
 ///|
-pub fn[T] Pointer::unsafe_into_array(self : Pointer[T]) -> FixedArray[T] = "%identity"
+fn[T] Pointer::unsafe_into_array(self : Pointer[T]) -> FixedArray[T] = "%identity"
 
 ///|
-pub fn Pointer::unsafe_into_bytes(self : Pointer[Byte]) -> Bytes = "%identity"
+fn Pointer::unsafe_into_bytes(self : Pointer[Byte]) -> Bytes = "%identity"
 
 ///|
 pub fn[T] Pointer::unsafe_into(self : Pointer[Unit]) -> T = "%identity"
