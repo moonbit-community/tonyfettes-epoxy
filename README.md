@@ -58,6 +58,7 @@ generator, and the examples.
 |------|------|
 | `resolver.mbt`, `version.mbt`, `handles.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, the version/extension introspection API, and the opaque-handle types. |
 | `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver (nothing else). |
+| `gl.mbt` | Hand-written ergonomic GL wrappers that couple related raw arguments into type-safe MoonBit values. |
 | `gl_generated.mbt` | **Generated** MoonBit `FuncRef` dispatch wrappers (3217) — no C shim. |
 | `gl_generated_enums.mbt` | **Generated** GL enum constants (`pub const GL_* : UInt/UInt64/Int`, 6061). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
@@ -84,13 +85,18 @@ generator, and the examples.
 > the psABI. The generated wrapper always masks/sign-extends the low byte/halfword
 > — the same fixup the old C shim's `(T)` cast did, now done MoonBit-side.
 
-Like libepoxy, the generated wrappers have the **same signature as the GL
-function** — no error channel. If an entry point can't be resolved (you called
-something the current context doesn't provide) the dispatch `abort()`s with
-`epoxy: glXxx() not found`, exactly as upstream does. That's a programming
-error: gate version/extension-specific calls on `gl_version` / `has_gl_extension`
-first, rather than wrapping every call. So a render loop reads as plain GL, with
-no `raise`/`try` plumbing.
+Like libepoxy, generated public wrappers preserve the GL function's argument
+shape and have no error channel. A small hand-written layer exposes a safer
+public shape where two raw arguments form one logical value. For example,
+`gl_vertex_attrib_pointer` accepts `VertexAttribPointerData`, which couples the
+GL type token to its backing array. Its generated `type_ + void*` helper stays
+package-private and receives only a pointer already borrowed by the hand-written
+wrapper. If an entry point can't be resolved (you called something the current
+context doesn't provide) the dispatch `abort()`s with `epoxy: glXxx() not
+found`, exactly as upstream does. That's a programming error: gate
+version/extension-specific calls on `gl_version` / `has_gl_extension` first,
+rather than wrapping every call. So a render loop reads as plain GL, with no
+`raise`/`try` plumbing.
 
 Context creation (CGL in the example) is deliberately *not* part of dispatch —
 it stands in for the window-system layer (CGL/EGL/GLX/WGL) an app/toolkit
@@ -112,6 +118,10 @@ in `generator/gen/types.mbt`:
 - **String arrays**: `const GLchar *const *` → `FixedArray[Bytes]` (the layout
   already *is* the `char**` GL wants — `glShaderSource` &c.).
 - **16-bit arrays**: `const GLshort*`/`GLhalf*` → `FixedArray[Int16]`/`[UInt16]`.
+- **Type-coupled client data**: the public `gl_vertex_attrib_pointer` wrapper
+  takes `VertexAttribPointerData`, whose constructor selects both the GL type
+  token and the matching `FixedArray` element representation. Its generated
+  raw-pointer helper is an internal implementation detail.
 - **Opaque handles**: `GLsync`/`GLeglImageOES`/`GLeglClientBufferEXT`/
   `GLVULKANPROCNV` → distinct `#external` types (`pub type GLsync` &c.). All
   share the `void *` ABI, so they cross a `FuncRef` as-is; the names keep the
@@ -160,7 +170,8 @@ moon -C generator run . -- \
 
 1. ✅ Vertical slice: resolver + self-patching dispatch + scalar/pointer calls.
 2. ✅ Generator: parse `registry/gl.xml`, emit `FuncRef` bindings (no C shims).
-3. ✅ Pointer/array params — `Bytes`/`FixedArray` borrowed to `@c.Pointer`.
+3. ✅ Pointer/array params — generated `Bytes`/`FixedArray` raw bindings plus a
+   type-coupled `VertexAttribPointerData` public wrapper.
 4. ✅ Alias groups (`<alias>` fallback) + `epoxy_gl_version` / `is_desktop_gl` /
    `has_gl_extension`.
 5. ✅ String arrays (`const GLchar *const *`) + 16-bit arrays.

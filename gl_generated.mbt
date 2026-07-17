@@ -27464,18 +27464,18 @@ pub fn gl_vertex_attrib_parameteri_amd(index : UInt, pname : UInt, param : Int) 
 let d_glVertexAttribPointer : Dispatch = Dispatch::with_aliases("glVertexAttribPointer", ["glVertexAttribPointerARB"])
 
 ///|
-pub fn gl_vertex_attrib_pointer(index : UInt, size : Int, type_ : UInt, normalized : Bool, stride : Int, pointer : Bytes) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Byte]) -> Unit] = d_glVertexAttribPointer.get().unsafe_into()
-  @c.borrow_bytes(pointer, fn(pointer_p) { fp(index, size, type_, normalized, stride, pointer_p) })
+fn gl_vertex_attrib_pointer_raw(index : UInt, size : Int, type_ : UInt, normalized : Bool, stride : Int, pointer : @c.Pointer[Unit]) -> Unit {
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Unit]) -> Unit] = d_glVertexAttribPointer.get().unsafe_into()
+  fp(index, size, type_, normalized, stride, pointer)
 }
 
 ///|
 let d_glVertexAttribPointerARB : Dispatch = Dispatch::with_aliases("glVertexAttribPointerARB", ["glVertexAttribPointer"])
 
 ///|
-pub fn gl_vertex_attrib_pointer_arb(index : UInt, size : Int, type_ : UInt, normalized : Bool, stride : Int, pointer : Bytes) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Byte]) -> Unit] = d_glVertexAttribPointerARB.get().unsafe_into()
-  @c.borrow_bytes(pointer, fn(pointer_p) { fp(index, size, type_, normalized, stride, pointer_p) })
+fn gl_vertex_attrib_pointer_arb_raw(index : UInt, size : Int, type_ : UInt, normalized : Bool, stride : Int, pointer : @c.Pointer[Unit]) -> Unit {
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @c.Pointer[Unit]) -> Unit] = d_glVertexAttribPointerARB.get().unsafe_into()
+  fp(index, size, type_, normalized, stride, pointer)
 }
 
 ///|

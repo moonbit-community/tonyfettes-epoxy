@@ -28,10 +28,10 @@ Notes on the GL choices:
 
 - **GLSL 1.20 + client-side vertex arrays** because the demo context is the
   macOS legacy 2.1 compatibility profile.
-- The per-frame animation demonstrates the `Bytes` lifetime rule: each frame's
-  positions are packed into a fresh `Bytes`, handed to
-  `gl_vertex_attrib_pointer` (which borrows and *stores* the pointer), and
-  kept alive until `gl_draw_arrays` and the buffer swap have consumed them.
+- The per-frame animation demonstrates the client-array lifetime rule: each
+  frame's positions live in a fresh `FixedArray[Float]`, whose `FLOAT` wrapper
+  lets `gl_vertex_attrib_pointer` derive both the GL type and raw pointer. The
+  array stays alive until `gl_draw_arrays` and the buffer swap consume it.
 - `NSOpenGLView` is deprecated (Apple wants Metal) but remains the smallest
   zero-dependency way to put a legacy GL context on screen; a real app would
   use GLFW/SDL, and only the two `demo_window_*` functions would change.
