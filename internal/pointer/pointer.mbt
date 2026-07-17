@@ -7,28 +7,28 @@ type Pointer[_]
 pub fn[T, U] Pointer::cast(self : Pointer[T]) -> Pointer[U] = "%identity"
 
 ///|
-extern "c" fn epoxy_pointer_null() -> Pointer[Unit] = "epoxy_pointer_null"
+extern "c" fn moonbit_epoxy_pointer_null() -> Pointer[Unit] = "moonbit_epoxy_pointer_null"
 
 ///|
 #borrow(pointer)
-extern "c" fn epoxy_pointer_is_null(pointer : Pointer[Unit]) -> Bool = "epoxy_pointer_is_null"
+extern "c" fn moonbit_epoxy_pointer_is_null(pointer : Pointer[Unit]) -> Bool = "moonbit_epoxy_pointer_is_null"
 
 ///|
-extern "c" fn epoxy_pointer_from_int64(value : Int64) -> Pointer[Unit] = "epoxy_pointer_from_int64"
+extern "c" fn moonbit_epoxy_pointer_from_int64(value : Int64) -> Pointer[Unit] = "moonbit_epoxy_pointer_from_int64"
 
 ///|
 pub fn[T] Pointer::null() -> Pointer[T] {
-  epoxy_pointer_null().cast()
+  moonbit_epoxy_pointer_null().cast()
 }
 
 ///|
 pub fn[T] Pointer::is_null(self : Pointer[T]) -> Bool {
-  epoxy_pointer_is_null(self.cast())
+  moonbit_epoxy_pointer_is_null(self.cast())
 }
 
 ///|
 pub fn Pointer::unsafe_from_int64(value : Int64) -> Pointer[Unit] {
-  epoxy_pointer_from_int64(value)
+  moonbit_epoxy_pointer_from_int64(value)
 }
 
 ///|
