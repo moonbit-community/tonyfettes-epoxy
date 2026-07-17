@@ -12440,11 +12440,15 @@ pub fn gl_blit_named_framebuffer(UInt, UInt, Int, Int, Int, Int, Int, Int, Int, 
 
 pub fn gl_buffer_address_range_nv(UInt, UInt, UInt64, Int64) -> Unit
 
+pub fn gl_buffer_allocate(UInt, Int64, UInt) -> Unit
+
+pub fn gl_buffer_allocate_arb(UInt, Int64, UInt) -> Unit
+
 pub fn gl_buffer_attach_memory_nv(UInt, UInt, UInt64) -> Unit
 
-pub fn gl_buffer_data(UInt, Int64, Bytes, UInt) -> Unit
+pub fn[T : GlData] gl_buffer_data(UInt, FixedArray[T], UInt) -> Unit
 
-pub fn gl_buffer_data_arb(UInt, Int64, Bytes, UInt) -> Unit
+pub fn[T : GlData] gl_buffer_data_arb(UInt, FixedArray[T], UInt) -> Unit
 
 pub fn gl_buffer_page_commitment_arb(UInt, Int64, Int64, Bool) -> Unit
 
@@ -12460,9 +12464,9 @@ pub fn gl_buffer_storage_external_ext(UInt, Int64, Int64, GLeglClientBufferEXT, 
 
 pub fn gl_buffer_storage_mem_ext(UInt, Int64, UInt, UInt64) -> Unit
 
-pub fn gl_buffer_sub_data(UInt, Int64, Int64, Bytes) -> Unit
+pub fn[T : GlData] gl_buffer_sub_data(UInt, Int64, FixedArray[T]) -> Unit
 
-pub fn gl_buffer_sub_data_arb(UInt, Int64, Int64, Bytes) -> Unit
+pub fn[T : GlData] gl_buffer_sub_data_arb(UInt, Int64, FixedArray[T]) -> Unit
 
 pub fn gl_call_command_list_nv(UInt) -> Unit
 
@@ -18240,9 +18244,9 @@ pub fn gl_vertex_attrib_p4uiv(UInt, UInt, Bool, FixedArray[UInt]) -> Unit
 
 pub fn gl_vertex_attrib_parameteri_amd(UInt, UInt, Int) -> Unit
 
-pub fn gl_vertex_attrib_pointer(UInt, Int, Bool, Int, VertexAttribPointerData) -> Unit
+pub fn gl_vertex_attrib_pointer(UInt, Int, UInt, Bool, Int, Int64) -> Unit
 
-pub fn gl_vertex_attrib_pointer_arb(UInt, Int, Bool, Int, VertexAttribPointerData) -> Unit
+pub fn gl_vertex_attrib_pointer_arb(UInt, Int, UInt, Bool, Int, Int64) -> Unit
 
 pub fn gl_vertex_attrib_pointer_nv(UInt, Int, UInt, Int, Bytes) -> Unit
 
@@ -18579,24 +18583,17 @@ pub type GLeglImageOES
 #external
 pub type GLsync
 
-pub(all) enum VertexAttribPointerData {
-  BYTE(FixedArray[Byte])
-  UNSIGNED_BYTE(FixedArray[Byte])
-  SHORT(FixedArray[Int16])
-  UNSIGNED_SHORT(FixedArray[UInt16])
-  INT(FixedArray[Int])
-  UNSIGNED_INT(FixedArray[UInt])
-  FLOAT(FixedArray[Float])
-  DOUBLE(FixedArray[Double])
-  HALF_FLOAT(FixedArray[UInt16])
-  FIXED(FixedArray[Int])
-  UNSIGNED_INT_2_10_10_10_REV(FixedArray[UInt])
-  UNSIGNED_INT_2_10_10_10_REV_EXT(FixedArray[UInt])
-  UNSIGNED_INT_10F_11F_11F_REV(FixedArray[UInt])
-  INT_2_10_10_10_REV(FixedArray[Int])
-}
-
 // Type aliases
 
 // Traits
+trait GlData
+pub impl GlData for Byte
+pub impl GlData for Int
+pub impl GlData for Int16
+pub impl GlData for Int64
+pub impl GlData for UInt
+pub impl GlData for UInt16
+pub impl GlData for UInt64
+pub impl GlData for Float
+pub impl GlData for Double
 

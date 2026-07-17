@@ -1,224 +1,220 @@
 ///|
-/// Client-side data accepted by `gl_vertex_attrib_pointer`.
-///
-/// Each constructor couples the OpenGL `type` token to a MoonBit array with
-/// the matching in-memory representation, so callers cannot accidentally pass
-/// (for example) `GL_FLOAT` alongside integer storage. OpenGL retains the raw
-/// pointer after this call; the backing array must remain alive until the draw
-/// that consumes it has completed.
-pub(all) enum VertexAttribPointerData {
-  BYTE(FixedArray[Byte])
-  UNSIGNED_BYTE(FixedArray[Byte])
-  SHORT(FixedArray[Int16])
-  UNSIGNED_SHORT(FixedArray[UInt16])
-  INT(FixedArray[Int])
-  UNSIGNED_INT(FixedArray[UInt])
-  FLOAT(FixedArray[Float])
-  DOUBLE(FixedArray[Double])
-  HALF_FLOAT(FixedArray[UInt16])
-  FIXED(FixedArray[Int])
-  UNSIGNED_INT_2_10_10_10_REV(FixedArray[UInt])
-  UNSIGNED_INT_2_10_10_10_REV_EXT(FixedArray[UInt])
-  UNSIGNED_INT_10F_11F_11F_REV(FixedArray[UInt])
-  INT_2_10_10_10_REV(FixedArray[Int])
+/// Scalar element types whose packed `FixedArray` representation can be copied
+/// into an OpenGL buffer. This trait is sealed so user-defined reference types
+/// cannot claim a native layout that MoonBit does not guarantee.
+trait GlData {
+  fn size_in_bytes() -> Int64
 }
 
 ///|
-/// Invoke one `glVertexAttribPointer` entry point after deriving its raw GL
-/// type and pointer ABI from the data constructor. Core and ARB wrappers share
-/// this complete transition; only their private generated helper differs.
-fn call_vertex_attrib_pointer(
-  call_raw : (UInt, Int, UInt, Bool, Int, @c.Pointer[Unit]) -> Unit,
-  index : UInt,
-  size : Int,
-  normalized : Bool,
-  stride : Int,
-  pointer : VertexAttribPointerData,
+pub impl GlData for Byte with fn size_in_bytes() {
+  1L
+}
+
+///|
+pub impl GlData for Int16 with fn size_in_bytes() {
+  2L
+}
+
+///|
+pub impl GlData for UInt16 with fn size_in_bytes() {
+  2L
+}
+
+///|
+pub impl GlData for Int with fn size_in_bytes() {
+  4L
+}
+
+///|
+pub impl GlData for UInt with fn size_in_bytes() {
+  4L
+}
+
+///|
+pub impl GlData for Int64 with fn size_in_bytes() {
+  8L
+}
+
+///|
+pub impl GlData for UInt64 with fn size_in_bytes() {
+  8L
+}
+
+///|
+pub impl GlData for Float with fn size_in_bytes() {
+  4L
+}
+
+///|
+pub impl GlData for Double with fn size_in_bytes() {
+  8L
+}
+
+///|
+fn[T : GlData] gl_buffer_data_size(data : FixedArray[T]) -> Int64 {
+  data.length().to_int64() * T::size_in_bytes()
+}
+
+///|
+let d_glBufferData : Dispatch = Dispatch::with_aliases("glBufferData", [
+  "glBufferDataARB",
+])
+
+///|
+let d_glBufferDataARB : Dispatch = Dispatch::with_aliases("glBufferDataARB", [
+  "glBufferData",
+])
+
+///|
+let d_glBufferSubData : Dispatch = Dispatch::with_aliases("glBufferSubData", [
+  "glBufferSubDataARB",
+])
+
+///|
+let d_glBufferSubDataARB : Dispatch = Dispatch::with_aliases(
+  "glBufferSubDataARB",
+  ["glBufferSubData"],
+)
+
+///|
+let d_glVertexAttribPointer : Dispatch = Dispatch::with_aliases(
+  "glVertexAttribPointer",
+  ["glVertexAttribPointerARB"],
+)
+
+///|
+let d_glVertexAttribPointerARB : Dispatch = Dispatch::with_aliases(
+  "glVertexAttribPointerARB",
+  ["glVertexAttribPointer"],
+)
+
+///|
+/// Copy a packed scalar array into a new data store for the buffer currently
+/// bound to `target`. The byte size is derived from `data`.
+pub fn[T : GlData] gl_buffer_data(
+  target : UInt,
+  data : FixedArray[T],
+  usage : UInt,
 ) -> Unit {
-  match pointer {
-    BYTE(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_BYTE,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    UNSIGNED_BYTE(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_UNSIGNED_BYTE,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    SHORT(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_SHORT,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    UNSIGNED_SHORT(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_UNSIGNED_SHORT,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    INT(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_INT,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    UNSIGNED_INT(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_UNSIGNED_INT,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    FLOAT(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_FLOAT,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    DOUBLE(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_DOUBLE,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    HALF_FLOAT(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_HALF_FLOAT,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    FIXED(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_FIXED,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    UNSIGNED_INT_2_10_10_10_REV(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_UNSIGNED_INT_2_10_10_10_REV,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    UNSIGNED_INT_2_10_10_10_REV_EXT(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_UNSIGNED_INT_2_10_10_10_REV_EXT,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    UNSIGNED_INT_10F_11F_11F_REV(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_UNSIGNED_INT_10F_11F_11F_REV,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-    INT_2_10_10_10_REV(data) =>
-      @c.borrow_array(data, fn(data_pointer) {
-        call_raw(
-          index,
-          size,
-          GL_INT_2_10_10_10_REV,
-          normalized,
-          stride,
-          data_pointer.cast_to_unit(),
-        )
-      })
-  }
+  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
+    d_glBufferData.get(),
+  )
+  let size = gl_buffer_data_size(data)
+  borrow_array(data, fn(data_pointer) {
+    let raw : Pointer[Unit] = data_pointer.cast()
+    fp(target, size, raw, usage)
+  })
 }
 
 ///|
-/// Define one client-side vertex attribute array. The backing array inside
-/// `pointer` must remain alive until OpenGL has consumed it in a draw call.
+/// ARB spelling of `gl_buffer_data`.
+pub fn[T : GlData] gl_buffer_data_arb(
+  target : UInt,
+  data : FixedArray[T],
+  usage : UInt,
+) -> Unit {
+  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
+    d_glBufferDataARB.get(),
+  )
+  let size = gl_buffer_data_size(data)
+  borrow_array(data, fn(data_pointer) {
+    let raw : Pointer[Unit] = data_pointer.cast()
+    fp(target, size, raw, usage)
+  })
+}
+
+///|
+/// Allocate an uninitialized data store for the buffer currently bound to
+/// `target`. Use `gl_buffer_sub_data` or another OpenGL operation to fill it.
+pub fn gl_buffer_allocate(target : UInt, size : Int64, usage : UInt) -> Unit {
+  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
+    d_glBufferData.get(),
+  )
+  fp(target, size, Pointer::null(), usage)
+}
+
+///|
+/// ARB spelling of `gl_buffer_allocate`.
+pub fn gl_buffer_allocate_arb(
+  target : UInt,
+  size : Int64,
+  usage : UInt,
+) -> Unit {
+  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
+    d_glBufferDataARB.get(),
+  )
+  fp(target, size, Pointer::null(), usage)
+}
+
+///|
+/// Update part of the buffer currently bound to `target`. The byte size is
+/// derived from `data`.
+pub fn[T : GlData] gl_buffer_sub_data(
+  target : UInt,
+  offset : Int64,
+  data : FixedArray[T],
+) -> Unit {
+  let fp : FuncRef[(UInt, Int64, Int64, Pointer[Unit]) -> Unit] = pointer_into(
+    d_glBufferSubData.get(),
+  )
+  let size = gl_buffer_data_size(data)
+  borrow_array(data, fn(data_pointer) {
+    let raw : Pointer[Unit] = data_pointer.cast()
+    fp(target, offset, size, raw)
+  })
+}
+
+///|
+/// ARB spelling of `gl_buffer_sub_data`.
+pub fn[T : GlData] gl_buffer_sub_data_arb(
+  target : UInt,
+  offset : Int64,
+  data : FixedArray[T],
+) -> Unit {
+  let fp : FuncRef[(UInt, Int64, Int64, Pointer[Unit]) -> Unit] = pointer_into(
+    d_glBufferSubDataARB.get(),
+  )
+  let size = gl_buffer_data_size(data)
+  borrow_array(data, fn(data_pointer) {
+    let raw : Pointer[Unit] = data_pointer.cast()
+    fp(target, offset, size, raw)
+  })
+}
+
+///|
+extern "c" fn epoxy_pointer_from_offset(offset : Int64) -> Pointer[Unit] = "epoxy_pointer_from_offset"
+
+///|
+/// Define the format of a vertex attribute stored in the buffer currently
+/// bound to `GL_ARRAY_BUFFER`. `offset` is a byte offset into that buffer;
+/// client-side MoonBit arrays are not accepted.
 pub fn gl_vertex_attrib_pointer(
   index : UInt,
   size : Int,
+  type_ : UInt,
   normalized : Bool,
   stride : Int,
-  pointer : VertexAttribPointerData,
+  offset : Int64,
 ) -> Unit {
-  call_vertex_attrib_pointer(
-    gl_vertex_attrib_pointer_raw, index, size, normalized, stride, pointer,
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, Pointer[Unit]) -> Unit] = pointer_into(
+    d_glVertexAttribPointer.get(),
   )
+  fp(index, size, type_, normalized, stride, epoxy_pointer_from_offset(offset))
 }
 
 ///|
-/// ARB spelling of `gl_vertex_attrib_pointer` with the same type-safe data
-/// coupling and lifetime requirement.
+/// ARB spelling of `gl_vertex_attrib_pointer`.
 pub fn gl_vertex_attrib_pointer_arb(
   index : UInt,
   size : Int,
+  type_ : UInt,
   normalized : Bool,
   stride : Int,
-  pointer : VertexAttribPointerData,
+  offset : Int64,
 ) -> Unit {
-  call_vertex_attrib_pointer(
-    gl_vertex_attrib_pointer_arb_raw, index, size, normalized, stride, pointer,
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, Pointer[Unit]) -> Unit] = pointer_into(
+    d_glVertexAttribPointerARB.get(),
   )
+  fp(index, size, type_, normalized, stride, epoxy_pointer_from_offset(offset))
 }

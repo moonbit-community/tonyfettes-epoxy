@@ -9,6 +9,4 @@ import {
   "tonyfettes/epoxy-generator/aliasgroup",
 }
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")

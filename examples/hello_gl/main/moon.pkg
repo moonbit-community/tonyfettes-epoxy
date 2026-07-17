@@ -2,7 +2,8 @@ import {
   "tonyfettes/epoxy",
 }
 
+pkgtype(kind: "executable")
+
 options(
-  "is-main": true,
   "native-stub": [ "demo_context.c" ],
 )

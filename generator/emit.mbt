@@ -208,26 +208,17 @@ fn moonbit_safe_ident(name : String) -> String {
 }
 
 ///|
-/// Whether a command has a hand-written public wrapper over its generated
-/// implementation. Keep this policy centralized so naming, visibility, and
-/// raw-pointer lowering cannot drift apart.
-fn has_hand_written_wrapper(name : String) -> Bool {
+/// Whether a command is implemented entirely by the hand-written binding
+/// layer. These commands are omitted from generated output.
+fn is_hand_written_command(name : String) -> Bool {
   match name {
-    "glVertexAttribPointer" | "glVertexAttribPointerARB" => true
+    "glBufferData"
+    | "glBufferDataARB"
+    | "glBufferSubData"
+    | "glBufferSubDataARB"
+    | "glVertexAttribPointer"
+    | "glVertexAttribPointerARB" => true
     _ => false
-  }
-}
-
-///|
-/// Generated entry points normally keep the snake-cased GL name. Hand-wrapped
-/// commands use a distinct package-private `_raw` implementation name so the
-/// public wrapper can own the undecorated name.
-fn generated_fn_name(name : String) -> String {
-  let base = snake(name)
-  if has_hand_written_wrapper(name) {
-    base + "_raw"
-  } else {
-    base
   }
 }
 
@@ -248,34 +239,17 @@ priv struct Rendered {
 ///
 /// The body resolves the slot once, reinterprets the address as a `FuncRef`
 /// typed to the GL function's exact ABI, marshals pointer/array params through
-/// `@c.borrow_*` (a `FixedArray`/`Bytes` is a MoonBit object, so only its
+/// `borrow_*` (a `FixedArray`/`Bytes` is a MoonBit object, so only its
 /// borrowed data pointer is `T *`), calls it, and narrows any sub-word return.
 fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   let mbt = StringBuilder::new()
-  let fn_name = generated_fn_name(c.name)
-  let hand_wrapped = has_hand_written_wrapper(c.name)
+  let fn_name = snake(c.name)
   let slot = "d_" + c.name
-  let is_raw_pointer = fn(b : Binding) { hand_wrapped && b.name == "pointer" }
-  let mbt_params = sig.params.map(fn(b) {
-    let ty = if is_raw_pointer(b) {
-      "@c.Pointer[Unit]"
-    } else {
-      b.mty.moonbit()
-    }
-    b.name + " : " + ty
-  })
+  let mbt_params = sig.params.map(fn(b) { b.name + " : " + b.mty.moonbit() })
 
   // FuncRef signature: each param and the return lowered to its exact-ABI
-  // spelling. A hand-wrapped void pointer is already borrowed by its public
-  // wrapper, so the private helper receives it directly. Empty param lists
-  // render as `()`.
-  let fr_params = sig.params.map(fn(b) {
-    if is_raw_pointer(b) {
-      "@c.Pointer[Unit]"
-    } else {
-      b.mty.funcref_type()
-    }
-  })
+  // spelling. Empty param lists render as `()`.
+  let fr_params = sig.params.map(fn(b) { b.mty.funcref_type() })
   let fr_param_list = if fr_params.is_empty() {
     "()"
   } else {
@@ -283,16 +257,14 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   }
   let (ret_mbt, fr_ret) = match sig.ret {
     Ret::Void => ("Unit", "Unit")
-    Str => ("String", "@c.Pointer[Byte]")
+    Str => ("String", "Pointer[Byte]")
     Scalar(mty, cast) => (mty.moonbit(), @gen.funcref_ret_type(cast, mty))
   }
 
   // Call arguments: a pointer param passes its borrowed pointer var (`<name>_p`),
-  // an internal raw pointer and every scalar pass their values directly.
+  // and every scalar passes its value directly.
   let call_args = sig.params.map(fn(b) {
-    if is_raw_pointer(b) {
-      b.name
-    } else if b.mty.is_pointer() {
+    if b.mty.is_pointer() {
       b.name + "_p"
     } else {
       b.name
@@ -317,17 +289,11 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
 
   // Nest a borrow closure per pointer param, innermost being the call result, so
   // every backing buffer stays live across the call.
-  let pointer_params = sig.params.filter(fn(b) {
-    b.mty.is_pointer() && !is_raw_pointer(b)
-  })
+  let pointer_params = sig.params.filter(fn(b) { b.mty.is_pointer() })
   let mut body = result_expr
   for i = pointer_params.length() - 1; i >= 0; i = i - 1 {
     let b = pointer_params[i]
-    let borrow = if b.mty is Bytes {
-      "@c.borrow_bytes"
-    } else {
-      "@c.borrow_array"
-    }
+    let borrow = if b.mty is Bytes { "borrow_bytes" } else { "borrow_array" }
     body = "\{borrow}(\{b.name}, fn(\{b.name}_p) { \{body} })"
   }
 
@@ -341,12 +307,11 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   mbt.write_string("///|\n")
   mbt.write_string(slot_decl)
   mbt.write_string("///|\n")
-  let visibility = if hand_wrapped { "" } else { "pub " }
   mbt.write_string(
-    "\{visibility}fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} {\n",
+    "pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} {\n",
   )
   mbt.write_string(
-    "  let fp : FuncRef[\{fr_param_list} -> \{fr_ret}] = \{slot}.get().unsafe_into()\n",
+    "  let fp : FuncRef[\{fr_param_list} -> \{fr_ret}] = pointer_into(\{slot}.get())\n",
   )
   mbt.write_string("  \{body}\n")
   mbt.write_string("}\n\n")

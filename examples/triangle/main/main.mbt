@@ -90,15 +90,31 @@ fn main {
   @epoxy.gl_enable_vertex_attrib_array(pos_loc)
   @epoxy.gl_enable_vertex_attrib_array(color_loc)
 
-  // Fixed per-vertex colors; positions are regenerated each frame. Client-side
-  // vertex arrays: glVertexAttribPointer keeps the raw pointer and glDrawArrays
-  // reads it, so each FixedArray must stay live until the draw that consumes it.
+  let buffers : FixedArray[UInt] = FixedArray::make(2, 0)
+  @epoxy.gl_gen_buffers(2, buffers)
+  let position_buffer = buffers[0]
+  let color_buffer = buffers[1]
+
+  // The static color array is copied into its VBO and can be released as soon
+  // as gl_buffer_data returns. gl_vertex_attrib_pointer stores only a buffer
+  // association and byte offset, never a pointer into MoonBit memory.
   let colors : FixedArray[Float] = [
     1.0, 0.0, 0.0, // red
      0.0, 1.0, 0.0, // green
      0.0, 0.0, 1.0, // blue
   ]
-  @epoxy.gl_vertex_attrib_pointer(color_loc, 3, false, 0, @epoxy.FLOAT(colors))
+  @epoxy.gl_bind_buffer(@epoxy.GL_ARRAY_BUFFER, color_buffer)
+  @epoxy.gl_buffer_data(@epoxy.GL_ARRAY_BUFFER, colors, @epoxy.GL_STATIC_DRAW)
+  @epoxy.gl_vertex_attrib_pointer(color_loc, 3, @epoxy.GL_FLOAT, false, 0, 0L)
+
+  // Reserve six Float values once; each frame updates that storage in place.
+  @epoxy.gl_bind_buffer(@epoxy.GL_ARRAY_BUFFER, position_buffer)
+  @epoxy.gl_buffer_allocate(
+    @epoxy.GL_ARRAY_BUFFER,
+    6L * 4L,
+    @epoxy.GL_STREAM_DRAW,
+  )
+  @epoxy.gl_vertex_attrib_pointer(pos_loc, 2, @epoxy.GL_FLOAT, false, 0, 0L)
   @epoxy.gl_viewport(0, 0, WIDTH, HEIGHT)
   @epoxy.gl_clear_color(0.1, 0.1, 0.1, 1.0)
 
@@ -106,20 +122,14 @@ fn main {
   let mut angle : Float = 0.0
   for ;; {
     let positions = triangle_positions(angle)
-    @epoxy.gl_vertex_attrib_pointer(
-      pos_loc,
-      2,
-      false,
-      0,
-      @epoxy.FLOAT(positions),
-    )
+    @epoxy.gl_bind_buffer(@epoxy.GL_ARRAY_BUFFER, position_buffer)
+    @epoxy.gl_buffer_sub_data(@epoxy.GL_ARRAY_BUFFER, 0L, positions)
     @epoxy.gl_clear(@epoxy.GL_COLOR_BUFFER_BIT)
     @epoxy.gl_draw_arrays(@epoxy.GL_TRIANGLES, 0, 3)
     let alive = ffi_window_frame()
-    ignore(positions)
     guard alive == 1 else { break }
     angle += 0.02
   }
-  ignore(colors)
+  @epoxy.gl_delete_buffers(2, buffers)
   println("window closed")
 }

@@ -5,11 +5,13 @@
 //   - Linux:   dlopen(libOpenGL/libGL)   + dlsym → glXGetProcAddress fallback
 //   - Windows: LoadLibrary(opengl32.dll) + GetProcAddress → wglGetProcAddress
 //
-// MoonBit sees exactly one function: epoxy_get_proc_address(name) → void*.
-// The generated wrappers reinterpret the returned pointer into a FuncRef
-// typed to the target GL function's exact ABI and call it directly.
+// The generated wrappers reinterpret addresses returned by
+// epoxy_get_proc_address into FuncRefs typed to the exact GL ABI and call them
+// directly. A few additional helpers expose only the pointer operations needed
+// by the private MoonBit FFI layer.
 
 #include <stddef.h>
+#include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -217,4 +219,20 @@ moonbit_bytes_t epoxy_cstr_to_bytes(const char *s) {
   moonbit_bytes_t bytes = moonbit_make_bytes_raw(len);
   memcpy(bytes, s, len);
   return bytes;
+}
+
+// ── Private pointer helpers ────────────────────────────────────────────────
+
+MOONBIT_FFI_EXPORT void *epoxy_pointer_null(void) {
+  return NULL;
+}
+
+MOONBIT_FFI_EXPORT int32_t epoxy_pointer_is_null(void *pointer) {
+  return pointer == NULL;
+}
+
+// Convert the byte offset used by buffer-backed OpenGL pointer parameters to
+// their ABI representation. The public MoonBit API exposes only the integer.
+MOONBIT_FFI_EXPORT void *epoxy_pointer_from_offset(int64_t offset) {
+  return (void *)(uintptr_t)offset;
 }

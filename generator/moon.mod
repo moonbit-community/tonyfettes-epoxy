@@ -11,6 +11,4 @@ import {
   "moonbitlang/async@0.19.4",
 }
 
-options(
-  source: ".",
-)
+source = "."

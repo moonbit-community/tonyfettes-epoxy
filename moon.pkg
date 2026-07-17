@@ -1,7 +1,6 @@
 import {
   "moonbitlang/core/encoding/utf8",
   "tonyfettes/epoxy/internal/glinfo",
-  "tonyfettes/c",
 }
 
 options(
