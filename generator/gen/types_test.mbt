@@ -23,14 +23,20 @@ test "GLboolean and GLubyte share a C type but differ in MoonBit" {
 }
 
 ///|
-test "FuncRef param spelling: scalars keep their type, arrays/bytes are Pointer" {
+test "FuncRef param spelling: scalars keep their type, arrays/bytes are internal Pointer" {
   inspect((UInt : MType).funcref_type(), content="UInt")
   inspect((Handle("GLsync") : MType).funcref_type(), content="GLsync")
-  inspect((Bytes : MType).funcref_type(), content="Pointer[Byte]")
-  inspect((Array(Int) : MType).funcref_type(), content="Pointer[Int]")
-  inspect((Array(Int16) : MType).funcref_type(), content="Pointer[Int16]")
+  inspect((Bytes : MType).funcref_type(), content="@pointer.Pointer[Byte]")
+  inspect((Array(Int) : MType).funcref_type(), content="@pointer.Pointer[Int]")
+  inspect(
+    (Array(Int16) : MType).funcref_type(),
+    content="@pointer.Pointer[Int16]",
+  )
   // the const GLchar *const * of glShaderSource: a pointer to the char* run
-  inspect((Array(Bytes) : MType).funcref_type(), content="Pointer[Bytes]")
+  inspect(
+    (Array(Bytes) : MType).funcref_type(),
+    content="@pointer.Pointer[Bytes]",
+  )
 }
 
 ///|

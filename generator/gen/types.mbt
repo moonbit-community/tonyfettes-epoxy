@@ -87,13 +87,12 @@ pub fn MType::is_pointer(self : MType) -> Bool {
 /// The type this value takes in a `FuncRef` signature — the spelling that lowers
 /// to the exact C ABI of the resolved GL function pointer. Scalars and opaque
 /// handles keep their MoonBit type (it already lowers 1:1); array/bytes params
-/// instead cross as a raw package-private `Pointer[elem]`, the borrowed data
-/// pointer that
-/// matches `T *`.
+/// instead cross as a raw `@pointer.Pointer[elem]`, the borrowed data pointer
+/// that matches `T *`.
 pub fn MType::funcref_type(self : MType) -> String {
   match self {
-    Bytes => "Pointer[Byte]"
-    Array(e) => "Pointer[\{e.moonbit()}]"
+    Bytes => "@pointer.Pointer[Byte]"
+    Array(e) => "@pointer.Pointer[\{e.moonbit()}]"
     _ => self.moonbit()
   }
 }

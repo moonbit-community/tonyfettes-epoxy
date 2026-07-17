@@ -97,12 +97,12 @@ pub fn[T : GlData] gl_buffer_data(
   data : FixedArray[T],
   usage : UInt,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
-    d_glBufferData.get(),
-  )
+  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferData
+    .get()
+    .unsafe_into()
   let size = gl_buffer_data_size(data)
-  borrow_array(data, fn(data_pointer) {
-    let raw : Pointer[Unit] = data_pointer.cast()
+  @pointer.borrow_array(data, fn(data_pointer) {
+    let raw : @pointer.Pointer[Unit] = data_pointer.cast()
     fp(target, size, raw, usage)
   })
 }
@@ -114,12 +114,12 @@ pub fn[T : GlData] gl_buffer_data_arb(
   data : FixedArray[T],
   usage : UInt,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
-    d_glBufferDataARB.get(),
-  )
+  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferDataARB
+    .get()
+    .unsafe_into()
   let size = gl_buffer_data_size(data)
-  borrow_array(data, fn(data_pointer) {
-    let raw : Pointer[Unit] = data_pointer.cast()
+  @pointer.borrow_array(data, fn(data_pointer) {
+    let raw : @pointer.Pointer[Unit] = data_pointer.cast()
     fp(target, size, raw, usage)
   })
 }
@@ -128,10 +128,10 @@ pub fn[T : GlData] gl_buffer_data_arb(
 /// Allocate an uninitialized data store for the buffer currently bound to
 /// `target`. Use `gl_buffer_sub_data` or another OpenGL operation to fill it.
 pub fn gl_buffer_allocate(target : UInt, size : Int64, usage : UInt) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
-    d_glBufferData.get(),
-  )
-  fp(target, size, Pointer::null(), usage)
+  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferData
+    .get()
+    .unsafe_into()
+  fp(target, size, @pointer.Pointer::null(), usage)
 }
 
 ///|
@@ -141,10 +141,10 @@ pub fn gl_buffer_allocate_arb(
   size : Int64,
   usage : UInt,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Pointer[Unit], UInt) -> Unit] = pointer_into(
-    d_glBufferDataARB.get(),
-  )
-  fp(target, size, Pointer::null(), usage)
+  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferDataARB
+    .get()
+    .unsafe_into()
+  fp(target, size, @pointer.Pointer::null(), usage)
 }
 
 ///|
@@ -155,12 +155,12 @@ pub fn[T : GlData] gl_buffer_sub_data(
   offset : Int64,
   data : FixedArray[T],
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Int64, Pointer[Unit]) -> Unit] = pointer_into(
-    d_glBufferSubData.get(),
-  )
+  let fp : FuncRef[(UInt, Int64, Int64, @pointer.Pointer[Unit]) -> Unit] = d_glBufferSubData
+    .get()
+    .unsafe_into()
   let size = gl_buffer_data_size(data)
-  borrow_array(data, fn(data_pointer) {
-    let raw : Pointer[Unit] = data_pointer.cast()
+  @pointer.borrow_array(data, fn(data_pointer) {
+    let raw : @pointer.Pointer[Unit] = data_pointer.cast()
     fp(target, offset, size, raw)
   })
 }
@@ -172,18 +172,15 @@ pub fn[T : GlData] gl_buffer_sub_data_arb(
   offset : Int64,
   data : FixedArray[T],
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Int64, Pointer[Unit]) -> Unit] = pointer_into(
-    d_glBufferSubDataARB.get(),
-  )
+  let fp : FuncRef[(UInt, Int64, Int64, @pointer.Pointer[Unit]) -> Unit] = d_glBufferSubDataARB
+    .get()
+    .unsafe_into()
   let size = gl_buffer_data_size(data)
-  borrow_array(data, fn(data_pointer) {
-    let raw : Pointer[Unit] = data_pointer.cast()
+  @pointer.borrow_array(data, fn(data_pointer) {
+    let raw : @pointer.Pointer[Unit] = data_pointer.cast()
     fp(target, offset, size, raw)
   })
 }
-
-///|
-extern "c" fn epoxy_pointer_from_offset(offset : Int64) -> Pointer[Unit] = "epoxy_pointer_from_offset"
 
 ///|
 /// Define the format of a vertex attribute stored in the buffer currently
@@ -197,10 +194,17 @@ pub fn gl_vertex_attrib_pointer(
   stride : Int,
   offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, Pointer[Unit]) -> Unit] = pointer_into(
-    d_glVertexAttribPointer.get(),
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribPointer
+    .get()
+    .unsafe_into()
+  fp(
+    index,
+    size,
+    type_,
+    normalized,
+    stride,
+    @pointer.Pointer::unsafe_from_int64(offset),
   )
-  fp(index, size, type_, normalized, stride, epoxy_pointer_from_offset(offset))
 }
 
 ///|
@@ -213,8 +217,15 @@ pub fn gl_vertex_attrib_pointer_arb(
   stride : Int,
   offset : Int64,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, Pointer[Unit]) -> Unit] = pointer_into(
-    d_glVertexAttribPointerARB.get(),
+  let fp : FuncRef[(UInt, Int, UInt, Bool, Int, @pointer.Pointer[Unit]) -> Unit] = d_glVertexAttribPointerARB
+    .get()
+    .unsafe_into()
+  fp(
+    index,
+    size,
+    type_,
+    normalized,
+    stride,
+    @pointer.Pointer::unsafe_from_int64(offset),
   )
-  fp(index, size, type_, normalized, stride, epoxy_pointer_from_offset(offset))
 }

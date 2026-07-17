@@ -16,15 +16,15 @@ with safer public shapes are implemented entirely by hand.
 
 Each wrapper calls its resolved entry point **directly through a `FuncRef`**
 typed to the GL function's exact ABI — there is no per-command C shim. The
-hand-written C file (`epoxy.c`) provides the `dlopen`/`dlsym` resolver and a few
-private pointer ABI helpers; C-string results are copied into MoonBit-owned
-bytes by the same small FFI layer.
+hand-written C file (`epoxy.c`) provides the `dlopen`/`dlsym` resolver and
+C-string conversion. Native-pointer representation, methods, borrows, and
+their three tiny ABI helpers live together in `internal/pointer`.
 
 Keeping the generator in its own module means the library's dependency closure
 stays minimal: consumers of `tonyfettes/epoxy` never inherit the build-time
 toolchain (xml parser, async IO). The library depends only on
-`moonbitlang/core`; its small native-pointer representation and borrow helpers
-are package-private.
+`moonbitlang/core`; its native-pointer support is isolated in an internal
+package and never appears in the public OpenGL API.
 
 ## Status
 
@@ -59,11 +59,12 @@ generator, and the examples.
 | Path | Role |
 |------|------|
 | `resolver.mbt`, `version.mbt`, `handles.mbt` | **The epoxy library** (module root, `tonyfettes/epoxy`): the lazy `dlopen`/`dlsym` resolver + self-patching `Dispatch` slots, the version/extension introspection API, and the opaque-handle types. |
-| `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver and private pointer ABI helpers. |
+| `epoxy.c` | Hand-written C: the `dlopen`/`dlsym` resolver and C-string conversion. |
 | `gl.mbt` | Hand-written safe GL wrappers for packed buffer uploads and buffer-backed vertex attributes. |
 | `gl_generated.mbt` | **Generated** MoonBit `FuncRef` dispatch wrappers (3211) — no C shim. |
 | `gl_generated_enums.mbt` | **Generated** GL enum constants (`pub const GL_* : UInt/UInt64/Int`, 6061). |
 | `internal/glinfo/` | Pure parsers for the `GL_VERSION`/`GL_EXTENSIONS` strings (the introspection logic, unit-tested in isolation). Module-internal — not part of the public API. |
+| `internal/pointer/` | Minimal native `Pointer[T]` package: pointer methods, array/bytes borrow scopes, and three ABI helpers. Importable only inside this module. |
 | `generator/` | **The binding generator** — its own module, `tonyfettes/epoxy-generator`: `parse.mbt` (streaming registry parse), `emit.mbt` (classification + codegen), `main.mbt` (CLI driver), plus its private support packages `gen/` (the `GLxxx`→type table), `cdecl/` (C-declarator parser), `aliasgroup/` (union-find over `<alias>` edges). |
 | `examples/` | A separate module (`tonyfettes/epoxy-examples`); see `hello_gl` and `triangle`. |
 | `upstream/libepoxy` | The reference C implementation (submodule), incl. `registry/*.xml`. |
@@ -74,7 +75,8 @@ generator, and the examples.
    empty cached pointer and its alias group's fallback names.
 2. First call → `Dispatch::get` → `dlopen` the GL library once (cached), then
    `dlsym` the primary name, falling back through the alias names.
-3. The resolved package-private `Pointer[Unit]` is cached in the slot and
+3. The resolved `@pointer.Pointer[Unit]` from the internal pointer package is
+   cached in the slot and
    reinterpreted into a `FuncRef` whose type lowers to the GL function's exact
    ABI. The wrapper borrows any call-scoped `FixedArray`/`Bytes` param into a raw
    pointer, calls the `FuncRef` directly, and
@@ -116,10 +118,10 @@ in `generator/gen/types.mbt`:
   `GLfloat`→`Float`, `GLdouble`→`Double`, `GL(u)int64`→`(U)Int64`. Direct.
 - **Pointer-width**: `GLintptr/GLsizeiptr`→`Int64` (== `intptr_t/ssize_t` on the
   64-bit native targets).
-- **Scalar arrays**: `const T*`/`T*` → `FixedArray[T]`, borrowed to a
-  package-private `Pointer[T]` for the call.
+- **Scalar arrays**: `const T*`/`T*` → `FixedArray[T]`, borrowed to an internal
+  `@pointer.Pointer[T]` for the call.
 - **Byte data / strings**: `void*`/`GLchar*`/byte buffers → `Bytes` (borrowed to
-  a package-private `Pointer[Byte]`); string returns decode to `String` via
+  an internal `@pointer.Pointer[Byte]`); string returns decode to `String` via
   `epoxy_cstr`.
 - **String arrays**: `const GLchar *const *` → `FixedArray[Bytes]` (the layout
   already *is* the `char**` GL wants — `glShaderSource` &c.).

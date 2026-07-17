@@ -239,7 +239,7 @@ priv struct Rendered {
 ///
 /// The body resolves the slot once, reinterprets the address as a `FuncRef`
 /// typed to the GL function's exact ABI, marshals pointer/array params through
-/// `borrow_*` (a `FixedArray`/`Bytes` is a MoonBit object, so only its
+/// `@pointer.borrow_*` (a `FixedArray`/`Bytes` is a MoonBit object, so only its
 /// borrowed data pointer is `T *`), calls it, and narrows any sub-word return.
 fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   let mbt = StringBuilder::new()
@@ -257,7 +257,7 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   }
   let (ret_mbt, fr_ret) = match sig.ret {
     Ret::Void => ("Unit", "Unit")
-    Str => ("String", "Pointer[Byte]")
+    Str => ("String", "@pointer.Pointer[Byte]")
     Scalar(mty, cast) => (mty.moonbit(), @gen.funcref_ret_type(cast, mty))
   }
 
@@ -293,7 +293,11 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   let mut body = result_expr
   for i = pointer_params.length() - 1; i >= 0; i = i - 1 {
     let b = pointer_params[i]
-    let borrow = if b.mty is Bytes { "borrow_bytes" } else { "borrow_array" }
+    let borrow = if b.mty is Bytes {
+      "@pointer.borrow_bytes"
+    } else {
+      "@pointer.borrow_array"
+    }
     body = "\{borrow}(\{b.name}, fn(\{b.name}_p) { \{body} })"
   }
 
@@ -311,7 +315,7 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
     "pub fn \{fn_name}(\{mbt_params.join(", ")}) -> \{ret_mbt} {\n",
   )
   mbt.write_string(
-    "  let fp : FuncRef[\{fr_param_list} -> \{fr_ret}] = pointer_into(\{slot}.get())\n",
+    "  let fp : FuncRef[\{fr_param_list} -> \{fr_ret}] = \{slot}.get().unsafe_into()\n",
   )
   mbt.write_string("  \{body}\n")
   mbt.write_string("}\n\n")

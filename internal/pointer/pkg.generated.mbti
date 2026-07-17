@@ -1,0 +1,26 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "tonyfettes/epoxy/internal/pointer"
+
+// Values
+pub fn[T, R] borrow_array(FixedArray[T], (Pointer[T]) -> R) -> R
+
+pub fn[R] borrow_bytes(Bytes, (Pointer[Byte]) -> R) -> R
+
+// Errors
+
+// Types and methods
+type Pointer[_]
+pub fn[T, U] Pointer::cast(Self[T]) -> Self[U]
+pub fn[T] Pointer::is_null(Self[T]) -> Bool
+pub fn[T] Pointer::null() -> Self[T]
+pub fn[T] Pointer::unsafe_from_array(FixedArray[T]) -> Self[T]
+pub fn Pointer::unsafe_from_bytes(Bytes) -> Self[Byte]
+pub fn Pointer::unsafe_from_int64(Int64) -> Self[Unit]
+pub fn[T] Pointer::unsafe_into(Self[Unit]) -> T
+pub fn[T] Pointer::unsafe_into_array(Self[T]) -> FixedArray[T]
+pub fn Pointer::unsafe_into_bytes(Self[Byte]) -> Bytes
+
+// Type aliases
+
+// Traits
+
