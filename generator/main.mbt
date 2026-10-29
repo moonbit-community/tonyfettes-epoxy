@@ -97,7 +97,7 @@ async fn main {
   let edges = []
   for c in commands {
     for target in c.aliases {
-      edges.push(@aliasgroup.Edge::{ name: c.name, target })
+      edges.push(@aliasgroup.Edge::{ name: c.name, target, })
     }
   }
   let groups = @aliasgroup.Groups::from_edges(edges)

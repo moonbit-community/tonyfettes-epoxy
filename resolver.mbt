@@ -50,12 +50,12 @@ priv struct Dispatch {
 
 ///|
 fn Dispatch::new(name : String) -> Dispatch {
-  { name, aliases: [], ptr: @pointer.Pointer::null() }
+  { name, aliases: [], ptr: @pointer.Pointer::null(), }
 }
 
 ///|
 fn Dispatch::with_aliases(name : String, aliases : Array[String]) -> Dispatch {
-  { name, aliases, ptr: @pointer.Pointer::null() }
+  { name, aliases, ptr: @pointer.Pointer::null(), }
 }
 
 ///|

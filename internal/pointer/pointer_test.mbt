@@ -1,6 +1,6 @@
 ///|
 test "native borrows keep managed arrays alive for the call" {
-  let values : FixedArray[Int] = [7, 8]
+  let values : FixedArray[Int32] = [7, 8]
   let pointer_was_non_null = @pointer.borrow_array(values, fn(pointer) {
     !pointer.is_null()
   })

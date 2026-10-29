@@ -8,7 +8,7 @@
 /// (e.g. 21 for "2.1", 46 for "4.6"). Mirrors `epoxy_gl_version`: returns 0 when
 /// the driver's `GL_VERSION` string cannot be parsed (a malformed-driver
 /// sentinel — real contexts always report `major.minor`).
-pub fn gl_version() -> Int {
+pub fn gl_version() -> Int32 {
   match @glinfo.parse_version(gl_get_string(GL_VERSION)) {
     Some(v) => v
     None => 0
@@ -31,7 +31,7 @@ pub fn has_gl_extension(ext : String) -> Bool {
   if gl_version() < 30 {
     @glinfo.extension_in_string(gl_get_string(GL_EXTENSIONS), ext)
   } else {
-    let count : FixedArray[Int] = FixedArray::make(1, 0)
+    let count : FixedArray[Int32] = FixedArray::make(1, 0)
     gl_get_integerv(GL_NUM_EXTENSIONS, count)
     for i in 0..<count[0] {
       if gl_get_stringi(GL_EXTENSIONS, i.reinterpret_as_uint()) == ext {

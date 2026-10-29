@@ -6,7 +6,7 @@ pub fn extension_in_string(String, String) -> Bool
 
 pub fn is_desktop(String) -> Bool
 
-pub fn parse_version(String) -> Int?
+pub fn parse_version(String) -> Int32?
 
 // Errors
 
@@ -15,4 +15,3 @@ pub fn parse_version(String) -> Int?
 // Type aliases
 
 // Traits
-

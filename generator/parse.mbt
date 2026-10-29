@@ -111,9 +111,9 @@ fn parse_enums(content : String) -> Array[EnumDef] raise {
   let out : Array[EnumDef] = []
   let seen : Map[String, Bool] = Map([])
   while true {
-    match reader.read_event() {
-      @xml.Eof => break
-      @xml.Empty(el) =>
+    match reader.read_event().kind {
+      @xml.EventKind::Eof => break
+      @xml.EventKind::Empty(el) =>
         if el.name == "enum" &&
           el.get("value") is Some(value) &&
           el.get("name") is Some(name) &&
@@ -126,7 +126,7 @@ fn parse_enums(content : String) -> Array[EnumDef] raise {
           } else {
             EnumKind::Unsigned
           }
-          out.push({ name, value, kind })
+          out.push({ name, value, kind, })
         }
       _ => ()
     }
@@ -148,16 +148,16 @@ fn parse_commands(content : String) -> Array[Command] raise {
   let mut params : Array[Param] = []
   let mut aliases : Array[String] = []
   while true {
-    match reader.read_event() {
-      @xml.Eof => break
-      @xml.Empty(el) =>
+    match reader.read_event().kind {
+      @xml.EventKind::Eof => break
+      @xml.EventKind::Empty(el) =>
         // `<alias name="..."/>` is a self-closing element inside <command>.
         if el.name == "alias" && section is Section::Elsewhere {
           if el.get("name") is Some(target) {
             aliases.push(target)
           }
         }
-      @xml.Start(el) =>
+      @xml.EventKind::Start(el) =>
         match el.name {
           "command" => {
             section = Section::Elsewhere
@@ -178,19 +178,19 @@ fn parse_commands(content : String) -> Array[Command] raise {
           "name" => field = Field::Name
           _ => ()
         }
-      @xml.Text(t) =>
+      @xml.EventKind::Text(t) =>
         match section {
           Section::Proto => proto.feed(field, t)
           Section::Param => param.feed(field, t)
           Section::Elsewhere => ()
         }
-      @xml.End(name) =>
+      @xml.EventKind::End(name) =>
         match name {
           "ptype" | "name" => field = Field::Surrounding
           "proto" => section = Section::Elsewhere
           "param" => {
             section = Section::Elsewhere
-            params.push({ name: param.ident(), ty: param.to_ctype() })
+            params.push({ name: param.ident(), ty: param.to_ctype(), })
           }
           "command" =>
             commands.push({

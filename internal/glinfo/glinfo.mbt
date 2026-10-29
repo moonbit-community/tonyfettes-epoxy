@@ -6,7 +6,7 @@
 /// the actual `glGetString` calls.
 
 ///|
-fn is_ascii_digit(code : Int) -> Bool {
+fn is_ascii_digit(code : Int32) -> Bool {
   code >= '0' && code <= '9'
 }
 
@@ -15,7 +15,7 @@ fn is_ascii_digit(code : Int) -> Bool {
 /// (so `"2.1 Metal - 90.5"` -> 21, `"OpenGL ES 3.2 ..."` -> 32, `"4.6.0 ..."`
 /// -> 46). Mirrors epoxy: skip any leading non-digits (the `OpenGL ES` prefix),
 /// then read `major.minor`. Returns `None` when no `major.minor` is present.
-pub fn parse_version(version_string : String) -> Int? {
+pub fn parse_version(version_string : String) -> Int32? {
   let n = version_string.length()
   let mut i = 0
   // skip to the first digit (past an "OpenGL ES " / "OpenGL ES-CM " prefix)

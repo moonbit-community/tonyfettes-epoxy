@@ -40,10 +40,10 @@ fn Binding::new(
   }
   guard mty is Some(mty) else { return None }
   if mty.is_pointer() && is_array_buffer_offset_param(command_name, name) {
-    Some({ name: "offset", mty: Int64, passing: ArrayBufferOffset })
+    Some({ name: "offset", mty: Int64, passing: ArrayBufferOffset, })
   } else {
     let passing = if mty.is_pointer() { Borrowed } else { Direct }
-    Some({ name: moonbit_safe_ident(name), mty, passing })
+    Some({ name: moonbit_safe_ident(name), mty, passing, })
   }
 }
 
@@ -98,7 +98,7 @@ fn Command::signature(self : Command) -> Signature? {
     guard Binding::new(self.name, p.name, p.ty) is Some(b) else { return None }
     params.push(b)
   }
-  Some({ params, ret })
+  Some({ params, ret, })
 }
 
 // --- type resolution: declarator -> concrete types via the @gen table ----
@@ -168,11 +168,11 @@ fn render_enum(e : EnumDef) -> String {
 /// camelCase GL name -> snake_case MoonBit name, keeping acronym runs together.
 /// "glGetString" -> "gl_get_string", "glCheckFramebufferStatusEXT" -> "..._ext".
 fn snake(name : String) -> String {
-  fn is_upper(x : Int) -> Bool {
+  fn is_upper(x : Int32) -> Bool {
     x >= 'A' && x <= 'Z'
   }
 
-  fn is_lower_or_digit(x : Int) -> Bool {
+  fn is_lower_or_digit(x : Int32) -> Bool {
     (x >= 'a' && x <= 'z') || (x >= '0' && x <= '9')
   }
 
@@ -391,5 +391,5 @@ fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
   )
   mbt.write_string("  \{body}\n")
   mbt.write_string("}\n\n")
-  { moonbit: mbt.to_string() }
+  { moonbit: mbt.to_string(), }
 }
