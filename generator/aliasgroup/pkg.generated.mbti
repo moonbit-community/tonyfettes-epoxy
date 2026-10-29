@@ -20,4 +20,3 @@ pub fn Groups::from_edges(Array[Edge]) -> Self
 // Type aliases
 
 // Traits
-

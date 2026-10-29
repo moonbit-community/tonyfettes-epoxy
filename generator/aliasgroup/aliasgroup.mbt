@@ -65,7 +65,7 @@ pub fn Groups::from_edges(edges : Array[Edge]) -> Groups {
 /// Lexicographic (dictionary) order over code units. MoonBit's default
 /// `String::compare` orders by length first, which would read as unsorted
 /// (`...OES` before `...APPLE`); this gives the intuitive A-before-O order.
-fn lex_compare(a : String, b : String) -> Int {
+fn lex_compare(a : String, b : String) -> Int32 {
   let limit = if a.length() <= b.length() { a.length() } else { b.length() }
   for i in 0..<limit {
     let order = a[i].to_int().compare(b[i].to_int())

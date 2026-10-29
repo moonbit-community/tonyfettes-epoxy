@@ -1,7 +1,7 @@
 ///|
 /// Window-system layer (the app's job, not epoxy's): make a current GL context.
 /// Implemented in demo_context.c; the only reason this demo links OpenGL.
-extern "c" fn ffi_make_context() -> Int = "demo_make_context"
+extern "c" fn ffi_make_context() -> Int32 = "demo_make_context"
 
 ///|
 fn main {
@@ -28,11 +28,11 @@ fn main {
 
   // Exercise generated pointer bindings end-to-end.
   // glGetIntegerv writes into a FixedArray[Int] output buffer.
-  let max_tex : FixedArray[Int] = FixedArray::make(1, 0)
+  let max_tex : FixedArray[Int32] = FixedArray::make(1, 0)
   @epoxy.gl_get_integerv(@epoxy.GL_MAX_TEXTURE_SIZE, max_tex)
   println("GL_MAX_TEXTURE_SIZE = \{max_tex[0]}")
   // glGenBuffers fills a FixedArray[UInt] with fresh object names.
-  let bufs : FixedArray[UInt] = FixedArray::make(3, 0)
+  let bufs : FixedArray[UInt32] = FixedArray::make(3, 0)
   @epoxy.gl_gen_buffers(3, bufs)
   println("glGenBuffers -> [\{bufs[0]}, \{bufs[1]}, \{bufs[2]}]")
 
@@ -42,11 +42,11 @@ fn main {
   // GLSL 1.20 vertex shader to prove the whole path end-to-end.
   let source : Bytes = b"#version 120\nvoid main() { gl_Position = vec4(0.0); }\n"
   let sources : FixedArray[Bytes] = [source]
-  let lengths : FixedArray[Int] = [source.length()]
+  let lengths : FixedArray[Int32] = [source.length()]
   let shader = @epoxy.gl_create_shader(@epoxy.GL_VERTEX_SHADER)
   @epoxy.gl_shader_source(shader, 1, sources, lengths)
   @epoxy.gl_compile_shader(shader)
-  let status : FixedArray[Int] = FixedArray::make(1, 0)
+  let status : FixedArray[Int32] = FixedArray::make(1, 0)
   @epoxy.gl_get_shaderiv(shader, @epoxy.GL_COMPILE_STATUS, status)
   println("glShaderSource+compile ok = \{status[0] == 1}")
 

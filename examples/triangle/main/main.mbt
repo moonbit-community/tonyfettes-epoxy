@@ -2,33 +2,33 @@
 /// Window-system layer (the app's job, not epoxy's): open a window with a
 /// current GL context and pump its events. Implemented in demo_window.m; the
 /// only reason this demo links Cocoa/OpenGL.
-extern "c" fn ffi_window_open(width : Int, height : Int) -> Int = "demo_window_open"
+extern "c" fn ffi_window_open(width : Int32, height : Int32) -> Int32 = "demo_window_open"
 
 ///|
 /// Present the just-drawn frame and process events; 0 once the window closes.
-extern "c" fn ffi_window_frame() -> Int = "demo_window_frame"
+extern "c" fn ffi_window_frame() -> Int32 = "demo_window_frame"
 
 ///|
-const WIDTH : Int = 640
+const WIDTH : Int32 = 640
 
 ///|
-const HEIGHT : Int = 480
+const HEIGHT : Int32 = 480
 
 ///|
 /// Compile one shader, printing the driver's info log on failure.
-fn compile_shader(kind : UInt, source : Bytes) -> UInt? {
+fn compile_shader(kind : UInt32, source : Bytes) -> UInt32? {
   let shader = @epoxy.gl_create_shader(kind)
   let sources : FixedArray[Bytes] = [source]
-  let lengths : FixedArray[Int] = [source.length()]
+  let lengths : FixedArray[Int32] = [source.length()]
   @epoxy.gl_shader_source(shader, 1, sources, lengths)
   @epoxy.gl_compile_shader(shader)
-  let status : FixedArray[Int] = FixedArray::make(1, 0)
+  let status : FixedArray[Int32] = FixedArray::make(1, 0)
   @epoxy.gl_get_shaderiv(shader, @epoxy.GL_COMPILE_STATUS, status)
   if status[0] == 1 {
     Some(shader)
   } else {
     let log = Bytes::make(1024, 0)
-    let log_len : FixedArray[Int] = FixedArray::make(1, 0)
+    let log_len : FixedArray[Int32] = FixedArray::make(1, 0)
     @epoxy.gl_get_shader_info_log(shader, log.length(), log_len, log)
     println("shader compile failed: \{@utf8.decode_lossy(log[0:log_len[0]])}")
     None
@@ -72,7 +72,7 @@ fn main {
   @epoxy.gl_attach_shader(program, vs)
   @epoxy.gl_attach_shader(program, fs)
   @epoxy.gl_link_program(program)
-  let linked : FixedArray[Int] = FixedArray::make(1, 0)
+  let linked : FixedArray[Int32] = FixedArray::make(1, 0)
   @epoxy.gl_get_programiv(program, @epoxy.GL_LINK_STATUS, linked)
   guard linked[0] == 1 else {
     println("program link failed")
@@ -90,7 +90,7 @@ fn main {
   @epoxy.gl_enable_vertex_attrib_array(pos_loc)
   @epoxy.gl_enable_vertex_attrib_array(color_loc)
 
-  let buffers : FixedArray[UInt] = FixedArray::make(2, 0)
+  let buffers : FixedArray[UInt32] = FixedArray::make(2, 0)
   @epoxy.gl_gen_buffers(2, buffers)
   let position_buffer = buffers[0]
   let color_buffer = buffers[1]

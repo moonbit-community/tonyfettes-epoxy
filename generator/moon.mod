@@ -7,7 +7,7 @@ description = "Binding generator for epoxy: parses the Khronos GL registry and e
 preferred_target = "native"
 
 import {
-  "Milky2018/xml@0.2.0",
+  "Milky2018/xml@0.6.1",
   "moonbitlang/async@0.19.4",
 }
 

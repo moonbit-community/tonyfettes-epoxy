@@ -155,54 +155,54 @@ pub struct TypeInfo {
 /// types like `GLDEBUGPROC`) are simply unsupported — the command is skipped.
 pub let table : Map[String, TypeInfo] = {
   // unsigned 32-bit
-  "GLenum": { c_type: UInt, m_type: UInt },
-  "GLbitfield": { c_type: UInt, m_type: UInt },
-  "GLuint": { c_type: UInt, m_type: UInt },
+  "GLenum": { c_type: UInt, m_type: UInt, },
+  "GLbitfield": { c_type: UInt, m_type: UInt, },
+  "GLuint": { c_type: UInt, m_type: UInt, },
   // signed 32-bit
-  "GLint": { c_type: Int, m_type: Int },
-  "GLsizei": { c_type: Int, m_type: Int },
-  "GLfixed": { c_type: Int, m_type: Int },
-  "GLclampx": { c_type: Int, m_type: Int },
+  "GLint": { c_type: Int, m_type: Int, },
+  "GLsizei": { c_type: Int, m_type: Int, },
+  "GLfixed": { c_type: Int, m_type: Int, },
+  "GLclampx": { c_type: Int, m_type: Int, },
   // floating point
-  "GLfloat": { c_type: Float, m_type: Float },
-  "GLclampf": { c_type: Float, m_type: Float },
-  "GLdouble": { c_type: Double, m_type: Double },
-  "GLclampd": { c_type: Double, m_type: Double },
+  "GLfloat": { c_type: Float, m_type: Float, },
+  "GLclampf": { c_type: Float, m_type: Float, },
+  "GLdouble": { c_type: Double, m_type: Double, },
+  "GLclampd": { c_type: Double, m_type: Double, },
   // 64-bit
-  "GLint64": { c_type: Int64, m_type: Int64 },
-  "GLint64EXT": { c_type: Int64, m_type: Int64 },
-  "GLuint64": { c_type: UInt64, m_type: UInt64 },
-  "GLuint64EXT": { c_type: UInt64, m_type: UInt64 },
+  "GLint64": { c_type: Int64, m_type: Int64, },
+  "GLint64EXT": { c_type: Int64, m_type: Int64, },
+  "GLuint64": { c_type: UInt64, m_type: UInt64, },
+  "GLuint64EXT": { c_type: UInt64, m_type: UInt64, },
   // byte-sized (GLboolean vs GLubyte differ in MoonBit)
-  "GLbyte": { c_type: SByte, m_type: Int },
-  "GLchar": { c_type: Char, m_type: Int },
-  "GLcharARB": { c_type: Char, m_type: Int },
-  "GLboolean": { c_type: Byte, m_type: Bool },
-  "GLubyte": { c_type: Byte, m_type: Int },
+  "GLbyte": { c_type: SByte, m_type: Int, },
+  "GLchar": { c_type: Char, m_type: Int, },
+  "GLcharARB": { c_type: Char, m_type: Int, },
+  "GLboolean": { c_type: Byte, m_type: Bool, },
+  "GLubyte": { c_type: Byte, m_type: Int, },
   // 16-bit (by value only; no native fixed-width array)
-  "GLshort": { c_type: Short, m_type: Int },
-  "GLushort": { c_type: UShort, m_type: Int },
-  "GLhalf": { c_type: UShort, m_type: Int },
-  "GLhalfARB": { c_type: UShort, m_type: Int },
-  "GLhalfNV": { c_type: UShort, m_type: Int },
+  "GLshort": { c_type: Short, m_type: Int, },
+  "GLushort": { c_type: UShort, m_type: Int, },
+  "GLhalf": { c_type: UShort, m_type: Int, },
+  "GLhalfARB": { c_type: UShort, m_type: Int, },
+  "GLhalfNV": { c_type: UShort, m_type: Int, },
   // pointer-width integers (offsets / sizes)
-  "GLintptr": { c_type: IntPtr, m_type: Int64 },
-  "GLintptrARB": { c_type: IntPtr, m_type: Int64 },
-  "GLsizeiptr": { c_type: SizePtr, m_type: Int64 },
-  "GLsizeiptrARB": { c_type: SizePtr, m_type: Int64 },
-  "GLvdpauSurfaceNV": { c_type: IntPtr, m_type: Int64 },
+  "GLintptr": { c_type: IntPtr, m_type: Int64, },
+  "GLintptrARB": { c_type: IntPtr, m_type: Int64, },
+  "GLsizeiptr": { c_type: SizePtr, m_type: Int64, },
+  "GLsizeiptrARB": { c_type: SizePtr, m_type: Int64, },
+  "GLvdpauSurfaceNV": { c_type: IntPtr, m_type: Int64, },
   // opaque object handles: pointer-valued tokens received from GL and handed
   // back unchanged. `GLhandleARB` is deliberately absent — it is `unsigned int`
   // on most platforms but `void *` on Apple, a platform-variant ABI this
   // single-ABI, header-free generator cannot express without miscompiling one
   // of them (its modern `GLuint` replacement, glCreateProgram &c., is bound).
-  "GLsync": { c_type: OpaquePtr, m_type: Handle("GLsync") },
-  "GLeglImageOES": { c_type: OpaquePtr, m_type: Handle("GLeglImageOES") },
+  "GLsync": { c_type: OpaquePtr, m_type: Handle("GLsync"), },
+  "GLeglImageOES": { c_type: OpaquePtr, m_type: Handle("GLeglImageOES"), },
   "GLeglClientBufferEXT": {
     c_type: OpaquePtr,
     m_type: Handle("GLeglClientBufferEXT"),
   },
-  "GLVULKANPROCNV": { c_type: OpaquePtr, m_type: Handle("GLVULKANPROCNV") },
+  "GLVULKANPROCNV": { c_type: OpaquePtr, m_type: Handle("GLVULKANPROCNV"), },
 }
 
 ///|

@@ -22,12 +22,12 @@ pub impl GlData for UInt16 with fn size_in_bytes() {
 }
 
 ///|
-pub impl GlData for Int with fn size_in_bytes() {
+pub impl GlData for Int32 with fn size_in_bytes() {
   4L
 }
 
 ///|
-pub impl GlData for UInt with fn size_in_bytes() {
+pub impl GlData for UInt32 with fn size_in_bytes() {
   4L
 }
 
@@ -81,11 +81,11 @@ let d_glBufferSubDataARB : Dispatch = Dispatch::with_aliases(
 /// Copy a packed scalar array into a new data store for the buffer currently
 /// bound to `target`. The byte size is derived from `data`.
 pub fn[T : GlData] gl_buffer_data(
-  target : UInt,
+  target : UInt32,
   data : FixedArray[T],
-  usage : UInt,
+  usage : UInt32,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferData
+  let fp : FuncRef[(UInt32, Int64, @pointer.Pointer[Unit], UInt32) -> Unit] = d_glBufferData
     .get()
     .unsafe_into()
   let size = gl_buffer_data_size(data)
@@ -98,11 +98,11 @@ pub fn[T : GlData] gl_buffer_data(
 ///|
 /// ARB spelling of `gl_buffer_data`.
 pub fn[T : GlData] gl_buffer_data_arb(
-  target : UInt,
+  target : UInt32,
   data : FixedArray[T],
-  usage : UInt,
+  usage : UInt32,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferDataARB
+  let fp : FuncRef[(UInt32, Int64, @pointer.Pointer[Unit], UInt32) -> Unit] = d_glBufferDataARB
     .get()
     .unsafe_into()
   let size = gl_buffer_data_size(data)
@@ -115,8 +115,12 @@ pub fn[T : GlData] gl_buffer_data_arb(
 ///|
 /// Allocate an uninitialized data store for the buffer currently bound to
 /// `target`. Use `gl_buffer_sub_data` or another OpenGL operation to fill it.
-pub fn gl_buffer_allocate(target : UInt, size : Int64, usage : UInt) -> Unit {
-  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferData
+pub fn gl_buffer_allocate(
+  target : UInt32,
+  size : Int64,
+  usage : UInt32,
+) -> Unit {
+  let fp : FuncRef[(UInt32, Int64, @pointer.Pointer[Unit], UInt32) -> Unit] = d_glBufferData
     .get()
     .unsafe_into()
   fp(target, size, @pointer.Pointer::null(), usage)
@@ -125,11 +129,11 @@ pub fn gl_buffer_allocate(target : UInt, size : Int64, usage : UInt) -> Unit {
 ///|
 /// ARB spelling of `gl_buffer_allocate`.
 pub fn gl_buffer_allocate_arb(
-  target : UInt,
+  target : UInt32,
   size : Int64,
-  usage : UInt,
+  usage : UInt32,
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, @pointer.Pointer[Unit], UInt) -> Unit] = d_glBufferDataARB
+  let fp : FuncRef[(UInt32, Int64, @pointer.Pointer[Unit], UInt32) -> Unit] = d_glBufferDataARB
     .get()
     .unsafe_into()
   fp(target, size, @pointer.Pointer::null(), usage)
@@ -139,11 +143,11 @@ pub fn gl_buffer_allocate_arb(
 /// Update part of the buffer currently bound to `target`. The byte size is
 /// derived from `data`.
 pub fn[T : GlData] gl_buffer_sub_data(
-  target : UInt,
+  target : UInt32,
   offset : Int64,
   data : FixedArray[T],
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Int64, @pointer.Pointer[Unit]) -> Unit] = d_glBufferSubData
+  let fp : FuncRef[(UInt32, Int64, Int64, @pointer.Pointer[Unit]) -> Unit] = d_glBufferSubData
     .get()
     .unsafe_into()
   let size = gl_buffer_data_size(data)
@@ -156,11 +160,11 @@ pub fn[T : GlData] gl_buffer_sub_data(
 ///|
 /// ARB spelling of `gl_buffer_sub_data`.
 pub fn[T : GlData] gl_buffer_sub_data_arb(
-  target : UInt,
+  target : UInt32,
   offset : Int64,
   data : FixedArray[T],
 ) -> Unit {
-  let fp : FuncRef[(UInt, Int64, Int64, @pointer.Pointer[Unit]) -> Unit] = d_glBufferSubDataARB
+  let fp : FuncRef[(UInt32, Int64, Int64, @pointer.Pointer[Unit]) -> Unit] = d_glBufferSubDataARB
     .get()
     .unsafe_into()
   let size = gl_buffer_data_size(data)
