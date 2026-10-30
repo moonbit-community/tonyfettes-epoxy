@@ -3,7 +3,6 @@ import {
   "moonbitlang/core/argparse",
   "moonbitlang/async",
   "moonbitlang/async/fs",
-  "moonbitlang/async/io",
   "tonyfettes/epoxy-generator/gen",
   "tonyfettes/epoxy-generator/cdecl",
   "tonyfettes/epoxy-generator/aliasgroup",
