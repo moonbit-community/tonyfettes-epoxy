@@ -50,11 +50,7 @@ priv struct Decl {
 
 ///|
 fn Decl::new() -> Decl {
-  {
-    ptype: StringBuilder::new(),
-    name: StringBuilder::new(),
-    text: StringBuilder::new(),
-  }
+  { ptype: StringBuilder(), name: StringBuilder(), text: StringBuilder(), }
 }
 
 ///|

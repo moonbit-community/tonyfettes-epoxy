@@ -12,6 +12,8 @@ pub(all) enum Declarator {
   Ptr(Declarator, is_const~ : Bool)
 }
 pub fn Declarator::base_name(Self) -> String
+pub fn Declarator::output(Self, &Logger) -> Unit
+pub fn Declarator::to_string(Self) -> String
 pub impl Show for Declarator
 
 // Type aliases

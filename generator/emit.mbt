@@ -177,7 +177,7 @@ fn snake(name : String) -> String {
   }
 
   let n = name.length()
-  let sb = StringBuilder::new()
+  let sb = StringBuilder()
   for i in 0..<n {
     let c = name[i].to_int()
     if is_upper(c) {
@@ -303,7 +303,7 @@ priv struct Rendered {
 /// params through `@pointer.borrow_*`, converts VBO offsets to pointer-shaped
 /// values, calls it, and narrows any sub-word return.
 fn render(c : Command, sig : Signature, aliases : Array[String]) -> Rendered {
-  let mbt = StringBuilder::new()
+  let mbt = StringBuilder()
   let fn_name = snake(c.name)
   let slot = "d_" + c.name
   let mbt_params = sig.params.map(fn(b) { b.name + " : " + b.mty.moonbit() })

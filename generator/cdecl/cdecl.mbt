@@ -68,13 +68,13 @@ fn Token::of_word(w : String) -> Token {
 /// [Const, Star], "struct _cl_event" -> [Struct, Word("_cl_event")].
 fn tokenize_declarator(s : String) -> Array[Token] {
   let toks : Array[Token] = []
-  let mut cur = StringBuilder::new()
+  let mut cur = StringBuilder()
   fn flush() -> Unit {
     let w = cur.to_string()
     if w != "" {
       toks.push(Token::of_word(w))
     }
-    cur = StringBuilder::new()
+    cur = StringBuilder()
   }
 
   for c in s {
